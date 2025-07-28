@@ -8,8 +8,7 @@
     "require-dev": {
         "laravel/pint": "^1.24",
         "league/commonmark": "^2.7",
-        "pestphp/pest": "*",
-        "pestphp/pest-plugin-drift": "^3.0"
+        "pestphp/pest": "*"
     },
     "autoload": {
         "psr-4": {
