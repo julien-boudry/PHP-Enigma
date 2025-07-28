@@ -64,7 +64,6 @@ final class MainTest extends TestCase
         $enigma->plugLetters('S', 'Z');
         $enigma->plugLetters('V', 'W');
 
-        var_dump($enigma->avai)
         self::assertSame('C', $enigma->encodeLetter('Q'));
         self::assertSame('D', $enigma->encodeLetter('E'));
         self::assertSame('S', $enigma->encodeLetter('O'));

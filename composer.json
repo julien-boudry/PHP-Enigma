@@ -3,12 +3,12 @@
     "description": "Enigma cipher machine was invented by a German engineer. This PHP package simulates its operation.",
     "type": "library",
     "require": {
-        "php": "^8.2"
+        "php": "^8.4"
     },
     "require-dev": {
-        "laravel/pint": "^1.4",
-        "phpunit/phpunit": "^9.5",
-        "league/commonmark": "^2.3"
+        "laravel/pint": "^1.24",
+        "phpunit/phpunit": "^12.2",
+        "league/commonmark": "^2.7"
     },
     "autoload": {
         "psr-4": {
@@ -16,7 +16,9 @@
         }
     },
     "scripts": {
-        "test": "phpunit tests"
+        "test": "phpunit tests",
+        "lint": "pint",
+        "pint": "pint"
     },
     "scripts-descriptions": {
         "test": "Run all tests!"
