@@ -127,7 +127,7 @@ class Enigma
             }
         }
 
-        foreach ($rotors as $key=>$value) {
+        foreach ($rotors as $key => $value) {
             $this->mountRotor($key, $value);
         }
         $this->mountReflector($reflector);
@@ -163,11 +163,11 @@ class Enigma
         $this->advance();
         $letter = self::enigma_l2p($letter);
         $letter = $this->plugboard->processLetter($letter);
-        for ($idx=0; $idx<\count($this->rotors); $idx++) {
+        for ($idx = 0; $idx < \count($this->rotors); $idx++) {
             $letter = $this->rotors[$idx]->processLetter1stPass($letter);
         }
         $letter = $this->reflector->processLetter($letter);
-        for ($idx=(\count($this->rotors)-1); $idx>-1; $idx--) {
+        for ($idx = (\count($this->rotors) - 1); $idx > -1; $idx--) {
             $letter = $this->rotors[$idx]->processLetter2ndPass($letter);
         }
         $letter = $this->plugboard->processLetter($letter);

@@ -48,8 +48,8 @@ class EnigmaPlugboard
     public function __construct()
     {
         $wiring = '';
-        for ($idx=0; $idx < EnigmaAlphabet::count(); $idx++) {
-            $wiring.= Enigma::enigma_p2l($idx);
+        for ($idx = 0; $idx < EnigmaAlphabet::count(); $idx++) {
+            $wiring .= Enigma::enigma_p2l($idx);
         }
         $this->wiring = new EnigmaWiring($wiring);
     }

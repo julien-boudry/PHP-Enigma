@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
  * @author  Mustache Lab <kontakt@mustachelab.pl>

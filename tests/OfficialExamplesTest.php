@@ -17,7 +17,7 @@ final class OfficialExamplesTest extends TestCase
             ob_start();
             include __DIR__.'/../ExampleSimple.php';
             ob_end_clean();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $r = false;
             throw $e;
         }
@@ -36,7 +36,7 @@ final class OfficialExamplesTest extends TestCase
             ob_start();
             include __DIR__.'/../ExampleHtml.php';
             ob_end_clean();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $r = false;
             throw $e;
         }

@@ -28,10 +28,10 @@ class EnigmaReflector
      * @global array $ENIGMA_REFLECTORS
      */
     public static array $setup = [
-        ['key'=>ReflectorType::B,     'wiring'=>'YRUHQSLDPXNGOKMIEBFZCWVJAT', 'used'=>[EnigmaModel::WMLW, EnigmaModel::KMM3]],
-        ['key'=>ReflectorType::C,     'wiring'=>'FVPJIAOYEDRZXWGCTKUQSBNMHL', 'used'=>[EnigmaModel::WMLW, EnigmaModel::KMM3]],
-        ['key'=>ReflectorType::BTHIN, 'wiring'=>'ENKQAUYWJICOPBLMDXZVFTHRGS', 'used'=>[EnigmaModel::KMM4]],
-        ['key'=>ReflectorType::CTHIN, 'wiring'=>'RDOBJNTKVEHMLFCWZAXGYIPSUQ', 'used'=>[EnigmaModel::KMM4]],
+        ['key' => ReflectorType::B,     'wiring' => 'YRUHQSLDPXNGOKMIEBFZCWVJAT', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3]],
+        ['key' => ReflectorType::C,     'wiring' => 'FVPJIAOYEDRZXWGCTKUQSBNMHL', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3]],
+        ['key' => ReflectorType::BTHIN, 'wiring' => 'ENKQAUYWJICOPBLMDXZVFTHRGS', 'used' => [EnigmaModel::KMM4]],
+        ['key' => ReflectorType::CTHIN, 'wiring' => 'RDOBJNTKVEHMLFCWZAXGYIPSUQ', 'used' => [EnigmaModel::KMM4]],
     ];
 
     /**
