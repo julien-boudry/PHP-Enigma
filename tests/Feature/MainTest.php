@@ -30,18 +30,18 @@ test('general', function () {
     self::assertSame('O', $enigma->getPosition(RotorPosition::P1));
 });
 test('message from dönitz1 may1945', function () {
-    $rotors = [RotorType::V, RotorType::VI, RotorType::VIII, RotorType::BETA];
+    $rotors = [RotorType::VIII, RotorType::VI, RotorType::V, RotorType::BETA];
     $enigma = new Enigma(EnigmaModel::KMM4, $rotors, ReflectorType::CTHIN);
 
-    $enigma->setPosition(RotorPosition::P1, 'N');
-    $enigma->setPosition(RotorPosition::P2, 'A');
-    $enigma->setPosition(RotorPosition::P3, 'E');
-    $enigma->setPosition(RotorPosition::GREEK, 'M');
+    $enigma->setPosition(RotorPosition::P1, 'M');
+    $enigma->setPosition(RotorPosition::P2, 'E');
+    $enigma->setPosition(RotorPosition::P3, 'A');
+    $enigma->setPosition(RotorPosition::GREEK, 'N');
 
-    $enigma->setRingstellung(RotorPosition::P1, 'E');
-    $enigma->setRingstellung(RotorPosition::P2, 'P');
-    $enigma->setRingstellung(RotorPosition::P3, 'E');
-    $enigma->setRingstellung(RotorPosition::GREEK, 'L');
+    $enigma->setRingstellung(RotorPosition::P1, 'L');
+    $enigma->setRingstellung(RotorPosition::P2, 'E');
+    $enigma->setRingstellung(RotorPosition::P3, 'P');
+    $enigma->setRingstellung(RotorPosition::GREEK, 'E');
 
     $enigma->plugLetters('A', 'E');
     $enigma->plugLetters('B', 'F');
