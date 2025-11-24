@@ -29,7 +29,7 @@ class EnigmaWiring
     *
     * [0]=4 means pin 0 on side A leads to pin 4 on side B, [1]=10 means pin 1 on side A leads to pin 10 on side B, ...<br>
     * Size is ENIGMA_ALPHABET_SIZE.
-    * @var array integer
+    * @var array<int, int>
     */
     private array $wiring;
 
@@ -37,7 +37,7 @@ class EnigmaWiring
      * Constructor connects the pins according to the list in $wiring.
      *
      * example string EKMFLGDQVZNTOWYHXUSPAIBRCJ leads to [0]=4, [1]=10, [2]=12, ...
-     * @param string setup for the internal wiring
+     * @param wiring setup for the internal wiring
      */
     public function __construct(string $wiring)
     {
@@ -46,8 +46,8 @@ class EnigmaWiring
 
     /**
      * Manually connect 2 pins.
-     * @param integer pin 1 to connect
-     * @param integer pin 2 to connect
+     * @param $pin1 pin 1 to connect
+     * @param $pin2 pin 2 to connect
      * @return void
      */
     public function connect(int $pin1, int $pin2): void
@@ -57,8 +57,8 @@ class EnigmaWiring
 
     /**
      * Get the connected pin.
-     * @param integer start of the connection
-     * @return integer the connected pin
+     * @param $pin start of the connection
+     * @return int the connected pin
      */
     public function connectsTo(int $pin): int
     {
@@ -67,8 +67,8 @@ class EnigmaWiring
 
     /**
      * Pass the given letter form side A to side B by following the connection of the pins.
-     * @param integer pin that got activated
-     * @return integer pin that gets activated
+     * @param $pin pin that got activated
+     * @return int pin that gets activated
      */
     public function processLetter1stPass(int $pin): int
     {
@@ -77,11 +77,17 @@ class EnigmaWiring
 
     /**
      * Pass the given letter form side B to side A by following the connection of the pins.
-     * @param integer pin that got activated
-     * @return integer pin that gets activated
+     * @param $pin pin that got activated
+     * @return int pin that gets activated
      */
     public function processLetter2ndPass(int $pin): int
     {
-        return array_search($pin, $this->wiring, true);
+        $r = array_search($pin, $this->wiring, true);
+
+        if ($r === false) {
+            throw new \RuntimeException('Wiring error: pin not found');
+        }
+
+        return $r;
     }
 }

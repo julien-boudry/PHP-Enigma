@@ -38,7 +38,7 @@ class EnigmaRotor
      * wiring: the setup for the wiring of a rotor
      * used: IDs of models, this rotos can be used in
      * notches: the turnover positions of a rotor
-     * @global array $ENIGMA_ROTORS
+     * @var array<array<string, mixed>>
      */
     public static array $setup = [
         ['key' => RotorType::I,     'wiring' => 'EKMFLGDQVZNTOWYHXUSPAIBRCJ', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], 'notches' => [Enigma::KEY_Q]],
@@ -61,7 +61,7 @@ class EnigmaRotor
 
     /**
      * The positions of the notches of a rotor.
-     * @var array integer positions of the notches
+     * @var array<int> integer positions of the notches
      */
     private array $notches;
 
@@ -85,8 +85,8 @@ class EnigmaRotor
 
     /**
      * Constructor creates a new Wiring with the setup from $wiring and stores positions of the notches.
-     * @param string setup for the wiring
-     * @param array positions of the notches
+     * @param $wiring setup for the wiring
+     * @param array<int> $notches positions of the notches
      */
     public function __construct(string $wiring, array $notches)
     {

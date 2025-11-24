@@ -53,18 +53,24 @@ class Enigma
 
     /**
      * converts a character into its pendant in the Enigma alphabet
-     * @param string character to convert
+     * @param $l character to convert
      * @return integer represention of a character in the Enigma alphabet
      */
     public static function enigma_l2p(string $l): int
     {
-        return array_search(strtoupper($l), EnigmaAlphabet::$map, true);
+        $r = array_search(strtoupper($l), EnigmaAlphabet::$map, true);
+
+        if ($r === false) {
+            throw new \RuntimeException('Invalid character for Enigma alphabet: ' . $l);
+        }
+
+        return $r;
     }
 
 
     /**
      * converts an element of the Enigma alphabet to 'our' alphabet
-     * @param integer element to be converted
+     * @param $p element to be converted
      * @return string resulting character
      */
     public static function enigma_p2l(int $p): string
@@ -80,7 +86,7 @@ class Enigma
 
     /**
      * The rotors used by the Enigma.
-     * @var array EnigmaRotor
+     * @var array<EnigmaRotor>
      */
     private array $rotors;
 
@@ -91,22 +97,22 @@ class Enigma
 
     /**
      * The rotors available for this model of the Enigma.
-     * @var array EnigmaRotor
+     * @var array<EnigmaRotor>
      */
     private array $availablerotors;
 
     /**
      * The reflectors available for this model of the Enigma.
-     * @var array EnigmaReflector
+     * @var array<EnigmaReflector>
      */
     private array $availablereflectors;
 
     /**
      * Constructor sets up the plugboard and creates the rotors and reflectros available for the given model.
      * The initital rotors and reflectros are mounted.
-     * @param integer ID for the model to emulate
-     * @param array integer IDs for the rotors for the initial setup
-     * @param integer ID for the reflector for the initial setup
+     * @param $model ID for the model to emulate
+     * @param array<RotorType> $rotors
+     * @param $reflector ID for the reflector for the initial setup
      */
     public function __construct(EnigmaModel $model, array $rotors, ReflectorType $reflector)
     {

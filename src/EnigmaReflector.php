@@ -25,7 +25,7 @@ class EnigmaReflector
      * key: ID of the reflector
      * wiring: the setup for the wiring of a reflector
      * used: IDs of models, this rotos can be used in
-     * @global array $ENIGMA_REFLECTORS
+     * @var array<array<string, mixed>>
      */
     public static array $setup = [
         ['key' => ReflectorType::B,     'wiring' => 'YRUHQSLDPXNGOKMIEBFZCWVJAT', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3]],
