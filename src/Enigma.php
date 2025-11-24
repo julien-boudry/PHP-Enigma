@@ -161,7 +161,7 @@ class Enigma
      * The letter passes the plugboard, the rotors, the reflector, the rotors in the opposite direction and again the plugboard.
      * Every encoding triggers the advancemechanism.
      * @see advance
-     * @param string letter to encode
+     * @param $letter letter to encode
      * @return string encoded letter
      */
     public function encodeLetter(string $letter): string
@@ -184,8 +184,8 @@ class Enigma
      * Mount a rotor into the enigma.
      * A rotor may only be used in one position at a time, so if an rotor is already in use nothing is changed.
      * The previously used rotor will be replaced.
-     * @param integer ID of the position to set the rotor
-     * @param integer ID of the rotor to use
+     * @param $position ID of the position to set the rotor
+     * @param $rotor ID of the rotor to use
      * @return void
      */
     public function mountRotor(int|RotorPosition $position, RotorType $rotor): void
@@ -205,7 +205,7 @@ class Enigma
     /**
      * Mount a reflector into the enigma.
      * The previously used reflector will be replaced.
-     * @param ReflectorType ID of the reflector to use
+     * @param $reflector ID of the reflector to use
      * @return void
      */
     public function mountReflector(ReflectorType $reflector): void
@@ -215,8 +215,8 @@ class Enigma
 
     /**
      * Turn a rotor to a new position.
-     * @param integer ID of the rotor to turn
-     * @param string letter to turn to
+     * @param $position ID of the rotor to turn
+     * @param $letter letter to turn to
      * @return void
      * @uses enigma_l2p
      */
@@ -227,7 +227,7 @@ class Enigma
 
     /**
      * Get the current position of a rotor.
-     * @param integer ID of the rotor
+     * @param $position ID of the rotor
      * @return string current position
      */
     public function getPosition(int|RotorPosition $position): string
@@ -239,8 +239,8 @@ class Enigma
 
     /**
      * Turn the ringstellung of a rotor to a new position.
-     * @param integer ID of the rotor
-     * @param string letter to turn to
+     * @param $position ID of the rotor
+     * @param $letter letter to turn to
      * @return void
      * @uses enigma_l2p
      */
@@ -254,8 +254,8 @@ class Enigma
     /**
      * Connect 2 letters on the plugboard.
      * The letter are transformed to integer first
-     * @param string letter 1 to connect
-     * @param string letter 2 to connect
+     * @param $letter1 letter 1 to connect
+     * @param $letter2 letter 2 to connect
      * @return void
      */
     public function plugLetters(string $letter1, string $letter2): void
@@ -266,7 +266,7 @@ class Enigma
     /**
      * Disconnects 2 letters on the plugboard.
      * Because letters are connected in pairs, we only need to know one of them.
-     * @param string 1 of the 2 letters to disconnect
+     * @param $letter 1 of the 2 letters to disconnect
      * @return void
      * @uses enigma_l2p
      */

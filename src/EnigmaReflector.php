@@ -56,7 +56,7 @@ class EnigmaReflector
      * Send a letter through the wiring.
      * Because pins are connected in pairs, there is no difference if
      * processLetter1stPass() or processLetter2ndPass() is used.
-     * @param integer letter to process
+     * @param $letter letter to process
      * @return integer resulting letter
      */
     public function processLetter(int $letter): int

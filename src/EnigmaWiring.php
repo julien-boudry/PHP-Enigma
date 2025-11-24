@@ -37,7 +37,7 @@ class EnigmaWiring
      * Constructor connects the pins according to the list in $wiring.
      *
      * example string EKMFLGDQVZNTOWYHXUSPAIBRCJ leads to [0]=4, [1]=10, [2]=12, ...
-     * @param wiring setup for the internal wiring
+     * @param $wiring setup for the internal wiring
      */
     public function __construct(string $wiring)
     {

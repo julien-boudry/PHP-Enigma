@@ -118,7 +118,7 @@ class EnigmaRotor
      * Send an letter from side A through the wiring to side B.
      * To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br>
      * + ENIGMA_ALPHABET_SIZE and % ENIGMA_ALPHABET_SIZE keep the value positive and in bounds
-     * @param integer letter to process
+     * @param $letter letter to process
      * @return integer resulting letter
      */
     public function processLetter1stPass(int $letter): int
@@ -132,7 +132,7 @@ class EnigmaRotor
      * Send an letter from side B through the wiring to side A.
      * To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br>
      * + ENIGMA_ALPHABET_SIZE and % ENIGMA_ALPHABET_SIZE keep the value positive and in bounds
-     * @param integer letter to process
+     * @param $letter letter to process
      * @return integer resulting letter
      */
     public function processLetter2ndPass(int $letter): int
@@ -144,7 +144,7 @@ class EnigmaRotor
 
     /**
      * Set the rotor to a given position.
-     * @param integer position to go to
+     * @param $letter position to go to
      * @return void
      */
     public function setPosition(int $letter): void
@@ -163,7 +163,7 @@ class EnigmaRotor
 
     /**
      * Sets the ringstellung to a given position.
-     * @param integer position to go to
+     * @param $letter position to go to
      * @return void
      */
     public function setRingstellung(int $letter): void
