@@ -19,7 +19,7 @@ function enigma_history()
 echo '<html><meta charset="utf-8">';
 echo enigma_history();
 
-require_once __DIR__.\DIRECTORY_SEPARATOR.'ExampleSimple.php';
+require __DIR__.\DIRECTORY_SEPARATOR.'ExampleSimple.php';
 
 echo '<pre>';
 print_r($enigma);
