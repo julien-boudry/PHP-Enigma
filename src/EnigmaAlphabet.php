@@ -11,7 +11,7 @@ final class EnigmaAlphabet
      * eg.: Enigma::KEY_A=>"A", Enigma::KEY_B=>"B", ...
      * @var array<int, string>
      */
-    public static array $map = [
+    public const array MAP = [
         Enigma::KEY_A => 'A',
         Enigma::KEY_B => 'B',
         Enigma::KEY_C => 'C',
@@ -42,6 +42,6 @@ final class EnigmaAlphabet
 
     public static function count(): int
     {
-        return \count(self::$map);
+        return \count(self::MAP);
     }
 }

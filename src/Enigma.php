@@ -58,7 +58,7 @@ class Enigma
      */
     public static function enigma_l2p(string $l): int
     {
-        $r = array_search(strtoupper($l), EnigmaAlphabet::$map, true);
+        $r = array_search(strtoupper($l), EnigmaAlphabet::MAP, true);
 
         if ($r === false) {
             throw new \RuntimeException('Invalid character for Enigma alphabet: ' . $l);
@@ -75,7 +75,7 @@ class Enigma
      */
     public static function enigma_p2l(int $p): string
     {
-        return EnigmaAlphabet::$map[$p];
+        return EnigmaAlphabet::MAP[$p];
     }
 
     /**
