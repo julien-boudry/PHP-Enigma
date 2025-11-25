@@ -15,6 +15,5 @@ readonly class EnigmaSetup
         public string $wiring,
         public array $used,
         public ?array $notches = null
-    ){
-    }
+    ) {}
 }

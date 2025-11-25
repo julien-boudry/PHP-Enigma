@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 use Rafalmasiarek\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
-test('general', function () {
+
+test('general', function (): void {
     $rotors = [RotorType::I, RotorType::II, RotorType::III];
     $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
     $enigma->setPosition(RotorPosition::P1, 'M');
@@ -54,4 +55,3 @@ test('general', function () {
 //     self::assertSame('H', $enigma->encodeLetter('Q'));
 //     self::assertSame('Z', $enigma->encodeLetter('E'));
 // }
-

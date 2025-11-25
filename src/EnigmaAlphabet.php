@@ -9,6 +9,7 @@ final class EnigmaAlphabet
     /**
      * encoding table@
      * eg.: Enigma::KEY_A=>"A", Enigma::KEY_B=>"B", ...
+     *
      * @var array<int, string>
      */
     public const array MAP = [

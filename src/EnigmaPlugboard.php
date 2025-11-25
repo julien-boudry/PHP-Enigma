@@ -28,9 +28,8 @@ namespace Rafalmasiarek\Enigma;
  */
 /**
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
+ *
  * @version 2.0
- * @package Enigma
- * @subpackage Core
  */
 class EnigmaPlugboard
 {
@@ -58,8 +57,10 @@ class EnigmaPlugboard
      * Send a letter through the wiring.
      * Because pins are connected in pairs, there is no difference if
      * processLetter1stPass() or processLetter2ndPass() is used.
+     *
      * @param $letter letter to process
-     * @return integer resulting letter
+     *
+     * @return int resulting letter
      */
     public function processLetter(int $letter): int
     {
@@ -68,8 +69,10 @@ class EnigmaPlugboard
 
     /**
      * Connect 2 letters.
+     *
      * @param $letter1 letter 1 to connect
      * @param $letter2 letter 2 to connect
+     *
      * @return void
      */
     public function plugLetters(int $letter1, int $letter2): void
@@ -81,7 +84,9 @@ class EnigmaPlugboard
     /**
      * Disconnect 2 letters.
      * Because letters are connected in pairs, we only need to know one of them.
+     *
      * @param $letter 1 of the 2 letters to disconnect
+     *
      * @return void
      */
     public function unplugLetters(int $letter): void

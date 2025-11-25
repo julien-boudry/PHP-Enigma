@@ -2,13 +2,9 @@
 
 declare(strict_types=1);
 
-use Rafalmasiarek\Enigma\Enigma;
-use Rafalmasiarek\Enigma\EnigmaModel;
-use Rafalmasiarek\Enigma\ReflectorType;
-use Rafalmasiarek\Enigma\RotorPosition;
-use Rafalmasiarek\Enigma\RotorType;
+use Rafalmasiarek\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
 
-test('message from dönitz1 may1945', function () {
+test('message from dönitz1 may1945', function (): void {
     $rotors = [RotorType::VIII, RotorType::VI, RotorType::V, RotorType::BETA];
     $enigma = new Enigma(EnigmaModel::KMM4, $rotors, ReflectorType::CTHIN);
 
@@ -39,7 +35,7 @@ test('message from dönitz1 may1945', function () {
     self::assertSame('Z', $enigma->encodeLetter('B'));
 });
 
-test('Operation Barbarossa (1941)', function () {
+test('Operation Barbarossa (1941)', function (): void {
     // Source: http://wiki.franklinheath.co.uk/index.php/Enigma/Sample_Messages#Operation_Barbarossa.2C_1941
     // Model: Enigma I (compatible with M3)
     // Reflector: B
@@ -83,7 +79,7 @@ test('Operation Barbarossa (1941)', function () {
     expect($decrypted)->toBe($expectedPlaintext);
 });
 
-test('U-264 (Kapitänleutnant Hartwig Looks) (1942)', function () {
+test('U-264 (Kapitänleutnant Hartwig Looks) (1942)', function (): void {
     // Source: http://wiki.franklinheath.co.uk/index.php/Enigma/Sample_Messages#U-264_.28Kapit.C3.A4nleutnant_Hartwig_Looks.29.2C_1942
     // Model: Enigma M4
     // Reflector: Thin B
@@ -130,7 +126,7 @@ test('U-264 (Kapitänleutnant Hartwig Looks) (1942)', function () {
     expect($decrypted)->toBe($expectedPlaintext);
 });
 
-test('Scharnhorst (Konteradmiral Erich Bey) (1943)', function () {
+test('Scharnhorst (Konteradmiral Erich Bey) (1943)', function (): void {
     // Source: http://wiki.franklinheath.co.uk/index.php/Enigma/Sample_Messages#Scharnhorst_.28Konteradmiral_Erich_Bey.29.2C_1943
     // Model: Enigma M3
     // Reflector: B

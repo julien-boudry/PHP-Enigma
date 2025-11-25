@@ -13,28 +13,29 @@ namespace Rafalmasiarek\Enigma;
  */
 /**
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
+ *
  * @version 2.0
- * @package Enigma
- * @subpackage Core
  */
 class EnigmaReflector
 {
     /**
-     * stores the setup for all available reflectors
+     * stores the setup for all available reflectors.
+     *
      * @var array<int, EnigmaSetup>|null
      */
     private static ?array $defaultSetup = null;
 
     /**
-     * Get the setup for all available reflectors
+     * Get the setup for all available reflectors.
+     *
      * @return array<int, EnigmaSetup>
      */
     public static function getDefaultSetup(): array
     {
         if (self::$defaultSetup === null) {
             self::$defaultSetup = [
-                new EnigmaSetup(ReflectorType::B,     'YRUHQSLDPXNGOKMIEBFZCWVJAT', [EnigmaModel::WMLW, EnigmaModel::KMM3]),
-                new EnigmaSetup(ReflectorType::C,     'FVPJIAOYEDRZXWGCTKUQSBNMHL', [EnigmaModel::WMLW, EnigmaModel::KMM3]),
+                new EnigmaSetup(ReflectorType::B, 'YRUHQSLDPXNGOKMIEBFZCWVJAT', [EnigmaModel::WMLW, EnigmaModel::KMM3]),
+                new EnigmaSetup(ReflectorType::C, 'FVPJIAOYEDRZXWGCTKUQSBNMHL', [EnigmaModel::WMLW, EnigmaModel::KMM3]),
                 new EnigmaSetup(ReflectorType::BTHIN, 'ENKQAUYWJICOPBLMDXZVFTHRGS', [EnigmaModel::KMM4]),
                 new EnigmaSetup(ReflectorType::CTHIN, 'RDOBJNTKVEHMLFCWZAXGYIPSUQ', [EnigmaModel::KMM4]),
             ];
@@ -47,13 +48,16 @@ class EnigmaReflector
      * The wiring of the reflector.
      * Pins are connected in pairs, that means, if 'D' on side A connects to 'H'
      * on side B, 'H' on side A connects to 'D' on side B. No letter must connect to itself!
+     *
      * @var EnigmaWiring
      */
     private EnigmaWiring $wiring;
 
     /**
      * Constructor creates a new Wiring with the setup from $wiring.
+     *
      * @uses EnigmaWiring
+     *
      * @param string $wiring setup for the wiring
      */
     public function __construct(string $wiring)
@@ -65,8 +69,10 @@ class EnigmaReflector
      * Send a letter through the wiring.
      * Because pins are connected in pairs, there is no difference if
      * processLetter1stPass() or processLetter2ndPass() is used.
+     *
      * @param $letter letter to process
-     * @return integer resulting letter
+     *
+     * @return int resulting letter
      */
     public function processLetter(int $letter): int
     {

@@ -12,13 +12,13 @@ enum ReflectorType
 
     /**
      * ID Reflector B Thin
-     * only available in model Kriegsmarine M4
+     * only available in model Kriegsmarine M4.
      */
     case BTHIN;
 
     /**
      * ID Reflector C Tthin
-     * only available in model Kriegsmarine M4
+     * only available in model Kriegsmarine M4.
      */
     case CTHIN;
 }

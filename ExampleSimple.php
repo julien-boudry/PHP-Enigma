@@ -4,8 +4,8 @@
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
  * @author  Mustache Lab <kontakt@mustachelab.pl>
  * @copyright Copyright (c) 2015, Rafal Masiarek
+ *
  * @version 2.0
- * @package Enigma
  */
 /*
 
@@ -94,6 +94,6 @@ $enigma->plugLetters('B', 'Z');
 $enigma->unplugLetters('A');
 
 $l = 'A';
-echo 'before: '.$enigma->getPosition(RotorPosition::P3).' '.$enigma->getPosition(RotorPosition::P2).' '.$enigma->getPosition(RotorPosition::P1)."\n";
-echo $l.'->'.$enigma->encodeLetter($l)."\n";
-echo 'after: '.$enigma->getPosition(RotorPosition::P3).' '.$enigma->getPosition(RotorPosition::P2).' '.$enigma->getPosition(RotorPosition::P1)."\n";
+echo 'before: ' . $enigma->getPosition(RotorPosition::P3) . ' ' . $enigma->getPosition(RotorPosition::P2) . ' ' . $enigma->getPosition(RotorPosition::P1) . "\n";
+echo $l . '->' . $enigma->encodeLetter($l) . "\n";
+echo 'after: ' . $enigma->getPosition(RotorPosition::P3) . ' ' . $enigma->getPosition(RotorPosition::P2) . ' ' . $enigma->getPosition(RotorPosition::P1) . "\n";
