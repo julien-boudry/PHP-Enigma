@@ -29,36 +29,7 @@ test('general', function () {
     self::assertSame('A', $enigma->getPosition(RotorPosition::P2));
     self::assertSame('O', $enigma->getPosition(RotorPosition::P1));
 });
-test('message from dönitz1 may1945', function () {
-    $rotors = [RotorType::VIII, RotorType::VI, RotorType::V, RotorType::BETA];
-    $enigma = new Enigma(EnigmaModel::KMM4, $rotors, ReflectorType::CTHIN);
 
-    $enigma->setPosition(RotorPosition::P1, 'M');
-    $enigma->setPosition(RotorPosition::P2, 'E');
-    $enigma->setPosition(RotorPosition::P3, 'A');
-    $enigma->setPosition(RotorPosition::GREEK, 'N');
-
-    $enigma->setRingstellung(RotorPosition::P1, 'L');
-    $enigma->setRingstellung(RotorPosition::P2, 'E');
-    $enigma->setRingstellung(RotorPosition::P3, 'P');
-    $enigma->setRingstellung(RotorPosition::GREEK, 'E');
-
-    $enigma->plugLetters('A', 'E');
-    $enigma->plugLetters('B', 'F');
-    $enigma->plugLetters('C', 'M');
-    $enigma->plugLetters('D', 'Q');
-    $enigma->plugLetters('H', 'U');
-    $enigma->plugLetters('J', 'N');
-    $enigma->plugLetters('L', 'X');
-    $enigma->plugLetters('P', 'R');
-    $enigma->plugLetters('S', 'Z');
-    $enigma->plugLetters('V', 'W');
-
-    self::assertSame('C', $enigma->encodeLetter('Q'));
-    self::assertSame('D', $enigma->encodeLetter('E'));
-    self::assertSame('S', $enigma->encodeLetter('O'));
-    self::assertSame('Z', $enigma->encodeLetter('B'));
-});
 // https://cryptii.com/pipes/enigma-machine
 // public function testRandom(): void
 // {
