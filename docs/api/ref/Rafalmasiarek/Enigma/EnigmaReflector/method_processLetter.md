@@ -1,6 +1,6 @@
 > Rafalmasiarek \ [EnigmaReflector](class_EnigmaReflector.md)
 # Method processLetter()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaReflector.php#L71)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaReflector.php#L77)
 
 ```php
 public function EnigmaReflector->processLetter( int $letter ): int

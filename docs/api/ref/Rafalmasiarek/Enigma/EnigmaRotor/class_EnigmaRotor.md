@@ -1,6 +1,6 @@
 > Rafalmasiarek \ **EnigmaRotor**
 # Class EnigmaRotor
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L32)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L31)
 ## Elements
 
 ### Public Static Methods
@@ -19,7 +19,7 @@
 | [__construct(...)](method___construct.md) | __ |
 | [advance(...)](method_advance.md) | _When postion reaches ENIGMA_ALPHABET_SIZE, it is reset to 0._ |
 | [getPosition(...)](method_getPosition.md) | __ |
-| [isNotchOpen(...)](method_isNotchOpen.md) | _Returns true if the rotor is in a turnover position for the next rotor_ |
+| [isNotchOpen(...)](method_isNotchOpen.md) | _Returns true if the rotor is in a turnover position for the next rotor._ |
 | [processLetter1stPass(...)](method_processLetter1stPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br> + ENIGMA_ALPHABET_SIZE and % ENIGMA_ALPHABET_SIZE keep the value pos..._ |
 | [processLetter2ndPass(...)](method_processLetter2ndPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br> + ENIGMA_ALPHABET_SIZE and % ENIGMA_ALPHABET_SIZE keep the value pos..._ |
 | [setPosition(...)](method_setPosition.md) | __ |

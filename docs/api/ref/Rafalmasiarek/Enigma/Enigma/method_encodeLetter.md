@@ -1,6 +1,6 @@
 > Rafalmasiarek \ [Enigma](class_Enigma.md)
 # Method encodeLetter()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L167)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L179)
 
 ```php
 public function Enigma->encodeLetter( string $letter ): string

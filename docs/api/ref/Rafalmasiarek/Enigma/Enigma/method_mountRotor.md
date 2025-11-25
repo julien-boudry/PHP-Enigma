@@ -1,6 +1,6 @@
 > Rafalmasiarek \ [Enigma](class_Enigma.md)
 # Method mountRotor()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L191)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L206)
 
 ```php
 public function Enigma->mountRotor( Rafalmasiarek\Enigma\RotorPosition|int $position, Rafalmasiarek\Enigma\RotorType $rotor ): void

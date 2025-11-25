@@ -54,7 +54,7 @@ After each encoded letter, the advance mechanism changes the internal setup by r
 | [getPosition(...)](method_getPosition.md) | __ |
 | [mountReflector(...)](method_mountReflector.md) | _The previously used reflector will be replaced._ |
 | [mountRotor(...)](method_mountRotor.md) | _A rotor may only be used in one position at a time, so if an rotor is already in use nothing is changed. The previously used rotor will be replaced._ |
-| [plugLetters(...)](method_plugLetters.md) | _The letter are transformed to integer first_ |
+| [plugLetters(...)](method_plugLetters.md) | _The letter are transformed to integer first._ |
 | [setPosition(...)](method_setPosition.md) | __ |
 | [setRingstellung(...)](method_setRingstellung.md) | __ |
 | [unplugLetters(...)](method_unplugLetters.md) | _Because letters are connected in pairs, we only need to know one of them._ |

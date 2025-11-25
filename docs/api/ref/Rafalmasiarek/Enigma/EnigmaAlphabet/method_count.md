@@ -1,6 +1,6 @@
 > Rafalmasiarek \ [EnigmaAlphabet](class_EnigmaAlphabet.md)
 # Method count()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaAlphabet.php#L43)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaAlphabet.php#L44)
 
 ```php
 public static function EnigmaAlphabet::count( ): int

@@ -1,6 +1,6 @@
 > Rafalmasiarek \ **EnigmaReflector**
 # Class EnigmaReflector
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaReflector.php#L20)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaReflector.php#L19)
 ## Elements
 
 ### Public Static Methods

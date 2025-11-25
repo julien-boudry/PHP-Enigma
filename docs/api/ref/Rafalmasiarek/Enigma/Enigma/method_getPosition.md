@@ -1,6 +1,6 @@
 > Rafalmasiarek \ [Enigma](class_Enigma.md)
 # Method getPosition()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L233)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L255)
 
 ```php
 public function Enigma->getPosition( Rafalmasiarek\Enigma\RotorPosition|int $position ): string

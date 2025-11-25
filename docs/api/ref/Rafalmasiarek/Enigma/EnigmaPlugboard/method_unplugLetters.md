@@ -1,6 +1,6 @@
 > Rafalmasiarek \ [EnigmaPlugboard](class_EnigmaPlugboard.md)
 # Method unplugLetters()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L87)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L92)
 
 ```php
 public function EnigmaPlugboard->unplugLetters( int $letter ): void

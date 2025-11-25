@@ -1,6 +1,6 @@
 > Rafalmasiarek \ **EnigmaPlugboard**
 # Class EnigmaPlugboard
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L35)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L34)
 ## Elements
 
 ### Public Methods

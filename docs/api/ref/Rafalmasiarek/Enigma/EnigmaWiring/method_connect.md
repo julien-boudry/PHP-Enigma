@@ -1,6 +1,6 @@
 > Rafalmasiarek \ [EnigmaWiring](class_EnigmaWiring.md)
 # Method connect()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L53)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L55)
 
 ```php
 public function EnigmaWiring->connect( int $pin1, int $pin2 ): void

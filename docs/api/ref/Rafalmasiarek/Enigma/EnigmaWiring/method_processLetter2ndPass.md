@@ -1,6 +1,6 @@
 > Rafalmasiarek \ [EnigmaWiring](class_EnigmaWiring.md)
 # Method processLetter2ndPass()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L83)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L91)
 
 ```php
 public function EnigmaWiring->processLetter2ndPass( int $pin ): int

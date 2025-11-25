@@ -1,6 +1,6 @@
 > Rafalmasiarek \ **EnigmaWiring**
 # Class EnigmaWiring
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L25)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L23)
 ## Elements
 
 ### Public Methods
