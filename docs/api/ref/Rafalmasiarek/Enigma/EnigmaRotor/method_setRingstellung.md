@@ -1,0 +1,22 @@
+> Rafalmasiarek \ [EnigmaRotor](class_EnigmaRotor.md)
+# Method setRingstellung()
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L177)
+
+```php
+public function EnigmaRotor->setRingstellung( int $letter ): void
+```
+
+## Parameters
+
+### **letter:**
+```php
+int $letter
+```
+**Type:** `int`
+
+position to go to
+
+## Return
+**Type:** `void`
+
+

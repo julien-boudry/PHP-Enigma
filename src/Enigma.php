@@ -160,7 +160,7 @@ class Enigma
      * Encode a single letter.
      * The letter passes the plugboard, the rotors, the reflector, the rotors in the opposite direction and again the plugboard.
      * Every encoding triggers the advancemechanism.
-     * @see advance
+     * @see Enigma::advance()
      * @param $letter letter to encode
      * @return string encoded letter
      */
