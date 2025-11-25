@@ -6,11 +6,11 @@
         "php": "^8.4"
     },
     "require-dev": {
-        "laravel/pint": "^1.24",
         "league/commonmark": "^2.7",
         "pestphp/pest": "^4.1",
         "phpstan/phpstan": "^2.1",
-        "julien-boudry/php-reference": ">0.1"
+        "julien-boudry/php-reference": ">0.1",
+        "friendsofphp/php-cs-fixer": "^3.90"
     },
     "autoload": {
         "psr-4": {
@@ -24,7 +24,7 @@
     },
     "scripts": {
         "test": "pest",
-        "lint": "pint",
+        "lint": "php-cs-fixer fix",
         "pint": "pint"
     },
     "scripts-descriptions": {
