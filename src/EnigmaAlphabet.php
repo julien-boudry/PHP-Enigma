@@ -7,7 +7,7 @@ namespace Rafalmasiarek\Enigma;
 final class EnigmaAlphabet
 {
     /**
-     * encoding table
+     * encoding table@
      * eg.: Enigma::KEY_A=>"A", Enigma::KEY_B=>"B", ...
      * @var array<int, string>
      */

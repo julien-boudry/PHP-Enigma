@@ -33,25 +33,33 @@ class EnigmaRotor
 {
     /**
      * stores the setup for all available rotors
-     * fields are
-     * key: ID of the rotor
-     * wiring: the setup for the wiring of a rotor
-     * used: IDs of models, this rotos can be used in
-     * notches: the turnover positions of a rotor
-     * @var array<array<string, mixed>>
+     * @var array<int, EnigmaSetup>|null
      */
-    public static array $setup = [
-        ['key' => RotorType::I,     'wiring' => 'EKMFLGDQVZNTOWYHXUSPAIBRCJ', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], 'notches' => [Enigma::KEY_Q]],
-        ['key' => RotorType::II,    'wiring' => 'AJDKSIRUXBLHWTMCQGZNPYFVOE', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], 'notches' => [Enigma::KEY_E]],
-        ['key' => RotorType::III,   'wiring' => 'BDFHJLCPRTXVZNYEIWGAKMUSQO', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], 'notches' => [Enigma::KEY_V]],
-        ['key' => RotorType::IV,    'wiring' => 'ESOVPZJAYQUIRHXLNFTGKDCMWB', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], 'notches' => [Enigma::KEY_J]],
-        ['key' => RotorType::V,     'wiring' => 'VZBRGITYUPSDNHLXAWMJQOFECK', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], 'notches' => [Enigma::KEY_Z]],
-        ['key' => RotorType::VI,    'wiring' => 'JPGVOUMFYQBENHZRDKASXLICTW', 'used' => [EnigmaModel::KMM3, EnigmaModel::KMM4], 'notches' => [Enigma::KEY_M, Enigma::KEY_Z]],
-        ['key' => RotorType::VII,   'wiring' => 'NZJHGRCXMYSWBOUFAIVLPEKQDT', 'used' => [EnigmaModel::KMM3, EnigmaModel::KMM4], 'notches' => [Enigma::KEY_M, Enigma::KEY_Z]],
-        ['key' => RotorType::VIII,  'wiring' => 'FKQHTLXOCBJSPDZRAMEWNIUYGV', 'used' => [EnigmaModel::KMM3, EnigmaModel::KMM4], 'notches' => [Enigma::KEY_M, Enigma::KEY_Z]],
-        ['key' => RotorType::BETA,  'wiring' => 'LEYJVCNIXWPBQMDRTAKZGFUHOS', 'used' => [EnigmaModel::KMM4], 'notches' => []],
-        ['key' => RotorType::GAMMA, 'wiring' => 'FSOKANUERHMBTIYCWLQPZXVGJD', 'used' => [EnigmaModel::KMM4], 'notches' => []],
-    ];
+    private static ?array $defaultSetup = null;
+
+    /**
+     * Get the setup for all available rotors
+     * @return array<int, EnigmaSetup>
+     */
+    public static function getDefaultSetup(): array
+    {
+        if (self::$defaultSetup === null) {
+            self::$defaultSetup = [
+                new EnigmaSetup(RotorType::I,     'EKMFLGDQVZNTOWYHXUSPAIBRCJ', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_Q]),
+                new EnigmaSetup(RotorType::II,    'AJDKSIRUXBLHWTMCQGZNPYFVOE', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_E]),
+                new EnigmaSetup(RotorType::III,   'BDFHJLCPRTXVZNYEIWGAKMUSQO', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_V]),
+                new EnigmaSetup(RotorType::IV,    'ESOVPZJAYQUIRHXLNFTGKDCMWB', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_J]),
+                new EnigmaSetup(RotorType::V,     'VZBRGITYUPSDNHLXAWMJQOFECK', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_Z]),
+                new EnigmaSetup(RotorType::VI,    'JPGVOUMFYQBENHZRDKASXLICTW', [EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_M, Enigma::KEY_Z]),
+                new EnigmaSetup(RotorType::VII,   'NZJHGRCXMYSWBOUFAIVLPEKQDT', [EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_M, Enigma::KEY_Z]),
+                new EnigmaSetup(RotorType::VIII,  'FKQHTLXOCBJSPDZRAMEWNIUYGV', [EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_M, Enigma::KEY_Z]),
+                new EnigmaSetup(RotorType::BETA,  'LEYJVCNIXWPBQMDRTAKZGFUHOS', [EnigmaModel::KMM4], []),
+                new EnigmaSetup(RotorType::GAMMA, 'FSOKANUERHMBTIYCWLQPZXVGJD', [EnigmaModel::KMM4], []),
+            ];
+        }
+
+        return self::$defaultSetup;
+    }
 
     /**
      * The wiring of a rotor.

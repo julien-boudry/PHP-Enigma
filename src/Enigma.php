@@ -122,14 +122,14 @@ class Enigma
 
         $this->plugboard = new EnigmaPlugboard;
 
-        foreach (EnigmaRotor::$setup as $r) {
-            if (\in_array($model, $r['used'], true)) {
-                $this->availablerotors[$r['key']->name] = new EnigmaRotor($r['wiring'], $r['notches']);
+        foreach (EnigmaRotor::getDefaultSetup() as $r) {
+            if (\in_array($model, $r->used, true)) {
+                $this->availablerotors[$r->reflectorType->name] = new EnigmaRotor($r->wiring, $r->notches ?? []);
             }
         }
-        foreach (EnigmaReflector::$setup as $r) {
-            if (\in_array($model, $r['used'], true)) {
-                $this->availablereflectors[$r['key']->name] = new EnigmaReflector($r['wiring']);
+        foreach (EnigmaReflector::getDefaultSetup() as $r) {
+            if (\in_array($model, $r->used, true)) {
+                $this->availablereflectors[$r->reflectorType->name] = new EnigmaReflector($r->wiring);
             }
         }
 

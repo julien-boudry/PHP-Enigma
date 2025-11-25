@@ -21,18 +21,27 @@ class EnigmaReflector
 {
     /**
      * stores the setup for all available reflectors
-     * fields are
-     * key: ID of the reflector
-     * wiring: the setup for the wiring of a reflector
-     * used: IDs of models, this rotos can be used in
-     * @var array<array<string, mixed>>
+     * @var array<int, EnigmaSetup>|null
      */
-    public static array $setup = [
-        ['key' => ReflectorType::B,     'wiring' => 'YRUHQSLDPXNGOKMIEBFZCWVJAT', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3]],
-        ['key' => ReflectorType::C,     'wiring' => 'FVPJIAOYEDRZXWGCTKUQSBNMHL', 'used' => [EnigmaModel::WMLW, EnigmaModel::KMM3]],
-        ['key' => ReflectorType::BTHIN, 'wiring' => 'ENKQAUYWJICOPBLMDXZVFTHRGS', 'used' => [EnigmaModel::KMM4]],
-        ['key' => ReflectorType::CTHIN, 'wiring' => 'RDOBJNTKVEHMLFCWZAXGYIPSUQ', 'used' => [EnigmaModel::KMM4]],
-    ];
+    private static ?array $defaultSetup = null;
+
+    /**
+     * Get the setup for all available reflectors
+     * @return array<int, EnigmaSetup>
+     */
+    public static function getDefaultSetup(): array
+    {
+        if (self::$defaultSetup === null) {
+            self::$defaultSetup = [
+                new EnigmaSetup(ReflectorType::B,     'YRUHQSLDPXNGOKMIEBFZCWVJAT', [EnigmaModel::WMLW, EnigmaModel::KMM3]),
+                new EnigmaSetup(ReflectorType::C,     'FVPJIAOYEDRZXWGCTKUQSBNMHL', [EnigmaModel::WMLW, EnigmaModel::KMM3]),
+                new EnigmaSetup(ReflectorType::BTHIN, 'ENKQAUYWJICOPBLMDXZVFTHRGS', [EnigmaModel::KMM4]),
+                new EnigmaSetup(ReflectorType::CTHIN, 'RDOBJNTKVEHMLFCWZAXGYIPSUQ', [EnigmaModel::KMM4]),
+            ];
+        }
+
+        return self::$defaultSetup;
+    }
 
     /**
      * The wiring of the reflector.
