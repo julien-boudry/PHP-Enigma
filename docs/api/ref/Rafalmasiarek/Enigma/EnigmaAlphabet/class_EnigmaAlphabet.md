@@ -21,7 +21,7 @@ final class Rafalmasiarek\Enigma\EnigmaAlphabet
     // Constants
     public const array MAP = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-    // Methods
+    // Static Methods
     public static function count( ): int;
 
 }
@@ -34,7 +34,7 @@ final class Rafalmasiarek\Enigma\EnigmaAlphabet
     // Constants
     public const array MAP = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-    // Methods
+    // Static Methods
     public static function count( ): int;
 
 }

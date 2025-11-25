@@ -48,8 +48,5 @@ readonly class Rafalmasiarek\Enigma\EnigmaSetup
     // Methods
     public function __construct( Rafalmasiarek\Enigma\ReflectorType|Rafalmasiarek\Enigma\RotorType $reflectorType, string $wiring, array $used, [ ?array $notches = null ] );
 
-    // Methods
-    public function __construct( Rafalmasiarek\Enigma\ReflectorType|Rafalmasiarek\Enigma\RotorType $reflectorType, string $wiring, array $used, [ ?array $notches = null ] );
-
 }
 ```

@@ -40,11 +40,5 @@ class Rafalmasiarek\Enigma\EnigmaPlugboard
     public function processLetter( int $letter ): int;
     public function unplugLetters( int $letter ): void;
 
-    // Methods
-    public function __construct( );
-    public function plugLetters( int $letter1, int $letter2 ): void;
-    public function processLetter( int $letter ): int;
-    public function unplugLetters( int $letter ): void;
-
 }
 ```

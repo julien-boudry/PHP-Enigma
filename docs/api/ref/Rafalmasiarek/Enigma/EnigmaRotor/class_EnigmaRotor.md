@@ -34,7 +34,7 @@ class Rafalmasiarek\Enigma\EnigmaRotor
     // Properties
     public bool $inUse = false;
 
-    // Methods
+    // Static Methods
     public static function getDefaultSetup( ): array;
 
     // Methods
@@ -65,16 +65,8 @@ class Rafalmasiarek\Enigma\EnigmaRotor
     private int $ringstellung = 0;
     private Rafalmasiarek\Enigma\EnigmaWiring $wiring;
 
-    // Methods
-    public function __construct( string $wiring, array $notches );
-    public function advance( ): void;
+    // Static Methods
     public static function getDefaultSetup( ): array;
-    public function getPosition( ): int;
-    public function isNotchOpen( ): bool;
-    public function processLetter1stPass( int $letter ): int;
-    public function processLetter2ndPass( int $letter ): int;
-    public function setPosition( int $letter ): void;
-    public function setRingstellung( int $letter ): void;
 
     // Methods
     public function __construct( string $wiring, array $notches );

@@ -43,12 +43,5 @@ class Rafalmasiarek\Enigma\EnigmaWiring
     public function processLetter1stPass( int $pin ): int;
     public function processLetter2ndPass( int $pin ): int;
 
-    // Methods
-    public function __construct( string $wiring );
-    public function connect( int $pin1, int $pin2 ): void;
-    public function connectsTo( int $pin ): int;
-    public function processLetter1stPass( int $pin ): int;
-    public function processLetter2ndPass( int $pin ): int;
-
 }
 ```

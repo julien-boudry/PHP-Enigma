@@ -92,7 +92,7 @@ class Rafalmasiarek\Enigma\Enigma
     public const KEY_Y = 24;
     public const KEY_Z = 25;
 
-    // Methods
+    // Static Methods
     public static function enigma_l2p( string $l ): int;
     public static function enigma_p2l( int $p ): string;
 
@@ -149,19 +149,9 @@ class Rafalmasiarek\Enigma\Enigma
     private Rafalmasiarek\Enigma\EnigmaReflector $reflector;
     private array $rotors;
 
-    // Methods
-    public function __construct( Rafalmasiarek\Enigma\EnigmaModel $model, array $rotors, Rafalmasiarek\Enigma\ReflectorType $reflector );
-    public function encodeLetter( string $letter ): string;
+    // Static Methods
     public static function enigma_l2p( string $l ): int;
     public static function enigma_p2l( int $p ): string;
-    public function getPosition( Rafalmasiarek\Enigma\RotorPosition|int $position ): string;
-    public function mountReflector( Rafalmasiarek\Enigma\ReflectorType $reflector ): void;
-    public function mountRotor( Rafalmasiarek\Enigma\RotorPosition|int $position, Rafalmasiarek\Enigma\RotorType $rotor ): void;
-    public function plugLetters( string $letter1, string $letter2 ): void;
-    public function setPosition( Rafalmasiarek\Enigma\RotorPosition $position, string $letter ): void;
-    public function setRingstellung( Rafalmasiarek\Enigma\RotorPosition|int $position, string $letter ): void;
-    public function unplugLetters( string $letter ): void;
-    private function advance( ): void;
 
     // Methods
     public function __construct( Rafalmasiarek\Enigma\EnigmaModel $model, array $rotors, Rafalmasiarek\Enigma\ReflectorType $reflector );

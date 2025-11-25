@@ -10,7 +10,7 @@
         "league/commonmark": "^2.7",
         "pestphp/pest": "^4.1",
         "phpstan/phpstan": "^2.1",
-        "julien-boudry/php-reference": "^0.1.0"
+        "julien-boudry/php-reference": ">0.1"
     },
     "autoload": {
         "psr-4": {

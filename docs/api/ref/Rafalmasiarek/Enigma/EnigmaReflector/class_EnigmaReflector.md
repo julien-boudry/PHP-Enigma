@@ -20,7 +20,7 @@
 class Rafalmasiarek\Enigma\EnigmaReflector
 {
 
-    // Methods
+    // Static Methods
     public static function getDefaultSetup( ): array;
 
     // Methods
@@ -41,10 +41,8 @@ class Rafalmasiarek\Enigma\EnigmaReflector
     // Properties
     private Rafalmasiarek\Enigma\EnigmaWiring $wiring;
 
-    // Methods
-    public function __construct( string $wiring );
+    // Static Methods
     public static function getDefaultSetup( ): array;
-    public function processLetter( int $letter ): int;
 
     // Methods
     public function __construct( string $wiring );
