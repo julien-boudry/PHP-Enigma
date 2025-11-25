@@ -98,13 +98,13 @@ This Enigma machine was used by the Nazis in occupied Norway and post-war by the
 Information used to create this package come from [http://en.wikipedia.org/wiki/Enigma_machine](http://en.wikipedia.org/wiki/Enigma_machine) and the manual from "Enigma Simulator" by D. Rijmenants [http://users.telenet.be/d.rijmenants/](http://users.telenet.be/d.rijmenants/) I tested proper encryption against "Enigma Simulator" by D. Rijmenants [http://www.xat.nl/enigma](http://www.xat.nl/enigma).
 Website of project [http://mustachelab.pl/enigma](http://mustachelab.pl/enigma)
 
-This package provides the funtionality of 3 different Enigma models:
+This package provides the functionality of 3 different Enigma models:
 
 *   Wehrmacht / Luftwaffe 3 rotor model
 *   Kriegsmarine 3 rotor model
 *   Kriegsmarine 4 rotor model
 
-Each model can be equipped with a different set of rotors and refelctors. All in all are 10 types of rotors and 4 types of refelctors available.
+Each model can be equipped with a different set of rotors and reflectors. All in all are 10 types of rotors and 4 types of reflectors available.
 
 *   Wehrmacht / Luftwaffe 3 rotor model uses:
     *   rotors: I, II, III, IV, V
@@ -149,67 +149,63 @@ Each Rotor can be only used in one position at a time. Rotors I..VIII can be mou
 **!!!important!!!**
 These conditions only apply if a proper emulation of the original Enigma is desired. This implementation allows to setup the rotors in any order, so its up to the user to take care of the order of rotors.
 
-# usage:
+# Usage
 
-to create a new instance call the constructor with the following parameters:
+To create a new instance call the constructor with the following parameters:
 
-    $enigma = new Enigma(integer $model, array $rotors, integer $reflector);
+```php
+$enigma = new Enigma(EnigmaModel $model, array $rotors, ReflectorType $reflector);
+```
 
-<pre>MODELS
+Available models (`EnigmaModel` enum):
+*   `EnigmaModel::WMLW` - Wehrmacht / Luftwaffe (3 rotors)
+*   `EnigmaModel::KMM3` - Kriegsmarine M3 (3 rotors)
+*   `EnigmaModel::KMM4` - Kriegsmarine M4 (4 rotors)
 
- ├── ENIGMA_MODEL_WMLW
+Parameters:
+*   `$rotors` - Array of `RotorType` enums to identify the rotors for the initial setup. The number of rotors has to match the number needed by the specific model.
+*   `$reflector` - `ReflectorType` enum to identify the reflector for the initial setup.
 
- ├── ENIGMA_MODEL_KMM3
-
- └── ENIGMA_MODEL_KMM4
-
-</pre>
-
-defines the model to emulate
-
-*   `$rotors` - IDs to identify the rotors for the initial setup number of IDs has to match the number needed by the specific model
-*   `$reflector` - ID to identify the reflector for the initial setup
-
-to en- or decode a letter, use
+To en- or decode a letter, use:
 ```php 
-$enigma->encodeLetter (string $letter): string
+$enigma->encodeLetter(string $letter): string
 ```
 
 ### To change the setup of the Enigma, these functions can be used:
 
-replace a rotor by another
+Replace a rotor by another:
 ```php
-$enigma->mountRotor (int|RotorPosition $position, integer $rotor): void
+$enigma->mountRotor(int|RotorPosition $position, RotorType $rotor): void
 ```
 
-replace a reflector by another
+Replace a reflector by another:
 ```php
-$enigma->mountReflector (int $reflector): void
+$enigma->mountReflector(ReflectorType $reflector): void
 ```
 
-turn a rotor to a new position
+Turn a rotor to a new position:
 ```php
-$enigma->setPosition (int RotorPosition, string $letter): void
+$enigma->setPosition(RotorPosition $position, string $letter): void
 ```
 
-turn the ringstellungon a rotor to a new position
+Turn the ringstellung on a rotor to a new position:
 ```php
-$enigma->setRingstellung (int|RotorPosition $position, string $letter): void
+$enigma->setRingstellung(int|RotorPosition $position, string $letter): void
 ```
 
-connect two letters on the plugboard
+Connect two letters on the plugboard:
 ```php
-$enigma->plugLetters (string $letter1, string $letter2): void
+$enigma->plugLetters(string $letter1, string $letter2): void
 ```
 
-disconnect two letters on the plugboard 
+Disconnect two letters on the plugboard:
 ```php
-$enigma->unplugLetters (string $letter): void
+$enigma->unplugLetters(string $letter): void
 ```
 
-the current position of a rotor can be obtained by
+The current position of a rotor can be obtained by:
 ```php
-$enigma->getPosition (int $position): string
+$enigma->getPosition(int|RotorPosition $position): string
 ```
 
 # Installation
@@ -222,13 +218,6 @@ composer require rafalmasiarek/enigma
 
 ```php
 <?php
-/**
- * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
- * @author Mustache Lab <http://mustachelab.pl>
- * @copyright Copyright (c) 2015, Rafal Masiarek
- * @version 2.0
- * @package Enigma
- */
 
 use Rafalmasiarek\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
 
