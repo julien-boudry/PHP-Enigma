@@ -112,6 +112,166 @@ echo $l.'->'.$enigma->encodeLetter($l)."\n";
 echo 'after: '.$enigma->getPosition(RotorPosition::P3).' '.$enigma->getPosition(RotorPosition::P2).' '.$enigma->getPosition(RotorPosition::P1)."\n";
 ```
 
+## Encoding and Decoding Text
+
+The library provides convenient methods to encode entire messages, not just single letters.
+
+### Encoding a sequence of letters (A-Z only)
+
+Use `encodeLetters()` for text that contains only valid Enigma characters (A-Z). This example recreates a real historical message from **Operation Barbarossa (1941)**:
+
+```php
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
+
+// Historical settings from Operation Barbarossa, 1941
+// Rotors: II, IV, V (right to left) | Reflector: B | Ring settings: B-U-L | Start: B-L-A
+$rotors = [
+    RotorPosition::P1->value => RotorType::V,   // Right (Fast)
+    RotorPosition::P2->value => RotorType::IV,  // Middle
+    RotorPosition::P3->value => RotorType::II,  // Left (Slow)
+];
+
+$enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
+
+// Ring settings (Ringstellung)
+$enigma->setRingstellung(RotorPosition::P1, 'L');
+$enigma->setRingstellung(RotorPosition::P2, 'U');
+$enigma->setRingstellung(RotorPosition::P3, 'B');
+
+// Start position (Grundstellung)
+$enigma->setPosition(RotorPosition::P1, 'A');
+$enigma->setPosition(RotorPosition::P2, 'L');
+$enigma->setPosition(RotorPosition::P3, 'B');
+
+// Plugboard connections
+$plugs = ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX'];
+foreach ($plugs as $plug) {
+    $enigma->plugLetters($plug[0], $plug[1]);
+}
+
+// Historical ciphertext (first part)
+$ciphertext = 'EDPUDNRGYSZRCXNUYTPOMRMBOFKTBZREZKMLXLVEFGUEY';
+
+// Decode the message
+$plaintext = $enigma->encodeLetters($ciphertext);
+echo $plaintext; 
+// "AUFKLXABTEILUNGXVONXKABOROWOAUFLKBXGFSJTNUEUN"
+// Translation: "Reconnaissance division from Kaborowo..."
+```
+
+### Encoding Latin text with spaces, numbers, and accents
+
+Use `encodeLatinText()` for human-readable text. It automatically converts:
+- Spaces → X (configurable)
+- Numbers → German words (0=NULL, 1=EINS, 2=ZWEI, etc.)
+- Accented characters → ASCII equivalents (é→E, ü→UE, ß→SS, etc.)
+- Common punctuation → letter codes
+
+```php
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, ReflectorType, RotorPosition, RotorType};
+
+$rotors = [RotorType::I, RotorType::II, RotorType::III];
+$enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
+$enigma->setPosition(RotorPosition::P1, 'A');
+$enigma->setPosition(RotorPosition::P2, 'A');
+$enigma->setPosition(RotorPosition::P3, 'A');
+
+// A message like a German officer might send
+$message = 'Panzer Division 7 nach München';
+
+// Automatically converts to: "PANZERXDIVISIONXSIEBENXNACHXMUENCHEN"
+$ciphertext = $enigma->encodeLatinText($message);
+
+// With formatted output (traditional 5-letter groups)
+$enigma->setPosition(RotorPosition::P1, 'A');
+$enigma->setPosition(RotorPosition::P2, 'A');
+$enigma->setPosition(RotorPosition::P3, 'A');
+$formatted = $enigma->encodeLatinText($message, formatOutput: true);
+echo "Formatted: $formatted\n";
+```
+
+### Decoding messages
+
+To decode, reset the Enigma to the same initial settings and encode the ciphertext:
+
+```php
+// Same settings as encoding
+$decoder = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
+$decoder->setPosition(RotorPosition::P1, 'A');
+$decoder->setPosition(RotorPosition::P2, 'A');
+$decoder->setPosition(RotorPosition::P3, 'A');
+
+// Remove group formatting if present, then decode
+$ciphertextClean = EnigmaTextConverter::removeGroupFormatting($formatted);
+$decoded = $decoder->encodeLetters($ciphertextClean);
+echo "Decoded: $decoded\n"; // "PANZERXDIVISIONXSIEBENXNACHXMUENCHEN"
+
+// Note: The decoded text contains the converted form.
+// "X" represents spaces, "SIEBEN" represents the number 7
+// This was the historical limitation of Enigma.
+```
+
+### Using the text converter directly
+
+You can also use `EnigmaTextConverter` directly for text conversion:
+
+```php
+use JulienBoudry\Enigma\EnigmaTextConverter;
+
+// Convert text to Enigma format (historical German style)
+$converted = EnigmaTextConverter::latinToEnigmaFormat('U-Boot 47 Position');
+echo $converted; // "UXBOOTXVIERSIEBENXPOSITION"
+
+// Check if text is valid Enigma format
+EnigmaTextConverter::isValidEnigmaFormat('ENIGMA');      // true
+EnigmaTextConverter::isValidEnigmaFormat('Enigma');      // false (lowercase)
+EnigmaTextConverter::isValidEnigmaFormat('ENIGMA 123');  // false (space + numbers)
+
+// Format output in traditional 5-letter groups
+$grouped = EnigmaTextConverter::formatInGroups('DERFUABOROTAKUZG'); // "DERFU ABORO TAKUZ G"
+
+// Remove group formatting
+$plain = EnigmaTextConverter::removeGroupFormatting('DERFU ABORO'); // "DERFUABORO"
+```
+
+### Encoding binary data
+
+For arbitrary binary data (files, images, etc.), use `encodeBinary()`. This method converts each byte to a 2-letter representation (base-26 encoding), allowing any data to be encoded through Enigma with **lossless roundtrip** encoding/decoding.
+
+```php
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, ReflectorType, RotorPosition, RotorType};
+
+$rotors = [RotorType::I, RotorType::II, RotorType::III];
+
+$encoder = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
+$encoder->setPosition(RotorPosition::P1, 'A');
+$encoder->setPosition(RotorPosition::P2, 'A');
+$encoder->setPosition(RotorPosition::P3, 'A');
+
+// Encode binary data
+$binaryData = "\x00\x0F\xFF"; // 3 bytes
+$ciphertext = $encoder->encodeBinary($binaryData);
+echo "Ciphertext: $ciphertext\n"; // 6 letters (2 per byte)
+
+// Decode
+$decoder = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
+$decoder->setPosition(RotorPosition::P1, 'A');
+$decoder->setPosition(RotorPosition::P2, 'A');
+$decoder->setPosition(RotorPosition::P3, 'A');
+
+$decrypted = $decoder->encodeLetters($ciphertext);
+$recoveredBinary = EnigmaTextConverter::enigmaFormatToBinary($decrypted);
+
+// $recoveredBinary === $binaryData (lossless!)
+```
+
+The binary encoding scheme:
+- Each byte (0-255) is converted to 2 letters (AA to JZ)
+- First letter: `byte / 26` (A=0, B=1, ..., J=9)
+- Second letter: `byte % 26` (A=0, B=1, ..., Z=25)
+
+This is **not** historically accurate (Enigma was only used for text), but provides a modern way to encrypt any data type through the Enigma algorithm.
+
 # Testing
 
 This library includes comprehensive automated test suites using [Pest PHP](https://pestphp.com/), including tests based on historical messages and official Enigma examples to ensure accuracy.

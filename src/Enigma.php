@@ -304,4 +304,90 @@ class Enigma
     {
         $this->plugboard->unplugLetters(self::enigma_l2p($letter));
     }
+
+    /**
+     * Encode a sequence of letters (A-Z only).
+     *
+     * This method processes each character in the input through the Enigma machine.
+     * The input must contain only valid Enigma alphabet characters (A-Z).
+     * Use encodeText() for arbitrary text that needs conversion first.
+     *
+     * @param string $letters The letters to encode (A-Z only, no spaces or other characters)
+     *
+     * @return string The encoded letters
+     *
+     * @throws \RuntimeException If the input contains invalid characters
+     *
+     * @see Enigma::encodeText() For encoding arbitrary text with automatic conversion
+     */
+    public function encodeLetters(string $letters): string
+    {
+        $result = '';
+        $letters = strtoupper($letters);
+
+        foreach (str_split($letters) as $char) {
+            $result .= $this->encodeLetter($char);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Encode Latin text by first converting it to Enigma format.
+     *
+     * This method accepts Latin-based text (including numbers, accented characters,
+     * punctuation, spaces, etc.) and converts it to Enigma-compatible format
+     * before encoding. Non-Latin characters (Cyrillic, Chinese, etc.) will be
+     * converted to X or skipped.
+     *
+     * Numbers are converted to German words (historical convention):
+     * 0=NULL, 1=EINS, 2=ZWEI, 3=DREI, 4=VIER, 5=FUENF, 6=SECHS, 7=SIEBEN, 8=ACHT, 9=NEUN
+     *
+     * @param string $text The text to encode (Latin characters, numbers, accents, punctuation)
+     * @param string $spaceReplacement Character(s) to replace spaces with (default: 'X')
+     * @param bool $formatOutput Whether to format output in 5-letter groups (default: false)
+     *
+     * @return string The encoded text
+     *
+     * @see EnigmaTextConverter::latinToEnigmaFormat() For the conversion rules
+     */
+    public function encodeLatinText(
+        string $text,
+        string $spaceReplacement = 'X',
+        bool $formatOutput = false
+    ): string {
+        $enigmaText = EnigmaTextConverter::latinToEnigmaFormat($text, $spaceReplacement);
+        $encoded = $this->encodeLetters($enigmaText);
+
+        if ($formatOutput) {
+            return EnigmaTextConverter::formatInGroups($encoded);
+        }
+
+        return $encoded;
+    }
+
+    /**
+     * Encode binary data through the Enigma machine.
+     *
+     * This method converts binary data to Enigma-compatible format and encodes it.
+     * Useful for encoding arbitrary data that isn't text.
+     *
+     * @param string $binaryData Raw binary data to encode
+     * @param bool $formatOutput Whether to format output in 5-letter groups (default: false)
+     *
+     * @return string The encoded data in Enigma format
+     *
+     * @see EnigmaTextConverter::binaryToEnigmaFormat() For the encoding scheme
+     */
+    public function encodeBinary(string $binaryData, bool $formatOutput = false): string
+    {
+        $enigmaText = EnigmaTextConverter::binaryToEnigmaFormat($binaryData);
+        $encoded = $this->encodeLetters($enigmaText);
+
+        if ($formatOutput) {
+            return EnigmaTextConverter::formatInGroups($encoded);
+        }
+
+        return $encoded;
+    }
 }
