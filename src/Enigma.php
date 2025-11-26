@@ -320,7 +320,7 @@ class Enigma
      *
      * @return string The encoded letters
      *
-     * @see Enigma::encodeText() For encoding arbitrary text with automatic conversion
+     * @see Enigma::encodeLatinText() For encoding arbitrary text with automatic conversion
      */
     public function encodeLetters(string $letters): string
     {
