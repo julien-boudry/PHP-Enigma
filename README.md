@@ -1,4 +1,4 @@
-PHP Enigma Machine
+Enigma Machine
 ==================
 
 > **Original Project**: This library is a maintained fork of [rafalmasiarek/PHP-Enigma](https://github.com/rafalmasiarek/PHP-Enigma), originally created by [Rafal Masiarek](http://rafal.masiarek.pl). The code has been modernized and restructured as a proper PHP library.
