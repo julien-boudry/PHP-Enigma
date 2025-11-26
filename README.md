@@ -1,3 +1,126 @@
+PHP Enigma Machine
+==================
+
+> **Original Project**: This library is a maintained fork of [rafalmasiarek/PHP-Enigma](https://github.com/rafalmasiarek/PHP-Enigma), originally created by [Rafal Masiarek](http://rafal.masiarek.pl). The code has been modernized and restructured as a proper PHP library.
+
+A PHP implementation of the historic Enigma cipher machine, supporting multiple models including Wehrmacht/Luftwaffe 3-rotor, Kriegsmarine 3-rotor, and Kriegsmarine 4-rotor variants.
+
+# Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [How it Works](#how-it-works)
+- [Example](#example)
+- [Testing](#testing)
+- [History](#history)
+- [Enigma Technology](#enigma-technology)
+- [Nazi Operating Procedures](#nazi-operating-procedures)
+- [Breaking the Enigma Code in WW2](#breaking-the-enigma-code-in-ww2)
+- [Beginning of Modern Computing](#beginning-of-modern-computing)
+- [Theory vs Practice](#theory-vs-practice)
+- [Credits](#credits)
+
+# Installation
+
+Require [Composer PHP](https://getcomposer.org/):
+
+```shell
+composer require julien-boudry/php-enigma
+```
+
+# Usage
+
+To create a new instance call the constructor with the following parameters:
+
+```php
+$enigma = new Enigma(EnigmaModel $model, array $rotors, ReflectorType $reflector);
+```
+
+Available models (`EnigmaModel` enum):
+*   `EnigmaModel::WMLW` - Wehrmacht / Luftwaffe (3 rotors)
+*   `EnigmaModel::KMM3` - Kriegsmarine M3 (3 rotors)
+*   `EnigmaModel::KMM4` - Kriegsmarine M4 (4 rotors)
+
+Parameters:
+*   `$rotors` - Array of `RotorType` enums to identify the rotors for the initial setup. The number of rotors has to match the number needed by the specific model.
+*   `$reflector` - `ReflectorType` enum to identify the reflector for the initial setup.
+
+To en- or decode a letter, use:
+```php 
+$enigma->encodeLetter(string $letter): string
+```
+
+## To change the setup of the Enigma, these functions can be used:
+
+Replace a rotor by another:
+```php
+$enigma->mountRotor(int|RotorPosition $position, RotorType $rotor): void
+```
+
+Replace a reflector by another:
+```php
+$enigma->mountReflector(ReflectorType $reflector): void
+```
+
+Turn a rotor to a new position:
+```php
+$enigma->setPosition(RotorPosition $position, string $letter): void
+```
+
+Turn the ringstellung on a rotor to a new position:
+```php
+$enigma->setRingstellung(int|RotorPosition $position, string $letter): void
+```
+
+Connect two letters on the plugboard:
+```php
+$enigma->plugLetters(string $letter1, string $letter2): void
+```
+
+Disconnect two letters on the plugboard:
+```php
+$enigma->unplugLetters(string $letter): void
+```
+
+The current position of a rotor can be obtained by:
+```php
+$enigma->getPosition(int|RotorPosition $position): string
+```
+
+# Example
+
+```php
+<?php
+
+use Rafalmasiarek\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
+
+require_once 'vendor/autoload.php';
+
+$rotors = [RotorType::I, RotorType::II, RotorType::III];
+$enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
+$enigma->setPosition(RotorPosition::P1, 'M');
+$enigma->setRingstellung(RotorPosition::P1, 'B');
+
+$enigma->plugLetters('A', 'C');
+$enigma->plugLetters('B', 'Z');
+
+$enigma->unplugLetters('A');
+
+$l = 'A';
+echo 'before: '.$enigma->getPosition(RotorPosition::P3).' '.$enigma->getPosition(RotorPosition::P2).' '.$enigma->getPosition(RotorPosition::P1)."\n";
+echo $l.'->'.$enigma->encodeLetter($l)."\n";
+echo 'after: '.$enigma->getPosition(RotorPosition::P3).' '.$enigma->getPosition(RotorPosition::P2).' '.$enigma->getPosition(RotorPosition::P1)."\n";
+```
+
+# Testing
+
+This library includes comprehensive automated test suites using [Pest PHP](https://pestphp.com/), including tests based on historical messages and official Enigma examples to ensure accuracy.
+
+Run the tests:
+```shell
+composer test
+```
+
 # History
 
 The Enigma cipher machine was invented by a German engineer, Arthur Scherbius, who applied for his patent on February 23, 1918\. This was in the same time frame that 3 other inventors from 3 other countries also applied for a patent for a rotary cipher machine. Scherbius first tried to sell his design to the German military but finding no interest decided to start up his own company to manufacture the Enigma for commercial sale.
@@ -93,10 +216,9 @@ Despite an estimated 30,000 Enigma machines manufactured, there are currently on
 
 This Enigma machine was used by the Nazis in occupied Norway and post-war by the Norwegian Police Special Branch (Overvaakingspolitiet). The Norwegians changed the wiring in the rotors and the reflector and also stenciled the "40."" on the outside and on the battery box. The Torn E.b radio was also left behind by the Nazis in Norway after the war.
 
-# How it Works?
+# How it Works
 
-Information used to create this package come from [http://en.wikipedia.org/wiki/Enigma_machine](http://en.wikipedia.org/wiki/Enigma_machine) and the manual from "Enigma Simulator" by D. Rijmenants [http://users.telenet.be/d.rijmenants/](http://users.telenet.be/d.rijmenants/) I tested proper encryption against "Enigma Simulator" by D. Rijmenants [http://www.xat.nl/enigma](http://www.xat.nl/enigma).
-Website of project [http://mustachelab.pl/enigma](http://mustachelab.pl/enigma)
+Information used to create this package come from [Wikipedia](http://en.wikipedia.org/wiki/Enigma_machine) and the manual from "Enigma Simulator" by D. Rijmenants.
 
 This package provides the functionality of 3 different Enigma models:
 
@@ -149,104 +271,9 @@ Each Rotor can be only used in one position at a time. Rotors I..VIII can be mou
 **!!!important!!!**
 These conditions only apply if a proper emulation of the original Enigma is desired. This implementation allows to setup the rotors in any order, so its up to the user to take care of the order of rotors.
 
-# Usage
-
-To create a new instance call the constructor with the following parameters:
-
-```php
-$enigma = new Enigma(EnigmaModel $model, array $rotors, ReflectorType $reflector);
-```
-
-Available models (`EnigmaModel` enum):
-*   `EnigmaModel::WMLW` - Wehrmacht / Luftwaffe (3 rotors)
-*   `EnigmaModel::KMM3` - Kriegsmarine M3 (3 rotors)
-*   `EnigmaModel::KMM4` - Kriegsmarine M4 (4 rotors)
-
-Parameters:
-*   `$rotors` - Array of `RotorType` enums to identify the rotors for the initial setup. The number of rotors has to match the number needed by the specific model.
-*   `$reflector` - `ReflectorType` enum to identify the reflector for the initial setup.
-
-To en- or decode a letter, use:
-```php 
-$enigma->encodeLetter(string $letter): string
-```
-
-### To change the setup of the Enigma, these functions can be used:
-
-Replace a rotor by another:
-```php
-$enigma->mountRotor(int|RotorPosition $position, RotorType $rotor): void
-```
-
-Replace a reflector by another:
-```php
-$enigma->mountReflector(ReflectorType $reflector): void
-```
-
-Turn a rotor to a new position:
-```php
-$enigma->setPosition(RotorPosition $position, string $letter): void
-```
-
-Turn the ringstellung on a rotor to a new position:
-```php
-$enigma->setRingstellung(int|RotorPosition $position, string $letter): void
-```
-
-Connect two letters on the plugboard:
-```php
-$enigma->plugLetters(string $letter1, string $letter2): void
-```
-
-Disconnect two letters on the plugboard:
-```php
-$enigma->unplugLetters(string $letter): void
-```
-
-The current position of a rotor can be obtained by:
-```php
-$enigma->getPosition(int|RotorPosition $position): string
-```
-
-# Installation
-Require [Composer PHP](https://getcomposer.org/).
-```shell
-composer require rafalmasiarek/enigma
-```
-
-# Example
-
-```php
-<?php
-
-use Rafalmasiarek\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
-
-require_once 'vendor/autoload.php';
-
-$rotors = [RotorType::I, RotorType::II, RotorType::III];
-$enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
-$enigma->setPosition(RotorPosition::P1, 'M');
-$enigma->setRingstellung(RotorPosition::P1, 'B');
-
-$enigma->plugLetters('A', 'C');
-$enigma->plugLetters('B', 'Z');
-
-$enigma->unplugLetters('A');
-
-$l = 'A';
-echo 'before: '.$enigma->getPosition(RotorPosition::P3).' '.$enigma->getPosition(RotorPosition::P2).' '.$enigma->getPosition(RotorPosition::P1)."\n";
-echo $l.'->'.$enigma->encodeLetter($l)."\n";
-echo 'after: '.$enigma->getPosition(RotorPosition::P3).' '.$enigma->getPosition(RotorPosition::P2).' '.$enigma->getPosition(RotorPosition::P1)."\n";
-```
+---
 
 Enigma machines are now a collector's item for the über geek - a standard Army Enigma has increased in value from $20K to over $100K in the past decade. A record price of over $208,000 was achieved in a Christie's auction on 9/29/2011.
-
-# Dev
-
-#### Run the tests
-```shell
-composer test
-```
 
 # Credits
 
