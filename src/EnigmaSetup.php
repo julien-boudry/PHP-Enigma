@@ -10,8 +10,6 @@ namespace JulienBoudry\Enigma;
  * This class stores the wiring configuration, compatible Enigma models,
  * and notch positions for a specific rotor or reflector type.
  * It is used to initialize the available components of an Enigma machine.
- *
- * @package Enigma
  */
 readonly class EnigmaSetup
 {

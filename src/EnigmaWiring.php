@@ -21,8 +21,6 @@ namespace JulienBoudry\Enigma;
  * The wiring can be traversed in both directions (side A to B, or B to A).
  *
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
- * @version 2.0
- * @package Enigma
  */
 class EnigmaWiring
 {

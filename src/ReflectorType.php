@@ -9,8 +9,6 @@ namespace JulienBoudry\Enigma;
  *
  * Defines the different reflector variants (Umkehrwalze) available for Enigma machines.
  * Different Enigma models support different reflector types.
- *
- * @package Enigma
  */
 enum ReflectorType
 {

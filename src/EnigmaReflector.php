@@ -15,8 +15,6 @@ namespace JulienBoudry\Enigma;
  * using the same settings—encoding the same message twice returns the original text.
  *
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
- * @version 2.0
- * @package Enigma
  */
 class EnigmaReflector
 {

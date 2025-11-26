@@ -26,8 +26,6 @@ namespace JulienBoudry\Enigma;
  * The Ringstellung (ring setting) offsets the wiring relative to the notches and visible alphabet.
  *
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
- * @version 2.0
- * @package Enigma
  */
 class EnigmaRotor
 {

@@ -27,8 +27,6 @@ namespace JulienBoudry\Enigma;
  * Unplugging one of the two letters restores the original state.
  *
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
- * @version 2.0
- * @package Enigma
  */
 class EnigmaPlugboard
 {

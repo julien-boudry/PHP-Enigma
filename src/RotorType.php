@@ -10,8 +10,6 @@ namespace JulienBoudry\Enigma;
  * Defines the different rotor variants (Walzen) available for Enigma machines.
  * Each rotor has unique internal wiring and notch positions.
  * Different Enigma models support different subsets of these rotors.
- *
- * @package Enigma
  */
 enum RotorType
 {

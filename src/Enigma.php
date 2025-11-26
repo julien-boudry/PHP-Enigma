@@ -18,8 +18,6 @@ namespace JulienBoudry\Enigma;
  * After each encoded letter, the advance mechanism changes the internal setup by rotating the rotors.
  *
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
- * @version 2.0
- * @package Enigma
  */
 class Enigma
 {

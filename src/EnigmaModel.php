@@ -9,8 +9,6 @@ namespace JulienBoudry\Enigma;
  *
  * Defines the different historical Enigma machine variants that can be emulated.
  * Each model has its own specific set of available rotors and reflectors.
- *
- * @package Enigma
  */
 enum EnigmaModel
 {
