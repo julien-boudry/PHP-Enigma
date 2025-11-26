@@ -390,4 +390,43 @@ class Enigma
 
         return $encoded;
     }
+
+    /**
+     * Deep clone the Enigma machine.
+     *
+     * This ensures all internal components (plugboard, rotors, reflector) are
+     * properly cloned so the cloned machine operates independently.
+     */
+    public function __clone(): void
+    {
+        // Clone the plugboard (readonly property requires reflection)
+        $plugboardClone = clone $this->plugboard;
+        $reflection = new \ReflectionClass($this);
+        $plugboardProperty = $reflection->getProperty('plugboard');
+        $plugboardProperty->setValue($this, $plugboardClone);
+
+        // Clone mounted rotors
+        $clonedRotors = [];
+        foreach ($this->rotors as $position => $rotor) {
+            $clonedRotors[$position] = clone $rotor;
+        }
+        $this->rotors = $clonedRotors;
+
+        // Clone the reflector
+        $this->reflector = clone $this->reflector;
+
+        // Clone all available rotors
+        $clonedAvailableRotors = [];
+        foreach ($this->availablerotors as $name => $rotor) {
+            $clonedAvailableRotors[$name] = clone $rotor;
+        }
+        $this->availablerotors = $clonedAvailableRotors;
+
+        // Clone all available reflectors
+        $clonedAvailableReflectors = [];
+        foreach ($this->availablereflectors as $name => $reflector) {
+            $clonedAvailableReflectors[$name] = clone $reflector;
+        }
+        $this->availablereflectors = $clonedAvailableReflectors;
+    }
 }

@@ -29,28 +29,22 @@ describe('Enigma string encoding', function (): void {
         });
 
         test('encoding then decoding returns original', function (): void {
-            // Reset to same position for decoding
-            $enigma1 = new Enigma(
+            // Create encoder
+            $encoder = new Enigma(
                 EnigmaModel::WMLW,
                 [RotorType::I, RotorType::II, RotorType::III],
                 ReflectorType::B
             );
-            $enigma1->setPosition(RotorPosition::P1, 'A');
-            $enigma1->setPosition(RotorPosition::P2, 'A');
-            $enigma1->setPosition(RotorPosition::P3, 'A');
+            $encoder->setPosition(RotorPosition::P1, 'A');
+            $encoder->setPosition(RotorPosition::P2, 'A');
+            $encoder->setPosition(RotorPosition::P3, 'A');
 
-            $enigma2 = new Enigma(
-                EnigmaModel::WMLW,
-                [RotorType::I, RotorType::II, RotorType::III],
-                ReflectorType::B
-            );
-            $enigma2->setPosition(RotorPosition::P1, 'A');
-            $enigma2->setPosition(RotorPosition::P2, 'A');
-            $enigma2->setPosition(RotorPosition::P3, 'A');
+            // Clone encoder to create decoder with same initial state
+            $decoder = clone $encoder;
 
             $plaintext = 'HELLOWORLD';
-            $ciphertext = $enigma1->encodeLetters($plaintext);
-            $decrypted = $enigma2->encodeLetters($ciphertext);
+            $ciphertext = $encoder->encodeLetters($plaintext);
+            $decrypted = $decoder->encodeLetters($ciphertext);
 
             expect($decrypted)->toBe($plaintext);
         });
@@ -89,30 +83,24 @@ describe('Enigma string encoding', function (): void {
         });
 
         test('encoding then decoding with text conversion', function (): void {
-            $enigma1 = new Enigma(
+            $encoder = new Enigma(
                 EnigmaModel::WMLW,
                 [RotorType::I, RotorType::II, RotorType::III],
                 ReflectorType::B
             );
-            $enigma1->setPosition(RotorPosition::P1, 'A');
-            $enigma1->setPosition(RotorPosition::P2, 'A');
-            $enigma1->setPosition(RotorPosition::P3, 'A');
+            $encoder->setPosition(RotorPosition::P1, 'A');
+            $encoder->setPosition(RotorPosition::P2, 'A');
+            $encoder->setPosition(RotorPosition::P3, 'A');
 
-            $enigma2 = new Enigma(
-                EnigmaModel::WMLW,
-                [RotorType::I, RotorType::II, RotorType::III],
-                ReflectorType::B
-            );
-            $enigma2->setPosition(RotorPosition::P1, 'A');
-            $enigma2->setPosition(RotorPosition::P2, 'A');
-            $enigma2->setPosition(RotorPosition::P3, 'A');
+            // Clone encoder to create decoder with same initial state
+            $decoder = clone $encoder;
 
             // Convert text first, then encode, then decode
             $originalText = 'Hello World 123';
             $convertedText = EnigmaTextConverter::latinToEnigmaFormat($originalText);
 
-            $ciphertext = $enigma1->encodeLetters($convertedText);
-            $decrypted = $enigma2->encodeLetters($ciphertext);
+            $ciphertext = $encoder->encodeLetters($convertedText);
+            $decrypted = $decoder->encodeLetters($ciphertext);
 
             expect($decrypted)->toBe($convertedText);
         });
@@ -122,26 +110,20 @@ describe('Enigma string encoding', function (): void {
         });
 
         test('uses custom space replacement', function (): void {
-            $enigma1 = new Enigma(
+            $encoder = new Enigma(
                 EnigmaModel::WMLW,
                 [RotorType::I, RotorType::II, RotorType::III],
                 ReflectorType::B
             );
-            $enigma1->setPosition(RotorPosition::P1, 'A');
-            $enigma1->setPosition(RotorPosition::P2, 'A');
-            $enigma1->setPosition(RotorPosition::P3, 'A');
+            $encoder->setPosition(RotorPosition::P1, 'A');
+            $encoder->setPosition(RotorPosition::P2, 'A');
+            $encoder->setPosition(RotorPosition::P3, 'A');
 
-            $enigma2 = new Enigma(
-                EnigmaModel::WMLW,
-                [RotorType::I, RotorType::II, RotorType::III],
-                ReflectorType::B
-            );
-            $enigma2->setPosition(RotorPosition::P1, 'A');
-            $enigma2->setPosition(RotorPosition::P2, 'A');
-            $enigma2->setPosition(RotorPosition::P3, 'A');
+            // Clone encoder to create decoder with same initial state
+            $decoder = clone $encoder;
 
-            $ciphertext = $enigma1->encodeLatinText('A B', spaceReplacement: 'QQ');
-            $decrypted = $enigma2->encodeLetters($ciphertext);
+            $ciphertext = $encoder->encodeLatinText('A B', spaceReplacement: 'QQ');
+            $decrypted = $decoder->encodeLetters($ciphertext);
 
             expect($decrypted)->toBe('AQQB');
         });
@@ -154,28 +136,22 @@ describe('Enigma string encoding', function (): void {
         });
 
         test('roundtrip binary encoding/decoding', function (): void {
-            $enigma1 = new Enigma(
+            $encoder = new Enigma(
                 EnigmaModel::WMLW,
                 [RotorType::I, RotorType::II, RotorType::III],
                 ReflectorType::B
             );
-            $enigma1->setPosition(RotorPosition::P1, 'A');
-            $enigma1->setPosition(RotorPosition::P2, 'A');
-            $enigma1->setPosition(RotorPosition::P3, 'A');
+            $encoder->setPosition(RotorPosition::P1, 'A');
+            $encoder->setPosition(RotorPosition::P2, 'A');
+            $encoder->setPosition(RotorPosition::P3, 'A');
 
-            $enigma2 = new Enigma(
-                EnigmaModel::WMLW,
-                [RotorType::I, RotorType::II, RotorType::III],
-                ReflectorType::B
-            );
-            $enigma2->setPosition(RotorPosition::P1, 'A');
-            $enigma2->setPosition(RotorPosition::P2, 'A');
-            $enigma2->setPosition(RotorPosition::P3, 'A');
+            // Clone encoder to create decoder with same initial state
+            $decoder = clone $encoder;
 
             $originalBinary = "\x00\x0F\xFF";
             $enigmaFormat = EnigmaTextConverter::binaryToEnigmaFormat($originalBinary);
-            $encrypted = $enigma1->encodeLetters($enigmaFormat);
-            $decrypted = $enigma2->encodeLetters($encrypted);
+            $encrypted = $encoder->encodeLetters($enigmaFormat);
+            $decrypted = $decoder->encodeLetters($encrypted);
             $recoveredBinary = EnigmaTextConverter::enigmaFormatToBinary($decrypted);
 
             expect($recoveredBinary)->toBe($originalBinary);

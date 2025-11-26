@@ -78,4 +78,12 @@ class EnigmaReflector
     {
         return $this->wiring->processLetter1stPass($letter);
     }
+
+    /**
+     * Deep clone the reflector.
+     */
+    public function __clone(): void
+    {
+        $this->wiring = clone $this->wiring;
+    }
 }

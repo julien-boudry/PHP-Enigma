@@ -98,4 +98,12 @@ class EnigmaWiring
 
         return $r;
     }
+
+    /**
+     * Clone the wiring array for deep cloning support.
+     */
+    public function __clone(): void
+    {
+        // Array is already copied by value in PHP, nothing special needed
+    }
 }

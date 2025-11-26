@@ -198,4 +198,12 @@ class EnigmaRotor
     {
         $this->ringstellung = $letter;
     }
+
+    /**
+     * Deep clone the rotor.
+     */
+    public function __clone(): void
+    {
+        $this->wiring = clone $this->wiring;
+    }
 }

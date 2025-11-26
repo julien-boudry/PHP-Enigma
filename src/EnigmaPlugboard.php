@@ -95,4 +95,12 @@ class EnigmaPlugboard
         $this->wiring->connect($letter, $letter);
         $this->wiring->connect($temp, $temp);
     }
+
+    /**
+     * Deep clone the plugboard.
+     */
+    public function __clone(): void
+    {
+        $this->wiring = clone $this->wiring;
+    }
 }
