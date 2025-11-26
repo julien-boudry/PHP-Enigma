@@ -25,7 +25,7 @@ A PHP implementation of the historic Enigma cipher machine, supporting multiple 
 Require [Composer PHP](https://getcomposer.org/):
 
 ```shell
-composer require julien-boudry/php-enigma
+composer require julien-boudry/enigma-machine
 ```
 
 # Usage
