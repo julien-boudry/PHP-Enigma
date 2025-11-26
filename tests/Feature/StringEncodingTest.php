@@ -50,8 +50,8 @@ describe('Enigma string encoding', function (): void {
         });
 
         test('throws exception for invalid characters', function (): void {
-            expect(fn () => $this->enigma->encodeLetters('HELLO WORLD'))
-                ->toThrow(\RuntimeException::class);
+            expect(fn() => $this->enigma->encodeLetters('HELLO WORLD'))
+                ->toThrow(RuntimeException::class);
         });
 
         test('handles empty string', function (): void {

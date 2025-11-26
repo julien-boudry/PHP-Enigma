@@ -314,9 +314,9 @@ class Enigma
      *
      * @param string $letters The letters to encode (A-Z only, no spaces or other characters)
      *
-     * @return string The encoded letters
-     *
      * @throws \RuntimeException If the input contains invalid characters
+     *
+     * @return string The encoded letters
      *
      * @see Enigma::encodeText() For encoding arbitrary text with automatic conversion
      */

@@ -117,24 +117,28 @@ final class EnigmaTextConverter
             // Already a valid Enigma letter
             if (preg_match('/^[A-Z]$/', $char)) {
                 $result .= $char;
+
                 continue;
             }
 
             // Space handling
             if ($char === ' ' || $char === "\t" || $char === "\n" || $char === "\r") {
                 $result .= $spaceReplacement;
+
                 continue;
             }
 
             // Number handling (German words, historical convention)
             if (preg_match('/^[0-9]$/', $char)) {
                 $result .= self::GERMAN_NUMBERS[(int) $char];
+
                 continue;
             }
 
             // Accented character handling
             if (isset(self::ACCENT_MAP[$char])) {
                 $result .= self::ACCENT_MAP[$char];
+
                 continue;
             }
 
@@ -142,12 +146,14 @@ final class EnigmaTextConverter
             $lowerChar = mb_strtolower($char);
             if (isset(self::ACCENT_MAP[$lowerChar])) {
                 $result .= mb_strtoupper(self::ACCENT_MAP[$lowerChar]);
+
                 continue;
             }
 
             // Punctuation handling
             if (isset(self::PUNCTUATION_MAP[$char])) {
                 $result .= self::PUNCTUATION_MAP[$char];
+
                 continue;
             }
 
@@ -197,8 +203,8 @@ final class EnigmaTextConverter
             $high = intdiv($byte, 26);
             $low = $byte % 26;
 
-            $result .= chr(65 + $high); // A=0, B=1, ..., J=9
-            $result .= chr(65 + $low);  // A=0, B=1, ..., Z=25
+            $result .= \chr(65 + $high); // A=0, B=1, ..., J=9
+            $result .= \chr(65 + $low);  // A=0, B=1, ..., Z=25
         }
 
         return $result;
@@ -223,8 +229,8 @@ final class EnigmaTextConverter
         $length = mb_strlen($enigmaText);
 
         for ($i = 0; $i < $length; $i += 2) {
-            $high = ord($enigmaText[$i]) - 65;
-            $low = ord($enigmaText[$i + 1]) - 65;
+            $high = \ord($enigmaText[$i]) - 65;
+            $low = \ord($enigmaText[$i + 1]) - 65;
 
             if ($high < 0 || $high > 9 || $low < 0 || $low > 25) {
                 return null;
@@ -235,7 +241,7 @@ final class EnigmaTextConverter
                 return null;
             }
 
-            $result .= chr($byte);
+            $result .= \chr($byte);
         }
 
         return $result;
