@@ -5,31 +5,30 @@ declare(strict_types=1);
 namespace JulienBoudry\Enigma;
 
 /**
- * This class represents the Plugboard of an Enigma.
+ * Represents the Plugboard (Steckerbrett) of an Enigma machine.
  *
- * The initial setup looks like this:
+ * The plugboard allows the operator to swap pairs of letters before and after
+ * the signal passes through the rotors. This adds an additional layer of encryption.
  *
+ * The initial setup has no swaps (each letter connects to itself):
  * <pre>
  * ABCDEFGHIJKLMNOPQRSTUVWXYZ
  * ||||||||||||||||||||||||||
  * ABCDEFGHIJKLMNOPQRSTUVWXYZ
  * </pre>
  *
- * However, unlike rotor and reflector, the wiring can be changed by the operator.
- * This is done by plugging 2 letters, e.: 'D' and 'F' results in:
- *
+ * Plugging two letters (e.g., 'D' and 'F') results in:
  * <pre>
  * ABCDEFGHIJKLMNOPQRSTUVWXYZ
  * ||||||||||||||||||||||||||
  * ABCFEDGHIJKLMNOPQRSTUVWXYZ
  * </pre>
  *
- * unplugging 1 of the 2 letters leads back to original state
- */
-/**
- * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
+ * Unplugging one of the two letters restores the original state.
  *
+ * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
  * @version 2.0
+ * @package Enigma
  */
 class EnigmaPlugboard
 {

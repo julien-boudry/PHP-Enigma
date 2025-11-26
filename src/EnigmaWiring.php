@@ -5,20 +5,24 @@ declare(strict_types=1);
 namespace JulienBoudry\Enigma;
 
 /**
- * This class represents the wiring of rotors, reflectors and the plugboard.
+ * Represents the internal wiring of Enigma components.
  *
- * Each wiring provides a monoalphabetical substitution e.g.:
+ * This class implements the wiring used by rotors, reflectors, and the plugboard.
+ * Each wiring provides a monoalphabetical substitution, mapping each input letter
+ * to a different output letter.
  *
+ * Example wiring:
  * <pre>
  * ABCDEFGHIJKLMNOPQRSTUVWXYZ
  * ||||||||||||||||||||||||||
  * EKMFLGDQVZNTOWYHXUSPAIBRCJ
  * </pre>
- */
-/**
- * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
  *
+ * The wiring can be traversed in both directions (side A to B, or B to A).
+ *
+ * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
  * @version 2.0
+ * @package Enigma
  */
 class EnigmaWiring
 {

@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace JulienBoudry\Enigma;
 
 /**
- * This class represents a Rotor of an Enigma.
+ * Represents a Rotor (Walze) of an Enigma machine.
  *
- * The Rotors are the key element of an Enigma. Each provides the monoalphabetical substitution of its wiring,
- * but unlike plugboard and reflector, rotors move, so that the substitution changes.
+ * The rotors are the key element of the Enigma. Each provides a monoalphabetical substitution
+ * through its internal wiring, but unlike the plugboard and reflector, rotors move,
+ * causing the substitution to change with each keypress.
  *
+ * Example of rotor advancement:
  * <pre>
  * ABCDEFGHIJKLMNOPQRSTUVWXYZ
  * ||||||||||||||||||||||||||
@@ -20,13 +22,12 @@ namespace JulienBoudry\Enigma;
  * JEKMFLGDQVZNTOWYHXUSPAIBRC
  * </pre>
  *
- * Notches mark the positions, where the next rotor may advance
- * The Ringstellung changes the position of the wiring relative to its notches and alphabet.
- */
-/**
- * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
+ * Notches mark positions where the next rotor may advance (turnover).
+ * The Ringstellung (ring setting) offsets the wiring relative to the notches and visible alphabet.
  *
+ * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
  * @version 2.0
+ * @package Enigma
  */
 class EnigmaRotor
 {

@@ -5,19 +5,21 @@ declare(strict_types=1);
 namespace JulienBoudry\Enigma;
 
 /**
- * This class represents an Enigma.
+ * Represents an Enigma cipher machine.
  *
- * 3 different models can be emulated with this class, each one has its own set of rotors and reflectors to be used with.
- * Depending on the model, 3 or 4 rotors are mounted, only the first three of them can be triggered by the advance mechanism.
- * A letter is encoded by sending its corresponding signal through the plugboard, rotor 1..3(4), the reflector,
- * rotor 3(4)..1 and the plugboard again.
+ * This class emulates the historical Enigma machine used during World War II.
+ * Three different models can be emulated (Wehrmacht/Luftwaffe, Kriegsmarine M3, and Kriegsmarine M4),
+ * each with its own set of rotors and reflectors.
+ *
+ * Depending on the model, 3 or 4 rotors are mounted. Only the first three rotors can be triggered
+ * by the advance mechanism. A letter is encoded by sending its corresponding signal through:
+ * plugboard → rotors 1..3(4) → reflector → rotors 3(4)..1 → plugboard.
+ *
  * After each encoded letter, the advance mechanism changes the internal setup by rotating the rotors.
- */
-/**const
+ *
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
  * @version 2.0
  * @package Enigma
- * @subpackage Core
  */
 class Enigma
 {

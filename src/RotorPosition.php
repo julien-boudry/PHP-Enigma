@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma;
 
+/**
+ * Enumeration of rotor positions in the Enigma machine.
+ *
+ * Defines the slots where rotors can be mounted. Most Enigma models have 3 positions (P1, P2, P3),
+ * while the Kriegsmarine M4 has an additional fourth "Greek" position that never rotates.
+ *
+ * @package Enigma
+ */
 enum RotorPosition: int
 {
     /**

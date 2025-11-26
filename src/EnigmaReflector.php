@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace JulienBoudry\Enigma;
 
 /**
- * This class represents a Reflector of an Enigma.
+ * Represents a Reflector (Umkehrwalze) of an Enigma machine.
  *
- * After its way through plugboard and all rotors, the reflector leads the signal all the way back.
- * Because no letter must connect to itself, its provided that the signal takes a different route.
- * This enables the Enigma to work both for encryption and decryption without any further setup
- */
-/**
+ * After passing through the plugboard and all rotors, the reflector redirects the signal
+ * back through the rotors in reverse order. Because no letter connects to itself,
+ * the signal always takes a different return path.
+ *
+ * This reciprocal property enables the Enigma to work for both encryption and decryption
+ * using the same settings—encoding the same message twice returns the original text.
+ *
  * @author Rafal Masiarek <rafalmasiarek@hotmail.com>
- *
  * @version 2.0
+ * @package Enigma
  */
 class EnigmaReflector
 {

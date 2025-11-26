@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma;
 
+/**
+ * Defines the Enigma machine alphabet.
+ *
+ * The Enigma machine uses a 26-letter alphabet (A-Z) for all encryption operations.
+ * This class provides the mapping between integer key codes and their corresponding letters.
+ *
+ * @package Enigma
+ */
 final class EnigmaAlphabet
 {
     /**
