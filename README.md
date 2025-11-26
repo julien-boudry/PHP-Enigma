@@ -54,7 +54,7 @@ $enigma->encodeLetter(string $letter): string
 
 Replace a rotor by another:
 ```php
-$enigma->mountRotor(int|RotorPosition $position, RotorType $rotor): void
+$enigma->mountRotor(RotorPosition $position, RotorType $rotor): void
 ```
 
 Replace a reflector by another:
@@ -69,7 +69,7 @@ $enigma->setPosition(RotorPosition $position, string $letter): void
 
 Turn the ringstellung on a rotor to a new position:
 ```php
-$enigma->setRingstellung(int|RotorPosition $position, string $letter): void
+$enigma->setRingstellung(RotorPosition $position, string $letter): void
 ```
 
 Connect two letters on the plugboard:
@@ -84,7 +84,7 @@ $enigma->unplugLetters(string $letter): void
 
 The current position of a rotor can be obtained by:
 ```php
-$enigma->getPosition(int|RotorPosition $position): string
+$enigma->getPosition(RotorPosition $position): string
 ```
 
 # Example

@@ -28,8 +28,8 @@ enum RotorPosition: int
      */
     case GREEK = 3;
 
-    public static function getPositionIntValue(int|RotorPosition $position): int
+    public static function getPositionIntValue(RotorPosition $position): int
     {
-        return ($position instanceof RotorPosition) ? $position->value : $position;
+        return $position->value;
     }
 }

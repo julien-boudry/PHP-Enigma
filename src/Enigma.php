@@ -142,7 +142,7 @@ class Enigma
         }
 
         foreach ($rotors as $key => $value) {
-            $this->mountRotor($key, $value);
+            $this->mountRotor(RotorPosition::from($key), $value);
         }
         $this->mountReflector($reflector);
     }
@@ -203,7 +203,7 @@ class Enigma
      *
      * @return void
      */
-    public function mountRotor(int|RotorPosition $position, RotorType $rotor): void
+    public function mountRotor(RotorPosition $position, RotorType $rotor): void
     {
         $position = RotorPosition::getPositionIntValue($position);
 
@@ -252,7 +252,7 @@ class Enigma
      *
      * @return string current position
      */
-    public function getPosition(int|RotorPosition $position): string
+    public function getPosition(RotorPosition $position): string
     {
         $position = RotorPosition::getPositionIntValue($position);
 
@@ -269,7 +269,7 @@ class Enigma
      *
      * @uses enigma_l2p
      */
-    public function setRingstellung(int|RotorPosition $position, string $letter): void
+    public function setRingstellung(RotorPosition $position, string $letter): void
     {
         $position = RotorPosition::getPositionIntValue($position);
 
