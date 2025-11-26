@@ -45,7 +45,7 @@ Parameters:
 *   `$rotors` - Array of `RotorType` enums to identify the rotors for the initial setup. The number of rotors has to match the number needed by the specific model.
 *   `$reflector` - `ReflectorType` enum to identify the reflector for the initial setup.
 
-To en- or decode a letter, use:
+To encode or decode a letter, use:
 ```php
 $enigma->encodeLetter(string $letter): string
 ```
@@ -345,11 +345,7 @@ The bombe and the secret of their codebreaking success was a closely guarded sec
 
 After the outbreak of WW2 and the information from the Poles, the British codebreaking efforts began in earnest. They used an estate north of London, Bletchley Park, as their headquarters. There would eventually be over 11,000 people working in secret on this codebreaking effort. The British mathematician, Alan Turing, would lead the effort. Using the Polish experience in bombe making, they developed a bombe with 36 Enigmas in series, with the first one delivered in May 1940\. This would not test all combination of rotors, and a brute force attack would take too long, in any case. Several contributions were made by Turing and others to eliminate many impossible rotor settings to allow the 36 Enigma bombe to figure out the rotor settings in a reasonable amount of time.
 
-After the outbreak of WW2 and the information from the Poles, the British codebreaking efforts began in earnest. They used an estate north of London, Bletchley Park, as their headquarters. There would eventually be over 11,000 people working in secret on this codebreaking effort. The British mathematician, Alan Turing, would lead the effort. Using the Polish experience in bombe making, they developed a bombe with 36 Enigmas in series, with the first one delivered in May 1940\. This would not test all combination of rotors, and a brute force attack would take too long, in any case. Several contributions were made by Turing and others to eliminate many impossible rotor settings to allow the 36 Enigma bombe to figure out the rotor settings in a reasonable amount of time.
-
-Before the US entered the war, the Nazi U-boats were the greatest threat to Britain. They were dependent on supplies from the US and the Nazis were sinking on average 60 ships per month. Ships were sent over in convoys and the Nazis employed a strategy of "wolfpacks" to wait until a dozen or so U-boats were on hand to swarm the convoy. This strategy was so efficient, Winston Churchill was later quoted as saying, "The only thing that ever really frightened me during the war was the U-boat peril". The Nazi strategy was to completely blockade Britain and win a quick victory over all of Europe before the US would enter the war
-
-Before the US entered the war, the Nazi U-boats were the greatest threat to Britain. They were dependent on supplies from the US and the Nazis were sinking on average 60 ships per month. Ships were sent over in convoys and the Nazis employed a strategy of "wolfpacks" to wait until a dozen or so U-boats were on hand to swarm the convoy. This strategy was so efficient, Winston Churchill was later quoted as saying, "The only thing that ever really frightened me during the war was the U-boat peril". The Nazi strategy was to completely blockade Britain and win a quick victory over all of Europe before the US would enter the war
+Before the US entered the war, the Nazi U-boats were the greatest threat to Britain. They were dependent on supplies from the US and the Nazis were sinking on average 60 ships per month. Ships were sent over in convoys and the Nazis employed a strategy of "wolfpacks" to wait until a dozen or so U-boats were on hand to swarm the convoy. This strategy was so efficient, Winston Churchill was later quoted as saying, "The only thing that ever really frightened me during the war was the U-boat peril". The Nazi strategy was to completely blockade Britain and win a quick victory over all of Europe before the US would enter the war.
 
 After the breakthrough from the capture of the U-110 codebooks, the British found other creative ways to get later codebooks. They discovered that the lightly armed weather ships had Enigma machines on them and the British would stage the capture of one of these weather ships in such a way that the Germans thought they were chance happenings and the ship sank with its cryptographic treasures. They also were able to get the codebooks from a few other U-boats, the most famous and courageous was the boarding of the already sinking U-559\. Valuable codebooks were captured, but 2 British sailors lost their lives as the U-boat sank.
 
@@ -426,10 +422,10 @@ Rotors can have notches, which indicate the position where the next rotor is adv
 *   V = Z
 *   VI, VII, VIII = Z + M
 
-Each Rotor can be only used in one position at a time. Rotors I..VIII can be mounted at position 1, 2 or 3, wherelse rotors Beta and Gamma can only be used at position 4\. Aditionally, Beta and Gamma can only be used in combination with reflector B Thin or C Thin, the others only with reflector B or C.
+Each Rotor can be only used in one position at a time. Rotors I..VIII can be mounted at position 1, 2 or 3, whereas rotors Beta and Gamma can only be used at position 4\. Additionally, Beta and Gamma can only be used in combination with reflector B Thin or C Thin, the others only with reflector B or C.
 
 **!!!important!!!**
-These conditions only apply if a proper emulation of the original Enigma is desired. This implementation allows to setup the rotors in any order, so its up to the user to take care of the order of rotors.
+These conditions only apply if a proper emulation of the original Enigma is desired. This implementation allows to setup the rotors in any order, so it's up to the user to take care of the order of rotors.
 
 ---
 
