@@ -86,33 +86,33 @@ class Enigma
      *
      * @var EnigmaPlugboard
      */
-    private EnigmaPlugboard $plugboard;
+    public readonly EnigmaPlugboard $plugboard;
 
     /**
      * The rotors used by the Enigma.
      *
      * @var array<EnigmaRotor>
      */
-    private array $rotors;
+    public private(set) array $rotors;
 
     /**
      * The reflector used by the Enigma.
      */
-    private EnigmaReflector $reflector;
+    public private(set) EnigmaReflector $reflector;
 
     /**
      * The rotors available for this model of the Enigma.
      *
      * @var array<EnigmaRotor>
      */
-    private array $availablerotors;
+    public private(set) array $availablerotors;
 
     /**
      * The reflectors available for this model of the Enigma.
      *
-     * @var array<EnigmaReflector>
+     * @var array<string, EnigmaReflector>
      */
-    private array $availablereflectors;
+    public private(set) array $availablereflectors;
 
     /**
      * Constructor sets up the plugboard and creates the rotors and reflectros available for the given model.
