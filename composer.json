@@ -25,10 +25,11 @@
     "scripts": {
         "test": "pest",
         "lint": "php-cs-fixer fix",
-        "pint": "pint"
+        "analyse": "phpstan analyse"
     },
     "scripts-descriptions": {
-        "test": "Run all tests!"
+        "test": "Run all tests!",
+        "analyse": "Run PHPStan static analysis"
     },
     "config": {
         "allow-plugins": {
