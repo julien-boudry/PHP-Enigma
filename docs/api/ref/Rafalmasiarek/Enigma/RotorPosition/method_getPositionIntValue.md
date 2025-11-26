@@ -3,16 +3,16 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorPosition.php#L31)
 
 ```php
-public static function RotorPosition::getPositionIntValue( Rafalmasiarek\Enigma\RotorPosition|int $position ): int
+public static function RotorPosition::getPositionIntValue( Rafalmasiarek\Enigma\RotorPosition $position ): int
 ```
 
 ## Parameters
 
 ### **position:**
 ```php
-Rafalmasiarek\Enigma\RotorPosition|int $position
+Rafalmasiarek\Enigma\RotorPosition $position
 ```
-**Type:** [`Rafalmasiarek\Enigma\RotorPosition`](enum_RotorPosition.md) | `int`
+**Type:** [`Rafalmasiarek\Enigma\RotorPosition`](enum_RotorPosition.md)
 
 
 

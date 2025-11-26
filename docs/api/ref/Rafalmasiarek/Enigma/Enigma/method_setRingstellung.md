@@ -3,16 +3,16 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L272)
 
 ```php
-public function Enigma->setRingstellung( Rafalmasiarek\Enigma\RotorPosition|int $position, string $letter ): void
+public function Enigma->setRingstellung( Rafalmasiarek\Enigma\RotorPosition $position, string $letter ): void
 ```
 
 ## Parameters
 
 ### **position:**
 ```php
-Rafalmasiarek\Enigma\RotorPosition|int $position
+Rafalmasiarek\Enigma\RotorPosition $position
 ```
-**Type:** [`Rafalmasiarek\Enigma\RotorPosition`](../RotorPosition/enum_RotorPosition.md) | `int`
+**Type:** [`Rafalmasiarek\Enigma\RotorPosition`](../RotorPosition/enum_RotorPosition.md)
 
 ID of the rotor
 

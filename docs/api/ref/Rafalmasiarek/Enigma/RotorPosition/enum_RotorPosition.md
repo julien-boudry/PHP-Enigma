@@ -42,7 +42,7 @@ enum Rafalmasiarek\Enigma\RotorPosition: int implements UnitEnum, BackedEnum
     public protected(set) readonly protected(set) int $value;
 
     // Static Methods
-    public static function getPositionIntValue( Rafalmasiarek\Enigma\RotorPosition|int $position ): int;
+    public static function getPositionIntValue( Rafalmasiarek\Enigma\RotorPosition $position ): int;
 
 }
 ```
@@ -66,7 +66,7 @@ enum Rafalmasiarek\Enigma\RotorPosition: int implements UnitEnum, BackedEnum
     public protected(set) readonly protected(set) int $value;
 
     // Static Methods
-    public static function getPositionIntValue( Rafalmasiarek\Enigma\RotorPosition|int $position ): int;
+    public static function getPositionIntValue( Rafalmasiarek\Enigma\RotorPosition $position ): int;
 
 }
 ```

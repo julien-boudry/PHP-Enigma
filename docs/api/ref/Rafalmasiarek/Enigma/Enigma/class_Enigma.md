@@ -46,6 +46,15 @@ After each encoded letter, the advance mechanism changes the internal setup by r
 | [enigma_l2p(...)](method_enigma_l2p.md) | __ |
 | [enigma_p2l(...)](method_enigma_p2l.md) | __ |
 
+### Public Properties
+| Property Name | Description |
+| ------------- | ------------- |
+| [availablereflectors(...)](property_availablereflectors.md) | __ |
+| [availablerotors(...)](property_availablerotors.md) | __ |
+| [plugboard(...)](property_plugboard.md) | __ |
+| [reflector(...)](property_reflector.md) | __ |
+| [rotors(...)](property_rotors.md) | __ |
+
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
@@ -92,6 +101,13 @@ class Rafalmasiarek\Enigma\Enigma
     public const KEY_Y = 24;
     public const KEY_Z = 25;
 
+    // Properties
+    final public private(set) private(set) array $availablereflectors;
+    final public private(set) private(set) array $availablerotors;
+    public protected(set) readonly protected(set) Rafalmasiarek\Enigma\EnigmaPlugboard $plugboard;
+    final public private(set) private(set) Rafalmasiarek\Enigma\EnigmaReflector $reflector;
+    final public private(set) private(set) array $rotors;
+
     // Static Methods
     public static function enigma_l2p( string $l ): int;
     public static function enigma_p2l( int $p ): string;
@@ -99,12 +115,12 @@ class Rafalmasiarek\Enigma\Enigma
     // Methods
     public function __construct( Rafalmasiarek\Enigma\EnigmaModel $model, array $rotors, Rafalmasiarek\Enigma\ReflectorType $reflector );
     public function encodeLetter( string $letter ): string;
-    public function getPosition( Rafalmasiarek\Enigma\RotorPosition|int $position ): string;
+    public function getPosition( Rafalmasiarek\Enigma\RotorPosition $position ): string;
     public function mountReflector( Rafalmasiarek\Enigma\ReflectorType $reflector ): void;
-    public function mountRotor( Rafalmasiarek\Enigma\RotorPosition|int $position, Rafalmasiarek\Enigma\RotorType $rotor ): void;
+    public function mountRotor( Rafalmasiarek\Enigma\RotorPosition $position, Rafalmasiarek\Enigma\RotorType $rotor ): void;
     public function plugLetters( string $letter1, string $letter2 ): void;
     public function setPosition( Rafalmasiarek\Enigma\RotorPosition $position, string $letter ): void;
-    public function setRingstellung( Rafalmasiarek\Enigma\RotorPosition|int $position, string $letter ): void;
+    public function setRingstellung( Rafalmasiarek\Enigma\RotorPosition $position, string $letter ): void;
     public function unplugLetters( string $letter ): void;
 
 }
@@ -143,11 +159,11 @@ class Rafalmasiarek\Enigma\Enigma
     public const KEY_Z = 25;
 
     // Properties
-    private array $availablereflectors;
-    private array $availablerotors;
-    private Rafalmasiarek\Enigma\EnigmaPlugboard $plugboard;
-    private Rafalmasiarek\Enigma\EnigmaReflector $reflector;
-    private array $rotors;
+    final public private(set) private(set) array $availablereflectors;
+    final public private(set) private(set) array $availablerotors;
+    public protected(set) readonly protected(set) Rafalmasiarek\Enigma\EnigmaPlugboard $plugboard;
+    final public private(set) private(set) Rafalmasiarek\Enigma\EnigmaReflector $reflector;
+    final public private(set) private(set) array $rotors;
 
     // Static Methods
     public static function enigma_l2p( string $l ): int;
@@ -156,12 +172,12 @@ class Rafalmasiarek\Enigma\Enigma
     // Methods
     public function __construct( Rafalmasiarek\Enigma\EnigmaModel $model, array $rotors, Rafalmasiarek\Enigma\ReflectorType $reflector );
     public function encodeLetter( string $letter ): string;
-    public function getPosition( Rafalmasiarek\Enigma\RotorPosition|int $position ): string;
+    public function getPosition( Rafalmasiarek\Enigma\RotorPosition $position ): string;
     public function mountReflector( Rafalmasiarek\Enigma\ReflectorType $reflector ): void;
-    public function mountRotor( Rafalmasiarek\Enigma\RotorPosition|int $position, Rafalmasiarek\Enigma\RotorType $rotor ): void;
+    public function mountRotor( Rafalmasiarek\Enigma\RotorPosition $position, Rafalmasiarek\Enigma\RotorType $rotor ): void;
     public function plugLetters( string $letter1, string $letter2 ): void;
     public function setPosition( Rafalmasiarek\Enigma\RotorPosition $position, string $letter ): void;
-    public function setRingstellung( Rafalmasiarek\Enigma\RotorPosition|int $position, string $letter ): void;
+    public function setRingstellung( Rafalmasiarek\Enigma\RotorPosition $position, string $letter ): void;
     public function unplugLetters( string $letter ): void;
 
 }

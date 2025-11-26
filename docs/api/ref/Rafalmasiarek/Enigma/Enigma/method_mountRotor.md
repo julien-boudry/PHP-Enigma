@@ -3,7 +3,7 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L206)
 
 ```php
-public function Enigma->mountRotor( Rafalmasiarek\Enigma\RotorPosition|int $position, Rafalmasiarek\Enigma\RotorType $rotor ): void
+public function Enigma->mountRotor( Rafalmasiarek\Enigma\RotorPosition $position, Rafalmasiarek\Enigma\RotorType $rotor ): void
 ```
 
 ## Description
@@ -14,9 +14,9 @@ The previously used rotor will be replaced.
 
 ### **position:**
 ```php
-Rafalmasiarek\Enigma\RotorPosition|int $position
+Rafalmasiarek\Enigma\RotorPosition $position
 ```
-**Type:** [`Rafalmasiarek\Enigma\RotorPosition`](../RotorPosition/enum_RotorPosition.md) | `int`
+**Type:** [`Rafalmasiarek\Enigma\RotorPosition`](../RotorPosition/enum_RotorPosition.md)
 
 ID of the position to set the rotor
 
