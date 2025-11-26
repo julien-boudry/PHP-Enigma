@@ -46,7 +46,7 @@ Parameters:
 *   `$reflector` - `ReflectorType` enum to identify the reflector for the initial setup.
 
 To en- or decode a letter, use:
-```php 
+```php
 $enigma->encodeLetter(string $letter): string
 ```
 
@@ -92,7 +92,7 @@ $enigma->getPosition(RotorPosition $position): string
 ```php
 <?php
 
-use Rafalmasiarek\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
 
 require_once 'vendor/autoload.php';
 
@@ -277,5 +277,5 @@ Enigma machines are now a collector's item for the über geek - a standard Army 
 
 # Credits
 
-Written and designed by [Rafal Masiarek](http://rafal.masiarek.pl "Rafal Masiarek") from [Mustache Lab](http://mustachelab.pl "Mustache Lab")  
+Written and designed by [Rafal Masiarek](http://rafal.masiarek.pl "Rafal Masiarek") from [Mustache Lab](http://mustachelab.pl "Mustache Lab")
 Refactored to a library and modernized by [Julien Boudry](https://github.com/julien-boudry)

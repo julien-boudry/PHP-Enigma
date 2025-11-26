@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Rafalmasiarek\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
 
 test('message from dönitz1 may1945', function (): void {
     $rotors = [RotorType::VIII, RotorType::VI, RotorType::V, RotorType::BETA];

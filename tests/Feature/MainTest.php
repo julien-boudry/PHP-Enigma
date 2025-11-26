@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-use Rafalmasiarek\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
 
 test('general', function (): void {
     $rotors = [RotorType::I, RotorType::II, RotorType::III];

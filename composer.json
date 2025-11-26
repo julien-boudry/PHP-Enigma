@@ -1,5 +1,5 @@
 {
-    "name": "rafalmasiarek/enigma",
+    "name": "julien-boudry/php-enigma",
     "description": "Enigma cipher machine was invented by a German engineer. This PHP package simulates its operation.",
     "type": "library",
     "require": {
@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Rafalmasiarek\\Enigma\\": "src/"
+            "JulienBoudry\\Enigma\\": "src/"
         }
     },
     "autoload-dev": {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rafalmasiarek\Enigma;
+namespace JulienBoudry\Enigma;
 
 /**
  * This class represents an Enigma.
