@@ -1,7 +1,7 @@
 Enigma Machine
 ==================
 
-> **Original Project**: This library is a maintained fork of [rafalmasiarek/PHP-Enigma](https://github.com/rafalmasiarek/PHP-Enigma), originally created by [Rafal Masiarek](http://rafal.masiarek.pl). The code has been modernized and restructured as a proper PHP library.
+> **Original Project**: This library is a maintained fork of [rafalmasiarek/PHP-Enigma](https://github.com/rafalmasiarek/PHP-Enigma), originally created by [Rafal Masiarek](http://rafal.masiarek.pl). The code has been modernized, extended, and restructured as a proper PHP library.
 
 A PHP implementation of the historic Enigma cipher machine, supporting multiple models including Wehrmacht/Luftwaffe 3-rotor, Kriegsmarine 3-rotor, and Kriegsmarine 4-rotor variants.
 
@@ -106,10 +106,20 @@ $enigma->plugLetters('B', 'Z');
 
 $enigma->unplugLetters('A');
 
+// Encode a single letter
 $l = 'A';
+
+// Display rotor positions before encoding (left to right: P3, P2, P1)
 echo 'before: '.$enigma->getPosition(RotorPosition::P3).' '.$enigma->getPosition(RotorPosition::P2).' '.$enigma->getPosition(RotorPosition::P1)."\n";
+// Output: "before: A A M"
+
+// Encode the letter - this also advances the rotors
 echo $l.'->'.$enigma->encodeLetter($l)."\n";
+// Output: "A->W"
+
+// Display rotor positions after encoding (P1 has advanced by 1)
 echo 'after: '.$enigma->getPosition(RotorPosition::P3).' '.$enigma->getPosition(RotorPosition::P2).' '.$enigma->getPosition(RotorPosition::P1)."\n";
+// Output: "after: A A N"
 ```
 
 ## Encoding and Decoding Text
@@ -181,13 +191,18 @@ $message = 'Panzer Division 7 nach München';
 
 // Automatically converts to: "PANZERXDIVISIONXSIEBENXNACHXMUENCHEN"
 $ciphertext = $enigma->encodeLatinText($message);
+// $ciphertext = "CTLOPHZGACEHCIAEGDWYQDERGHXASOAQSDTH"
 
-// With formatted output (traditional 5-letter groups)
+// Reset rotor positions to encode the same message with formatted output
+// (Enigma state changes after each encoding, so we need to reset it)
 $enigma->setPosition(RotorPosition::P1, 'A');
 $enigma->setPosition(RotorPosition::P2, 'A');
 $enigma->setPosition(RotorPosition::P3, 'A');
+
+// With formatted output (traditional 5-letter groups)
 $formatted = $enigma->encodeLatinText($message, formatOutput: true);
 echo "Formatted: $formatted\n";
+// Output: "Formatted: CTLOP HZGAC EHCIA EGDWY QDERG HXASO AQSDT H"
 ```
 
 ### Decoding messages
