@@ -2,37 +2,37 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorType};
 
 test('message from dönitz1 may1945', function (): void {
     $rotors = [RotorType::VIII, RotorType::VI, RotorType::V, RotorType::BETA];
     $enigma = new Enigma(EnigmaModel::KMM4, $rotors, ReflectorType::CTHIN);
 
-    $enigma->setPosition(RotorPosition::P1, 'M');
-    $enigma->setPosition(RotorPosition::P2, 'E');
-    $enigma->setPosition(RotorPosition::P3, 'A');
-    $enigma->setPosition(RotorPosition::GREEK, 'N');
+    $enigma->setPosition(RotorPosition::P1, Letter::M);
+    $enigma->setPosition(RotorPosition::P2, Letter::E);
+    $enigma->setPosition(RotorPosition::P3, Letter::A);
+    $enigma->setPosition(RotorPosition::GREEK, Letter::N);
 
-    $enigma->setRingstellung(RotorPosition::P1, 'L');
-    $enigma->setRingstellung(RotorPosition::P2, 'E');
-    $enigma->setRingstellung(RotorPosition::P3, 'P');
-    $enigma->setRingstellung(RotorPosition::GREEK, 'E');
+    $enigma->setRingstellung(RotorPosition::P1, Letter::L);
+    $enigma->setRingstellung(RotorPosition::P2, Letter::E);
+    $enigma->setRingstellung(RotorPosition::P3, Letter::P);
+    $enigma->setRingstellung(RotorPosition::GREEK, Letter::E);
 
-    $enigma->plugLetters('A', 'E');
-    $enigma->plugLetters('B', 'F');
-    $enigma->plugLetters('C', 'M');
-    $enigma->plugLetters('D', 'Q');
-    $enigma->plugLetters('H', 'U');
-    $enigma->plugLetters('J', 'N');
-    $enigma->plugLetters('L', 'X');
-    $enigma->plugLetters('P', 'R');
-    $enigma->plugLetters('S', 'Z');
-    $enigma->plugLetters('V', 'W');
+    $enigma->plugLetters(Letter::A, Letter::E);
+    $enigma->plugLetters(Letter::B, Letter::F);
+    $enigma->plugLetters(Letter::C, Letter::M);
+    $enigma->plugLetters(Letter::D, Letter::Q);
+    $enigma->plugLetters(Letter::H, Letter::U);
+    $enigma->plugLetters(Letter::J, Letter::N);
+    $enigma->plugLetters(Letter::L, Letter::X);
+    $enigma->plugLetters(Letter::P, Letter::R);
+    $enigma->plugLetters(Letter::S, Letter::Z);
+    $enigma->plugLetters(Letter::V, Letter::W);
 
-    self::assertSame('C', $enigma->encodeLetter('Q'));
-    self::assertSame('D', $enigma->encodeLetter('E'));
-    self::assertSame('S', $enigma->encodeLetter('O'));
-    self::assertSame('Z', $enigma->encodeLetter('B'));
+    self::assertSame(Letter::C, $enigma->encodeLetter(Letter::Q));
+    self::assertSame(Letter::D, $enigma->encodeLetter(Letter::E));
+    self::assertSame(Letter::S, $enigma->encodeLetter(Letter::O));
+    self::assertSame(Letter::Z, $enigma->encodeLetter(Letter::B));
 });
 
 test('Operation Barbarossa (1941)', function (): void {
@@ -53,19 +53,19 @@ test('Operation Barbarossa (1941)', function (): void {
     $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
 
     // Ring Settings (Ringstellung)
-    $enigma->setRingstellung(RotorPosition::P1, 'L');
-    $enigma->setRingstellung(RotorPosition::P2, 'U');
-    $enigma->setRingstellung(RotorPosition::P3, 'B');
+    $enigma->setRingstellung(RotorPosition::P1, Letter::L);
+    $enigma->setRingstellung(RotorPosition::P2, Letter::U);
+    $enigma->setRingstellung(RotorPosition::P3, Letter::B);
 
     // Start Position (Grundstellung)
-    $enigma->setPosition(RotorPosition::P1, 'A');
-    $enigma->setPosition(RotorPosition::P2, 'L');
-    $enigma->setPosition(RotorPosition::P3, 'B');
+    $enigma->setPosition(RotorPosition::P1, Letter::A);
+    $enigma->setPosition(RotorPosition::P2, Letter::L);
+    $enigma->setPosition(RotorPosition::P3, Letter::B);
 
     // Plugboard
     $plugs = ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX'];
     foreach ($plugs as $plug) {
-        $enigma->plugLetters($plug[0], $plug[1]);
+        $enigma->plugLetters(Letter::fromChar($plug[0]), Letter::fromChar($plug[1]));
     }
 
     $ciphertext = str_replace(' ', '', 'EDPUD NRGYS ZRCXN UYTPO MRMBO FKTBZ REZKM LXLVE FGUEY SIOZV EQMIK UBPMM YLKLT TDEIS MDICA GYKUA CTCDO MOHWX MUUIA UBSTS LRNBZ SZWNR FXWFY SSXJZ VIJHI DISHP RKLKA YUPAD TXQSP INQMA TLPIF SVKDA SCTAC DPBOP VHJK');
@@ -73,7 +73,7 @@ test('Operation Barbarossa (1941)', function (): void {
 
     $decrypted = '';
     foreach (str_split($ciphertext) as $char) {
-        $decrypted .= $enigma->encodeLetter($char);
+        $decrypted .= $enigma->encodeLetter(Letter::fromChar($char))->toChar();
     }
 
     expect($decrypted)->toBe($expectedPlaintext);
@@ -98,21 +98,21 @@ test('U-264 (Kapitänleutnant Hartwig Looks) (1942)', function (): void {
     $enigma = new Enigma(EnigmaModel::KMM4, $rotors, ReflectorType::BTHIN);
 
     // Ring Settings
-    $enigma->setRingstellung(RotorPosition::P1, 'V');
-    $enigma->setRingstellung(RotorPosition::P2, 'A');
-    $enigma->setRingstellung(RotorPosition::P3, 'A');
-    $enigma->setRingstellung(RotorPosition::GREEK, 'A');
+    $enigma->setRingstellung(RotorPosition::P1, Letter::V);
+    $enigma->setRingstellung(RotorPosition::P2, Letter::A);
+    $enigma->setRingstellung(RotorPosition::P3, Letter::A);
+    $enigma->setRingstellung(RotorPosition::GREEK, Letter::A);
 
     // Start Position
-    $enigma->setPosition(RotorPosition::P1, 'A');
-    $enigma->setPosition(RotorPosition::P2, 'N');
-    $enigma->setPosition(RotorPosition::P3, 'J');
-    $enigma->setPosition(RotorPosition::GREEK, 'V');
+    $enigma->setPosition(RotorPosition::P1, Letter::A);
+    $enigma->setPosition(RotorPosition::P2, Letter::N);
+    $enigma->setPosition(RotorPosition::P3, Letter::J);
+    $enigma->setPosition(RotorPosition::GREEK, Letter::V);
 
     // Plugboard
     $plugs = ['AT', 'BL', 'DF', 'GJ', 'HM', 'NW', 'OP', 'QY', 'RZ', 'VX'];
     foreach ($plugs as $plug) {
-        $enigma->plugLetters($plug[0], $plug[1]);
+        $enigma->plugLetters(Letter::fromChar($plug[0]), Letter::fromChar($plug[1]));
     }
 
     $ciphertext = str_replace(' ', '', 'NCZW VUSX PNYM INHZ XMQX SFWX WLKJ AHSH NMCO CCAK UQPM KCSM HKSE INJU SBLK IOSX CKUB HMLL XCSJ USRR DVKO HULX WCCB GVLI YXEO AHXR HKKF VDRE WEZL XOBA FGYU JQUK GRTV UKAM EURB VEKS UHHV OYHA BCJW MAKL FKLM YFVN RIZR VVRT KOFD ANJM OLBG FFLE OPRG TFLV RHOW OPBE KVWM UQFM PWPA RMFH AGKX IIBG');
@@ -120,7 +120,7 @@ test('U-264 (Kapitänleutnant Hartwig Looks) (1942)', function (): void {
 
     $decrypted = '';
     foreach (str_split($ciphertext) as $char) {
-        $decrypted .= $enigma->encodeLetter($char);
+        $decrypted .= $enigma->encodeLetter(Letter::fromChar($char))->toChar();
     }
 
     expect($decrypted)->toBe($expectedPlaintext);
@@ -144,19 +144,19 @@ test('Scharnhorst (Konteradmiral Erich Bey) (1943)', function (): void {
     $enigma = new Enigma(EnigmaModel::KMM3, $rotors, ReflectorType::B);
 
     // Ring Settings
-    $enigma->setRingstellung(RotorPosition::P1, 'M');
-    $enigma->setRingstellung(RotorPosition::P2, 'H');
-    $enigma->setRingstellung(RotorPosition::P3, 'A');
+    $enigma->setRingstellung(RotorPosition::P1, Letter::M);
+    $enigma->setRingstellung(RotorPosition::P2, Letter::H);
+    $enigma->setRingstellung(RotorPosition::P3, Letter::A);
 
     // Start Position
-    $enigma->setPosition(RotorPosition::P1, 'V');
-    $enigma->setPosition(RotorPosition::P2, 'Z');
-    $enigma->setPosition(RotorPosition::P3, 'U');
+    $enigma->setPosition(RotorPosition::P1, Letter::V);
+    $enigma->setPosition(RotorPosition::P2, Letter::Z);
+    $enigma->setPosition(RotorPosition::P3, Letter::U);
 
     // Plugboard
     $plugs = ['AN', 'EZ', 'HK', 'IJ', 'LR', 'MQ', 'OT', 'PV', 'SW', 'UX'];
     foreach ($plugs as $plug) {
-        $enigma->plugLetters($plug[0], $plug[1]);
+        $enigma->plugLetters(Letter::fromChar($plug[0]), Letter::fromChar($plug[1]));
     }
 
     $ciphertext = str_replace(' ', '', 'YKAE NZAP MSCH ZBFO CUVM RMDP YCOF HADZ IZME FXTH FLOL PZLF GGBO TGOX GRET DWTJ IQHL MXVJ WKZU ASTR');
@@ -164,7 +164,7 @@ test('Scharnhorst (Konteradmiral Erich Bey) (1943)', function (): void {
 
     $decrypted = '';
     foreach (str_split($ciphertext) as $char) {
-        $decrypted .= $enigma->encodeLetter($char);
+        $decrypted .= $enigma->encodeLetter(Letter::fromChar($char))->toChar();
     }
 
     expect($decrypted)->toBe($expectedPlaintext);

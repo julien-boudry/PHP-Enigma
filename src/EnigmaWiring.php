@@ -43,7 +43,10 @@ class EnigmaWiring
      */
     public function __construct(string $wiring)
     {
-        $this->wiring = array_map(Enigma::enigma_l2p(...), str_split($wiring));
+        $this->wiring = array_map(
+            static fn(string $char): int => Letter::fromChar($char)->value,
+            str_split($wiring)
+        );
     }
 
     /**

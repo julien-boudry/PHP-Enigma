@@ -44,8 +44,8 @@ class EnigmaPlugboard
     public function __construct()
     {
         $wiring = '';
-        for ($idx = 0; $idx < EnigmaAlphabet::count(); $idx++) {
-            $wiring .= Enigma::enigma_p2l($idx);
+        for ($idx = 0; $idx < Letter::count(); $idx++) {
+            $wiring .= Letter::from($idx)->toChar();
         }
         $this->wiring = new EnigmaWiring($wiring);
     }
@@ -55,41 +55,37 @@ class EnigmaPlugboard
      * Because pins are connected in pairs, there is no difference if
      * processLetter1stPass() or processLetter2ndPass() is used.
      *
-     * @param $letter letter to process
+     * @param Letter $letter letter to process
      *
-     * @return int resulting letter
+     * @return Letter resulting letter
      */
-    public function processLetter(int $letter): int
+    public function processLetter(Letter $letter): Letter
     {
-        return $this->wiring->processLetter1stPass($letter);
+        return Letter::from($this->wiring->processLetter1stPass($letter->value));
     }
 
     /**
      * Connect 2 letters.
      *
-     * @param $letter1 letter 1 to connect
-     * @param $letter2 letter 2 to connect
-     *
-     * @return void
+     * @param Letter $letter1 letter 1 to connect
+     * @param Letter $letter2 letter 2 to connect
      */
-    public function plugLetters(int $letter1, int $letter2): void
+    public function plugLetters(Letter $letter1, Letter $letter2): void
     {
-        $this->wiring->connect($letter1, $letter2);
-        $this->wiring->connect($letter2, $letter1);
+        $this->wiring->connect($letter1->value, $letter2->value);
+        $this->wiring->connect($letter2->value, $letter1->value);
     }
 
     /**
      * Disconnect 2 letters.
      * Because letters are connected in pairs, we only need to know one of them.
      *
-     * @param $letter 1 of the 2 letters to disconnect
-     *
-     * @return void
+     * @param Letter $letter 1 of the 2 letters to disconnect
      */
-    public function unplugLetters(int $letter): void
+    public function unplugLetters(Letter $letter): void
     {
-        $temp = $this->wiring->connectsTo($letter);
-        $this->wiring->connect($letter, $letter);
+        $temp = $this->wiring->connectsTo($letter->value);
+        $this->wiring->connect($letter->value, $letter->value);
         $this->wiring->connect($temp, $temp);
     }
 

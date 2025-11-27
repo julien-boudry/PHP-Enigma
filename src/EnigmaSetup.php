@@ -15,7 +15,7 @@ readonly class EnigmaSetup
 {
     /**
      * @param array<int, EnigmaModel> $used
-     * @param array<int>|null $notches
+     * @param array<Letter>|null $notches
      */
     public function __construct(
         public ReflectorType|RotorType $reflectorType,

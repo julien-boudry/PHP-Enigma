@@ -79,21 +79,21 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorType};
 
 require_once 'vendor/autoload.php';
 
 $rotors = [RotorType::I, RotorType::II, RotorType::III];
 $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
-$enigma->setPosition(RotorPosition::P1, 'M');
-$enigma->setRingstellung(RotorPosition::P1, 'B');
+$enigma->setPosition(RotorPosition::P1, Letter::M);
+$enigma->setRingstellung(RotorPosition::P1, Letter::B);
 
-$enigma->plugLetters('A', 'C');
-$enigma->plugLetters('B', 'Z');
+$enigma->plugLetters(Letter::A, Letter::C);
+$enigma->plugLetters(Letter::B, Letter::Z);
 
-$enigma->unplugLetters('A');
+$enigma->unplugLetters(Letter::A);
 
-$l = 'A';
-echo 'before: ' . $enigma->getPosition(RotorPosition::P3) . ' ' . $enigma->getPosition(RotorPosition::P2) . ' ' . $enigma->getPosition(RotorPosition::P1) . "\n";
-echo $l . '->' . $enigma->encodeLetter($l) . "\n";
-echo 'after: ' . $enigma->getPosition(RotorPosition::P3) . ' ' . $enigma->getPosition(RotorPosition::P2) . ' ' . $enigma->getPosition(RotorPosition::P1) . "\n";
+$l = Letter::A;
+echo 'before: ' . $enigma->getPosition(RotorPosition::P3)->toChar() . ' ' . $enigma->getPosition(RotorPosition::P2)->toChar() . ' ' . $enigma->getPosition(RotorPosition::P1)->toChar() . "\n";
+echo $l->toChar() . '->' . $enigma->encodeLetter($l)->toChar() . "\n";
+echo 'after: ' . $enigma->getPosition(RotorPosition::P3)->toChar() . ' ' . $enigma->getPosition(RotorPosition::P2)->toChar() . ' ' . $enigma->getPosition(RotorPosition::P1)->toChar() . "\n";

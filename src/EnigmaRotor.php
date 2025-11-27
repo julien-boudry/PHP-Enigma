@@ -45,14 +45,14 @@ class EnigmaRotor
     {
         if (self::$defaultSetup === null) {
             self::$defaultSetup = [
-                new EnigmaSetup(RotorType::I, 'EKMFLGDQVZNTOWYHXUSPAIBRCJ', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_Q]),
-                new EnigmaSetup(RotorType::II, 'AJDKSIRUXBLHWTMCQGZNPYFVOE', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_E]),
-                new EnigmaSetup(RotorType::III, 'BDFHJLCPRTXVZNYEIWGAKMUSQO', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_V]),
-                new EnigmaSetup(RotorType::IV, 'ESOVPZJAYQUIRHXLNFTGKDCMWB', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_J]),
-                new EnigmaSetup(RotorType::V, 'VZBRGITYUPSDNHLXAWMJQOFECK', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_Z]),
-                new EnigmaSetup(RotorType::VI, 'JPGVOUMFYQBENHZRDKASXLICTW', [EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_M, Enigma::KEY_Z]),
-                new EnigmaSetup(RotorType::VII, 'NZJHGRCXMYSWBOUFAIVLPEKQDT', [EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_M, Enigma::KEY_Z]),
-                new EnigmaSetup(RotorType::VIII, 'FKQHTLXOCBJSPDZRAMEWNIUYGV', [EnigmaModel::KMM3, EnigmaModel::KMM4], [Enigma::KEY_M, Enigma::KEY_Z]),
+                new EnigmaSetup(RotorType::I, 'EKMFLGDQVZNTOWYHXUSPAIBRCJ', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Letter::Q]),
+                new EnigmaSetup(RotorType::II, 'AJDKSIRUXBLHWTMCQGZNPYFVOE', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Letter::E]),
+                new EnigmaSetup(RotorType::III, 'BDFHJLCPRTXVZNYEIWGAKMUSQO', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Letter::V]),
+                new EnigmaSetup(RotorType::IV, 'ESOVPZJAYQUIRHXLNFTGKDCMWB', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Letter::J]),
+                new EnigmaSetup(RotorType::V, 'VZBRGITYUPSDNHLXAWMJQOFECK', [EnigmaModel::WMLW, EnigmaModel::KMM3, EnigmaModel::KMM4], [Letter::Z]),
+                new EnigmaSetup(RotorType::VI, 'JPGVOUMFYQBENHZRDKASXLICTW', [EnigmaModel::KMM3, EnigmaModel::KMM4], [Letter::M, Letter::Z]),
+                new EnigmaSetup(RotorType::VII, 'NZJHGRCXMYSWBOUFAIVLPEKQDT', [EnigmaModel::KMM3, EnigmaModel::KMM4], [Letter::M, Letter::Z]),
+                new EnigmaSetup(RotorType::VIII, 'FKQHTLXOCBJSPDZRAMEWNIUYGV', [EnigmaModel::KMM3, EnigmaModel::KMM4], [Letter::M, Letter::Z]),
                 new EnigmaSetup(RotorType::BETA, 'LEYJVCNIXWPBQMDRTAKZGFUHOS', [EnigmaModel::KMM4], []),
                 new EnigmaSetup(RotorType::GAMMA, 'FSOKANUERHMBTIYCWLQPZXVGJD', [EnigmaModel::KMM4], []),
             ];
@@ -71,7 +71,7 @@ class EnigmaRotor
     /**
      * The positions of the notches of a rotor.
      *
-     * @var array<int> integer positions of the notches
+     * @var array<Letter> Letter positions of the notches
      */
     private array $notches;
 
@@ -99,8 +99,8 @@ class EnigmaRotor
     /**
      * Constructor creates a new Wiring with the setup from $wiring and stores positions of the notches.
      *
-     * @param $wiring setup for the wiring
-     * @param array<int> $notches positions of the notches
+     * @param string $wiring setup for the wiring
+     * @param array<Letter> $notches positions of the notches
      */
     public function __construct(string $wiring, array $notches)
     {
@@ -110,13 +110,13 @@ class EnigmaRotor
 
     /**
      * Advance the rotor by 1 step.
-     * When postion reaches ENIGMA_ALPHABET_SIZE, it is reset to 0.
+     * When postion reaches Letter::count(), it is reset to 0.
      *
      * @return void
      */
     public function advance(): void
     {
-        $this->position = ($this->position + 1) % EnigmaAlphabet::count();
+        $this->position = ($this->position + 1) % Letter::count();
     }
 
     /**
@@ -127,13 +127,18 @@ class EnigmaRotor
      */
     public function isNotchOpen(): bool
     {
-        return \in_array($this->position, $this->notches, true);
+        foreach ($this->notches as $notch) {
+            if ($this->position === $notch->value) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * Send an letter from side A through the wiring to side B.
      * To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br>
-     * + ENIGMA_ALPHABET_SIZE and % ENIGMA_ALPHABET_SIZE keep the value positive and in bounds.
+     * + Letter::count() and % Letter::count() keep the value positive and in bounds.
      *
      * @param $letter letter to process
      *
@@ -141,16 +146,17 @@ class EnigmaRotor
      */
     public function processLetter1stPass(int $letter): int
     {
-        $letter = ($letter - $this->ringstellung + $this->position + EnigmaAlphabet::count()) % EnigmaAlphabet::count();
+        $count = Letter::count();
+        $letter = ($letter - $this->ringstellung + $this->position + $count) % $count;
         $letter = $this->wiring->processLetter1stPass($letter);
 
-        return ($letter + $this->ringstellung - $this->position + EnigmaAlphabet::count()) % EnigmaAlphabet::count();
+        return ($letter + $this->ringstellung - $this->position + $count) % $count;
     }
 
     /**
      * Send an letter from side B through the wiring to side A.
      * To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br>
-     * + ENIGMA_ALPHABET_SIZE and % ENIGMA_ALPHABET_SIZE keep the value positive and in bounds.
+     * + Letter::count() and % Letter::count() keep the value positive and in bounds.
      *
      * @param $letter letter to process
      *
@@ -158,10 +164,11 @@ class EnigmaRotor
      */
     public function processLetter2ndPass(int $letter): int
     {
-        $letter = ($letter - $this->ringstellung + $this->position + EnigmaAlphabet::count()) % EnigmaAlphabet::count();
+        $count = Letter::count();
+        $letter = ($letter - $this->ringstellung + $this->position + $count) % $count;
         $letter = $this->wiring->processLetter2ndPass($letter);
 
-        return ($letter + $this->ringstellung - $this->position + EnigmaAlphabet::count()) % EnigmaAlphabet::count();
+        return ($letter + $this->ringstellung - $this->position + $count) % $count;
     }
 
     /**

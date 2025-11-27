@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorPosition, RotorType};
 
 describe('Enigma string encoding', function (): void {
     beforeEach(function (): void {
@@ -11,9 +11,9 @@ describe('Enigma string encoding', function (): void {
             [RotorType::I, RotorType::II, RotorType::III],
             ReflectorType::B
         );
-        $this->enigma->setPosition(RotorPosition::P1, 'A');
-        $this->enigma->setPosition(RotorPosition::P2, 'A');
-        $this->enigma->setPosition(RotorPosition::P3, 'A');
+        $this->enigma->setPosition(RotorPosition::P1, Letter::A);
+        $this->enigma->setPosition(RotorPosition::P2, Letter::A);
+        $this->enigma->setPosition(RotorPosition::P3, Letter::A);
     });
 
     describe('encodeLetters', function (): void {
@@ -35,9 +35,9 @@ describe('Enigma string encoding', function (): void {
                 [RotorType::I, RotorType::II, RotorType::III],
                 ReflectorType::B
             );
-            $encoder->setPosition(RotorPosition::P1, 'A');
-            $encoder->setPosition(RotorPosition::P2, 'A');
-            $encoder->setPosition(RotorPosition::P3, 'A');
+            $encoder->setPosition(RotorPosition::P1, Letter::A);
+            $encoder->setPosition(RotorPosition::P2, Letter::A);
+            $encoder->setPosition(RotorPosition::P3, Letter::A);
 
             // Clone encoder to create decoder with same initial state
             $decoder = clone $encoder;
@@ -51,7 +51,7 @@ describe('Enigma string encoding', function (): void {
 
         test('throws exception for invalid characters', function (): void {
             expect(fn() => $this->enigma->encodeLetters('HELLO WORLD'))
-                ->toThrow(RuntimeException::class);
+                ->toThrow(ValueError::class);
         });
 
         test('handles empty string', function (): void {
@@ -88,9 +88,9 @@ describe('Enigma string encoding', function (): void {
                 [RotorType::I, RotorType::II, RotorType::III],
                 ReflectorType::B
             );
-            $encoder->setPosition(RotorPosition::P1, 'A');
-            $encoder->setPosition(RotorPosition::P2, 'A');
-            $encoder->setPosition(RotorPosition::P3, 'A');
+            $encoder->setPosition(RotorPosition::P1, Letter::A);
+            $encoder->setPosition(RotorPosition::P2, Letter::A);
+            $encoder->setPosition(RotorPosition::P3, Letter::A);
 
             // Clone encoder to create decoder with same initial state
             $decoder = clone $encoder;
@@ -115,9 +115,9 @@ describe('Enigma string encoding', function (): void {
                 [RotorType::I, RotorType::II, RotorType::III],
                 ReflectorType::B
             );
-            $encoder->setPosition(RotorPosition::P1, 'A');
-            $encoder->setPosition(RotorPosition::P2, 'A');
-            $encoder->setPosition(RotorPosition::P3, 'A');
+            $encoder->setPosition(RotorPosition::P1, Letter::A);
+            $encoder->setPosition(RotorPosition::P2, Letter::A);
+            $encoder->setPosition(RotorPosition::P3, Letter::A);
 
             // Clone encoder to create decoder with same initial state
             $decoder = clone $encoder;
@@ -141,9 +141,9 @@ describe('Enigma string encoding', function (): void {
                 [RotorType::I, RotorType::II, RotorType::III],
                 ReflectorType::B
             );
-            $encoder->setPosition(RotorPosition::P1, 'A');
-            $encoder->setPosition(RotorPosition::P2, 'A');
-            $encoder->setPosition(RotorPosition::P3, 'A');
+            $encoder->setPosition(RotorPosition::P1, Letter::A);
+            $encoder->setPosition(RotorPosition::P2, Letter::A);
+            $encoder->setPosition(RotorPosition::P3, Letter::A);
 
             // Clone encoder to create decoder with same initial state
             $decoder = clone $encoder;
@@ -176,13 +176,13 @@ describe('Enigma string encoding', function (): void {
                 [RotorType::I, RotorType::II, RotorType::III],
                 ReflectorType::B
             );
-            $encoder->setPosition(RotorPosition::P1, 'C');
-            $encoder->setPosition(RotorPosition::P2, 'F');
-            $encoder->setPosition(RotorPosition::P3, 'G');
-            $encoder->plugLetters('A', 'B');
-            $encoder->plugLetters('C', 'D');
-            $encoder->plugLetters('E', 'F');
-            $encoder->plugLetters('G', 'H');
+            $encoder->setPosition(RotorPosition::P1, Letter::C);
+            $encoder->setPosition(RotorPosition::P2, Letter::F);
+            $encoder->setPosition(RotorPosition::P3, Letter::G);
+            $encoder->plugLetters(Letter::A, Letter::B);
+            $encoder->plugLetters(Letter::C, Letter::D);
+            $encoder->plugLetters(Letter::E, Letter::F);
+            $encoder->plugLetters(Letter::G, Letter::H);
 
             // Clone encoder to create decoder with same initial state
             $decoder = clone $encoder;

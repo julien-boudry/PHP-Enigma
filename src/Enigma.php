@@ -22,66 +22,6 @@ namespace JulienBoudry\Enigma;
 class Enigma
 {
     /**
-     * Keyboard codes.
-     */
-    public const KEY_A = 0;
-    public const KEY_B = 1;
-    public const KEY_C = 2;
-    public const KEY_D = 3;
-    public const KEY_E = 4;
-    public const KEY_F = 5;
-    public const KEY_G = 6;
-    public const KEY_H = 7;
-    public const KEY_I = 8;
-    public const KEY_J = 9;
-    public const KEY_K = 10;
-    public const KEY_L = 11;
-    public const KEY_M = 12;
-    public const KEY_N = 13;
-    public const KEY_O = 14;
-    public const KEY_P = 15;
-    public const KEY_Q = 16;
-    public const KEY_R = 17;
-    public const KEY_S = 18;
-    public const KEY_T = 19;
-    public const KEY_U = 20;
-    public const KEY_V = 21;
-    public const KEY_W = 22;
-    public const KEY_X = 23;
-    public const KEY_Y = 24;
-    public const KEY_Z = 25;
-
-    /**
-     * converts a character into its pendant in the Enigma alphabet.
-     *
-     * @param $l character to convert
-     *
-     * @return int represention of a character in the Enigma alphabet
-     */
-    public static function enigma_l2p(string $l): int
-    {
-        $r = array_search(strtoupper($l), EnigmaAlphabet::MAP, true);
-
-        if ($r === false) {
-            throw new \RuntimeException('Invalid character for Enigma alphabet: ' . $l);
-        }
-
-        return $r;
-    }
-
-    /**
-     * converts an element of the Enigma alphabet to 'our' alphabet.
-     *
-     * @param $p element to be converted
-     *
-     * @return string resulting character
-     */
-    public static function enigma_p2l(int $p): string
-    {
-        return EnigmaAlphabet::MAP[$p];
-    }
-
-    /**
      * The plugboard that connects input and output to the 1st rotor.
      *
      * @var EnigmaPlugboard
@@ -172,25 +112,24 @@ class Enigma
      *
      * @see Enigma::advance()
      *
-     * @param $letter letter to encode
+     * @param Letter $letter letter to encode
      *
-     * @return string encoded letter
+     * @return Letter encoded letter
      */
-    public function encodeLetter(string $letter): string
+    public function encodeLetter(Letter $letter): Letter
     {
         $this->advance();
-        $letter = self::enigma_l2p($letter);
-        $letter = $this->plugboard->processLetter($letter);
+        $value = $this->plugboard->processLetter($letter)->value;
         for ($idx = 0; $idx < \count($this->rotors); $idx++) {
-            $letter = $this->rotors[$idx]->processLetter1stPass($letter);
+            $value = $this->rotors[$idx]->processLetter1stPass($value);
         }
-        $letter = $this->reflector->processLetter($letter);
+        $value = $this->reflector->processLetter($value);
         for ($idx = (\count($this->rotors) - 1); $idx > -1; $idx--) {
-            $letter = $this->rotors[$idx]->processLetter2ndPass($letter);
+            $value = $this->rotors[$idx]->processLetter2ndPass($value);
         }
-        $letter = $this->plugboard->processLetter($letter);
+        $value = $this->plugboard->processLetter(Letter::from($value))->value;
 
-        return self::enigma_p2l($letter);
+        return Letter::from($value);
     }
 
     /**
@@ -233,76 +172,61 @@ class Enigma
     /**
      * Turn a rotor to a new position.
      *
-     * @param $position ID of the rotor to turn
-     * @param $letter letter to turn to
-     *
-     * @return void
-     *
-     * @uses enigma_l2p
+     * @param RotorPosition $position ID of the rotor to turn
+     * @param Letter $letter letter to turn to
      */
-    public function setPosition(RotorPosition $position, string $letter): void
+    public function setPosition(RotorPosition $position, Letter $letter): void
     {
-        $this->rotors[$position->value]->setPosition(self::enigma_l2p($letter));
+        $this->rotors[$position->value]->setPosition($letter->value);
     }
 
     /**
      * Get the current position of a rotor.
      *
-     * @param $position ID of the rotor
+     * @param RotorPosition $position ID of the rotor
      *
-     * @return string current position
+     * @return Letter current position
      */
-    public function getPosition(RotorPosition $position): string
+    public function getPosition(RotorPosition $position): Letter
     {
-        $position = RotorPosition::getPositionIntValue($position);
+        $positionInt = RotorPosition::getPositionIntValue($position);
 
-        return self::enigma_p2l($this->rotors[$position]->getPosition());
+        return Letter::from($this->rotors[$positionInt]->getPosition());
     }
 
     /**
      * Turn the ringstellung of a rotor to a new position.
      *
-     * @param $position ID of the rotor
-     * @param $letter letter to turn to
-     *
-     * @return void
-     *
-     * @uses enigma_l2p
+     * @param RotorPosition $position ID of the rotor
+     * @param Letter $letter letter to turn to
      */
-    public function setRingstellung(RotorPosition $position, string $letter): void
+    public function setRingstellung(RotorPosition $position, Letter $letter): void
     {
-        $position = RotorPosition::getPositionIntValue($position);
+        $positionInt = RotorPosition::getPositionIntValue($position);
 
-        $this->rotors[$position]->setRingstellung(self::enigma_l2p($letter));
+        $this->rotors[$positionInt]->setRingstellung($letter->value);
     }
 
     /**
      * Connect 2 letters on the plugboard.
-     * The letter are transformed to integer first.
      *
-     * @param $letter1 letter 1 to connect
-     * @param $letter2 letter 2 to connect
-     *
-     * @return void
+     * @param Letter $letter1 letter 1 to connect
+     * @param Letter $letter2 letter 2 to connect
      */
-    public function plugLetters(string $letter1, string $letter2): void
+    public function plugLetters(Letter $letter1, Letter $letter2): void
     {
-        $this->plugboard->plugLetters(self::enigma_l2p($letter1), self::enigma_l2p($letter2));
+        $this->plugboard->plugLetters($letter1, $letter2);
     }
 
     /**
      * Disconnects 2 letters on the plugboard.
      * Because letters are connected in pairs, we only need to know one of them.
      *
-     * @param $letter 1 of the 2 letters to disconnect
-     *
-     * @return void
-     *
-     * @uses enigma_l2p
+     * @param Letter $letter 1 of the 2 letters to disconnect
      */
-    public function unplugLetters(string $letter): void
+    public function unplugLetters(Letter $letter): void
     {
-        $this->plugboard->unplugLetters(self::enigma_l2p($letter));
+        $this->plugboard->unplugLetters($letter);
     }
 
     /**
@@ -314,7 +238,7 @@ class Enigma
      *
      * @param string $letters The letters to encode (A-Z only, no spaces or other characters)
      *
-     * @throws \RuntimeException If the input contains invalid characters
+     * @throws \ValueError If the input contains invalid characters
      *
      * @return string The encoded letters
      *
@@ -326,7 +250,7 @@ class Enigma
         $letters = strtoupper($letters);
 
         foreach (str_split($letters) as $char) {
-            $result .= $this->encodeLetter($char);
+            $result .= $this->encodeLetter(Letter::fromChar($char))->toChar();
         }
 
         return $result;

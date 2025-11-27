@@ -1,34 +1,34 @@
 <?php
 
 declare(strict_types=1);
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorType};
 
 test('general', function (): void {
     $rotors = [RotorType::I, RotorType::II, RotorType::III];
     $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
-    $enigma->setPosition(RotorPosition::P1, 'M');
-    $enigma->setRingstellung(RotorPosition::P1, 'B');
+    $enigma->setPosition(RotorPosition::P1, Letter::M);
+    $enigma->setRingstellung(RotorPosition::P1, Letter::B);
 
-    $enigma->plugLetters('A', 'C');
-    $enigma->plugLetters('B', 'Z');
+    $enigma->plugLetters(Letter::A, Letter::C);
+    $enigma->plugLetters(Letter::B, Letter::Z);
 
-    $enigma->unplugLetters('A');
+    $enigma->unplugLetters(Letter::A);
 
-    self::assertSame('A', $enigma->getPosition(RotorPosition::P3));
-    self::assertSame('A', $enigma->getPosition(RotorPosition::P2));
-    self::assertSame('M', $enigma->getPosition(RotorPosition::P1));
+    self::assertSame(Letter::A, $enigma->getPosition(RotorPosition::P3));
+    self::assertSame(Letter::A, $enigma->getPosition(RotorPosition::P2));
+    self::assertSame(Letter::M, $enigma->getPosition(RotorPosition::P1));
 
-    self::assertSame('W', $enigma->encodeLetter('A'));
+    self::assertSame(Letter::W, $enigma->encodeLetter(Letter::A));
 
-    self::assertSame('A', $enigma->getPosition(RotorPosition::P3));
-    self::assertSame('A', $enigma->getPosition(RotorPosition::P2));
-    self::assertSame('N', $enigma->getPosition(RotorPosition::P1));
+    self::assertSame(Letter::A, $enigma->getPosition(RotorPosition::P3));
+    self::assertSame(Letter::A, $enigma->getPosition(RotorPosition::P2));
+    self::assertSame(Letter::N, $enigma->getPosition(RotorPosition::P1));
 
-    self::assertSame('G', $enigma->encodeLetter('A'));
+    self::assertSame(Letter::G, $enigma->encodeLetter(Letter::A));
 
-    self::assertSame('A', $enigma->getPosition(RotorPosition::P3));
-    self::assertSame('A', $enigma->getPosition(RotorPosition::P2));
-    self::assertSame('O', $enigma->getPosition(RotorPosition::P1));
+    self::assertSame(Letter::A, $enigma->getPosition(RotorPosition::P3));
+    self::assertSame(Letter::A, $enigma->getPosition(RotorPosition::P2));
+    self::assertSame(Letter::O, $enigma->getPosition(RotorPosition::P1));
 });
 
 // https://cryptii.com/pipes/enigma-machine
@@ -36,22 +36,22 @@ test('general', function (): void {
 // {
 //     $rotors = [RotorType::I, RotorType::II, RotorType::III];
 //     $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
-//     $enigma->setPosition(RotorPosition::P1, 'A');
-//     $enigma->setPosition(RotorPosition::P2, 'E');
-//     $enigma->setPosition(RotorPosition::P3, 'M');
-//     $enigma->setRingstellung(RotorPosition::P1, 'I');
-//     $enigma->setRingstellung(RotorPosition::P2, 'E');
-//     $enigma->setRingstellung(RotorPosition::P3, 'R');
-//     $enigma->plugLetters('A', 'E');
-//     $enigma->plugLetters('B', 'F');
-//     $enigma->plugLetters('C', 'M');
-//     $enigma->plugLetters('D', 'Q');
-//     $enigma->plugLetters('H', 'U');
-//     $enigma->plugLetters('J', 'N');
-//     $enigma->plugLetters('L', 'X');
-//     $enigma->plugLetters('P', 'R');
-//     $enigma->plugLetters('S', 'Z');
-//     $enigma->plugLetters('V', 'W');
-//     self::assertSame('H', $enigma->encodeLetter('Q'));
-//     self::assertSame('Z', $enigma->encodeLetter('E'));
+//     $enigma->setPosition(RotorPosition::P1, Letter::A);
+//     $enigma->setPosition(RotorPosition::P2, Letter::E);
+//     $enigma->setPosition(RotorPosition::P3, Letter::M);
+//     $enigma->setRingstellung(RotorPosition::P1, Letter::I);
+//     $enigma->setRingstellung(RotorPosition::P2, Letter::E);
+//     $enigma->setRingstellung(RotorPosition::P3, Letter::R);
+//     $enigma->plugLetters(Letter::A, Letter::E);
+//     $enigma->plugLetters(Letter::B, Letter::F);
+//     $enigma->plugLetters(Letter::C, Letter::M);
+//     $enigma->plugLetters(Letter::D, Letter::Q);
+//     $enigma->plugLetters(Letter::H, Letter::U);
+//     $enigma->plugLetters(Letter::J, Letter::N);
+//     $enigma->plugLetters(Letter::L, Letter::X);
+//     $enigma->plugLetters(Letter::P, Letter::R);
+//     $enigma->plugLetters(Letter::S, Letter::Z);
+//     $enigma->plugLetters(Letter::V, Letter::W);
+//     self::assertSame(Letter::H, $enigma->encodeLetter(Letter::Q));
+//     self::assertSame(Letter::Z, $enigma->encodeLetter(Letter::E));
 // }
