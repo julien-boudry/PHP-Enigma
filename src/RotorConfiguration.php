@@ -186,10 +186,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      */
     public function validateForModel(EnigmaModel $model): void
     {
-        $expectedCount = match ($model) {
-            EnigmaModel::WMLW, EnigmaModel::KMM3 => 3,
-            EnigmaModel::KMM4 => 4,
-        };
+        $expectedCount = $model->getExpectedRotorCount();
 
         if ($this->count() !== $expectedCount) {
             throw new \InvalidArgumentException(
@@ -197,8 +194,8 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
             );
         }
 
-        if ($model === EnigmaModel::KMM4 && !$this->hasGreekRotor()) {
-            throw new \InvalidArgumentException('Model KMM4 requires a Greek rotor');
+        if ($model->requiresGreekRotor() && !$this->hasGreekRotor()) {
+            throw new \InvalidArgumentException("Model {$model->name} requires a Greek rotor");
         }
     }
 

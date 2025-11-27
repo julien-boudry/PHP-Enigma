@@ -26,4 +26,23 @@ enum EnigmaModel
      * Kriegsmarine M4 (4-rotor model).
      */
     case KMM4;
+
+    /**
+     * Get the expected number of rotors for this model.
+     */
+    public function getExpectedRotorCount(): int
+    {
+        return match ($this) {
+            self::WMLW, self::KMM3 => 3,
+            self::KMM4 => 4,
+        };
+    }
+
+    /**
+     * Check if this model requires a Greek rotor.
+     */
+    public function requiresGreekRotor(): bool
+    {
+        return $this === self::KMM4;
+    }
 }
