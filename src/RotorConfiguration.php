@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma;
 
+use JulienBoudry\Enigma\Rotor\AbstractRotor;
+
 /**
  * Represents the configuration of rotors for an Enigma machine.
  *
  * This class encapsulates the collection of rotors and provides type-safe access
  * to rotors by their position. It accepts either RotorType enums (which will be
- * converted to EnigmaRotor instances) or pre-configured EnigmaRotor objects.
+ * converted to AbstractRotor instances) or pre-configured AbstractRotor objects.
  *
- * @implements \IteratorAggregate<RotorPosition, EnigmaRotor>
+ * @implements \IteratorAggregate<RotorPosition, AbstractRotor>
  */
 class RotorConfiguration implements \Countable, \IteratorAggregate
 {
     /**
      * The mounted rotors indexed by position value.
      *
-     * @var array<int, EnigmaRotor>
+     * @var array<int, AbstractRotor>
      */
     private array $rotors = [];
 
@@ -27,22 +29,22 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      *
      * Each rotor can be specified as:
      * - A RotorType enum (will be created with the corresponding ringstellung parameter)
-     * - An EnigmaRotor instance (for pre-configured rotors, ringstellung parameter is ignored)
+     * - An AbstractRotor instance (for pre-configured rotors, ringstellung parameter is ignored)
      *
-     * @param RotorType|EnigmaRotor $right The right rotor (P1) - fastest rotating
-     * @param RotorType|EnigmaRotor $middle The middle rotor (P2)
-     * @param RotorType|EnigmaRotor $left The left rotor (P3) - slowest rotating
-     * @param RotorType|EnigmaRotor|null $greek The Greek rotor (P4) - only for M4 model, never rotates
+     * @param RotorType|AbstractRotor $right The right rotor (P1) - fastest rotating
+     * @param RotorType|AbstractRotor $middle The middle rotor (P2)
+     * @param RotorType|AbstractRotor $left The left rotor (P3) - slowest rotating
+     * @param RotorType|AbstractRotor|null $greek The Greek rotor (P4) - only for M4 model, never rotates
      * @param Letter $ringstellungRight The ring setting for the right rotor (only used if $right is RotorType)
      * @param Letter $ringstellungMiddle The ring setting for the middle rotor (only used if $middle is RotorType)
      * @param Letter $ringstellungLeft The ring setting for the left rotor (only used if $left is RotorType)
      * @param Letter $ringstellungGreek The ring setting for the Greek rotor (only used if $greek is RotorType)
      */
     public function __construct(
-        RotorType|EnigmaRotor $right,
-        RotorType|EnigmaRotor $middle,
-        RotorType|EnigmaRotor $left,
-        RotorType|EnigmaRotor|null $greek = null,
+        RotorType|AbstractRotor $right,
+        RotorType|AbstractRotor $middle,
+        RotorType|AbstractRotor $left,
+        RotorType|AbstractRotor|null $greek = null,
         Letter $ringstellungRight = Letter::A,
         Letter $ringstellungMiddle = Letter::A,
         Letter $ringstellungLeft = Letter::A,
@@ -61,15 +63,15 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
     }
 
     /**
-     * Resolve a rotor parameter to an EnigmaRotor instance.
+     * Resolve a rotor parameter to an AbstractRotor instance.
      */
-    private function resolveRotor(RotorType|EnigmaRotor $rotor, Letter $ringstellung): EnigmaRotor
+    private function resolveRotor(RotorType|AbstractRotor $rotor, Letter $ringstellung): AbstractRotor
     {
-        if ($rotor instanceof EnigmaRotor) {
+        if ($rotor instanceof AbstractRotor) {
             return $rotor;
         }
 
-        return EnigmaRotor::fromType($rotor, $ringstellung);
+        return $rotor->createRotor($ringstellung);
     }
 
     /**
@@ -80,11 +82,8 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
     private function validateNoDuplicates(): void
     {
         $types = [];
-        foreach ($this->rotors as $position => $rotor) {
+        foreach ($this->rotors as $rotor) {
             $type = $rotor->getType();
-            if ($type === null) {
-                continue; // Custom rotors can be duplicated
-            }
 
             if (\in_array($type, $types, true)) {
                 throw new \InvalidArgumentException(
@@ -120,10 +119,8 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
         if (isset($this->rotors[RotorPosition::GREEK->value])) {
             $greekRotor = $this->rotors[RotorPosition::GREEK->value];
             if (!$greekRotor->isGreekRotor()) {
-                $type = $greekRotor->getType();
-                $typeName = $type !== null ? $type->name : 'custom';
                 throw new \InvalidArgumentException(
-                    "Only Greek rotors (BETA/GAMMA) can be mounted in the GREEK position, not {$typeName}"
+                    "Only Greek rotors (BETA/GAMMA) can be mounted in the GREEK position, not {$greekRotor->getType()->name}"
                 );
             }
         }
@@ -136,9 +133,9 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      *
      * @throws \InvalidArgumentException If no rotor is mounted at the given position
      *
-     * @return EnigmaRotor The rotor at the given position
+     * @return AbstractRotor The rotor at the given position
      */
-    public function get(RotorPosition $position): EnigmaRotor
+    public function get(RotorPosition $position): AbstractRotor
     {
         if (!isset($this->rotors[$position->value])) {
             throw new \InvalidArgumentException("No rotor mounted at position {$position->name}");
@@ -163,21 +160,19 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      * Mount a rotor at the given position, replacing any existing rotor.
      *
      * @param RotorPosition $position The position to mount the rotor
-     * @param RotorType|EnigmaRotor $rotor The rotor to mount
+     * @param RotorType|AbstractRotor $rotor The rotor to mount
      * @param Letter $ringstellung The ring setting (only used if $rotor is RotorType)
      *
      * @throws \InvalidArgumentException If the rotor type is already used or incompatible with position
      */
-    public function mountRotor(RotorPosition $position, RotorType|EnigmaRotor $rotor, Letter $ringstellung = Letter::A): void
+    public function mountRotor(RotorPosition $position, RotorType|AbstractRotor $rotor, Letter $ringstellung = Letter::A): void
     {
         $newRotor = $this->resolveRotor($rotor, $ringstellung);
 
         // Validate Greek rotor position
         if ($position === RotorPosition::GREEK && !$newRotor->isGreekRotor()) {
-            $type = $newRotor->getType();
-            $typeName = $type !== null ? $type->name : 'custom';
             throw new \InvalidArgumentException(
-                "Only Greek rotors (BETA/GAMMA) can be mounted in the GREEK position, not {$typeName}"
+                "Only Greek rotors (BETA/GAMMA) can be mounted in the GREEK position, not {$newRotor->getType()->name}"
             );
         }
 
@@ -189,16 +184,14 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
 
         // Validate no duplicates (excluding the position being replaced)
         $newType = $newRotor->getType();
-        if ($newType !== null) {
-            foreach ($this->rotors as $pos => $existingRotor) {
-                if ($pos === $position->value) {
-                    continue; // Skip the position we're replacing
-                }
-                if ($existingRotor->getType() === $newType) {
-                    throw new \InvalidArgumentException(
-                        "Rotor {$newType->name} is already mounted in another position. Each rotor can only be used once."
-                    );
-                }
+        foreach ($this->rotors as $pos => $existingRotor) {
+            if ($pos === $position->value) {
+                continue; // Skip the position we're replacing
+            }
+            if ($existingRotor->getType() === $newType) {
+                throw new \InvalidArgumentException(
+                    "Rotor {$newType->name} is already mounted in another position. Each rotor can only be used once."
+                );
             }
         }
 
@@ -210,7 +203,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      *
      * @throws \InvalidArgumentException If no rotor is mounted
      */
-    public function getRight(): EnigmaRotor
+    public function getRight(): AbstractRotor
     {
         return $this->get(RotorPosition::P1);
     }
@@ -220,7 +213,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      *
      * @throws \InvalidArgumentException If no rotor is mounted
      */
-    public function getMiddle(): EnigmaRotor
+    public function getMiddle(): AbstractRotor
     {
         return $this->get(RotorPosition::P2);
     }
@@ -230,7 +223,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      *
      * @throws \InvalidArgumentException If no rotor is mounted
      */
-    public function getLeft(): EnigmaRotor
+    public function getLeft(): AbstractRotor
     {
         return $this->get(RotorPosition::P3);
     }
@@ -240,7 +233,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      *
      * @throws \InvalidArgumentException If no rotor is mounted
      */
-    public function getGreek(): EnigmaRotor
+    public function getGreek(): AbstractRotor
     {
         return $this->get(RotorPosition::GREEK);
     }
@@ -285,11 +278,9 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
         // Validate each rotor is compatible with the model
         foreach ($this->rotors as $position => $rotor) {
             if (!$rotor->isCompatibleWithModel($model)) {
-                $type = $rotor->getType();
-                $typeName = $type !== null ? $type->name : 'custom';
                 $positionName = RotorPosition::from($position)->name;
                 throw new \InvalidArgumentException(
-                    "Rotor {$typeName} at position {$positionName} is not compatible with model {$model->name}"
+                    "Rotor {$rotor->getType()->name} at position {$positionName} is not compatible with model {$model->name}"
                 );
             }
         }
@@ -298,7 +289,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
     /**
      * Iterate over the rotors in order (P1, P2, P3, [GREEK]).
      *
-     * @return \Traversable<RotorPosition, EnigmaRotor>
+     * @return \Traversable<RotorPosition, AbstractRotor>
      */
     public function getIterator(): \Traversable
     {
@@ -314,7 +305,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
     /**
      * Get all rotors as an array indexed by position value.
      *
-     * @return array<int, EnigmaRotor>
+     * @return array<int, AbstractRotor>
      */
     public function toArray(): array
     {
