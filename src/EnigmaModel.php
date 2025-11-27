@@ -54,7 +54,8 @@ enum EnigmaModel
     public function getCompatibleReflectors(): array
     {
         return match ($this) {
-            self::WMLW, self::KMM3 => [ReflectorType::B, ReflectorType::C],
+            self::WMLW => [ReflectorType::B, ReflectorType::C, ReflectorType::DORA],
+            self::KMM3 => [ReflectorType::B, ReflectorType::C],
             self::KMM4 => [ReflectorType::BTHIN, ReflectorType::CTHIN],
         };
     }

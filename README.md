@@ -437,6 +437,24 @@ Each model can be equipped with a different set of rotors and reflectors. All in
     *   rotors: I, II, III, IV, V, VI, VII, VIII, Beta, Gamma
     *   reflectors: B Thin, C Thin
 
+## UKW-D (Rewirable Reflector)
+
+The UKW-D (Umkehrwalze Dora) was a rewirable reflector introduced in January 1944. Unlike fixed reflectors, operators could configure their own wiring using 12 plug cables connecting 24 sockets.
+
+```php
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorConfiguration, RotorType};
+use JulienBoudry\Enigma\Reflector\ReflectorDora;
+
+// Using default wiring (includes historical B↔O pair)
+$enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::DORA);
+
+// Or with custom wiring (13 letter pairs)
+$customDora = ReflectorDora::fromString('AZ BY CX DW EV FU GT HS IR JQ KP LO MN');
+$enigma->mountReflector($customDora);
+```
+
+The UKW-D is only compatible with the Wehrmacht/Luftwaffe 3-rotor model (WMLW).
+
 Each rotor and reflector provides a unique wiring, which can not be changed. Settings are:
 
 *   Contacts = ABCDEFGHIJKLMNOPQRSTUVWXYZ

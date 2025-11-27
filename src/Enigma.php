@@ -120,19 +120,23 @@ class Enigma
      * Mount a reflector into the enigma.
      * The previously used reflector will be replaced.
      *
-     * @param ReflectorType $reflector The reflector type to mount
+     * @param ReflectorType|AbstractReflector $reflector The reflector type or instance to mount
      *
      * @throws \InvalidArgumentException If the reflector is not compatible with this model
      */
-    public function mountReflector(ReflectorType $reflector): void
+    public function mountReflector(ReflectorType|AbstractReflector $reflector): void
     {
-        if (!$this->model->isReflectorCompatible($reflector)) {
-            throw new \InvalidArgumentException(
-                "Reflector {$reflector->name} is not compatible with model {$this->model->name}"
-            );
+        if ($reflector instanceof ReflectorType) {
+            if (!$this->model->isReflectorCompatible($reflector)) {
+                throw new \InvalidArgumentException(
+                    "Reflector {$reflector->name} is not compatible with model {$this->model->name}"
+                );
+            }
+            $this->reflector = $reflector->createReflector();
+        } else {
+            // For custom reflectors (like configured ReflectorDora), accept directly
+            $this->reflector = $reflector;
         }
-
-        $this->reflector = $reflector->createReflector();
     }
 
     /**
