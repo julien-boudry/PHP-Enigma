@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Enigma-logo.svg" alt="Enigma Machine Logo" width="200">
+</p>
+
 Enigma Machine
 ==================
 
