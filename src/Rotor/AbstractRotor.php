@@ -177,6 +177,16 @@ abstract class AbstractRotor
     }
 
     /**
+     * Retrieve current ringstellung (ring setting) of the rotor.
+     *
+     * @return Letter current ringstellung
+     */
+    public function getRingstellung(): Letter
+    {
+        return Letter::from($this->ringstellung);
+    }
+
+    /**
      * Check if this rotor is compatible with the given Enigma model.
      *
      * @param EnigmaModel $model The model to check compatibility with

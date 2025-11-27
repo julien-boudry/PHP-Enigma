@@ -305,6 +305,52 @@ The binary encoding scheme:
 
 This is **not** historically accurate (Enigma was only used for text), but provides a modern way to encrypt any data type through the Enigma algorithm.
 
+### Random Configuration
+
+For quick setup or testing, you can create an Enigma with a fully random configuration:
+
+```php
+use JulienBoudry\Enigma\{Enigma, EnigmaModel};
+
+// Create with cryptographically secure random settings
+$enigma = Enigma::createRandom(EnigmaModel::WMLW);
+
+// Encode a message
+$ciphertext = $enigma->encodeLetters('SECRETMESSAGE');
+```
+
+The random configuration includes:
+- Random rotor selection and order (compatible with model)
+- Random ring settings (Ringstellung)
+- Random initial positions (Grundstellung)
+- Random plugboard connections (10 pairs, as per historical practice)
+- Random reflector (compatible with model)
+
+To retrieve the configuration for logging or recreating the same setup:
+
+```php
+use JulienBoudry\Enigma\EnigmaConfiguration;
+
+// Get configuration from existing Enigma
+$config = $enigma->getConfiguration();
+echo $config->getSummary();
+// "Model: WMLW | Rotors: III-V-I | Ring: KNP | Position: BXG | Reflector: B | Plugs: AZ BY CX..."
+
+// Or get both at creation time
+[$enigma, $config] = Enigma::createRandomWithConfiguration(EnigmaModel::WMLW);
+
+// Recreate the same Enigma later
+$sameEnigma = $config->createEnigma();
+```
+
+For deterministic testing, inject a seeded random engine:
+
+```php
+use Random\Engine\Mt19937;
+
+$enigma = Enigma::createRandom(EnigmaModel::WMLW, new Mt19937(12345));
+```
+
 # Testing
 
 This library includes comprehensive automated test suites using [Pest PHP](https://pestphp.com/), including tests based on historical messages and official Enigma examples to ensure accuracy.

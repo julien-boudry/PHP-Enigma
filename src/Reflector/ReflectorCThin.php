@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma\Reflector;
 
+use JulienBoudry\Enigma\ReflectorType;
+
 /**
  * Reflector C Thin (Umkehrwalze C Dünn).
  *
@@ -15,5 +17,10 @@ final class ReflectorCThin extends AbstractReflector
     protected function getWiring(): string
     {
         return 'RDOBJNTKVEHMLFCWZAXGYIPSUQ';
+    }
+
+    public function getType(): ReflectorType
+    {
+        return ReflectorType::CTHIN;
     }
 }

@@ -90,6 +90,31 @@ class EnigmaPlugboard
     }
 
     /**
+     * Get all plugged letter pairs.
+     *
+     * Returns pairs where the first letter is alphabetically before the second
+     * to avoid duplicates (e.g., returns [A, Z] not [Z, A]).
+     *
+     * @return list<array{Letter, Letter}> List of letter pairs
+     */
+    public function getPluggedPairs(): array
+    {
+        $pairs = [];
+
+        foreach (Letter::cases() as $letter) {
+            $connected = $this->wiring->connectsTo($letter);
+
+            // Only include if connected to a different letter
+            // and this letter comes before its pair alphabetically (avoid duplicates)
+            if ($connected !== $letter && $letter->value < $connected->value) {
+                $pairs[] = [$letter, $connected];
+            }
+        }
+
+        return $pairs;
+    }
+
+    /**
      * Deep clone the plugboard.
      */
     public function __clone(): void

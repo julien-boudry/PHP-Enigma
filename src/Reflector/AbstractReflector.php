@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma\Reflector;
 
-use JulienBoudry\Enigma\{EnigmaWiring, Letter};
+use JulienBoudry\Enigma\{EnigmaWiring, Letter, ReflectorType};
 
 /**
  * Abstract base class for Enigma Reflectors (Umkehrwalze).
@@ -33,6 +33,11 @@ abstract class AbstractReflector
      * @return string The 26-character wiring string
      */
     abstract protected function getWiring(): string;
+
+    /**
+     * Get the reflector type.
+     */
+    abstract public function getType(): ReflectorType;
 
     /**
      * Constructor creates a new Wiring with the setup from the concrete class.

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma\Reflector;
 
+use JulienBoudry\Enigma\{Letter, ReflectorType};
+
 /**
  * UKW-D (Umkehrwalze Dora) - Rewirable Reflector.
  *
@@ -135,6 +137,40 @@ final class ReflectorDora extends AbstractReflector
     protected function getWiring(): string
     {
         return $this->customWiring;
+    }
+
+    /**
+     * Get the wiring pairs as an array of Letter tuples.
+     *
+     * @return list<array{Letter, Letter}> The 13 wiring pairs
+     */
+    public function getWiringPairs(): array
+    {
+        $pairs = [];
+        $usedLetters = [];
+
+        for ($i = 0; $i < 26; $i++) {
+            $fromChar = \chr(\ord('A') + $i);
+            $toChar = $this->customWiring[$i];
+
+            if (!\in_array($fromChar, $usedLetters, true) && !\in_array($toChar, $usedLetters, true)) {
+                $pairs[] = [Letter::fromChar($fromChar), Letter::fromChar($toChar)];
+                $usedLetters[] = $fromChar;
+                $usedLetters[] = $toChar;
+            }
+        }
+
+        return $pairs;
+    }
+
+    /**
+     * Get the reflector type.
+     *
+     * Returns DORA for default wiring, null for custom configurations.
+     */
+    public function getType(): ReflectorType
+    {
+        return ReflectorType::DORA;
     }
 
     /**

@@ -94,4 +94,14 @@ enum RotorType
     {
         return $this === self::BETA || $this === self::GAMMA;
     }
+
+    /**
+     * Get all Greek rotor types (BETA and GAMMA).
+     *
+     * @return list<self>
+     */
+    public static function getGreekRotors(): array
+    {
+        return [self::BETA, self::GAMMA];
+    }
 }

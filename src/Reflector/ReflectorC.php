@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma\Reflector;
 
+use JulienBoudry\Enigma\ReflectorType;
+
 /**
  * Reflector C (Umkehrwalze C).
  *
@@ -14,5 +16,10 @@ final class ReflectorC extends AbstractReflector
     protected function getWiring(): string
     {
         return 'FVPJIAOYEDRZXWGCTKUQSBNMHL';
+    }
+
+    public function getType(): ReflectorType
+    {
+        return ReflectorType::C;
     }
 }

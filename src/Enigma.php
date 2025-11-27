@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JulienBoudry\Enigma;
 
 use JulienBoudry\Enigma\Reflector\AbstractReflector;
+use Random\Engine;
 
 /**
  * Represents an Enigma cipher machine.
@@ -60,6 +61,61 @@ class Enigma
         $this->plugboard = new EnigmaPlugboard;
 
         $this->mountReflector($reflector);
+    }
+
+    /**
+     * Create an Enigma machine with a random configuration.
+     *
+     * Generates cryptographically secure random settings including:
+     * - Random rotor selection and order (compatible with model)
+     * - Random ring settings (Ringstellung)
+     * - Random initial positions (Grundstellung)
+     * - Random plugboard connections (10 pairs)
+     * - Random reflector (compatible with model)
+     *
+     * @param EnigmaModel $model The Enigma model to create
+     * @param Engine|null $randomEngine Random engine for testing (null = secure random)
+     *
+     * @return self A fully configured Enigma machine
+     */
+    public static function createRandom(EnigmaModel $model, ?Engine $randomEngine = null): self
+    {
+        $configurator = new EnigmaRandomConfigurator($randomEngine);
+        $config = $configurator->generate($model);
+
+        return $config->createEnigma();
+    }
+
+    /**
+     * Create an Enigma machine with a random configuration and return both.
+     *
+     * Same as createRandom() but also returns the configuration object,
+     * which is useful for logging, debugging, or recreating the same setup.
+     *
+     * @param EnigmaModel $model The Enigma model to create
+     * @param Engine|null $randomEngine Random engine for testing (null = secure random)
+     *
+     * @return array{Enigma, EnigmaConfiguration} The Enigma and its configuration
+     */
+    public static function createRandomWithConfiguration(EnigmaModel $model, ?Engine $randomEngine = null): array
+    {
+        $configurator = new EnigmaRandomConfigurator($randomEngine);
+        $config = $configurator->generate($model);
+
+        return [$config->createEnigma(), $config];
+    }
+
+    /**
+     * Get the current configuration of this Enigma machine.
+     *
+     * Extracts the complete state including rotor types, ring settings,
+     * current positions, reflector, and plugboard configuration.
+     *
+     * @return EnigmaConfiguration The current configuration
+     */
+    public function getConfiguration(): EnigmaConfiguration
+    {
+        return EnigmaConfiguration::fromEnigma($this);
     }
 
     /**
