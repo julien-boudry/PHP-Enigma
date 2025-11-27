@@ -4,8 +4,6 @@
 
 ### Auto-generated Files
 
-**NEVER edit files in the `docs/` directory** - this directory is auto-generated and any manual changes will be overwritten.
-
 ### Code Standards
 
 - This project uses PHP 8.4+ with strict types
@@ -17,3 +15,8 @@
 - Run tests with `composer test`
 - All new features should include test coverage
 - Historical accuracy is validated against official Enigma examples
+
+### Documentation
+
+- Always update the README.md when making API changes
+- **NEVER edit files in the `docs/` directory** - this directory is auto-generated and any manual changes will be overwritten.
