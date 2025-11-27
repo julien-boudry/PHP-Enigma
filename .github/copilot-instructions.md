@@ -4,6 +4,8 @@
 
 ### Auto-generated Files
 
+- The `docs/` directory is auto-generated. Do not edit files there manually.
+
 ### Code Standards
 
 - This project uses PHP 8.4+ with strict types
@@ -16,8 +18,12 @@
 - All new features should include test coverage
 - Historical accuracy is validated against official Enigma examples
 
-### Documentation
+### Documentation & Instructions
 
-- Always update the README.md when making API changes
-- Update the table of content if you edit the README
-- **NEVER edit files in the `docs/` directory** - this directory is auto-generated and any manual changes will be overwritten.
+- **README.md**:
+    - Always update the README.md when making API changes.
+    - **CRITICAL**: You MUST update the Table of Contents in README.md immediately after adding, renaming, or moving sections.
+- **Instructions**:
+    - If you identify a change in project standards, workflows, or requirements, propose an update to this file (`.github/copilot-instructions.md`).
+- **Auto-generated**:
+    - **NEVER edit files in the `docs/` directory** - this directory is auto-generated and any manual changes will be overwritten.
