@@ -39,11 +39,9 @@ class Enigma
     public private(set) EnigmaReflector $reflector;
 
     /**
-     * The reflectors available for this model of the Enigma.
-     *
-     * @var array<string, EnigmaReflector>
+     * The model of the Enigma machine.
      */
-    public private(set) array $availablereflectors;
+    public readonly EnigmaModel $model;
 
     /**
      * Constructor sets up the plugboard and creates the rotors and reflectros available for the given model.
@@ -55,16 +53,9 @@ class Enigma
      */
     public function __construct(EnigmaModel $model, RotorConfiguration $rotors, ReflectorType $reflector)
     {
+        $this->model = $model;
         $this->rotors = $rotors;
-        $this->availablereflectors = [];
-
         $this->plugboard = new EnigmaPlugboard;
-
-        foreach (EnigmaReflector::getDefaultSetup() as $r) {
-            if (\in_array($model, $r->compatibleModels, true)) {
-                $this->availablereflectors[$r->type->name] = new EnigmaReflector($r->wiring);
-            }
-        }
 
         $this->mountReflector($reflector);
     }
@@ -121,13 +112,19 @@ class Enigma
      * Mount a reflector into the enigma.
      * The previously used reflector will be replaced.
      *
-     * @param $reflector ID of the reflector to use
+     * @param ReflectorType $reflector The reflector type to mount
      *
-     * @return void
+     * @throws \InvalidArgumentException If the reflector is not compatible with this model
      */
     public function mountReflector(ReflectorType $reflector): void
     {
-        $this->reflector = $this->availablereflectors[$reflector->name];
+        if (!$this->model->isReflectorCompatible($reflector)) {
+            throw new \InvalidArgumentException(
+                "Reflector {$reflector->name} is not compatible with model {$this->model->name}"
+            );
+        }
+
+        $this->reflector = EnigmaReflector::fromType($reflector);
     }
 
     /**
@@ -280,12 +277,5 @@ class Enigma
 
         // Clone the reflector
         $this->reflector = clone $this->reflector;
-
-        // Clone all available reflectors
-        $clonedAvailableReflectors = [];
-        foreach ($this->availablereflectors as $name => $reflector) {
-            $clonedAvailableReflectors[$name] = clone $reflector;
-        }
-        $this->availablereflectors = $clonedAvailableReflectors;
     }
 }

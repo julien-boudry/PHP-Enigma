@@ -45,6 +45,26 @@ class EnigmaReflector
     }
 
     /**
+     * Create a reflector from its type.
+     *
+     * @param ReflectorType $type The type of reflector to create
+     *
+     * @throws \InvalidArgumentException If the reflector type is not found
+     *
+     * @return self A new reflector instance
+     */
+    public static function fromType(ReflectorType $type): self
+    {
+        foreach (self::getDefaultSetup() as $setup) {
+            if ($setup->type === $type) {
+                return new self($setup->wiring);
+            }
+        }
+
+        throw new \InvalidArgumentException("Unknown reflector type: {$type->name}");
+    }
+
+    /**
      * The wiring of the reflector.
      * Pins are connected in pairs, that means, if 'D' on side A connects to 'H'
      * on side B, 'H' on side A connects to 'D' on side B. No letter must connect to itself!
