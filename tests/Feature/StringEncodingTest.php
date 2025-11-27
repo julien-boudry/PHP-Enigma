@@ -165,5 +165,37 @@ describe('Enigma string encoding', function (): void {
         test('handles empty binary input', function (): void {
             expect($this->enigma->encodeBinary(''))->toBe('');
         });
+
+        test('roundtrip PNG file encoding/decoding preserves integrity', function (): void {
+            // Load the PNG file
+            $originalPngData = file_get_contents(__DIR__ . '/../Assets/Enigma-logo.png');
+
+            // Create encoder
+            $encoder = new Enigma(
+                EnigmaModel::WMLW,
+                [RotorType::I, RotorType::II, RotorType::III],
+                ReflectorType::B
+            );
+            $encoder->setPosition(RotorPosition::P1, 'C');
+            $encoder->setPosition(RotorPosition::P2, 'F');
+            $encoder->setPosition(RotorPosition::P3, 'G');
+            $encoder->plugLetters('A', 'B');
+            $encoder->plugLetters('C', 'D');
+            $encoder->plugLetters('E', 'F');
+            $encoder->plugLetters('G', 'H');
+
+            // Clone encoder to create decoder with same initial state
+            $decoder = clone $encoder;
+
+            // Encode the binary PNG data
+            $encrypted = $encoder->encodeBinary($originalPngData);
+
+            // Decode it back
+            $decrypted = $decoder->encodeLetters($encrypted);
+            $recoveredPngData = EnigmaTextConverter::enigmaFormatToBinary($decrypted);
+
+            // Verify data is identical
+            expect($recoveredPngData)->toBe($originalPngData);
+        });
     });
 });
