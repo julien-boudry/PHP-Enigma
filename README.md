@@ -13,16 +13,20 @@ A PHP implementation of the historic Enigma cipher machine, supporting multiple 
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [How it Works](#how-it-works)
+  - [Strict Mode](#strict-mode)
 - [Example](#example)
+  - [Encoding and Decoding Text](#encoding-and-decoding-text)
+  - [Random Configuration](#random-configuration)
 - [Testing](#testing)
 - [History](#history)
 - [Enigma Technology](#enigma-technology)
+- [Lampboard](#lampboard)
 - [Nazi Operating Procedures](#nazi-operating-procedures)
 - [Cryptographic Weaknesses](#cryptographic-weaknesses)
 - [Breaking the Enigma Code in WW2](#breaking-the-enigma-code-in-ww2)
 - [Beginning of Modern Computing](#beginning-of-modern-computing)
-- [Theory vs Practice](#theory-vs-practice)
+- [How it Works](#how-it-works)
+- [Theory vs. Practice](#theory-vs-practice)
 - [Credits](#credits)
 
 # Installation

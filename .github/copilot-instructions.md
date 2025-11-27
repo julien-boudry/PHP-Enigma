@@ -19,4 +19,5 @@
 ### Documentation
 
 - Always update the README.md when making API changes
+- Update the table of content if you edit the README
 - **NEVER edit files in the `docs/` directory** - this directory is auto-generated and any manual changes will be overwritten.
