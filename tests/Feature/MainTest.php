@@ -8,10 +8,10 @@ test('general', function (): void {
         right: RotorType::I,
         middle: RotorType::II,
         left: RotorType::III,
+        ringstellungRight: Letter::B,
     );
     $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
     $enigma->setPosition(RotorPosition::P1, Letter::M);
-    $enigma->setRingstellung(RotorPosition::P1, Letter::B);
 
     $enigma->plugLetters(Letter::A, Letter::C);
     $enigma->plugLetters(Letter::B, Letter::Z);

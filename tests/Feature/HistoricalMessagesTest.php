@@ -10,6 +10,10 @@ test('message from dönitz1 may1945', function (): void {
         middle: RotorType::VI,
         left: RotorType::V,
         greek: RotorType::BETA,
+        ringstellungRight: Letter::L,
+        ringstellungMiddle: Letter::E,
+        ringstellungLeft: Letter::P,
+        ringstellungGreek: Letter::E,
     );
     $enigma = new Enigma(EnigmaModel::KMM4, $rotors, ReflectorType::CTHIN);
 
@@ -17,11 +21,6 @@ test('message from dönitz1 may1945', function (): void {
     $enigma->setPosition(RotorPosition::P2, Letter::E);
     $enigma->setPosition(RotorPosition::P3, Letter::A);
     $enigma->setPosition(RotorPosition::GREEK, Letter::N);
-
-    $enigma->setRingstellung(RotorPosition::P1, Letter::L);
-    $enigma->setRingstellung(RotorPosition::P2, Letter::E);
-    $enigma->setRingstellung(RotorPosition::P3, Letter::P);
-    $enigma->setRingstellung(RotorPosition::GREEK, Letter::E);
 
     $enigma->plugLetters(Letter::A, Letter::E);
     $enigma->plugLetters(Letter::B, Letter::F);
@@ -53,14 +52,12 @@ test('Operation Barbarossa (1941)', function (): void {
         right: RotorType::V,    // Right (Fast)
         middle: RotorType::IV,  // Middle
         left: RotorType::II,    // Left (Slow)
+        ringstellungRight: Letter::L,
+        ringstellungMiddle: Letter::U,
+        ringstellungLeft: Letter::B,
     );
 
     $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
-
-    // Ring Settings (Ringstellung)
-    $enigma->setRingstellung(RotorPosition::P1, Letter::L);
-    $enigma->setRingstellung(RotorPosition::P2, Letter::U);
-    $enigma->setRingstellung(RotorPosition::P3, Letter::B);
 
     // Start Position (Grundstellung)
     $enigma->setPosition(RotorPosition::P1, Letter::A);
@@ -98,15 +95,13 @@ test('U-264 (Kapitänleutnant Hartwig Looks) (1942)', function (): void {
         middle: RotorType::IV,     // Middle
         left: RotorType::II,       // Left (Slow)
         greek: RotorType::BETA,    // Greek (Leftmost)
+        ringstellungRight: Letter::V,
+        ringstellungMiddle: Letter::A,
+        ringstellungLeft: Letter::A,
+        ringstellungGreek: Letter::A,
     );
 
     $enigma = new Enigma(EnigmaModel::KMM4, $rotors, ReflectorType::BTHIN);
-
-    // Ring Settings
-    $enigma->setRingstellung(RotorPosition::P1, Letter::V);
-    $enigma->setRingstellung(RotorPosition::P2, Letter::A);
-    $enigma->setRingstellung(RotorPosition::P3, Letter::A);
-    $enigma->setRingstellung(RotorPosition::GREEK, Letter::A);
 
     // Start Position
     $enigma->setPosition(RotorPosition::P1, Letter::A);
@@ -144,14 +139,12 @@ test('Scharnhorst (Konteradmiral Erich Bey) (1943)', function (): void {
         right: RotorType::VIII,   // Right (Fast)
         middle: RotorType::VI,    // Middle
         left: RotorType::III,     // Left (Slow)
+        ringstellungRight: Letter::M,
+        ringstellungMiddle: Letter::H,
+        ringstellungLeft: Letter::A,
     );
 
     $enigma = new Enigma(EnigmaModel::KMM3, $rotors, ReflectorType::B);
-
-    // Ring Settings
-    $enigma->setRingstellung(RotorPosition::P1, Letter::M);
-    $enigma->setRingstellung(RotorPosition::P2, Letter::H);
-    $enigma->setRingstellung(RotorPosition::P3, Letter::A);
 
     // Start Position
     $enigma->setPosition(RotorPosition::P1, Letter::V);

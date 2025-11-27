@@ -81,6 +81,7 @@ class Enigma
 
         foreach ($rotorSelection as $position => $rotorType) {
             $this->mountRotor($position, $rotorType);
+            $this->rotors->get($position)->setRingstellung($rotorSelection->getRingstellung($position));
         }
         $this->mountReflector($reflector);
     }
@@ -189,17 +190,6 @@ class Enigma
     public function getPosition(RotorPosition $position): Letter
     {
         return $this->rotors->get($position)->getPosition();
-    }
-
-    /**
-     * Turn the ringstellung of a rotor to a new position.
-     *
-     * @param RotorPosition $position ID of the rotor
-     * @param Letter $letter letter to turn to
-     */
-    public function setRingstellung(RotorPosition $position, Letter $letter): void
-    {
-        $this->rotors->get($position)->setRingstellung($letter);
     }
 
     /**

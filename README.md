@@ -42,6 +42,9 @@ $rotors = new RotorSelection(
     right: RotorType::I,    // P1 - fastest rotating
     middle: RotorType::II,  // P2
     left: RotorType::III,   // P3 - slowest rotating
+    ringstellungRight: Letter::A,   // Ring setting for P1 (default: A)
+    ringstellungMiddle: Letter::A,  // Ring setting for P2 (default: A)
+    ringstellungLeft: Letter::A,    // Ring setting for P3 (default: A)
 );
 $enigma = new Enigma(EnigmaModel $model, RotorSelection $rotors, ReflectorType $reflector);
 ```
@@ -77,11 +80,6 @@ Turn a rotor to a new position:
 $enigma->setPosition(RotorPosition $position, Letter $letter): void
 ```
 
-Turn the ringstellung on a rotor to a new position:
-```php
-$enigma->setRingstellung(RotorPosition $position, Letter $letter): void
-```
-
 Connect two letters on the plugboard:
 ```php
 $enigma->plugLetters(Letter $letter1, Letter $letter2): void
@@ -110,10 +108,10 @@ $rotors = new RotorSelection(
     right: RotorType::I,
     middle: RotorType::II,
     left: RotorType::III,
+    ringstellungRight: Letter::B,
 );
 $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
 $enigma->setPosition(RotorPosition::P1, Letter::M);
-$enigma->setRingstellung(RotorPosition::P1, Letter::B);
 
 $enigma->plugLetters(Letter::A, Letter::C);
 $enigma->plugLetters(Letter::B, Letter::Z);
@@ -153,14 +151,12 @@ $rotors = new RotorSelection(
     right: RotorType::V,    // Right (Fast)
     middle: RotorType::IV,  // Middle
     left: RotorType::II,    // Left (Slow)
+    ringstellungRight: Letter::L,
+    ringstellungMiddle: Letter::U,
+    ringstellungLeft: Letter::B,
 );
 
 $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
-
-// Ring settings (Ringstellung)
-$enigma->setRingstellung(RotorPosition::P1, Letter::L);
-$enigma->setRingstellung(RotorPosition::P2, Letter::U);
-$enigma->setRingstellung(RotorPosition::P3, Letter::B);
 
 // Start position (Grundstellung)
 $enigma->setPosition(RotorPosition::P1, Letter::A);

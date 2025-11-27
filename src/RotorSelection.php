@@ -22,12 +22,20 @@ readonly class RotorSelection implements \Countable, \IteratorAggregate
      * @param RotorType $middle The middle rotor type (P2)
      * @param RotorType $left The left rotor type (P3) - slowest rotating
      * @param RotorType|null $greek The Greek rotor type (P4) - only for M4 model, never rotates
+     * @param Letter $ringstellungRight The ring setting for the right rotor (default: A)
+     * @param Letter $ringstellungMiddle The ring setting for the middle rotor (default: A)
+     * @param Letter $ringstellungLeft The ring setting for the left rotor (default: A)
+     * @param Letter $ringstellungGreek The ring setting for the Greek rotor (default: A)
      */
     public function __construct(
         public RotorType $right,
         public RotorType $middle,
         public RotorType $left,
         public ?RotorType $greek = null,
+        public Letter $ringstellungRight = Letter::A,
+        public Letter $ringstellungMiddle = Letter::A,
+        public Letter $ringstellungLeft = Letter::A,
+        public Letter $ringstellungGreek = Letter::A,
     ) {}
 
     /**
@@ -72,6 +80,23 @@ readonly class RotorSelection implements \Countable, \IteratorAggregate
     public function hasGreekRotor(): bool
     {
         return $this->greek !== null;
+    }
+
+    /**
+     * Get the ring setting for a rotor position.
+     *
+     * @param RotorPosition $position The position to get the ring setting for
+     *
+     * @return Letter The ring setting for the given position
+     */
+    public function getRingstellung(RotorPosition $position): Letter
+    {
+        return match ($position) {
+            RotorPosition::P1 => $this->ringstellungRight,
+            RotorPosition::P2 => $this->ringstellungMiddle,
+            RotorPosition::P3 => $this->ringstellungLeft,
+            RotorPosition::GREEK => $this->ringstellungGreek,
+        };
     }
 
     /**
