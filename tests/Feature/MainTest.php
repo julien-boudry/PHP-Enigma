@@ -53,13 +53,16 @@ test('mountRotor allows changing a rotor after creation', function (): void {
     $enigma->setPosition(RotorPosition::P1, Letter::A);
 
     // Change rotor at P1 to rotor IV
-    $rotorsConfiguration->mountRotor(RotorPosition::P1, RotorType::IV);
+    $enigma->rotors->mountRotor(RotorPosition::P1, RotorType::IV);
 
     // Encode the same letter - should produce different result
     $resultWithRotorIV = $enigma->encodeLetter(Letter::A);
 
     // Results should be different because we changed the rotor
     self::assertNotSame($resultWithRotorI, $resultWithRotorIV);
+
+    // Same object instance
+    self::assertSame($enigma->rotors, $rotorsConfiguration);
 });
 
 test('mountRotor with ringstellung', function (): void {
