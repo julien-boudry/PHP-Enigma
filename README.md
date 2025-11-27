@@ -15,6 +15,7 @@ A PHP implementation of the historic Enigma cipher machine, supporting multiple 
 - [History](#history)
 - [Enigma Technology](#enigma-technology)
 - [Nazi Operating Procedures](#nazi-operating-procedures)
+- [Cryptographic Weaknesses](#cryptographic-weaknesses)
 - [Breaking the Enigma Code in WW2](#breaking-the-enigma-code-in-ww2)
 - [Beginning of Modern Computing](#beginning-of-modern-computing)
 - [Theory vs Practice](#theory-vs-practice)
@@ -347,6 +348,16 @@ Now, the user will select a 3 letter code of his choosing and encipher that code
 To decipher a message, he would reset the rotors to the daily setting and decode the first 6 characters of the message. It should be a 3 character code, repeated, for example "BTLBTL". Now he would reset the rotors to "BTL" and key in the rest of the message, writing down the letter lit up with each key stroke. The result will be the plaintext message. In the field, the Nazis normally had one person keying in the letters and someone else writing down the message. There may even be a third person to carry the plaintext message to the intended recipient or the enciphered message to a radio operator. Later in the war, the 3 character code was sent only once instead of twice, eliminating an easy method of Allied codebreaking.
 
 The strength of the Enigma cipher gave the Nazis complete confidence in the security of their messages. Even when faced with clear evidence that the Enigma messages were compromised, they steadfastly refused to believe it and instead attributed any security breach to spies or coincidence. While the design was very strong, there were design and operational choices the Nazis made that weakened the encipherment. For instance, the fact that no character could encipher to itself, always using 10 plugboard cables, enciphering the 3 letter message setting twice, etc. all helped the Allies break the Enigma code.
+
+# Cryptographic Weaknesses
+
+The Enigma encryption, while formidable for its time, suffered from several critical flaws that ultimately led to its defeat:
+
+1.  **The Reflector Flaw**: The most significant weakness was that a letter could **never** be encrypted as itself. This property allowed cryptanalysts to rule out vast numbers of possible settings when using "cribs" (guessed plaintext).
+2.  **Reciprocity**: Due to the reflector, the encryption was reciprocal (if A -> Z, then Z -> A). This simplified the mathematical model of the machine.
+3.  **Operational Errors**: Operators often used predictable keys (like initials or diagonal keyboard patterns) or standard message formats.
+
+These vulnerabilities were exploited first by Polish mathematicians (Rejewski, Różycki, Zygalski) who reconstructed the machine's wiring. Later, at Bletchley Park, **Alan Turing** and Gordon Welchman designed the **Bombe**—an electromechanical device that automated the process of finding the daily settings by searching for contradictions based on the "no letter encrypts to itself" rule. This industrial-scale decryption effort, known as **Ultra**, is estimated to have shortened the war by several years.
 
 # Breaking the Enigma Code in WW2
 
