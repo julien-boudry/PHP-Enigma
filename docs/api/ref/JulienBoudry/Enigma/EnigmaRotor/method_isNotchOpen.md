@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaRotor](class_EnigmaRotor.md)
 # Method isNotchOpen()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L130)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L128)
 
 ```php
 public function EnigmaRotor->isNotchOpen( ): bool

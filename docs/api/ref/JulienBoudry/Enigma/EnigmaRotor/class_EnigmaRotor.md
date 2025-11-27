@@ -1,6 +1,6 @@
 > JulienBoudry \ **EnigmaRotor**
 # Class EnigmaRotor
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L32)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L30)
 
 ## Description
 The rotors are the key element of the Enigma. Each provides a monoalphabetical substitution

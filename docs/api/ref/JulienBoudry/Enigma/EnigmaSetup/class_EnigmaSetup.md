@@ -1,6 +1,6 @@
 > JulienBoudry \ **EnigmaSetup**
 # Class EnigmaSetup
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaSetup.php#L16)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaSetup.php#L14)
 
 ## Description
 This class stores the wiring configuration, compatible Enigma models,

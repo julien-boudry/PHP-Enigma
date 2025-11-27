@@ -1,6 +1,6 @@
 > JulienBoudry \ **RotorType**
 # Enum RotorType
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L16)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L14)
 
 ## Description
 Defines the different rotor variants (Walzen) available for Enigma machines.

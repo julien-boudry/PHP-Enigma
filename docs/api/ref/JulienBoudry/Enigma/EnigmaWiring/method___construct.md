@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaWiring](class_EnigmaWiring.md)
 # Method __construct()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L46)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L44)
 
 ```php
 public function EnigmaWiring->__construct( string $wiring )

@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaRotor](class_EnigmaRotor.md)
 # Method __construct()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L107)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L105)
 
 ```php
 public function EnigmaRotor->__construct( string $wiring, array $notches )

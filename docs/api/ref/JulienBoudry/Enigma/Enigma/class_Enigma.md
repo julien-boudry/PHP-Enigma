@@ -1,6 +1,6 @@
 > JulienBoudry \ **Enigma**
 # Class Enigma
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L24)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L22)
 
 ## Description
 This class emulates the historical Enigma machine used during World War II.

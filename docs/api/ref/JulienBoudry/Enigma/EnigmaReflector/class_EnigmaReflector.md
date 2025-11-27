@@ -1,6 +1,6 @@
 > JulienBoudry \ **EnigmaReflector**
 # Class EnigmaReflector
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaReflector.php#L21)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaReflector.php#L19)
 
 ## Description
 After passing through the plugboard and all rotors, the reflector redirects the signal

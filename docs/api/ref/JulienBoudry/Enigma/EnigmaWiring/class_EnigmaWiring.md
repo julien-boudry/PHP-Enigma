@@ -1,6 +1,6 @@
 > JulienBoudry \ **EnigmaWiring**
 # Class EnigmaWiring
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L27)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L25)
 
 ## Description
 This class implements the wiring used by rotors, reflectors, and the plugboard.

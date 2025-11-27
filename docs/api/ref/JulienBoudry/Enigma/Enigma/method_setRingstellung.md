@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method setRingstellung()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L274)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L272)
 
 ```php
 public function Enigma->setRingstellung( JulienBoudry\Enigma\RotorPosition $position, string $letter ): void

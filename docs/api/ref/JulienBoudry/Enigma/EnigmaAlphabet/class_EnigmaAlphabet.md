@@ -1,6 +1,6 @@
 > JulienBoudry \ **EnigmaAlphabet**
 # Class EnigmaAlphabet
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaAlphabet.php#L15)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaAlphabet.php#L13)
 
 ## Description
 The Enigma machine uses a 26-letter alphabet (A-Z) for all encryption operations.

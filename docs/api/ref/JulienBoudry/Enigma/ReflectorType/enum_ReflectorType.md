@@ -1,6 +1,6 @@
 > JulienBoudry \ **ReflectorType**
 # Enum ReflectorType
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/ReflectorType.php#L15)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/ReflectorType.php#L13)
 
 ## Description
 Defines the different reflector variants (Umkehrwalze) available for Enigma machines.

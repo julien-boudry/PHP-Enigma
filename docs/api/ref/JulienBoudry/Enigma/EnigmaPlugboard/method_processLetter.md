@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaPlugboard](class_EnigmaPlugboard.md)
 # Method processLetter()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L64)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L62)
 
 ```php
 public function EnigmaPlugboard->processLetter( int $letter ): int

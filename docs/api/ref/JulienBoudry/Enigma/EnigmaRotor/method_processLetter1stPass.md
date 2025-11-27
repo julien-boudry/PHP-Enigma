@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaRotor](class_EnigmaRotor.md)
 # Method processLetter1stPass()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L144)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L142)
 
 ```php
 public function EnigmaRotor->processLetter1stPass( int $letter ): int

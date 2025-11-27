@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method __construct()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L127)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L125)
 
 ```php
 public function Enigma->__construct( JulienBoudry\Enigma\EnigmaModel $model, array $rotors, JulienBoudry\Enigma\ReflectorType $reflector )

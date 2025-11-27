@@ -1,6 +1,6 @@
 > JulienBoudry \ **RotorPosition**
 # Enum RotorPosition
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorPosition.php#L15)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorPosition.php#L13)
 
 ## Description
 Defines the slots where rotors can be mounted. Most Enigma models have 3 positions (P1, P2, P3),

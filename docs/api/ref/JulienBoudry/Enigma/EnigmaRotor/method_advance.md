@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaRotor](class_EnigmaRotor.md)
 # Method advance()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L119)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRotor.php#L117)
 
 ```php
 public function EnigmaRotor->advance( ): void

@@ -1,6 +1,6 @@
 > JulienBoudry \ **EnigmaPlugboard**
 # Class EnigmaPlugboard
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L33)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L31)
 
 ## Description
 The plugboard allows the operator to swap pairs of letters before and after

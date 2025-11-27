@@ -1,6 +1,6 @@
 > JulienBoudry \ **EnigmaModel**
 # Enum EnigmaModel
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaModel.php#L15)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaModel.php#L13)
 
 ## Description
 Defines the different historical Enigma machine variants that can be emulated.

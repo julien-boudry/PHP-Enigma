@@ -1,6 +1,6 @@
 > JulienBoudry \ [RotorPosition](enum_RotorPosition.md)
 # Method getPositionIntValue()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorPosition.php#L39)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorPosition.php#L37)
 
 ```php
 public static function RotorPosition::getPositionIntValue( JulienBoudry\Enigma\RotorPosition $position ): int
