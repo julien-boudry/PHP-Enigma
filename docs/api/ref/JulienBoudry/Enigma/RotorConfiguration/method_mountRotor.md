@@ -1,6 +1,6 @@
 > JulienBoudry \ [RotorConfiguration](class_RotorConfiguration.md)
 # Method mountRotor()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L168)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L184)
 
 ```php
 public function RotorConfiguration->mountRotor( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $rotor, [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] ): void
@@ -38,4 +38,4 @@ The ring setting (only used if $rotor is RotorType)
 
 
 ## Throws
-- **[\InvalidArgumentException]()** _If the rotor type is already used or incompatible with position_
+- **[\JulienBoudry\Enigma\Exception\EnigmaConfigurationException](../Exception/EnigmaConfigurationException/class_EnigmaConfigurationException.md)** _If the rotor type is already used or incompatible with position (when strictMode is enabled)_

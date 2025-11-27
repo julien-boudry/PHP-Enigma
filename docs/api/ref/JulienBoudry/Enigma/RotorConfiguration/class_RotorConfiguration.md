@@ -1,12 +1,17 @@
 > JulienBoudry \ **RotorConfiguration**
 # Class RotorConfiguration
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L18)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L19)
 
 ## Description
 This class encapsulates the collection of rotors and provides type-safe access
 to rotors by their position. It accepts either RotorType enums (which will be
 converted to AbstractRotor instances) or pre-configured AbstractRotor objects.
 ## Elements
+
+### Public Properties
+| Property Name | Description |
+| ------------- | ------------- |
+| [strictMode(...)](property_strictMode.md) | _When true (default), validates that rotors are not duplicated and that Greek rotors are only in GREEK position. Set to false to bypass these checks and allow any configuration._ |
 
 ### Public Methods
 | Method Name | Description |
@@ -32,9 +37,12 @@ converted to AbstractRotor instances) or pre-configured AbstractRotor objects.
 class JulienBoudry\Enigma\RotorConfiguration implements Countable, IteratorAggregate, Traversable
 {
 
+    // Properties
+    public bool $strictMode = true;
+
     // Methods
     public function __clone( ): void;
-    public function __construct( JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p1, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p2, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p3, [ JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor|null $greek = null, JulienBoudry\Enigma\Letter $ringstellungP1 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP2 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP3 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungGreek = \JulienBoudry\Enigma\Letter::A ] );
+    public function __construct( JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p1, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p2, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p3, [ JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor|null $greek = null, JulienBoudry\Enigma\Letter $ringstellungP1 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP2 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP3 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungGreek = \JulienBoudry\Enigma\Letter::A, bool $strictMode = true ] );
     public function count( ): int;
     public function get( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Rotor\AbstractRotor;
     public function getGreek( ): JulienBoudry\Enigma\Rotor\AbstractRotor;
@@ -57,11 +65,12 @@ class JulienBoudry\Enigma\RotorConfiguration implements Countable, IteratorAggre
 {
 
     // Properties
+    public bool $strictMode = true;
     private array $rotors = [];
 
     // Methods
     public function __clone( ): void;
-    public function __construct( JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p1, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p2, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p3, [ JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor|null $greek = null, JulienBoudry\Enigma\Letter $ringstellungP1 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP2 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP3 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungGreek = \JulienBoudry\Enigma\Letter::A ] );
+    public function __construct( JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p1, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p2, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p3, [ JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor|null $greek = null, JulienBoudry\Enigma\Letter $ringstellungP1 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP2 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP3 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungGreek = \JulienBoudry\Enigma\Letter::A, bool $strictMode = true ] );
     public function count( ): int;
     public function get( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Rotor\AbstractRotor;
     public function getGreek( ): JulienBoudry\Enigma\Rotor\AbstractRotor;

@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method mountReflector()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L183)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L199)
 
 ```php
 public function Enigma->mountReflector( JulienBoudry\Enigma\ReflectorType|JulienBoudry\Enigma\Reflector\AbstractReflector $reflector ): void
@@ -25,4 +25,4 @@ The reflector type or instance to mount
 
 
 ## Throws
-- **[\InvalidArgumentException]()** _If the reflector is not compatible with this model_
+- **[\InvalidArgumentException]()** _If the reflector is not compatible with this model (when strictMode is enabled)_

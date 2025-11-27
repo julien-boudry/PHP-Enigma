@@ -19,6 +19,13 @@
 | [RotorPosition](ref/JulienBoudry/Enigma/RotorPosition/enum_RotorPosition.md) | _Defines the slots where rotors can be mounted. Most Enigma models have 3 positions (P1, P2, P3), while the Kriegsmarine M4 has an additional fourth "Greek" position that never rotates.  Signal flow: K..._ |
 | [RotorType](ref/JulienBoudry/Enigma/RotorType/enum_RotorType.md) | _Defines the different rotor variants (Walzen) available for Enigma machines. Each rotor has unique internal wiring and notch positions. Different Enigma models support different subsets of these rotor..._ |
 
+## JulienBoudry\Enigma\Exception
+| Class Name | Description |
+| ------------- | ------------- |
+| [EnigmaConfigurationException](ref/JulienBoudry/Enigma/Exception/EnigmaConfigurationException/class_EnigmaConfigurationException.md) | _This includes: - Incompatible rotor/model combinations - Incompatible reflector/model combinations - Invalid rotor positions (e.g., Greek rotor in wrong position) - Duplicate rotors  These errors can ..._ |
+| [EnigmaWiringException](ref/JulienBoudry/Enigma/Exception/EnigmaWiringException/class_EnigmaWiringException.md) | _This exception is thrown for hardware-level wiring errors that cannot be bypassed, such as: - Invalid DORA reflector pairs (wrong count, duplicate letters, self-connections) - Invalid rotor wiring con..._ |
+
+
 ## JulienBoudry\Enigma\Reflector
 | Class Name | Description |
 | ------------- | ------------- |

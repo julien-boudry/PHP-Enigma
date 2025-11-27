@@ -1,9 +1,9 @@
 > JulienBoudry \ [RotorConfiguration](class_RotorConfiguration.md)
 # Method __construct()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L43)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L54)
 
 ```php
-public function RotorConfiguration->__construct( JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p1, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p2, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p3, [ JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor|null $greek = null, JulienBoudry\Enigma\Letter $ringstellungP1 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP2 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP3 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungGreek = \JulienBoudry\Enigma\Letter::A ] )
+public function RotorConfiguration->__construct( JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p1, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p2, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $p3, [ JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor|null $greek = null, JulienBoudry\Enigma\Letter $ringstellungP1 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP2 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungP3 = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungGreek = \JulienBoudry\Enigma\Letter::A, bool $strictMode = true ] )
 ```
 
 ## Description
@@ -76,3 +76,11 @@ JulienBoudry\Enigma\Letter $ringstellungGreek = \JulienBoudry\Enigma\Letter::A
 **Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 Ring setting for Greek rotor (only used if $greek is RotorType)
+
+### **strictMode:**
+```php
+bool $strictMode = true
+```
+**Type:** `bool`
+
+Whether to enforce configuration checks (default: true)

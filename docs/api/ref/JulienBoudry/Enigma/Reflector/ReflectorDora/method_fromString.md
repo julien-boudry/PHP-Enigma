@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](../../readme.md) \ [ReflectorDora](class_ReflectorDora.md)
 # Method fromString()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorDora.php#L185)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorDora.php#L186)
 
 ```php
 public static function ReflectorDora::fromString( string $pairsString ): JulienBoudry\Enigma\Reflector\ReflectorDora
@@ -22,4 +22,4 @@ string $pairsString
 
 
 ## Throws
-- **[\InvalidArgumentException]()** _If the string format is invalid_
+- **[\JulienBoudry\Enigma\Exception\EnigmaWiringException](../../Exception/EnigmaWiringException/class_EnigmaWiringException.md)** _If the string format is invalid_

@@ -1,9 +1,9 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method __construct()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L57)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L68)
 
 ```php
-public function Enigma->__construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector )
+public function Enigma->__construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector, [ bool $strictMode = true ] )
 ```
 
 ## Description
@@ -34,3 +34,11 @@ JulienBoudry\Enigma\ReflectorType $reflector
 **Type:** [`JulienBoudry\Enigma\ReflectorType`](../ReflectorType/enum_ReflectorType.md)
 
 ID for the reflector for the initial setup
+
+### **strictMode:**
+```php
+bool $strictMode = true
+```
+**Type:** `bool`
+
+Whether to enforce compatibility checks (default: true)

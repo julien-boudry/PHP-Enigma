@@ -1,6 +1,6 @@
 > JulienBoudry \ **Enigma**
 # Class Enigma
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L25)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L26)
 
 ## Description
 This class emulates the historical Enigma machine used during World War II.
@@ -27,6 +27,7 @@ After each encoded letter, the advance mechanism changes the internal setup by r
 | [plugboard(...)](property_plugboard.md) | __ |
 | [reflector(...)](property_reflector.md) | __ |
 | [rotors(...)](property_rotors.md) | __ |
+| [strictMode(...)](property_strictMode.md) | _When true (default), validates that rotors and reflectors are compatible with the selected model. Set to false to bypass all compatibility checks and allow any configuration._ |
 
 ### Public Methods
 | Method Name | Description |
@@ -55,6 +56,7 @@ class JulienBoudry\Enigma\Enigma
     public protected(set) readonly protected(set) JulienBoudry\Enigma\EnigmaPlugboard $plugboard;
     final public private(set) private(set) JulienBoudry\Enigma\Reflector\AbstractReflector $reflector;
     final public private(set) private(set) JulienBoudry\Enigma\RotorConfiguration $rotors;
+    public bool $strictMode = true;
 
     // Static Methods
     public static function createRandom( JulienBoudry\Enigma\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): JulienBoudry\Enigma\Enigma;
@@ -62,7 +64,7 @@ class JulienBoudry\Enigma\Enigma
 
     // Methods
     public function __clone( ): void;
-    public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector );
+    public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector, [ bool $strictMode = true ] );
     public function encodeBinary( string $binaryData, [ bool $formatOutput = false ] ): string;
     public function encodeLatinText( string $text, [ string $spaceReplacement = 'X', bool $formatOutput = false ] ): string;
     public function encodeLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
@@ -87,6 +89,7 @@ class JulienBoudry\Enigma\Enigma
     public protected(set) readonly protected(set) JulienBoudry\Enigma\EnigmaPlugboard $plugboard;
     final public private(set) private(set) JulienBoudry\Enigma\Reflector\AbstractReflector $reflector;
     final public private(set) private(set) JulienBoudry\Enigma\RotorConfiguration $rotors;
+    public bool $strictMode = true;
 
     // Static Methods
     public static function createRandom( JulienBoudry\Enigma\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): JulienBoudry\Enigma\Enigma;
@@ -94,7 +97,7 @@ class JulienBoudry\Enigma\Enigma
 
     // Methods
     public function __clone( ): void;
-    public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector );
+    public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector, [ bool $strictMode = true ] );
     public function encodeBinary( string $binaryData, [ bool $formatOutput = false ] ): string;
     public function encodeLatinText( string $text, [ string $spaceReplacement = 'X', bool $formatOutput = false ] ): string;
     public function encodeLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
