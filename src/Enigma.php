@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma;
 
+use JulienBoudry\Enigma\Reflector\AbstractReflector;
+
 /**
  * Represents an Enigma cipher machine.
  *
@@ -36,7 +38,7 @@ class Enigma
     /**
      * The reflector used by the Enigma.
      */
-    public private(set) EnigmaReflector $reflector;
+    public private(set) AbstractReflector $reflector;
 
     /**
      * The model of the Enigma machine.
@@ -124,7 +126,7 @@ class Enigma
             );
         }
 
-        $this->reflector = EnigmaReflector::fromType($reflector);
+        $this->reflector = $reflector->createReflector();
     }
 
     /**
