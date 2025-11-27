@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](../../readme.md) \ **ReflectorDora**
 # Class ReflectorDora
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorDora.php#L25)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorDora.php#L27)
 
 ## Description
 The UKW-D was a rewirable reflector introduced by the Wehrmacht/Luftwaffe in January 1944.
@@ -28,6 +28,8 @@ This reflector was compatible with 3-rotor Enigma models (Wehrmacht/Luftwaffe).
 | ------------- | ------------- |
 | [__clone(...)](../AbstractReflector/method___clone.md) | __ |
 | [__construct(...)](method___construct.md) | __ |
+| [getType(...)](method_getType.md) | _Returns DORA for default wiring, null for custom configurations._ |
+| [getWiringPairs(...)](method_getWiringPairs.md) | __ |
 | [processLetter(...)](../AbstractReflector/method_processLetter.md) | _Because pins are connected in pairs, there is no difference if processLetter1stPass() or processLetter2ndPass() is used._ |
 
 
@@ -42,6 +44,8 @@ final class JulienBoudry\Enigma\Reflector\ReflectorDora extends JulienBoudry\Eni
 
     // Methods
     public function __construct( array $pairs );
+    public function getType( ): JulienBoudry\Enigma\ReflectorType;
+    public function getWiringPairs( ): array;
 
     // Inherited Methods
     public function AbstractReflector->__clone( ): void;
@@ -64,6 +68,8 @@ final class JulienBoudry\Enigma\Reflector\ReflectorDora extends JulienBoudry\Eni
 
     // Methods
     public function __construct( array $pairs );
+    public function getType( ): JulienBoudry\Enigma\ReflectorType;
+    public function getWiringPairs( ): array;
 
     // Inherited Methods
     public function AbstractReflector->__clone( ): void;

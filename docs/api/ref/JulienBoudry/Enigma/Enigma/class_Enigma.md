@@ -1,6 +1,6 @@
 > JulienBoudry \ **Enigma**
 # Class Enigma
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L24)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L25)
 
 ## Description
 This class emulates the historical Enigma machine used during World War II.
@@ -13,6 +13,12 @@ plugboard → rotors 1..3(4) → reflector → rotors 3(4)..1 → plugboard.
 
 After each encoded letter, the advance mechanism changes the internal setup by rotating the rotors.
 ## Elements
+
+### Public Static Methods
+| Method Name | Description |
+| ------------- | ------------- |
+| [createRandom(...)](method_createRandom.md) | _Generates cryptographically secure random settings including: - Random rotor selection and order (compatible with model) - Random ring settings (Ringstellung) - Random initial positions (Grundstellung..._ |
+| [createRandomWithConfiguration(...)](method_createRandomWithConfiguration.md) | _Same as createRandom() but also returns the configuration object, which is useful for logging, debugging, or recreating the same setup._ |
 
 ### Public Properties
 | Property Name | Description |
@@ -31,6 +37,7 @@ After each encoded letter, the advance mechanism changes the internal setup by r
 | [encodeLatinText(...)](method_encodeLatinText.md) | _This method accepts Latin-based text (including numbers, accented characters, punctuation, spaces, etc.) and converts it to Enigma-compatible format before encoding. Non-Latin characters (Cyrillic, Ch..._ |
 | [encodeLetter(...)](method_encodeLetter.md) | _The letter passes the plugboard, the rotors, the reflector, the rotors in the opposite direction and again the plugboard. Every encoding triggers the advancemechanism._ |
 | [encodeLetters(...)](method_encodeLetters.md) | _This method processes each character in the input through the Enigma machine. The input must contain only valid Enigma alphabet characters (A-Z). Use encodeText() for arbitrary text that needs convers..._ |
+| [getConfiguration(...)](method_getConfiguration.md) | _Extracts the complete state including rotor types, ring settings, current positions, reflector, and plugboard configuration._ |
 | [getPosition(...)](method_getPosition.md) | __ |
 | [mountReflector(...)](method_mountReflector.md) | _The previously used reflector will be replaced._ |
 | [plugLetters(...)](method_plugLetters.md) | __ |
@@ -49,6 +56,10 @@ class JulienBoudry\Enigma\Enigma
     final public private(set) private(set) JulienBoudry\Enigma\Reflector\AbstractReflector $reflector;
     final public private(set) private(set) JulienBoudry\Enigma\RotorConfiguration $rotors;
 
+    // Static Methods
+    public static function createRandom( JulienBoudry\Enigma\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): JulienBoudry\Enigma\Enigma;
+    public static function createRandomWithConfiguration( JulienBoudry\Enigma\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): array;
+
     // Methods
     public function __clone( ): void;
     public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector );
@@ -56,6 +67,7 @@ class JulienBoudry\Enigma\Enigma
     public function encodeLatinText( string $text, [ string $spaceReplacement = 'X', bool $formatOutput = false ] ): string;
     public function encodeLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
     public function encodeLetters( string $letters ): string;
+    public function getConfiguration( ): JulienBoudry\Enigma\EnigmaConfiguration;
     public function getPosition( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Letter;
     public function mountReflector( JulienBoudry\Enigma\ReflectorType|JulienBoudry\Enigma\Reflector\AbstractReflector $reflector ): void;
     public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;
@@ -76,6 +88,10 @@ class JulienBoudry\Enigma\Enigma
     final public private(set) private(set) JulienBoudry\Enigma\Reflector\AbstractReflector $reflector;
     final public private(set) private(set) JulienBoudry\Enigma\RotorConfiguration $rotors;
 
+    // Static Methods
+    public static function createRandom( JulienBoudry\Enigma\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): JulienBoudry\Enigma\Enigma;
+    public static function createRandomWithConfiguration( JulienBoudry\Enigma\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): array;
+
     // Methods
     public function __clone( ): void;
     public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector );
@@ -83,6 +99,7 @@ class JulienBoudry\Enigma\Enigma
     public function encodeLatinText( string $text, [ string $spaceReplacement = 'X', bool $formatOutput = false ] ): string;
     public function encodeLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
     public function encodeLetters( string $letters ): string;
+    public function getConfiguration( ): JulienBoudry\Enigma\EnigmaConfiguration;
     public function getPosition( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Letter;
     public function mountReflector( JulienBoudry\Enigma\ReflectorType|JulienBoudry\Enigma\Reflector\AbstractReflector $reflector ): void;
     public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;

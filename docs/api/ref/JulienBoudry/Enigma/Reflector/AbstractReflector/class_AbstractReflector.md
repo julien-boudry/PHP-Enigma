@@ -16,6 +16,7 @@ using the same settings—encoding the same message twice returns the original t
 | ------------- | ------------- |
 | [__clone(...)](method___clone.md) | __ |
 | [__construct(...)](method___construct.md) | __ |
+| [getType(...)](method_getType.md) | __ |
 | [processLetter(...)](method_processLetter.md) | _Because pins are connected in pairs, there is no difference if processLetter1stPass() or processLetter2ndPass() is used._ |
 
 
@@ -27,6 +28,7 @@ abstract class JulienBoudry\Enigma\Reflector\AbstractReflector
     // Methods
     public function __clone( ): void;
     public function __construct( );
+    abstract public function getType( ): JulienBoudry\Enigma\ReflectorType;
     public function processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
 
 }
@@ -43,6 +45,7 @@ abstract class JulienBoudry\Enigma\Reflector\AbstractReflector
     // Methods
     public function __clone( ): void;
     public function __construct( );
+    abstract public function getType( ): JulienBoudry\Enigma\ReflectorType;
     public function processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
 
 }

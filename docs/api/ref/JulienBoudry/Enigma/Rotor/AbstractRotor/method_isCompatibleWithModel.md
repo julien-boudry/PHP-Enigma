@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](../../readme.md) \ [AbstractRotor](class_AbstractRotor.md)
 # Method isCompatibleWithModel()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Rotor/AbstractRotor.php#L186)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Rotor/AbstractRotor.php#L196)
 
 ```php
 public function AbstractRotor->isCompatibleWithModel( JulienBoudry\Enigma\EnigmaModel $model ): bool

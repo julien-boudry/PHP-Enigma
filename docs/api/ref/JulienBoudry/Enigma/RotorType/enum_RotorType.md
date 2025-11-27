@@ -22,6 +22,11 @@ Different Enigma models support different subsets of these rotors.
 | VII | `public const VII = \JulienBoudry\Enigma\RotorType::VII` | __ |
 | VIII | `public const VIII = \JulienBoudry\Enigma\RotorType::VIII` | __ |
 
+### Public Static Methods
+| Method Name | Description |
+| ------------- | ------------- |
+| [getGreekRotors(...)](method_getGreekRotors.md) | __ |
+
 ### Public Properties
 | Property Name | Description |
 | ------------- | ------------- |
@@ -63,6 +68,9 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
     // Properties
     public protected(set) readonly protected(set) string $name;
 
+    // Static Methods
+    public static function getGreekRotors( ): array;
+
     // Methods
     public function createRotor( [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] ): JulienBoudry\Enigma\Rotor\AbstractRotor;
     public function isGreekRotor( ): bool;
@@ -98,6 +106,9 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
 
     // Properties
     public protected(set) readonly protected(set) string $name;
+
+    // Static Methods
+    public static function getGreekRotors( ): array;
 
     // Methods
     public function createRotor( [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] ): JulienBoudry\Enigma\Rotor\AbstractRotor;

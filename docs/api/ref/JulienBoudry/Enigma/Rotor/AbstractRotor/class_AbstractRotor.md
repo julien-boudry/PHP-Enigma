@@ -40,6 +40,7 @@ The Ringstellung (ring setting) offsets the wiring relative to the notches and v
 | [__construct(...)](method___construct.md) | __ |
 | [advance(...)](method_advance.md) | _When position reaches Letter::count(), it is reset to 0._ |
 | [getPosition(...)](method_getPosition.md) | __ |
+| [getRingstellung(...)](method_getRingstellung.md) | __ |
 | [getType(...)](method_getType.md) | __ |
 | [isCompatibleWithModel(...)](method_isCompatibleWithModel.md) | __ |
 | [isGreekRotor(...)](method_isGreekRotor.md) | __ |
@@ -67,6 +68,7 @@ abstract class JulienBoudry\Enigma\Rotor\AbstractRotor
     public function __construct( [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] );
     public function advance( ): void;
     public function getPosition( ): JulienBoudry\Enigma\Letter;
+    public function getRingstellung( ): JulienBoudry\Enigma\Letter;
     abstract public function getType( ): JulienBoudry\Enigma\RotorType;
     public function isCompatibleWithModel( JulienBoudry\Enigma\EnigmaModel $model ): bool;
     public function isGreekRotor( ): bool;
@@ -100,6 +102,7 @@ abstract class JulienBoudry\Enigma\Rotor\AbstractRotor
     public function __construct( [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] );
     public function advance( ): void;
     public function getPosition( ): JulienBoudry\Enigma\Letter;
+    public function getRingstellung( ): JulienBoudry\Enigma\Letter;
     abstract public function getType( ): JulienBoudry\Enigma\RotorType;
     public function isCompatibleWithModel( JulienBoudry\Enigma\EnigmaModel $model ): bool;
     public function isGreekRotor( ): bool;

@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](../../readme.md) \ [AbstractReflector](class_AbstractReflector.md)
 # Method processLetter()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/AbstractReflector.php#L54)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/AbstractReflector.php#L59)
 
 ```php
 public function AbstractReflector->processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter

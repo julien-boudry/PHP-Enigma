@@ -24,6 +24,7 @@ Notch at position V (turnover at W).
 | [__construct(...)](../AbstractRotor/method___construct.md) | __ |
 | [advance(...)](../AbstractRotor/method_advance.md) | _When position reaches Letter::count(), it is reset to 0._ |
 | [getPosition(...)](../AbstractRotor/method_getPosition.md) | __ |
+| [getRingstellung(...)](../AbstractRotor/method_getRingstellung.md) | __ |
 | [getType(...)](method_getType.md) | __ |
 | [isCompatibleWithModel(...)](../AbstractRotor/method_isCompatibleWithModel.md) | __ |
 | [isGreekRotor(...)](../AbstractRotor/method_isGreekRotor.md) | __ |
@@ -54,6 +55,7 @@ final class JulienBoudry\Enigma\Rotor\RotorIII extends JulienBoudry\Enigma\Rotor
     public function AbstractRotor->__construct( [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] );
     public function AbstractRotor->advance( ): void;
     public function AbstractRotor->getPosition( ): JulienBoudry\Enigma\Letter;
+    public function AbstractRotor->getRingstellung( ): JulienBoudry\Enigma\Letter;
     public function AbstractRotor->isCompatibleWithModel( JulienBoudry\Enigma\EnigmaModel $model ): bool;
     public function AbstractRotor->isGreekRotor( ): bool;
     public function AbstractRotor->isNotchOpen( ): bool;
@@ -86,6 +88,7 @@ final class JulienBoudry\Enigma\Rotor\RotorIII extends JulienBoudry\Enigma\Rotor
     public function AbstractRotor->__construct( [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] );
     public function AbstractRotor->advance( ): void;
     public function AbstractRotor->getPosition( ): JulienBoudry\Enigma\Letter;
+    public function AbstractRotor->getRingstellung( ): JulienBoudry\Enigma\Letter;
     public function AbstractRotor->isCompatibleWithModel( JulienBoudry\Enigma\EnigmaModel $model ): bool;
     public function AbstractRotor->isGreekRotor( ): bool;
     public function AbstractRotor->isNotchOpen( ): bool;
