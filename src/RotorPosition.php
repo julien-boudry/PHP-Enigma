@@ -33,9 +33,4 @@ enum RotorPosition: int
      * this rotor never turns.
      */
     case GREEK = 3;
-
-    public static function getPositionIntValue(RotorPosition $position): int
-    {
-        return $position->value;
-    }
 }

@@ -1,10 +1,14 @@
 <?php
 
 declare(strict_types=1);
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorSelection, RotorType};
 
 test('general', function (): void {
-    $rotors = [RotorType::I, RotorType::II, RotorType::III];
+    $rotors = new RotorSelection(
+        right: RotorType::I,
+        middle: RotorType::II,
+        left: RotorType::III,
+    );
     $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
     $enigma->setPosition(RotorPosition::P1, Letter::M);
     $enigma->setRingstellung(RotorPosition::P1, Letter::B);

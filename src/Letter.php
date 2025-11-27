@@ -49,7 +49,7 @@ enum Letter: int
         static $count;
 
         if ($count === null) {
-            $count = count(self::cases());
+            $count = \count(self::cases());
         }
 
         return $count;
@@ -66,7 +66,7 @@ enum Letter: int
     {
         $char = strtoupper($char);
 
-        return self::tryFrom(ord($char) - ord('A'))
+        return self::tryFrom(\ord($char) - \ord('A'))
             ?? throw new \ValueError("Invalid character for Enigma alphabet: {$char}");
     }
 
@@ -75,7 +75,7 @@ enum Letter: int
      */
     public function toChar(): string
     {
-        return chr(ord('A') + $this->value);
+        return \chr(\ord('A') + $this->value);
     }
 
     /**

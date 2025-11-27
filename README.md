@@ -38,7 +38,12 @@ composer require julien-boudry/enigma-machine
 To create a new instance call the constructor with the following parameters:
 
 ```php
-$enigma = new Enigma(EnigmaModel $model, array $rotors, ReflectorType $reflector);
+$rotors = new RotorSelection(
+    right: RotorType::I,    // P1 - fastest rotating
+    middle: RotorType::II,  // P2
+    left: RotorType::III,   // P3 - slowest rotating
+);
+$enigma = new Enigma(EnigmaModel $model, RotorSelection $rotors, ReflectorType $reflector);
 ```
 
 Available models (`EnigmaModel` enum):
@@ -47,7 +52,7 @@ Available models (`EnigmaModel` enum):
 *   `EnigmaModel::KMM4` - Kriegsmarine M4 (4 rotors)
 
 Parameters:
-*   `$rotors` - Array of `RotorType` enums to identify the rotors for the initial setup. The number of rotors has to match the number needed by the specific model.
+*   `$rotors` - A `RotorSelection` object specifying the rotors for each position. For 4-rotor models (KMM4), include the `greek` parameter.
 *   `$reflector` - `ReflectorType` enum to identify the reflector for the initial setup.
 
 To encode or decode a letter, use:
@@ -97,11 +102,15 @@ $enigma->getPosition(RotorPosition $position): Letter
 ```php
 <?php
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorSelection, RotorType};
 
 require_once 'vendor/autoload.php';
 
-$rotors = [RotorType::I, RotorType::II, RotorType::III];
+$rotors = new RotorSelection(
+    right: RotorType::I,
+    middle: RotorType::II,
+    left: RotorType::III,
+);
 $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
 $enigma->setPosition(RotorPosition::P1, Letter::M);
 $enigma->setRingstellung(RotorPosition::P1, Letter::B);
@@ -136,15 +145,15 @@ The library provides convenient methods to encode entire messages, not just sing
 Use `encodeLetters()` for text that contains only valid Enigma characters (A-Z). This example recreates a real historical message from **Operation Barbarossa (1941)**:
 
 ```php
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorSelection, RotorType};
 
 // Historical settings from Operation Barbarossa, 1941
 // Rotors: II, IV, V (right to left) | Reflector: B | Ring settings: B-U-L | Start: B-L-A
-$rotors = [
-    RotorPosition::P1->value => RotorType::V,   // Right (Fast)
-    RotorPosition::P2->value => RotorType::IV,  // Middle
-    RotorPosition::P3->value => RotorType::II,  // Left (Slow)
-];
+$rotors = new RotorSelection(
+    right: RotorType::V,    // Right (Fast)
+    middle: RotorType::IV,  // Middle
+    left: RotorType::II,    // Left (Slow)
+);
 
 $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
 
@@ -183,9 +192,13 @@ Use `encodeLatinText()` for human-readable text. It automatically converts:
 - Common punctuation → letter codes
 
 ```php
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorPosition, RotorSelection, RotorType};
 
-$rotors = [RotorType::I, RotorType::II, RotorType::III];
+$rotors = new RotorSelection(
+    right: RotorType::I,
+    middle: RotorType::II,
+    left: RotorType::III,
+);
 $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
 $enigma->setPosition(RotorPosition::P1, Letter::A);
 $enigma->setPosition(RotorPosition::P2, Letter::A);
@@ -259,9 +272,13 @@ $plain = EnigmaTextConverter::removeGroupFormatting('DERFU ABORO'); // "DERFUABO
 For arbitrary binary data (files, images, etc.), use `encodeBinary()`. This method converts each byte to a 2-letter representation (base-26 encoding), allowing any data to be encoded through Enigma with **lossless roundtrip** encoding/decoding.
 
 ```php
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorPosition, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorPosition, RotorSelection, RotorType};
 
-$rotors = [RotorType::I, RotorType::II, RotorType::III];
+$rotors = new RotorSelection(
+    right: RotorType::I,
+    middle: RotorType::II,
+    left: RotorType::III,
+);
 
 $encoder = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
 $encoder->setPosition(RotorPosition::P1, Letter::A);

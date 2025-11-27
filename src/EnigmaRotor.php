@@ -132,6 +132,7 @@ class EnigmaRotor
                 return true;
             }
         }
+
         return false;
     }
 

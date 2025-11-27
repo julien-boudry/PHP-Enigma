@@ -30,10 +30,8 @@ class Enigma
 
     /**
      * The rotors used by the Enigma.
-     *
-     * @var array<EnigmaRotor>
      */
-    public private(set) array $rotors;
+    public private(set) RotorConfiguration $rotors;
 
     /**
      * The reflector used by the Enigma.
@@ -58,13 +56,13 @@ class Enigma
      * Constructor sets up the plugboard and creates the rotors and reflectros available for the given model.
      * The initital rotors and reflectros are mounted.
      *
-     * @param $model ID for the model to emulate
-     * @param array<RotorType> $rotors
-     * @param $reflector ID for the reflector for the initial setup
+     * @param EnigmaModel $model ID for the model to emulate
+     * @param RotorSelection $rotorSelection The selection of rotors to mount
+     * @param ReflectorType $reflector ID for the reflector for the initial setup
      */
-    public function __construct(EnigmaModel $model, array $rotors, ReflectorType $reflector)
+    public function __construct(EnigmaModel $model, RotorSelection $rotorSelection, ReflectorType $reflector)
     {
-        $this->rotors = [];
+        $this->rotors = new RotorConfiguration;
         $this->availablerotors = [];
         $this->availablereflectors = [];
 
@@ -81,8 +79,8 @@ class Enigma
             }
         }
 
-        foreach ($rotors as $key => $value) {
-            $this->mountRotor(RotorPosition::from($key), $value);
+        foreach ($rotorSelection as $position => $rotorType) {
+            $this->mountRotor($position, $rotorType);
         }
         $this->mountReflector($reflector);
     }
@@ -95,14 +93,14 @@ class Enigma
      */
     private function advance(): void
     {
-        if ($this->rotors[1]->isNotchOpen()) {
-            $this->rotors[2]->advance();
-            $this->rotors[1]->advance();
+        if ($this->rotors->getMiddle()->isNotchOpen()) {
+            $this->rotors->getLeft()->advance();
+            $this->rotors->getMiddle()->advance();
         }
-        if ($this->rotors[0]->isNotchOpen()) {
-            $this->rotors[1]->advance();
+        if ($this->rotors->getRight()->isNotchOpen()) {
+            $this->rotors->getMiddle()->advance();
         }
-        $this->rotors[0]->advance();
+        $this->rotors->getRight()->advance();
     }
 
     /**
@@ -120,12 +118,16 @@ class Enigma
     {
         $this->advance();
         $value = $this->plugboard->processLetter($letter);
-        for ($idx = 0; $idx < \count($this->rotors); $idx++) {
-            $value = $this->rotors[$idx]->processLetter1stPass($value);
+
+        $rotorArray = $this->rotors->toArray();
+        foreach ($rotorArray as $rotor) {
+            $value = $rotor->processLetter1stPass($value);
         }
+
         $value = $this->reflector->processLetter($value);
-        for ($idx = (\count($this->rotors) - 1); $idx > -1; $idx--) {
-            $value = $this->rotors[$idx]->processLetter2ndPass($value);
+
+        foreach (array_reverse($rotorArray) as $rotor) {
+            $value = $rotor->processLetter2ndPass($value);
         }
 
         return $this->plugboard->processLetter($value);
@@ -143,16 +145,14 @@ class Enigma
      */
     public function mountRotor(RotorPosition $position, RotorType $rotor): void
     {
-        $position = RotorPosition::getPositionIntValue($position);
-
         if ($this->availablerotors[$rotor->name]->inUse) {
             return;
         }
-        if (isset($this->rotors[$position])) {
-            $this->rotors[$position]->inUse = false;
+        if ($this->rotors->has($position)) {
+            $this->rotors->get($position)->inUse = false;
         }
-        $this->rotors[$position] = $this->availablerotors[$rotor->name];
-        $this->rotors[$position]->inUse = true;
+        $this->rotors->set($position, $this->availablerotors[$rotor->name]);
+        $this->rotors->get($position)->inUse = true;
     }
 
     /**
@@ -176,7 +176,7 @@ class Enigma
      */
     public function setPosition(RotorPosition $position, Letter $letter): void
     {
-        $this->rotors[$position->value]->setPosition($letter);
+        $this->rotors->get($position)->setPosition($letter);
     }
 
     /**
@@ -188,9 +188,7 @@ class Enigma
      */
     public function getPosition(RotorPosition $position): Letter
     {
-        $positionInt = RotorPosition::getPositionIntValue($position);
-
-        return $this->rotors[$positionInt]->getPosition();
+        return $this->rotors->get($position)->getPosition();
     }
 
     /**
@@ -201,9 +199,7 @@ class Enigma
      */
     public function setRingstellung(RotorPosition $position, Letter $letter): void
     {
-        $positionInt = RotorPosition::getPositionIntValue($position);
-
-        $this->rotors[$positionInt]->setRingstellung($letter);
+        $this->rotors->get($position)->setRingstellung($letter);
     }
 
     /**
@@ -329,11 +325,7 @@ class Enigma
         $plugboardProperty->setValue($this, $plugboardClone);
 
         // Clone mounted rotors
-        $clonedRotors = [];
-        foreach ($this->rotors as $position => $rotor) {
-            $clonedRotors[$position] = clone $rotor;
-        }
-        $this->rotors = $clonedRotors;
+        $this->rotors = clone $this->rotors;
 
         // Clone the reflector
         $this->reflector = clone $this->reflector;
