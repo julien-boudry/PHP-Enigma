@@ -7,13 +7,9 @@
 | ------------- | ------------- |
 | [Enigma](Enigma/class_Enigma.md) | _This class emulates the historical Enigma machine used during World War II. Three different models can be emulated (Wehrmacht/Luftwaffe, Kriegsmarine M3, and Kriegsmarine M4), each with its own set of..._ |
 | [EnigmaPlugboard](EnigmaPlugboard/class_EnigmaPlugboard.md) | _The plugboard allows the operator to swap pairs of letters before and after the signal passes through the rotors. This adds an additional layer of encryption.  The initial setup has no swaps (each let..._ |
-| [EnigmaReflector](EnigmaReflector/class_EnigmaReflector.md) | _After passing through the plugboard and all rotors, the reflector redirects the signal back through the rotors in reverse order. Because no letter connects to itself, the signal always takes a differe..._ |
-| [EnigmaRotor](EnigmaRotor/class_EnigmaRotor.md) | _The rotors are the key element of the Enigma. Each provides a monoalphabetical substitution through its internal wiring, but unlike the plugboard and reflector, rotors move, causing the substitution t..._ |
-| [EnigmaSetup](EnigmaSetup/class_EnigmaSetup.md) | _This class stores the wiring configuration, compatible Enigma models, and notch positions for a specific rotor or reflector type. It is used to initialize the available components of an Enigma machine..._ |
 | [EnigmaTextConverter](EnigmaTextConverter/class_EnigmaTextConverter.md) | _Historical Enigma machines could only process the 26 letters A-Z. This class provides conversion utilities to transform any input text into a format suitable for Enigma encryption.  Common historical ..._ |
 | [EnigmaWiring](EnigmaWiring/class_EnigmaWiring.md) | _This class implements the wiring used by rotors, reflectors, and the plugboard. Each wiring provides a monoalphabetical substitution, mapping each input letter to a different output letter.  Example w..._ |
-| [RotorConfiguration](RotorConfiguration/class_RotorConfiguration.md) | _This class encapsulates the collection of rotors and provides type-safe access to rotors by their position. It also validates that the correct number of rotors is configured for the given Enigma model..._ |
-| [RotorSelection](RotorSelection/class_RotorSelection.md) | _This class encapsulates the choice of which rotors to use in each position before they are actually mounted in the machine. It provides type-safe access to rotor types by their position._ |
+| [RotorConfiguration](RotorConfiguration/class_RotorConfiguration.md) | _This class encapsulates the collection of rotors and provides type-safe access to rotors by their position. It accepts either RotorType enums (which will be converted to AbstractRotor instances) or pr..._ |
 
 ## Enums
 

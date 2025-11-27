@@ -1,6 +1,6 @@
 > JulienBoudry \ **RotorType**
 # Enum RotorType
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L14)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L16)
 
 ## Description
 Defines the different rotor variants (Walzen) available for Enigma machines.
@@ -26,6 +26,12 @@ Different Enigma models support different subsets of these rotors.
 | Property Name | Description |
 | ------------- | ------------- |
 | [name(...)](property_name.md) | __ |
+
+### Public Methods
+| Method Name | Description |
+| ------------- | ------------- |
+| [createRotor(...)](method_createRotor.md) | __ |
+| [isGreekRotor(...)](method_isGreekRotor.md) | __ |
 
 
 ## Public Representation
@@ -56,6 +62,10 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
 
     // Properties
     public protected(set) readonly protected(set) string $name;
+
+    // Methods
+    public function createRotor( [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] ): JulienBoudry\Enigma\Rotor\AbstractRotor;
+    public function isGreekRotor( ): bool;
 
 }
 ```
@@ -88,6 +98,10 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
 
     // Properties
     public protected(set) readonly protected(set) string $name;
+
+    // Methods
+    public function createRotor( [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] ): JulienBoudry\Enigma\Rotor\AbstractRotor;
+    public function isGreekRotor( ): bool;
 
 }
 ```

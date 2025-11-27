@@ -1,18 +1,18 @@
 > JulienBoudry \ **RotorConfiguration**
 # Class RotorConfiguration
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L16)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L18)
 
 ## Description
 This class encapsulates the collection of rotors and provides type-safe access
-to rotors by their position. It also validates that the correct number of rotors
-is configured for the given Enigma model.
+to rotors by their position. It accepts either RotorType enums (which will be
+converted to AbstractRotor instances) or pre-configured AbstractRotor objects.
 ## Elements
 
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
 | [__clone(...)](method___clone.md) | __ |
-| [__construct(...)](method___construct.md) | __ |
+| [__construct(...)](method___construct.md) | _Each rotor can be specified as: - A RotorType enum (will be created with the corresponding ringstellung parameter) - An AbstractRotor instance (for pre-configured rotors, ringstellung parameter is ign..._ |
 | [count(...)](method_count.md) | __ |
 | [get(...)](method_get.md) | __ |
 | [getGreek(...)](method_getGreek.md) | __ |
@@ -22,10 +22,9 @@ is configured for the given Enigma model.
 | [getRight(...)](method_getRight.md) | __ |
 | [has(...)](method_has.md) | __ |
 | [hasGreekRotor(...)](method_hasGreekRotor.md) | __ |
-| [set(...)](method_set.md) | __ |
+| [mountRotor(...)](method_mountRotor.md) | __ |
 | [toArray(...)](method_toArray.md) | __ |
 | [validateForModel(...)](method_validateForModel.md) | __ |
-| [withRotor(...)](method_withRotor.md) | __ |
 
 
 ## Public Representation
@@ -35,20 +34,19 @@ class JulienBoudry\Enigma\RotorConfiguration implements Countable, IteratorAggre
 
     // Methods
     public function __clone( ): void;
-    public function __construct( [ ?JulienBoudry\Enigma\EnigmaRotor $right = null, ?JulienBoudry\Enigma\EnigmaRotor $middle = null, ?JulienBoudry\Enigma\EnigmaRotor $left = null, ?JulienBoudry\Enigma\EnigmaRotor $greek = null ] );
+    public function __construct( JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $right, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $middle, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $left, [ JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor|null $greek = null, JulienBoudry\Enigma\Letter $ringstellungRight = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungMiddle = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungLeft = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungGreek = \JulienBoudry\Enigma\Letter::A ] );
     public function count( ): int;
-    public function get( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\EnigmaRotor;
-    public function getGreek( ): JulienBoudry\Enigma\EnigmaRotor;
+    public function get( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Rotor\AbstractRotor;
+    public function getGreek( ): JulienBoudry\Enigma\Rotor\AbstractRotor;
     public function getIterator( ): Traversable;
-    public function getLeft( ): JulienBoudry\Enigma\EnigmaRotor;
-    public function getMiddle( ): JulienBoudry\Enigma\EnigmaRotor;
-    public function getRight( ): JulienBoudry\Enigma\EnigmaRotor;
+    public function getLeft( ): JulienBoudry\Enigma\Rotor\AbstractRotor;
+    public function getMiddle( ): JulienBoudry\Enigma\Rotor\AbstractRotor;
+    public function getRight( ): JulienBoudry\Enigma\Rotor\AbstractRotor;
     public function has( JulienBoudry\Enigma\RotorPosition $position ): bool;
     public function hasGreekRotor( ): bool;
-    public function set( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\EnigmaRotor $rotor ): void;
+    public function mountRotor( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $rotor, [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] ): void;
     public function toArray( ): array;
     public function validateForModel( JulienBoudry\Enigma\EnigmaModel $model ): void;
-    public function withRotor( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\EnigmaRotor $rotor ): JulienBoudry\Enigma\RotorConfiguration;
 
 }
 ```
@@ -59,28 +57,23 @@ class JulienBoudry\Enigma\RotorConfiguration implements Countable, IteratorAggre
 {
 
     // Properties
-    private ?JulienBoudry\Enigma\EnigmaRotor $greek;
-    private ?JulienBoudry\Enigma\EnigmaRotor $left;
-    private ?JulienBoudry\Enigma\EnigmaRotor $middle;
-    private ?JulienBoudry\Enigma\EnigmaRotor $right;
     private array $rotors = [];
 
     // Methods
     public function __clone( ): void;
-    public function __construct( [ ?JulienBoudry\Enigma\EnigmaRotor $right = null, ?JulienBoudry\Enigma\EnigmaRotor $middle = null, ?JulienBoudry\Enigma\EnigmaRotor $left = null, ?JulienBoudry\Enigma\EnigmaRotor $greek = null ] );
+    public function __construct( JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $right, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $middle, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $left, [ JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor|null $greek = null, JulienBoudry\Enigma\Letter $ringstellungRight = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungMiddle = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungLeft = \JulienBoudry\Enigma\Letter::A, JulienBoudry\Enigma\Letter $ringstellungGreek = \JulienBoudry\Enigma\Letter::A ] );
     public function count( ): int;
-    public function get( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\EnigmaRotor;
-    public function getGreek( ): JulienBoudry\Enigma\EnigmaRotor;
+    public function get( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Rotor\AbstractRotor;
+    public function getGreek( ): JulienBoudry\Enigma\Rotor\AbstractRotor;
     public function getIterator( ): Traversable;
-    public function getLeft( ): JulienBoudry\Enigma\EnigmaRotor;
-    public function getMiddle( ): JulienBoudry\Enigma\EnigmaRotor;
-    public function getRight( ): JulienBoudry\Enigma\EnigmaRotor;
+    public function getLeft( ): JulienBoudry\Enigma\Rotor\AbstractRotor;
+    public function getMiddle( ): JulienBoudry\Enigma\Rotor\AbstractRotor;
+    public function getRight( ): JulienBoudry\Enigma\Rotor\AbstractRotor;
     public function has( JulienBoudry\Enigma\RotorPosition $position ): bool;
     public function hasGreekRotor( ): bool;
-    public function set( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\EnigmaRotor $rotor ): void;
+    public function mountRotor( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\RotorType|JulienBoudry\Enigma\Rotor\AbstractRotor $rotor, [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] ): void;
     public function toArray( ): array;
     public function validateForModel( JulienBoudry\Enigma\EnigmaModel $model ): void;
-    public function withRotor( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\EnigmaRotor $rotor ): JulienBoudry\Enigma\RotorConfiguration;
 
 }
 ```

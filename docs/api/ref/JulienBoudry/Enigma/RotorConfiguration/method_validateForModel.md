@@ -1,6 +1,6 @@
 > JulienBoudry \ [RotorConfiguration](class_RotorConfiguration.md)
 # Method validateForModel()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L187)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L264)
 
 ```php
 public function RotorConfiguration->validateForModel( JulienBoudry\Enigma\EnigmaModel $model ): void

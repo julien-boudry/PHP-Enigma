@@ -1,6 +1,6 @@
 > JulienBoudry \ **Enigma**
 # Class Enigma
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L22)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L24)
 
 ## Description
 This class emulates the historical Enigma machine used during World War II.
@@ -17,8 +17,7 @@ After each encoded letter, the advance mechanism changes the internal setup by r
 ### Public Properties
 | Property Name | Description |
 | ------------- | ------------- |
-| [availablereflectors(...)](property_availablereflectors.md) | __ |
-| [availablerotors(...)](property_availablerotors.md) | __ |
+| [model(...)](property_model.md) | __ |
 | [plugboard(...)](property_plugboard.md) | __ |
 | [reflector(...)](property_reflector.md) | __ |
 | [rotors(...)](property_rotors.md) | __ |
@@ -34,10 +33,8 @@ After each encoded letter, the advance mechanism changes the internal setup by r
 | [encodeLetters(...)](method_encodeLetters.md) | _This method processes each character in the input through the Enigma machine. The input must contain only valid Enigma alphabet characters (A-Z). Use encodeText() for arbitrary text that needs convers..._ |
 | [getPosition(...)](method_getPosition.md) | __ |
 | [mountReflector(...)](method_mountReflector.md) | _The previously used reflector will be replaced._ |
-| [mountRotor(...)](method_mountRotor.md) | _A rotor may only be used in one position at a time, so if an rotor is already in use nothing is changed. The previously used rotor will be replaced._ |
 | [plugLetters(...)](method_plugLetters.md) | __ |
 | [setPosition(...)](method_setPosition.md) | __ |
-| [setRingstellung(...)](method_setRingstellung.md) | __ |
 | [unplugLetters(...)](method_unplugLetters.md) | _Because letters are connected in pairs, we only need to know one of them._ |
 
 
@@ -47,25 +44,22 @@ class JulienBoudry\Enigma\Enigma
 {
 
     // Properties
-    final public private(set) private(set) array $availablereflectors;
-    final public private(set) private(set) array $availablerotors;
+    public protected(set) readonly protected(set) JulienBoudry\Enigma\EnigmaModel $model;
     public protected(set) readonly protected(set) JulienBoudry\Enigma\EnigmaPlugboard $plugboard;
-    final public private(set) private(set) JulienBoudry\Enigma\EnigmaReflector $reflector;
+    final public private(set) private(set) JulienBoudry\Enigma\Reflector\AbstractReflector $reflector;
     final public private(set) private(set) JulienBoudry\Enigma\RotorConfiguration $rotors;
 
     // Methods
     public function __clone( ): void;
-    public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorSelection $rotorSelection, JulienBoudry\Enigma\ReflectorType $reflector );
+    public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector );
     public function encodeBinary( string $binaryData, [ bool $formatOutput = false ] ): string;
     public function encodeLatinText( string $text, [ string $spaceReplacement = 'X', bool $formatOutput = false ] ): string;
     public function encodeLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
     public function encodeLetters( string $letters ): string;
     public function getPosition( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Letter;
     public function mountReflector( JulienBoudry\Enigma\ReflectorType $reflector ): void;
-    public function mountRotor( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\RotorType $rotor ): void;
     public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;
     public function setPosition( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\Letter $letter ): void;
-    public function setRingstellung( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\Letter $letter ): void;
     public function unplugLetters( JulienBoudry\Enigma\Letter $letter ): void;
 
 }
@@ -77,25 +71,22 @@ class JulienBoudry\Enigma\Enigma
 {
 
     // Properties
-    final public private(set) private(set) array $availablereflectors;
-    final public private(set) private(set) array $availablerotors;
+    public protected(set) readonly protected(set) JulienBoudry\Enigma\EnigmaModel $model;
     public protected(set) readonly protected(set) JulienBoudry\Enigma\EnigmaPlugboard $plugboard;
-    final public private(set) private(set) JulienBoudry\Enigma\EnigmaReflector $reflector;
+    final public private(set) private(set) JulienBoudry\Enigma\Reflector\AbstractReflector $reflector;
     final public private(set) private(set) JulienBoudry\Enigma\RotorConfiguration $rotors;
 
     // Methods
     public function __clone( ): void;
-    public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorSelection $rotorSelection, JulienBoudry\Enigma\ReflectorType $reflector );
+    public function __construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorConfiguration $rotors, JulienBoudry\Enigma\ReflectorType $reflector );
     public function encodeBinary( string $binaryData, [ bool $formatOutput = false ] ): string;
     public function encodeLatinText( string $text, [ string $spaceReplacement = 'X', bool $formatOutput = false ] ): string;
     public function encodeLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
     public function encodeLetters( string $letters ): string;
     public function getPosition( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Letter;
     public function mountReflector( JulienBoudry\Enigma\ReflectorType $reflector ): void;
-    public function mountRotor( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\RotorType $rotor ): void;
     public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;
     public function setPosition( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\Letter $letter ): void;
-    public function setRingstellung( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\Letter $letter ): void;
     public function unplugLetters( JulienBoudry\Enigma\Letter $letter ): void;
 
 }

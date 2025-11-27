@@ -1,6 +1,6 @@
 > JulienBoudry \ [RotorConfiguration](class_RotorConfiguration.md)
 # Method toArray()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L222)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L311)
 
 ```php
 public function RotorConfiguration->toArray( ): array

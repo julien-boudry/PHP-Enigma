@@ -19,6 +19,14 @@ Each model has its own specific set of available rotors and reflectors.
 | ------------- | ------------- |
 | [name(...)](property_name.md) | __ |
 
+### Public Methods
+| Method Name | Description |
+| ------------- | ------------- |
+| [getCompatibleReflectors(...)](method_getCompatibleReflectors.md) | __ |
+| [getExpectedRotorCount(...)](method_getExpectedRotorCount.md) | __ |
+| [isReflectorCompatible(...)](method_isReflectorCompatible.md) | __ |
+| [requiresGreekRotor(...)](method_requiresGreekRotor.md) | __ |
+
 
 ## Public Representation
 ```php
@@ -34,6 +42,12 @@ enum JulienBoudry\Enigma\EnigmaModel implements UnitEnum
 
     // Properties
     public protected(set) readonly protected(set) string $name;
+
+    // Methods
+    public function getCompatibleReflectors( ): array;
+    public function getExpectedRotorCount( ): int;
+    public function isReflectorCompatible( JulienBoudry\Enigma\ReflectorType $reflector ): bool;
+    public function requiresGreekRotor( ): bool;
 
 }
 ```
@@ -52,6 +66,12 @@ enum JulienBoudry\Enigma\EnigmaModel implements UnitEnum
 
     // Properties
     public protected(set) readonly protected(set) string $name;
+
+    // Methods
+    public function getCompatibleReflectors( ): array;
+    public function getExpectedRotorCount( ): int;
+    public function isReflectorCompatible( JulienBoudry\Enigma\ReflectorType $reflector ): bool;
+    public function requiresGreekRotor( ): bool;
 
 }
 ```

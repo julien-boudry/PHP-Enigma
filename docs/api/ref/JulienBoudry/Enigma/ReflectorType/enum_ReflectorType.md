@@ -1,6 +1,6 @@
 > JulienBoudry \ **ReflectorType**
 # Enum ReflectorType
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/ReflectorType.php#L13)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/ReflectorType.php#L15)
 
 ## Description
 Defines the different reflector variants (Umkehrwalze) available for Enigma machines.
@@ -20,6 +20,11 @@ Different Enigma models support different reflector types.
 | ------------- | ------------- |
 | [name(...)](property_name.md) | __ |
 
+### Public Methods
+| Method Name | Description |
+| ------------- | ------------- |
+| [createReflector(...)](method_createReflector.md) | __ |
+
 
 ## Public Representation
 ```php
@@ -37,6 +42,9 @@ enum JulienBoudry\Enigma\ReflectorType implements UnitEnum
 
     // Properties
     public protected(set) readonly protected(set) string $name;
+
+    // Methods
+    public function createReflector( ): JulienBoudry\Enigma\Reflector\AbstractReflector;
 
 }
 ```
@@ -57,6 +65,9 @@ enum JulienBoudry\Enigma\ReflectorType implements UnitEnum
 
     // Properties
     public protected(set) readonly protected(set) string $name;
+
+    // Methods
+    public function createReflector( ): JulienBoudry\Enigma\Reflector\AbstractReflector;
 
 }
 ```

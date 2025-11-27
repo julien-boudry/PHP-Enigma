@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method mountReflector()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L166)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L121)
 
 ```php
 public function Enigma->mountReflector( JulienBoudry\Enigma\ReflectorType $reflector ): void
@@ -17,9 +17,12 @@ JulienBoudry\Enigma\ReflectorType $reflector
 ```
 **Type:** [`JulienBoudry\Enigma\ReflectorType`](../ReflectorType/enum_ReflectorType.md)
 
-ID of the reflector to use
+The reflector type to mount
 
 ## Return
 **Type:** `void`
 
 
+
+## Throws
+- **[\InvalidArgumentException]()** _If the reflector is not compatible with this model_

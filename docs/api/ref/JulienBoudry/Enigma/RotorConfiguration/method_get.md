@@ -1,9 +1,9 @@
 > JulienBoudry \ [RotorConfiguration](class_RotorConfiguration.md)
 # Method get()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L62)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L138)
 
 ```php
-public function RotorConfiguration->get( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\EnigmaRotor
+public function RotorConfiguration->get( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Rotor\AbstractRotor
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ JulienBoudry\Enigma\RotorPosition $position
 The position to get
 
 ## Return
-**Type:** [`JulienBoudry\Enigma\EnigmaRotor`](../EnigmaRotor/class_EnigmaRotor.md)
+**Type:** [`JulienBoudry\Enigma\Rotor\AbstractRotor`](../Rotor/AbstractRotor/class_AbstractRotor.md)
 
 The rotor at the given position
 

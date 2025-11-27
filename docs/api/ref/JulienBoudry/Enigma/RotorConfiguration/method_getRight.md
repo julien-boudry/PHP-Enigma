@@ -1,13 +1,13 @@
 > JulienBoudry \ [RotorConfiguration](class_RotorConfiguration.md)
 # Method getRight()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L129)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L206)
 
 ```php
-public function RotorConfiguration->getRight( ): JulienBoudry\Enigma\EnigmaRotor
+public function RotorConfiguration->getRight( ): JulienBoudry\Enigma\Rotor\AbstractRotor
 ```
 
 ## Return
-**Type:** [`JulienBoudry\Enigma\EnigmaRotor`](../EnigmaRotor/class_EnigmaRotor.md)
+**Type:** [`JulienBoudry\Enigma\Rotor\AbstractRotor`](../Rotor/AbstractRotor/class_AbstractRotor.md)
 
 
 

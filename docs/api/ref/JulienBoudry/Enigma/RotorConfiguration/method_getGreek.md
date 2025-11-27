@@ -1,13 +1,13 @@
 > JulienBoudry \ [RotorConfiguration](class_RotorConfiguration.md)
 # Method getGreek()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L159)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L236)
 
 ```php
-public function RotorConfiguration->getGreek( ): JulienBoudry\Enigma\EnigmaRotor
+public function RotorConfiguration->getGreek( ): JulienBoudry\Enigma\Rotor\AbstractRotor
 ```
 
 ## Return
-**Type:** [`JulienBoudry\Enigma\EnigmaRotor`](../EnigmaRotor/class_EnigmaRotor.md)
+**Type:** [`JulienBoudry\Enigma\Rotor\AbstractRotor`](../Rotor/AbstractRotor/class_AbstractRotor.md)
 
 
 
