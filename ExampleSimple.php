@@ -84,10 +84,10 @@ use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfig
 require_once 'vendor/autoload.php';
 
 $rotorsConfiguration = new RotorConfiguration(
-    right: RotorType::I,
-    middle: RotorType::II,
-    left: RotorType::III,
-    ringstellungRight: Letter::B,
+    p1: RotorType::I,
+    p2: RotorType::II,
+    p3: RotorType::III,
+    ringstellungP1: Letter::B,
 );
 $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
 $enigma->setPosition(RotorPosition::P1, Letter::M);

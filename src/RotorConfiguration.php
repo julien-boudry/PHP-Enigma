@@ -31,28 +31,28 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      * - A RotorType enum (will be created with the corresponding ringstellung parameter)
      * - An AbstractRotor instance (for pre-configured rotors, ringstellung parameter is ignored)
      *
-     * @param RotorType|AbstractRotor $right The right rotor (P1) - fastest rotating
-     * @param RotorType|AbstractRotor $middle The middle rotor (P2)
-     * @param RotorType|AbstractRotor $left The left rotor (P3) - slowest rotating
-     * @param RotorType|AbstractRotor|null $greek The Greek rotor (P4) - only for M4 model, never rotates
-     * @param Letter $ringstellungRight The ring setting for the right rotor (only used if $right is RotorType)
-     * @param Letter $ringstellungMiddle The ring setting for the middle rotor (only used if $middle is RotorType)
-     * @param Letter $ringstellungLeft The ring setting for the left rotor (only used if $left is RotorType)
-     * @param Letter $ringstellungGreek The ring setting for the Greek rotor (only used if $greek is RotorType)
+     * @param RotorType|AbstractRotor $p1 Position 1 rotor (rightmost, fastest rotating)
+     * @param RotorType|AbstractRotor $p2 Position 2 rotor (middle)
+     * @param RotorType|AbstractRotor $p3 Position 3 rotor (leftmost in 3-rotor models)
+     * @param RotorType|AbstractRotor|null $greek Greek position rotor (M4 only, never rotates)
+     * @param Letter $ringstellungP1 Ring setting for P1 rotor (only used if $p1 is RotorType)
+     * @param Letter $ringstellungP2 Ring setting for P2 rotor (only used if $p2 is RotorType)
+     * @param Letter $ringstellungP3 Ring setting for P3 rotor (only used if $p3 is RotorType)
+     * @param Letter $ringstellungGreek Ring setting for Greek rotor (only used if $greek is RotorType)
      */
     public function __construct(
-        RotorType|AbstractRotor $right,
-        RotorType|AbstractRotor $middle,
-        RotorType|AbstractRotor $left,
+        RotorType|AbstractRotor $p1,
+        RotorType|AbstractRotor $p2,
+        RotorType|AbstractRotor $p3,
         RotorType|AbstractRotor|null $greek = null,
-        Letter $ringstellungRight = Letter::A,
-        Letter $ringstellungMiddle = Letter::A,
-        Letter $ringstellungLeft = Letter::A,
+        Letter $ringstellungP1 = Letter::A,
+        Letter $ringstellungP2 = Letter::A,
+        Letter $ringstellungP3 = Letter::A,
         Letter $ringstellungGreek = Letter::A,
     ) {
-        $this->rotors[RotorPosition::P1->value] = $this->resolveRotor($right, $ringstellungRight);
-        $this->rotors[RotorPosition::P2->value] = $this->resolveRotor($middle, $ringstellungMiddle);
-        $this->rotors[RotorPosition::P3->value] = $this->resolveRotor($left, $ringstellungLeft);
+        $this->rotors[RotorPosition::P1->value] = $this->resolveRotor($p1, $ringstellungP1);
+        $this->rotors[RotorPosition::P2->value] = $this->resolveRotor($p2, $ringstellungP2);
+        $this->rotors[RotorPosition::P3->value] = $this->resolveRotor($p3, $ringstellungP3);
 
         if ($greek !== null) {
             $this->rotors[RotorPosition::GREEK->value] = $this->resolveRotor($greek, $ringstellungGreek);
@@ -199,37 +199,37 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
     }
 
     /**
-     * Get the right rotor (P1) - the fastest rotating rotor.
+     * Get the P1 rotor (rightmost, fastest rotating).
      *
      * @throws \InvalidArgumentException If no rotor is mounted
      */
-    public function getRight(): AbstractRotor
+    public function getP1(): AbstractRotor
     {
         return $this->get(RotorPosition::P1);
     }
 
     /**
-     * Get the middle rotor (P2).
+     * Get the P2 rotor (middle).
      *
      * @throws \InvalidArgumentException If no rotor is mounted
      */
-    public function getMiddle(): AbstractRotor
+    public function getP2(): AbstractRotor
     {
         return $this->get(RotorPosition::P2);
     }
 
     /**
-     * Get the left rotor (P3) - the slowest rotating rotor.
+     * Get the P3 rotor (leftmost in 3-rotor models).
      *
      * @throws \InvalidArgumentException If no rotor is mounted
      */
-    public function getLeft(): AbstractRotor
+    public function getP3(): AbstractRotor
     {
         return $this->get(RotorPosition::P3);
     }
 
     /**
-     * Get the Greek rotor (P4) - only available on M4 model.
+     * Get the Greek rotor (M4 only, never rotates).
      *
      * @throws \InvalidArgumentException If no rotor is mounted
      */

@@ -64,20 +64,26 @@ class Enigma
 
     /**
      * Advance the rotors.
-     * Rotor 1 advances every time, rotor 2 when a notch on rotor 1 is open and when rotor 3 advances, rotor 3 when a notch on rotor 2 is open.
+     *
+     * P1 (rightmost) advances every keypress.
+     * P2 (middle) advances when P1's notch is open, or when P3 advances (double-stepping).
+     * P3 (leftmost) advances when P2's notch is open.
      *
      * @return void
      */
     private function advance(): void
     {
-        if ($this->rotors->getMiddle()->isNotchOpen()) {
-            $this->rotors->getLeft()->advance();
-            $this->rotors->getMiddle()->advance();
+        // Double-stepping: when P2's notch is open, both P2 and P3 advance
+        if ($this->rotors->getP2()->isNotchOpen()) {
+            $this->rotors->getP3()->advance();
+            $this->rotors->getP2()->advance();
         }
-        if ($this->rotors->getRight()->isNotchOpen()) {
-            $this->rotors->getMiddle()->advance();
+        // Normal stepping: when P1's notch is open, P2 advances
+        if ($this->rotors->getP1()->isNotchOpen()) {
+            $this->rotors->getP2()->advance();
         }
-        $this->rotors->getRight()->advance();
+        // P1 always advances
+        $this->rotors->getP1()->advance();
     }
 
     /**

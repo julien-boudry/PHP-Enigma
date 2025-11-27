@@ -9,9 +9,9 @@ describe('Enigma string encoding', function (): void {
         $this->enigma = new Enigma(
             EnigmaModel::WMLW,
             new RotorConfiguration(
-                right: RotorType::I,
-                middle: RotorType::II,
-                left: RotorType::III,
+                p1: RotorType::I,
+                p2: RotorType::II,
+                p3: RotorType::III,
             ),
             ReflectorType::B
         );
@@ -37,9 +37,9 @@ describe('Enigma string encoding', function (): void {
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
                 new RotorConfiguration(
-                    right: RotorType::I,
-                    middle: RotorType::II,
-                    left: RotorType::III,
+                    p1: RotorType::I,
+                    p2: RotorType::II,
+                    p3: RotorType::III,
                 ),
                 ReflectorType::B
             );
@@ -94,9 +94,9 @@ describe('Enigma string encoding', function (): void {
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
                 new RotorConfiguration(
-                    right: RotorType::I,
-                    middle: RotorType::II,
-                    left: RotorType::III,
+                    p1: RotorType::I,
+                    p2: RotorType::II,
+                    p3: RotorType::III,
                 ),
                 ReflectorType::B
             );
@@ -125,9 +125,9 @@ describe('Enigma string encoding', function (): void {
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
                 new RotorConfiguration(
-                    right: RotorType::I,
-                    middle: RotorType::II,
-                    left: RotorType::III,
+                    p1: RotorType::I,
+                    p2: RotorType::II,
+                    p3: RotorType::III,
                 ),
                 ReflectorType::B
             );
@@ -155,9 +155,9 @@ describe('Enigma string encoding', function (): void {
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
                 new RotorConfiguration(
-                    right: RotorType::I,
-                    middle: RotorType::II,
-                    left: RotorType::III,
+                    p1: RotorType::I,
+                    p2: RotorType::II,
+                    p3: RotorType::III,
                 ),
                 ReflectorType::B
             );
@@ -194,9 +194,9 @@ describe('Enigma string encoding', function (): void {
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
                 new RotorConfiguration(
-                    right: RotorType::I,
-                    middle: RotorType::II,
-                    left: RotorType::III,
+                    p1: RotorType::I,
+                    p2: RotorType::II,
+                    p3: RotorType::III,
                 ),
                 ReflectorType::B
             );

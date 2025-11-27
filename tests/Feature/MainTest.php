@@ -5,10 +5,10 @@ use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfig
 
 test('general', function (): void {
     $rotorsConfiguration = new RotorConfiguration(
-        right: RotorType::I,
-        middle: RotorType::II,
-        left: RotorType::III,
-        ringstellungRight: Letter::B,
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+        ringstellungP1: Letter::B,
     );
     $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
     $enigma->setPosition(RotorPosition::P1, Letter::M);
@@ -37,9 +37,9 @@ test('general', function (): void {
 
 test('mountRotor allows changing a rotor after creation', function (): void {
     $rotorsConfiguration = new RotorConfiguration(
-        right: RotorType::I,
-        middle: RotorType::II,
-        left: RotorType::III,
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
     );
     $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
     $enigma->setPosition(RotorPosition::P1, Letter::A);
@@ -67,9 +67,9 @@ test('mountRotor allows changing a rotor after creation', function (): void {
 
 test('mountRotor with ringstellung', function (): void {
     $rotorsConfiguration = new RotorConfiguration(
-        right: RotorType::I,
-        middle: RotorType::II,
-        left: RotorType::III,
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
     );
     $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
     $enigma->setPosition(RotorPosition::P1, Letter::A);
@@ -93,17 +93,17 @@ test('mountRotor with ringstellung', function (): void {
 
 test('duplicate rotor throws exception in constructor', function (): void {
     expect(fn() => new RotorConfiguration(
-        right: RotorType::I,
-        middle: RotorType::I, // Duplicate!
-        left: RotorType::III,
+        p1: RotorType::I,
+        p2: RotorType::I, // Duplicate!
+        p3: RotorType::III,
     ))->toThrow(InvalidArgumentException::class, 'Rotor I is already mounted');
 });
 
 test('duplicate rotor throws exception in mountRotor', function (): void {
     $rotorsConfiguration = new RotorConfiguration(
-        right: RotorType::I,
-        middle: RotorType::II,
-        left: RotorType::III,
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
     );
 
     expect(fn() => $rotorsConfiguration->mountRotor(RotorPosition::P2, RotorType::I))
@@ -112,39 +112,39 @@ test('duplicate rotor throws exception in mountRotor', function (): void {
 
 test('replacing same position with different rotor is allowed', function (): void {
     $rotorsConfiguration = new RotorConfiguration(
-        right: RotorType::I,
-        middle: RotorType::II,
-        left: RotorType::III,
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
     );
 
     // This should not throw - we're replacing P1 with a different rotor
     $rotorsConfiguration->mountRotor(RotorPosition::P1, RotorType::IV);
 
-    expect($rotorsConfiguration->getRight()->getType())->toBe(RotorType::IV);
+    expect($rotorsConfiguration->getP1()->getType())->toBe(RotorType::IV);
 });
 
 test('greek rotor in non-greek position throws exception', function (): void {
     expect(fn() => new RotorConfiguration(
-        right: RotorType::BETA, // Greek rotor in wrong position!
-        middle: RotorType::II,
-        left: RotorType::III,
+        p1: RotorType::BETA, // Greek rotor in wrong position!
+        p2: RotorType::II,
+        p3: RotorType::III,
     ))->toThrow(InvalidArgumentException::class, 'Greek rotors (BETA/GAMMA) can only be mounted in the GREEK position');
 });
 
 test('non-greek rotor in greek position throws exception', function (): void {
     expect(fn() => new RotorConfiguration(
-        right: RotorType::I,
-        middle: RotorType::II,
-        left: RotorType::III,
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
         greek: RotorType::IV, // Non-greek rotor in greek position!
     ))->toThrow(InvalidArgumentException::class, 'Only Greek rotors (BETA/GAMMA) can be mounted in the GREEK position');
 });
 
 test('incompatible rotor for model throws exception', function (): void {
     $rotorsConfiguration = new RotorConfiguration(
-        right: RotorType::VI, // Only available for KMM3/KMM4
-        middle: RotorType::II,
-        left: RotorType::III,
+        p1: RotorType::VI, // Only available for KMM3/KMM4
+        p2: RotorType::II,
+        p3: RotorType::III,
     );
 
     expect(fn() => $rotorsConfiguration->validateForModel(EnigmaModel::WMLW))
