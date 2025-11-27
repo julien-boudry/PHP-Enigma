@@ -70,11 +70,11 @@ class EnigmaReflector
      * Because pins are connected in pairs, there is no difference if
      * processLetter1stPass() or processLetter2ndPass() is used.
      *
-     * @param $letter letter to process
+     * @param Letter $letter letter to process
      *
-     * @return int resulting letter
+     * @return Letter resulting letter
      */
-    public function processLetter(int $letter): int
+    public function processLetter(Letter $letter): Letter
     {
         return $this->wiring->processLetter1stPass($letter);
     }

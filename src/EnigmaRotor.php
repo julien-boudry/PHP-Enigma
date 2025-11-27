@@ -140,17 +140,17 @@ class EnigmaRotor
      * To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br>
      * + Letter::count() and % Letter::count() keep the value positive and in bounds.
      *
-     * @param $letter letter to process
+     * @param Letter $letter letter to process
      *
-     * @return int resulting letter
+     * @return Letter resulting letter
      */
-    public function processLetter1stPass(int $letter): int
+    public function processLetter1stPass(Letter $letter): Letter
     {
         $count = Letter::count();
-        $letter = ($letter - $this->ringstellung + $this->position + $count) % $count;
-        $letter = $this->wiring->processLetter1stPass($letter);
+        $adjustedPosition = ($letter->value - $this->ringstellung + $this->position + $count) % $count;
+        $result = $this->wiring->processLetter1stPass(Letter::from($adjustedPosition));
 
-        return ($letter + $this->ringstellung - $this->position + $count) % $count;
+        return Letter::fromPosition($result->value + $this->ringstellung - $this->position);
     }
 
     /**
@@ -158,51 +158,51 @@ class EnigmaRotor
      * To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br>
      * + Letter::count() and % Letter::count() keep the value positive and in bounds.
      *
-     * @param $letter letter to process
+     * @param Letter $letter letter to process
      *
-     * @return int resulting letter
+     * @return Letter resulting letter
      */
-    public function processLetter2ndPass(int $letter): int
+    public function processLetter2ndPass(Letter $letter): Letter
     {
         $count = Letter::count();
-        $letter = ($letter - $this->ringstellung + $this->position + $count) % $count;
-        $letter = $this->wiring->processLetter2ndPass($letter);
+        $adjustedPosition = ($letter->value - $this->ringstellung + $this->position + $count) % $count;
+        $result = $this->wiring->processLetter2ndPass(Letter::from($adjustedPosition));
 
-        return ($letter + $this->ringstellung - $this->position + $count) % $count;
+        return Letter::fromPosition($result->value + $this->ringstellung - $this->position);
     }
 
     /**
      * Set the rotor to a given position.
      *
-     * @param $letter position to go to
+     * @param Letter $letter position to go to
      *
      * @return void
      */
-    public function setPosition(int $letter): void
+    public function setPosition(Letter $letter): void
     {
-        $this->position = $letter;
+        $this->position = $letter->value;
     }
 
     /**
      * Retrieve current position of the rotor.
      *
-     * @return int current position
+     * @return Letter current position
      */
-    public function getPosition(): int
+    public function getPosition(): Letter
     {
-        return $this->position;
+        return Letter::from($this->position);
     }
 
     /**
      * Sets the ringstellung to a given position.
      *
-     * @param $letter position to go to
+     * @param Letter $letter position to go to
      *
      * @return void
      */
-    public function setRingstellung(int $letter): void
+    public function setRingstellung(Letter $letter): void
     {
-        $this->ringstellung = $letter;
+        $this->ringstellung = $letter->value;
     }
 
     /**

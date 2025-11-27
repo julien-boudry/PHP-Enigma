@@ -119,7 +119,7 @@ class Enigma
     public function encodeLetter(Letter $letter): Letter
     {
         $this->advance();
-        $value = $this->plugboard->processLetter($letter)->value;
+        $value = $this->plugboard->processLetter($letter);
         for ($idx = 0; $idx < \count($this->rotors); $idx++) {
             $value = $this->rotors[$idx]->processLetter1stPass($value);
         }
@@ -127,9 +127,8 @@ class Enigma
         for ($idx = (\count($this->rotors) - 1); $idx > -1; $idx--) {
             $value = $this->rotors[$idx]->processLetter2ndPass($value);
         }
-        $value = $this->plugboard->processLetter(Letter::from($value))->value;
 
-        return Letter::from($value);
+        return $this->plugboard->processLetter($value);
     }
 
     /**
@@ -177,7 +176,7 @@ class Enigma
      */
     public function setPosition(RotorPosition $position, Letter $letter): void
     {
-        $this->rotors[$position->value]->setPosition($letter->value);
+        $this->rotors[$position->value]->setPosition($letter);
     }
 
     /**
@@ -191,7 +190,7 @@ class Enigma
     {
         $positionInt = RotorPosition::getPositionIntValue($position);
 
-        return Letter::from($this->rotors[$positionInt]->getPosition());
+        return $this->rotors[$positionInt]->getPosition();
     }
 
     /**
@@ -204,7 +203,7 @@ class Enigma
     {
         $positionInt = RotorPosition::getPositionIntValue($position);
 
-        $this->rotors[$positionInt]->setRingstellung($letter->value);
+        $this->rotors[$positionInt]->setRingstellung($letter);
     }
 
     /**

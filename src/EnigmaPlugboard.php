@@ -61,7 +61,7 @@ class EnigmaPlugboard
      */
     public function processLetter(Letter $letter): Letter
     {
-        return Letter::from($this->wiring->processLetter1stPass($letter->value));
+        return $this->wiring->processLetter1stPass($letter);
     }
 
     /**
@@ -72,8 +72,8 @@ class EnigmaPlugboard
      */
     public function plugLetters(Letter $letter1, Letter $letter2): void
     {
-        $this->wiring->connect($letter1->value, $letter2->value);
-        $this->wiring->connect($letter2->value, $letter1->value);
+        $this->wiring->connect($letter1, $letter2);
+        $this->wiring->connect($letter2, $letter1);
     }
 
     /**
@@ -84,8 +84,8 @@ class EnigmaPlugboard
      */
     public function unplugLetters(Letter $letter): void
     {
-        $temp = $this->wiring->connectsTo($letter->value);
-        $this->wiring->connect($letter->value, $letter->value);
+        $temp = $this->wiring->connectsTo($letter);
+        $this->wiring->connect($letter, $letter);
         $this->wiring->connect($temp, $temp);
     }
 
