@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use JulienBoudry\Enigma\Exception\{EnigmaConfigurationException, EnigmaWiringException};
 use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorType};
 use JulienBoudry\Enigma\Reflector\ReflectorDora;
 
@@ -37,7 +38,7 @@ describe('ReflectorDora', function (): void {
                 'A' => 'C', 'D' => 'E', 'F' => 'G',
             ];
 
-            expect(fn() => new ReflectorDora($pairs))->toThrow(InvalidArgumentException::class);
+            expect(fn() => new ReflectorDora($pairs))->toThrow(EnigmaWiringException::class);
         });
 
         it('throws exception for self-connection', function (): void {
@@ -48,7 +49,7 @@ describe('ReflectorDora', function (): void {
                 'X' => 'Y',
             ];
 
-            expect(fn() => new ReflectorDora($pairs))->toThrow(InvalidArgumentException::class);
+            expect(fn() => new ReflectorDora($pairs))->toThrow(EnigmaWiringException::class);
         });
 
         it('throws exception for duplicate letter', function (): void {
@@ -59,11 +60,11 @@ describe('ReflectorDora', function (): void {
                 'X' => 'Y',
             ];
 
-            expect(fn() => new ReflectorDora($pairs))->toThrow(InvalidArgumentException::class);
+            expect(fn() => new ReflectorDora($pairs))->toThrow(EnigmaWiringException::class);
         });
 
         it('throws exception for invalid string length', function (): void {
-            expect(fn() => ReflectorDora::fromString('AB CD'))->toThrow(InvalidArgumentException::class);
+            expect(fn() => ReflectorDora::fromString('AB CD'))->toThrow(EnigmaWiringException::class);
         });
 
         it('allows any 13 pairs without B↔O constraint', function (): void {
@@ -206,7 +207,7 @@ describe('ReflectorDora', function (): void {
                     p3: RotorType::III,
                 ),
                 ReflectorType::DORA
-            ))->toThrow(InvalidArgumentException::class);
+            ))->toThrow(EnigmaConfigurationException::class);
         });
     });
 

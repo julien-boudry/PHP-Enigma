@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+
+use JulienBoudry\Enigma\Exception\EnigmaConfigurationException;
 use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 test('general', function (): void {
@@ -96,7 +98,7 @@ test('duplicate rotor throws exception in constructor', function (): void {
         p1: RotorType::I,
         p2: RotorType::I, // Duplicate!
         p3: RotorType::III,
-    ))->toThrow(InvalidArgumentException::class, 'Rotor I is already mounted');
+    ))->toThrow(EnigmaConfigurationException::class, 'Rotor I is already mounted');
 });
 
 test('duplicate rotor throws exception in mountRotor', function (): void {
@@ -107,7 +109,7 @@ test('duplicate rotor throws exception in mountRotor', function (): void {
     );
 
     expect(fn() => $rotorsConfiguration->mountRotor(RotorPosition::P2, RotorType::I))
-        ->toThrow(InvalidArgumentException::class, 'Rotor I is already mounted');
+        ->toThrow(EnigmaConfigurationException::class, 'Rotor I is already mounted');
 });
 
 test('replacing same position with different rotor is allowed', function (): void {
@@ -128,7 +130,7 @@ test('greek rotor in non-greek position throws exception', function (): void {
         p1: RotorType::BETA, // Greek rotor in wrong position!
         p2: RotorType::II,
         p3: RotorType::III,
-    ))->toThrow(InvalidArgumentException::class, 'Greek rotors (BETA/GAMMA) can only be mounted in the GREEK position');
+    ))->toThrow(EnigmaConfigurationException::class, 'Greek rotors (BETA/GAMMA) can only be mounted in the GREEK position');
 });
 
 test('non-greek rotor in greek position throws exception', function (): void {
@@ -137,7 +139,7 @@ test('non-greek rotor in greek position throws exception', function (): void {
         p2: RotorType::II,
         p3: RotorType::III,
         greek: RotorType::IV, // Non-greek rotor in greek position!
-    ))->toThrow(InvalidArgumentException::class, 'Only Greek rotors (BETA/GAMMA) can be mounted in the GREEK position');
+    ))->toThrow(EnigmaConfigurationException::class, 'Only Greek rotors (BETA/GAMMA) can be mounted in the GREEK position');
 });
 
 test('incompatible rotor for model throws exception', function (): void {
@@ -148,7 +150,147 @@ test('incompatible rotor for model throws exception', function (): void {
     );
 
     expect(fn() => $rotorsConfiguration->validateForModel(EnigmaModel::WMLW))
-        ->toThrow(InvalidArgumentException::class, 'Rotor VI at position P1 is not compatible with model WMLW');
+        ->toThrow(EnigmaConfigurationException::class, 'Rotor VI at position P1 is not compatible with model WMLW');
+});
+
+test('incompatible rotor for model throws exception in Enigma constructor', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::VI, // Only available for KMM3/KMM4
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+
+    expect(fn() => new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B))
+        ->toThrow(EnigmaConfigurationException::class, 'Rotor VI at position P1 is not compatible with model WMLW');
+});
+
+test('strictMode false allows incompatible rotor configuration', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::VI, // Only available for KMM3/KMM4
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+
+    // Should not throw with strictMode disabled
+    $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B, strictMode: false);
+
+    expect($enigma)->toBeInstanceOf(Enigma::class);
+    expect($enigma->strictMode)->toBeFalse();
+});
+
+test('strictMode false allows incompatible reflector', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+
+    // DORA is not compatible with KMM3, but strictMode disabled allows it
+    $enigma = new Enigma(EnigmaModel::KMM3, $rotorsConfiguration, ReflectorType::DORA, strictMode: false);
+
+    expect($enigma)->toBeInstanceOf(Enigma::class);
+});
+
+test('strictMode can be changed after construction', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+
+    $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
+
+    expect($enigma->strictMode)->toBeTrue();
+
+    $enigma->strictMode = false;
+
+    expect($enigma->strictMode)->toBeFalse();
+
+    // Now we can mount an incompatible reflector
+    $enigma->mountReflector(ReflectorType::BTHIN); // Not compatible with WMLW
+
+    expect($enigma->reflector)->toBeInstanceOf(JulienBoudry\Enigma\Reflector\AbstractReflector::class);
+});
+
+test('RotorConfiguration strictMode false allows duplicate rotors in constructor', function (): void {
+    // Should not throw with strictMode disabled
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::I, // Duplicate rotor
+        p3: RotorType::III,
+        strictMode: false
+    );
+
+    expect($rotorsConfiguration)->toBeInstanceOf(RotorConfiguration::class);
+    expect($rotorsConfiguration->getP1()->getType())->toBe(RotorType::I);
+    expect($rotorsConfiguration->getP2()->getType())->toBe(RotorType::I);
+});
+
+test('RotorConfiguration strictMode false allows duplicate rotors in mountRotor', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+        strictMode: false
+    );
+
+    // Should not throw - mounting duplicate rotor with strictMode disabled
+    $rotorsConfiguration->mountRotor(RotorPosition::P2, RotorType::I);
+
+    expect($rotorsConfiguration->getP1()->getType())->toBe(RotorType::I);
+    expect($rotorsConfiguration->getP2()->getType())->toBe(RotorType::I);
+});
+
+test('RotorConfiguration strictMode false allows greek rotor in non-greek position', function (): void {
+    // Should not throw with strictMode disabled
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::BETA, // Greek rotor in non-greek position
+        p2: RotorType::II,
+        p3: RotorType::III,
+        strictMode: false
+    );
+
+    expect($rotorsConfiguration)->toBeInstanceOf(RotorConfiguration::class);
+    expect($rotorsConfiguration->getP1()->getType())->toBe(RotorType::BETA);
+});
+
+test('RotorConfiguration strictMode false allows non-greek rotor in greek position', function (): void {
+    // Should not throw with strictMode disabled
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+        greek: RotorType::IV, // Non-greek rotor in greek position
+        strictMode: false
+    );
+
+    expect($rotorsConfiguration)->toBeInstanceOf(RotorConfiguration::class);
+    expect($rotorsConfiguration->getGreek()?->getType())->toBe(RotorType::IV);
+});
+
+test('RotorConfiguration strictMode false allows mounting non-greek rotor to greek position via mountRotor', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+        greek: RotorType::BETA,
+        strictMode: false
+    );
+
+    // Should not throw - mounting non-greek rotor to greek position with strictMode disabled
+    $rotorsConfiguration->mountRotor(RotorPosition::GREEK, RotorType::V);
+
+    expect($rotorsConfiguration->getGreek()?->getType())->toBe(RotorType::V);
+});
+
+test('RotorConfiguration strictMode is true by default', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+
+    expect($rotorsConfiguration->strictMode)->toBeTrue();
 });
 
 // https://cryptii.com/pipes/enigma-machine

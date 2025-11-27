@@ -57,6 +57,39 @@ Available models (`EnigmaModel` enum):
 Parameters:
 *   `$rotors` - A `RotorConfiguration` object specifying the rotors for each position. For 4-rotor models (KMM4), include the `greek` parameter.
 *   `$reflector` - `ReflectorType` enum to identify the reflector for the initial setup.
+*   `$strictMode` - (optional, default: `true`) When enabled, validates that rotors and reflectors are compatible with the selected model.
+
+### Strict Mode
+
+By default, the Enigma constructor validates that rotors and reflectors are compatible with the selected model. You can disable these checks to allow any configuration:
+
+```php
+// Disable compatibility checks
+$enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B, strictMode: false);
+
+// Or change it after construction
+$enigma->strictMode = false;
+$enigma->mountReflector(ReflectorType::BTHIN); // Would normally throw for WMLW model
+```
+
+Similarly, `RotorConfiguration` also supports strict mode to bypass duplicate rotor and Greek rotor position validations:
+
+```php
+// Allow duplicate rotors and invalid Greek rotor positions
+$rotorsConfiguration = new RotorConfiguration(
+    slow: RotorType::I,
+    middle: RotorType::I,  // Same rotor twice - normally forbidden
+    fast: RotorType::III,
+    strictMode: false
+);
+
+// Or mount a non-Greek rotor in the Greek position
+$rotorsConfiguration->mountRotor(RotorPosition::GREEK, RotorType::I); // Works when strictMode is false
+```
+
+This is useful for experimental configurations or testing purposes.
+
+> **Note:** Wiring validation (e.g., for the DORA reflector) is **always** enforced regardless of strict mode, as invalid wiring would make the machine mathematically broken.
 
 To encode or decode a letter, use:
 ```php
@@ -174,7 +207,7 @@ $ciphertext = 'EDPUDNRGYSZRCXNUYTPOMRMBOFKTBZREZKMLXLVEFGUEY';
 
 // Decode the message
 $plaintext = $enigma->encodeLetters($ciphertext);
-echo $plaintext; 
+echo $plaintext;
 // "AUFKLXABTEILUNGXVONXKABOROWOAUFLKBXGFSJTNUEUN"
 // Translation: "Reconnaissance division from Kaborowo..."
 ```
@@ -475,7 +508,7 @@ Each model can be equipped with a different set of rotors and reflectors. All in
 
 *   Wehrmacht / Luftwaffe 3 rotor model uses:
     *   rotors: I, II, III, IV, V
-    *   reflectors: B, C
+    *   reflectors: B, C, DORA (rewirable)
 *   Kriegsmarine 3 rotor model uses:
     *   rotors: I, II, III, IV, V, VI, VII, VIII
     *   reflectors: B, C

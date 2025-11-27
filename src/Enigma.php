@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma;
 
+use JulienBoudry\Enigma\Exception\EnigmaConfigurationException;
 use JulienBoudry\Enigma\Reflector\AbstractReflector;
 use Random\Engine;
 
@@ -47,18 +48,33 @@ class Enigma
     public readonly EnigmaModel $model;
 
     /**
+     * Whether to enforce compatibility checks.
+     *
+     * When true (default), validates that rotors and reflectors are compatible
+     * with the selected model. Set to false to bypass all compatibility checks
+     * and allow any configuration.
+     */
+    public bool $strictMode = true;
+
+    /**
      * Constructor sets up the plugboard and creates the rotors and reflectros available for the given model.
      * The initital rotors and reflectros are mounted.
      *
      * @param EnigmaModel $model ID for the model to emulate
      * @param RotorConfiguration $rotors The rotor configuration
      * @param ReflectorType $reflector ID for the reflector for the initial setup
+     * @param bool $strictMode Whether to enforce compatibility checks (default: true)
      */
-    public function __construct(EnigmaModel $model, RotorConfiguration $rotors, ReflectorType $reflector)
+    public function __construct(EnigmaModel $model, RotorConfiguration $rotors, ReflectorType $reflector, bool $strictMode = true)
     {
         $this->model = $model;
+        $this->strictMode = $strictMode;
         $this->rotors = $rotors;
         $this->plugboard = new EnigmaPlugboard;
+
+        if ($this->strictMode) {
+            $this->rotors->validateForModel($model);
+        }
 
         $this->mountReflector($reflector);
     }
@@ -178,13 +194,13 @@ class Enigma
      *
      * @param ReflectorType|AbstractReflector $reflector The reflector type or instance to mount
      *
-     * @throws \InvalidArgumentException If the reflector is not compatible with this model
+     * @throws \InvalidArgumentException If the reflector is not compatible with this model (when strictMode is enabled)
      */
     public function mountReflector(ReflectorType|AbstractReflector $reflector): void
     {
         if ($reflector instanceof ReflectorType) {
-            if (!$this->model->isReflectorCompatible($reflector)) {
-                throw new \InvalidArgumentException(
+            if ($this->strictMode && !$this->model->isReflectorCompatible($reflector)) {
+                throw new EnigmaConfigurationException(
                     "Reflector {$reflector->name} is not compatible with model {$this->model->name}"
                 );
             }

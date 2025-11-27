@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma\Reflector;
 
+use JulienBoudry\Enigma\Exception\EnigmaWiringException;
 use JulienBoudry\Enigma\{Letter, ReflectorType};
 
 /**
@@ -77,12 +78,12 @@ final class ReflectorDora extends AbstractReflector
      *
      * @param array<string, string> $pairs
      *
-     * @throws \InvalidArgumentException
+     * @throws EnigmaWiringException If the wiring is invalid
      */
     private function validatePairs(array $pairs): void
     {
         if (\count($pairs) !== 13) {
-            throw new \InvalidArgumentException(
+            throw new EnigmaWiringException(
                 'UKW-D requires exactly 13 pairs. Got ' . \count($pairs) . ' pairs.'
             );
         }
@@ -95,10 +96,10 @@ final class ReflectorDora extends AbstractReflector
 
             // Validate letter format
             if (\strlen($from) !== 1 || !ctype_alpha($from)) {
-                throw new \InvalidArgumentException("Invalid letter: '{$from}'");
+                throw new EnigmaWiringException("Invalid letter: '{$from}'");
             }
             if (\strlen($to) !== 1 || !ctype_alpha($to)) {
-                throw new \InvalidArgumentException("Invalid letter: '{$to}'");
+                throw new EnigmaWiringException("Invalid letter: '{$to}'");
             }
 
             $from = strtoupper($from);
@@ -106,15 +107,15 @@ final class ReflectorDora extends AbstractReflector
 
             // No letter can connect to itself
             if ($from === $to) {
-                throw new \InvalidArgumentException("Letter '{$from}' cannot connect to itself");
+                throw new EnigmaWiringException("Letter '{$from}' cannot connect to itself");
             }
 
             // Check for duplicate letters
             if (\in_array($from, $usedLetters, true)) {
-                throw new \InvalidArgumentException("Letter '{$from}' is used more than once");
+                throw new EnigmaWiringException("Letter '{$from}' is used more than once");
             }
             if (\in_array($to, $usedLetters, true)) {
-                throw new \InvalidArgumentException("Letter '{$to}' is used more than once");
+                throw new EnigmaWiringException("Letter '{$to}' is used more than once");
             }
 
             $usedLetters[] = $from;
@@ -125,7 +126,7 @@ final class ReflectorDora extends AbstractReflector
         if (\count($usedLetters) !== 26) {
             $missing = array_diff(range('A', 'Z'), $usedLetters);
 
-            throw new \InvalidArgumentException(
+            throw new EnigmaWiringException(
                 'All 26 letters must be paired. Missing: ' . implode(', ', $missing)
             );
         }
@@ -178,7 +179,7 @@ final class ReflectorDora extends AbstractReflector
      *
      * @param string $pairsString 13 pairs as a string, e.g., "AC BO DE FG HI JK LM NP QR ST UV WX YZ"
      *
-     * @throws \InvalidArgumentException If the string format is invalid
+     * @throws EnigmaWiringException If the string format is invalid
      *
      * @return self
      */
@@ -186,12 +187,12 @@ final class ReflectorDora extends AbstractReflector
     {
         $cleaned = preg_replace('/\s+/', '', $pairsString);
         if ($cleaned === null) {
-            throw new \InvalidArgumentException('Invalid pairs string');
+            throw new EnigmaWiringException('Invalid pairs string');
         }
         $pairsString = strtoupper($cleaned);
 
         if (\strlen($pairsString) !== 26) {
-            throw new \InvalidArgumentException(
+            throw new EnigmaWiringException(
                 'Pairs string must contain exactly 26 characters (13 pairs). Got ' . \strlen($pairsString) . ' characters.'
             );
         }
