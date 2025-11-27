@@ -79,17 +79,17 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorSelection, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 require_once 'vendor/autoload.php';
 
-$rotors = new RotorSelection(
+$rotorsConfiguration = new RotorConfiguration(
     right: RotorType::I,
     middle: RotorType::II,
     left: RotorType::III,
     ringstellungRight: Letter::B,
 );
-$enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
+$enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
 $enigma->setPosition(RotorPosition::P1, Letter::M);
 
 $enigma->plugLetters(Letter::A, Letter::C);

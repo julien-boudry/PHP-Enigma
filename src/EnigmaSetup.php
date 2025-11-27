@@ -14,13 +14,13 @@ namespace JulienBoudry\Enigma;
 readonly class EnigmaSetup
 {
     /**
-     * @param array<int, EnigmaModel> $used
+     * @param array<int, EnigmaModel> $compatibleModels
      * @param array<Letter>|null $notches
      */
     public function __construct(
-        public ReflectorType|RotorType $reflectorType,
+        public ReflectorType|RotorType $type,
         public string $wiring,
-        public array $used,
+        public array $compatibleModels,
         public ?array $notches = null
     ) {}
 }

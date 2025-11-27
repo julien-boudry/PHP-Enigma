@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorPosition, RotorSelection, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 test('message from dönitz1 may1945', function (): void {
-    $rotors = new RotorSelection(
+    $rotorsConfiguration = new RotorConfiguration(
         right: RotorType::VIII,
         middle: RotorType::VI,
         left: RotorType::V,
@@ -15,7 +15,7 @@ test('message from dönitz1 may1945', function (): void {
         ringstellungLeft: Letter::P,
         ringstellungGreek: Letter::E,
     );
-    $enigma = new Enigma(EnigmaModel::KMM4, $rotors, ReflectorType::CTHIN);
+    $enigma = new Enigma(EnigmaModel::KMM4, $rotorsConfiguration, ReflectorType::CTHIN);
 
     $enigma->setPosition(RotorPosition::P1, Letter::M);
     $enigma->setPosition(RotorPosition::P2, Letter::E);
@@ -48,7 +48,7 @@ test('Operation Barbarossa (1941)', function (): void {
     // Plugboard: AV BS CG DL FU HZ IN KM OW RX
     // Start Position: BLA
 
-    $rotors = new RotorSelection(
+    $rotorsConfiguration = new RotorConfiguration(
         right: RotorType::V,    // Right (Fast)
         middle: RotorType::IV,  // Middle
         left: RotorType::II,    // Left (Slow)
@@ -57,7 +57,7 @@ test('Operation Barbarossa (1941)', function (): void {
         ringstellungLeft: Letter::B,
     );
 
-    $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B);
+    $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
 
     // Start Position (Grundstellung)
     $enigma->setPosition(RotorPosition::P1, Letter::A);
@@ -90,7 +90,7 @@ test('U-264 (Kapitänleutnant Hartwig Looks) (1942)', function (): void {
     // Plugboard: AT BL DF GJ HM NW OP QY RZ VX
     // Start Position: VJNA
 
-    $rotors = new RotorSelection(
+    $rotorsConfiguration = new RotorConfiguration(
         right: RotorType::I,       // Right (Fast)
         middle: RotorType::IV,     // Middle
         left: RotorType::II,       // Left (Slow)
@@ -101,7 +101,7 @@ test('U-264 (Kapitänleutnant Hartwig Looks) (1942)', function (): void {
         ringstellungGreek: Letter::A,
     );
 
-    $enigma = new Enigma(EnigmaModel::KMM4, $rotors, ReflectorType::BTHIN);
+    $enigma = new Enigma(EnigmaModel::KMM4, $rotorsConfiguration, ReflectorType::BTHIN);
 
     // Start Position
     $enigma->setPosition(RotorPosition::P1, Letter::A);
@@ -135,7 +135,7 @@ test('Scharnhorst (Konteradmiral Erich Bey) (1943)', function (): void {
     // Plugboard: AN EZ HK IJ LR MQ OT PV SW UX
     // Start Position: UZV
 
-    $rotors = new RotorSelection(
+    $rotorsConfiguration = new RotorConfiguration(
         right: RotorType::VIII,   // Right (Fast)
         middle: RotorType::VI,    // Middle
         left: RotorType::III,     // Left (Slow)
@@ -144,7 +144,7 @@ test('Scharnhorst (Konteradmiral Erich Bey) (1943)', function (): void {
         ringstellungLeft: Letter::A,
     );
 
-    $enigma = new Enigma(EnigmaModel::KMM3, $rotors, ReflectorType::B);
+    $enigma = new Enigma(EnigmaModel::KMM3, $rotorsConfiguration, ReflectorType::B);
 
     // Start Position
     $enigma->setPosition(RotorPosition::P1, Letter::V);

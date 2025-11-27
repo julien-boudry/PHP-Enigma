@@ -39,13 +39,6 @@ class Enigma
     public private(set) EnigmaReflector $reflector;
 
     /**
-     * The rotors available for this model of the Enigma.
-     *
-     * @var array<EnigmaRotor>
-     */
-    public private(set) array $availablerotors;
-
-    /**
      * The reflectors available for this model of the Enigma.
      *
      * @var array<string, EnigmaReflector>
@@ -57,32 +50,22 @@ class Enigma
      * The initital rotors and reflectros are mounted.
      *
      * @param EnigmaModel $model ID for the model to emulate
-     * @param RotorSelection $rotorSelection The selection of rotors to mount
+     * @param RotorConfiguration $rotors The rotor configuration
      * @param ReflectorType $reflector ID for the reflector for the initial setup
      */
-    public function __construct(EnigmaModel $model, RotorSelection $rotorSelection, ReflectorType $reflector)
+    public function __construct(EnigmaModel $model, RotorConfiguration $rotors, ReflectorType $reflector)
     {
-        $this->rotors = new RotorConfiguration;
-        $this->availablerotors = [];
+        $this->rotors = $rotors;
         $this->availablereflectors = [];
 
         $this->plugboard = new EnigmaPlugboard;
 
-        foreach (EnigmaRotor::getDefaultSetup() as $r) {
-            if (\in_array($model, $r->used, true)) {
-                $this->availablerotors[$r->reflectorType->name] = new EnigmaRotor($r->wiring, $r->notches ?? []);
-            }
-        }
         foreach (EnigmaReflector::getDefaultSetup() as $r) {
-            if (\in_array($model, $r->used, true)) {
-                $this->availablereflectors[$r->reflectorType->name] = new EnigmaReflector($r->wiring);
+            if (\in_array($model, $r->compatibleModels, true)) {
+                $this->availablereflectors[$r->type->name] = new EnigmaReflector($r->wiring);
             }
         }
 
-        foreach ($rotorSelection as $position => $rotorType) {
-            $this->mountRotor($position, $rotorType);
-            $this->rotors->get($position)->setRingstellung($rotorSelection->getRingstellung($position));
-        }
         $this->mountReflector($reflector);
     }
 
@@ -132,28 +115,6 @@ class Enigma
         }
 
         return $this->plugboard->processLetter($value);
-    }
-
-    /**
-     * Mount a rotor into the enigma.
-     * A rotor may only be used in one position at a time, so if an rotor is already in use nothing is changed.
-     * The previously used rotor will be replaced.
-     *
-     * @param $position ID of the position to set the rotor
-     * @param $rotor ID of the rotor to use
-     *
-     * @return void
-     */
-    public function mountRotor(RotorPosition $position, RotorType $rotor): void
-    {
-        if ($this->availablerotors[$rotor->name]->inUse) {
-            return;
-        }
-        if ($this->rotors->has($position)) {
-            $this->rotors->get($position)->inUse = false;
-        }
-        $this->rotors->set($position, $this->availablerotors[$rotor->name]);
-        $this->rotors->get($position)->inUse = true;
     }
 
     /**
@@ -319,13 +280,6 @@ class Enigma
 
         // Clone the reflector
         $this->reflector = clone $this->reflector;
-
-        // Clone all available rotors
-        $clonedAvailableRotors = [];
-        foreach ($this->availablerotors as $name => $rotor) {
-            $clonedAvailableRotors[$name] = clone $rotor;
-        }
-        $this->availablerotors = $clonedAvailableRotors;
 
         // Clone all available reflectors
         $clonedAvailableReflectors = [];

@@ -62,6 +62,31 @@ class EnigmaRotor
     }
 
     /**
+     * Create a rotor from its type.
+     *
+     * @param RotorType $type The type of rotor to create
+     * @param Letter $ringstellung The ring setting (default: A)
+     *
+     * @throws \InvalidArgumentException If the rotor type is not found
+     *
+     * @return self A new rotor instance
+     */
+    public static function fromType(RotorType $type, Letter $ringstellung = Letter::A): self
+    {
+        foreach (self::getDefaultSetup() as $setup) {
+            if ($setup->type === $type) {
+                $rotor = new self($setup->wiring, $setup->notches ?? []);
+                $rotor->type = $type;
+                $rotor->setRingstellung($ringstellung);
+
+                return $rotor;
+            }
+        }
+
+        throw new \InvalidArgumentException("Unknown rotor type: {$type->name}");
+    }
+
+    /**
      * The wiring of a rotor.
      *
      * @var EnigmaWiring
@@ -88,6 +113,11 @@ class EnigmaRotor
      * @var int actual positions rotor
      */
     private int $ringstellung = 0;
+
+    /**
+     * The type of the rotor (if created from a known type).
+     */
+    private ?RotorType $type = null;
 
     /**
      * A rotor is in use or available.
@@ -204,6 +234,49 @@ class EnigmaRotor
     public function setRingstellung(Letter $letter): void
     {
         $this->ringstellung = $letter->value;
+    }
+
+    /**
+     * Get the type of the rotor.
+     *
+     * @return RotorType|null The rotor type, or null if created with custom wiring
+     */
+    public function getType(): ?RotorType
+    {
+        return $this->type;
+    }
+
+    /**
+     * Check if this rotor is compatible with the given Enigma model.
+     *
+     * @param EnigmaModel $model The model to check compatibility with
+     *
+     * @return bool True if compatible, false otherwise
+     */
+    public function isCompatibleWithModel(EnigmaModel $model): bool
+    {
+        if ($this->type === null) {
+            // Custom rotors are assumed compatible
+            return true;
+        }
+
+        foreach (self::getDefaultSetup() as $setup) {
+            if ($setup->type === $this->type) {
+                return \in_array($model, $setup->compatibleModels, true);
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if this rotor is a Greek rotor (BETA or GAMMA).
+     *
+     * @return bool True if this is a Greek rotor
+     */
+    public function isGreekRotor(): bool
+    {
+        return $this->type === RotorType::BETA || $this->type === RotorType::GAMMA;
     }
 
     /**

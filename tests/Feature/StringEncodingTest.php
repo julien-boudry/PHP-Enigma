@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorPosition, RotorSelection, RotorType};
+use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 describe('Enigma string encoding', function (): void {
     beforeEach(function (): void {
         $this->enigma = new Enigma(
             EnigmaModel::WMLW,
-            new RotorSelection(
+            new RotorConfiguration(
                 right: RotorType::I,
                 middle: RotorType::II,
                 left: RotorType::III,
@@ -36,7 +36,7 @@ describe('Enigma string encoding', function (): void {
             // Create encoder
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
-                new RotorSelection(
+                new RotorConfiguration(
                     right: RotorType::I,
                     middle: RotorType::II,
                     left: RotorType::III,
@@ -93,7 +93,7 @@ describe('Enigma string encoding', function (): void {
         test('encoding then decoding with text conversion', function (): void {
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
-                new RotorSelection(
+                new RotorConfiguration(
                     right: RotorType::I,
                     middle: RotorType::II,
                     left: RotorType::III,
@@ -124,7 +124,7 @@ describe('Enigma string encoding', function (): void {
         test('uses custom space replacement', function (): void {
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
-                new RotorSelection(
+                new RotorConfiguration(
                     right: RotorType::I,
                     middle: RotorType::II,
                     left: RotorType::III,
@@ -154,7 +154,7 @@ describe('Enigma string encoding', function (): void {
         test('roundtrip binary encoding/decoding', function (): void {
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
-                new RotorSelection(
+                new RotorConfiguration(
                     right: RotorType::I,
                     middle: RotorType::II,
                     left: RotorType::III,
@@ -193,7 +193,7 @@ describe('Enigma string encoding', function (): void {
             // Create encoder
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
-                new RotorSelection(
+                new RotorConfiguration(
                     right: RotorType::I,
                     middle: RotorType::II,
                     left: RotorType::III,
