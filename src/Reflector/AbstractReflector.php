@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma\Reflector;
 
-use JulienBoudry\Enigma\EnigmaWiring;
-use JulienBoudry\Enigma\Letter;
+use JulienBoudry\Enigma\{EnigmaWiring, Letter};
 
 /**
  * Abstract base class for Enigma Reflectors (Umkehrwalze).

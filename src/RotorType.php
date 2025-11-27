@@ -4,17 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma;
 
-use JulienBoudry\Enigma\Rotor\AbstractRotor;
-use JulienBoudry\Enigma\Rotor\RotorBeta;
-use JulienBoudry\Enigma\Rotor\RotorGamma;
-use JulienBoudry\Enigma\Rotor\RotorI;
-use JulienBoudry\Enigma\Rotor\RotorII;
-use JulienBoudry\Enigma\Rotor\RotorIII;
-use JulienBoudry\Enigma\Rotor\RotorIV;
-use JulienBoudry\Enigma\Rotor\RotorV;
-use JulienBoudry\Enigma\Rotor\RotorVI;
-use JulienBoudry\Enigma\Rotor\RotorVII;
-use JulienBoudry\Enigma\Rotor\RotorVIII;
+use JulienBoudry\Enigma\Rotor\{AbstractRotor, RotorBeta, RotorGamma, RotorI, RotorII, RotorIII, RotorIV, RotorV, RotorVI, RotorVII, RotorVIII};
 
 /**
  * Enumeration of available rotor types.

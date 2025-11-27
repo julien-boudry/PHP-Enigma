@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma;
 
-use JulienBoudry\Enigma\Reflector\AbstractReflector;
-use JulienBoudry\Enigma\Reflector\ReflectorB;
-use JulienBoudry\Enigma\Reflector\ReflectorBThin;
-use JulienBoudry\Enigma\Reflector\ReflectorC;
-use JulienBoudry\Enigma\Reflector\ReflectorCThin;
+use JulienBoudry\Enigma\Reflector\{AbstractReflector, ReflectorB, ReflectorBThin, ReflectorC, ReflectorCThin};
 
 /**
  * Enumeration of available reflector types.
@@ -42,10 +38,10 @@ enum ReflectorType
     public function createReflector(): AbstractReflector
     {
         return match ($this) {
-            self::B => new ReflectorB(),
-            self::C => new ReflectorC(),
-            self::BTHIN => new ReflectorBThin(),
-            self::CTHIN => new ReflectorCThin(),
+            self::B => new ReflectorB,
+            self::C => new ReflectorC,
+            self::BTHIN => new ReflectorBThin,
+            self::CTHIN => new ReflectorCThin,
         };
     }
 }

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma\Rotor;
 
-use JulienBoudry\Enigma\EnigmaModel;
-use JulienBoudry\Enigma\Letter;
-use JulienBoudry\Enigma\RotorType;
+use JulienBoudry\Enigma\{EnigmaModel, Letter, RotorType};
 
 /**
  * Rotor I - Available on all Enigma models.

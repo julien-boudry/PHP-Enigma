@@ -93,7 +93,7 @@ test('duplicate rotor throws exception in constructor', function (): void {
         right: RotorType::I,
         middle: RotorType::I, // Duplicate!
         left: RotorType::III,
-    ))->toThrow(\InvalidArgumentException::class, 'Rotor I is already mounted');
+    ))->toThrow(InvalidArgumentException::class, 'Rotor I is already mounted');
 });
 
 test('duplicate rotor throws exception in mountRotor', function (): void {
@@ -104,7 +104,7 @@ test('duplicate rotor throws exception in mountRotor', function (): void {
     );
 
     expect(fn() => $rotorsConfiguration->mountRotor(RotorPosition::P2, RotorType::I))
-        ->toThrow(\InvalidArgumentException::class, 'Rotor I is already mounted');
+        ->toThrow(InvalidArgumentException::class, 'Rotor I is already mounted');
 });
 
 test('replacing same position with different rotor is allowed', function (): void {
@@ -125,7 +125,7 @@ test('greek rotor in non-greek position throws exception', function (): void {
         right: RotorType::BETA, // Greek rotor in wrong position!
         middle: RotorType::II,
         left: RotorType::III,
-    ))->toThrow(\InvalidArgumentException::class, 'Greek rotors (BETA/GAMMA) can only be mounted in the GREEK position');
+    ))->toThrow(InvalidArgumentException::class, 'Greek rotors (BETA/GAMMA) can only be mounted in the GREEK position');
 });
 
 test('non-greek rotor in greek position throws exception', function (): void {
@@ -134,7 +134,7 @@ test('non-greek rotor in greek position throws exception', function (): void {
         middle: RotorType::II,
         left: RotorType::III,
         greek: RotorType::IV, // Non-greek rotor in greek position!
-    ))->toThrow(\InvalidArgumentException::class, 'Only Greek rotors (BETA/GAMMA) can be mounted in the GREEK position');
+    ))->toThrow(InvalidArgumentException::class, 'Only Greek rotors (BETA/GAMMA) can be mounted in the GREEK position');
 });
 
 test('incompatible rotor for model throws exception', function (): void {
@@ -145,7 +145,7 @@ test('incompatible rotor for model throws exception', function (): void {
     );
 
     expect(fn() => $rotorsConfiguration->validateForModel(EnigmaModel::WMLW))
-        ->toThrow(\InvalidArgumentException::class, 'Rotor VI at position P1 is not compatible with model WMLW');
+        ->toThrow(InvalidArgumentException::class, 'Rotor VI at position P1 is not compatible with model WMLW');
 });
 
 // https://cryptii.com/pipes/enigma-machine

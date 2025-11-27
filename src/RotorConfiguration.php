@@ -279,6 +279,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
         foreach ($this->rotors as $position => $rotor) {
             if (!$rotor->isCompatibleWithModel($model)) {
                 $positionName = RotorPosition::from($position)->name;
+
                 throw new \InvalidArgumentException(
                     "Rotor {$rotor->getType()->name} at position {$positionName} is not compatible with model {$model->name}"
                 );
