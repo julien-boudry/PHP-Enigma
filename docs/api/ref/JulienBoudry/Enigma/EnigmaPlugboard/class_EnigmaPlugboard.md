@@ -41,9 +41,9 @@ class JulienBoudry\Enigma\EnigmaPlugboard
     // Methods
     public function __clone( ): void;
     public function __construct( );
-    public function plugLetters( int $letter1, int $letter2 ): void;
-    public function processLetter( int $letter ): int;
-    public function unplugLetters( int $letter ): void;
+    public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;
+    public function processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
+    public function unplugLetters( JulienBoudry\Enigma\Letter $letter ): void;
 
 }
 ```
@@ -59,9 +59,9 @@ class JulienBoudry\Enigma\EnigmaPlugboard
     // Methods
     public function __clone( ): void;
     public function __construct( );
-    public function plugLetters( int $letter1, int $letter2 ): void;
-    public function processLetter( int $letter ): int;
-    public function unplugLetters( int $letter ): void;
+    public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;
+    public function processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
+    public function unplugLetters( JulienBoudry\Enigma\Letter $letter ): void;
 
 }
 ```

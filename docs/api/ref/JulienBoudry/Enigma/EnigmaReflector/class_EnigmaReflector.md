@@ -35,7 +35,7 @@ class JulienBoudry\Enigma\EnigmaReflector
     // Methods
     public function __clone( ): void;
     public function __construct( string $wiring );
-    public function processLetter( int $letter ): int;
+    public function processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
 
 }
 ```
@@ -57,7 +57,7 @@ class JulienBoudry\Enigma\EnigmaReflector
     // Methods
     public function __clone( ): void;
     public function __construct( string $wiring );
-    public function processLetter( int $letter ): int;
+    public function processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
 
 }
 ```

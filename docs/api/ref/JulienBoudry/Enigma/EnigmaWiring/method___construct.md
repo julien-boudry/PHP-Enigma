@@ -7,7 +7,7 @@ public function EnigmaWiring->__construct( string $wiring )
 ```
 
 ## Description
-example string EKMFLGDQVZNTOWYHXUSPAIBRCJ leads to [0]=4, [1]=10, [2]=12, ...
+example string EKMFLGDQVZNTOWYHXUSPAIBRCJ leads to [0]=Letter::E, [1]=Letter::K, [2]=Letter::M, ...
 
 ## Parameters
 

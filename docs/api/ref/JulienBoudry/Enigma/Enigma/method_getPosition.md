@@ -1,9 +1,9 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method getPosition()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L255)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L189)
 
 ```php
-public function Enigma->getPosition( JulienBoudry\Enigma\RotorPosition $position ): string
+public function Enigma->getPosition( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Letter
 ```
 
 ## Parameters
@@ -17,6 +17,6 @@ JulienBoudry\Enigma\RotorPosition $position
 ID of the rotor
 
 ## Return
-**Type:** `string`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 current position

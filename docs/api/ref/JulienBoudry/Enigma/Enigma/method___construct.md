@@ -1,9 +1,9 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method __construct()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L125)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L63)
 
 ```php
-public function Enigma->__construct( JulienBoudry\Enigma\EnigmaModel $model, array $rotors, JulienBoudry\Enigma\ReflectorType $reflector )
+public function Enigma->__construct( JulienBoudry\Enigma\EnigmaModel $model, JulienBoudry\Enigma\RotorSelection $rotorSelection, JulienBoudry\Enigma\ReflectorType $reflector )
 ```
 
 ## Description
@@ -19,13 +19,13 @@ JulienBoudry\Enigma\EnigmaModel $model
 
 ID for the model to emulate
 
-### **rotors:**
+### **rotorSelection:**
 ```php
-array $rotors
+JulienBoudry\Enigma\RotorSelection $rotorSelection
 ```
-**Type:** `array`
+**Type:** [`JulienBoudry\Enigma\RotorSelection`](../RotorSelection/class_RotorSelection.md)
 
-
+The selection of rotors to mount
 
 ### **reflector:**
 ```php

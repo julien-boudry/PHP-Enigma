@@ -7,7 +7,7 @@ public function EnigmaRotor->advance( ): void
 ```
 
 ## Description
-When postion reaches ENIGMA_ALPHABET_SIZE, it is reset to 0.
+When postion reaches Letter::count(), it is reset to 0.
 
 ## Return
 **Type:** `void`

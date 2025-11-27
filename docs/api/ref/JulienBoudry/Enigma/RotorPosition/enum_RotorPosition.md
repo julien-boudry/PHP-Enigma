@@ -15,11 +15,6 @@ while the Kriegsmarine M4 has an additional fourth "Greek" position that never r
 | P2 | `public const P2 = \JulienBoudry\Enigma\RotorPosition::P2` | __ |
 | P3 | `public const P3 = \JulienBoudry\Enigma\RotorPosition::P3` | __ |
 
-### Public Static Methods
-| Method Name | Description |
-| ------------- | ------------- |
-| [getPositionIntValue(...)](method_getPositionIntValue.md) | __ |
-
 ### Public Properties
 | Property Name | Description |
 | ------------- | ------------- |
@@ -45,9 +40,6 @@ enum JulienBoudry\Enigma\RotorPosition: int implements UnitEnum, BackedEnum
     public protected(set) readonly protected(set) string $name;
     public protected(set) readonly protected(set) int $value;
 
-    // Static Methods
-    public static function getPositionIntValue( JulienBoudry\Enigma\RotorPosition $position ): int;
-
 }
 ```
 
@@ -68,9 +60,6 @@ enum JulienBoudry\Enigma\RotorPosition: int implements UnitEnum, BackedEnum
     // Properties
     public protected(set) readonly protected(set) string $name;
     public protected(set) readonly protected(set) int $value;
-
-    // Static Methods
-    public static function getPositionIntValue( JulienBoudry\Enigma\RotorPosition $position ): int;
 
 }
 ```

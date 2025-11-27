@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method encodeLetters()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L323)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L242)
 
 ```php
 public function Enigma->encodeLetters( string $letters ): string
@@ -27,7 +27,7 @@ The letters to encode (A-Z only, no spaces or other characters)
 The encoded letters
 
 ## Throws
-- **[\RuntimeException]()** _If the input contains invalid characters_
+- **[\ValueError]()** _If the input contains invalid characters_
 
 ## Related
 - **[\JulienBoudry\Enigma\Enigma::encodeLatinText()](method_encodeLatinText.md)** _For encoding arbitrary text with automatic conversion_

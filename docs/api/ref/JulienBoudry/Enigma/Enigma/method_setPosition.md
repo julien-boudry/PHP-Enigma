@@ -1,9 +1,9 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method setPosition()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L243)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L177)
 
 ```php
-public function Enigma->setPosition( JulienBoudry\Enigma\RotorPosition $position, string $letter ): void
+public function Enigma->setPosition( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\Letter $letter ): void
 ```
 
 ## Parameters
@@ -18,9 +18,9 @@ ID of the rotor to turn
 
 ### **letter:**
 ```php
-string $letter
+JulienBoudry\Enigma\Letter $letter
 ```
-**Type:** `string`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 letter to turn to
 

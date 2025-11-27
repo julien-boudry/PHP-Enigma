@@ -1,26 +1,26 @@
 > JulienBoudry \ [EnigmaWiring](class_EnigmaWiring.md)
 # Method connect()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L57)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L60)
 
 ```php
-public function EnigmaWiring->connect( int $pin1, int $pin2 ): void
+public function EnigmaWiring->connect( JulienBoudry\Enigma\Letter $pin1, JulienBoudry\Enigma\Letter $pin2 ): void
 ```
 
 ## Parameters
 
 ### **pin1:**
 ```php
-int $pin1
+JulienBoudry\Enigma\Letter $pin1
 ```
-**Type:** `int`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 pin 1 to connect
 
 ### **pin2:**
 ```php
-int $pin2
+JulienBoudry\Enigma\Letter $pin2
 ```
-**Type:** `int`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 pin 2 to connect
 

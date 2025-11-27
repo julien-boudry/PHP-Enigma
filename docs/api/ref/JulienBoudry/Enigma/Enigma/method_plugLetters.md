@@ -1,29 +1,26 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method plugLetters()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L288)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L211)
 
 ```php
-public function Enigma->plugLetters( string $letter1, string $letter2 ): void
+public function Enigma->plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void
 ```
-
-## Description
-The letter are transformed to integer first.
 
 ## Parameters
 
 ### **letter1:**
 ```php
-string $letter1
+JulienBoudry\Enigma\Letter $letter1
 ```
-**Type:** `string`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 letter 1 to connect
 
 ### **letter2:**
 ```php
-string $letter2
+JulienBoudry\Enigma\Letter $letter2
 ```
-**Type:** `string`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 letter 2 to connect
 

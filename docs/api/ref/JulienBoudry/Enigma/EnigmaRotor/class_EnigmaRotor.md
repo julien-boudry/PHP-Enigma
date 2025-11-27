@@ -37,11 +37,11 @@ The Ringstellung (ring setting) offsets the wiring relative to the notches and v
 | ------------- | ------------- |
 | [__clone(...)](method___clone.md) | __ |
 | [__construct(...)](method___construct.md) | __ |
-| [advance(...)](method_advance.md) | _When postion reaches ENIGMA_ALPHABET_SIZE, it is reset to 0._ |
+| [advance(...)](method_advance.md) | _When postion reaches Letter::count(), it is reset to 0._ |
 | [getPosition(...)](method_getPosition.md) | __ |
 | [isNotchOpen(...)](method_isNotchOpen.md) | _Returns true if the rotor is in a turnover position for the next rotor._ |
-| [processLetter1stPass(...)](method_processLetter1stPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br> + ENIGMA_ALPHABET_SIZE and % ENIGMA_ALPHABET_SIZE keep the value pos..._ |
-| [processLetter2ndPass(...)](method_processLetter2ndPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br> + ENIGMA_ALPHABET_SIZE and % ENIGMA_ALPHABET_SIZE keep the value pos..._ |
+| [processLetter1stPass(...)](method_processLetter1stPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br> + Letter::count() and % Letter::count() keep the value positive and ..._ |
+| [processLetter2ndPass(...)](method_processLetter2ndPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.<br> + Letter::count() and % Letter::count() keep the value positive and ..._ |
 | [setPosition(...)](method_setPosition.md) | __ |
 | [setRingstellung(...)](method_setRingstellung.md) | __ |
 
@@ -61,12 +61,12 @@ class JulienBoudry\Enigma\EnigmaRotor
     public function __clone( ): void;
     public function __construct( string $wiring, array $notches );
     public function advance( ): void;
-    public function getPosition( ): int;
+    public function getPosition( ): JulienBoudry\Enigma\Letter;
     public function isNotchOpen( ): bool;
-    public function processLetter1stPass( int $letter ): int;
-    public function processLetter2ndPass( int $letter ): int;
-    public function setPosition( int $letter ): void;
-    public function setRingstellung( int $letter ): void;
+    public function processLetter1stPass( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
+    public function processLetter2ndPass( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
+    public function setPosition( JulienBoudry\Enigma\Letter $letter ): void;
+    public function setRingstellung( JulienBoudry\Enigma\Letter $letter ): void;
 
 }
 ```
@@ -93,12 +93,12 @@ class JulienBoudry\Enigma\EnigmaRotor
     public function __clone( ): void;
     public function __construct( string $wiring, array $notches );
     public function advance( ): void;
-    public function getPosition( ): int;
+    public function getPosition( ): JulienBoudry\Enigma\Letter;
     public function isNotchOpen( ): bool;
-    public function processLetter1stPass( int $letter ): int;
-    public function processLetter2ndPass( int $letter ): int;
-    public function setPosition( int $letter ): void;
-    public function setRingstellung( int $letter ): void;
+    public function processLetter1stPass( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
+    public function processLetter2ndPass( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
+    public function setPosition( JulienBoudry\Enigma\Letter $letter ): void;
+    public function setRingstellung( JulienBoudry\Enigma\Letter $letter ): void;
 
 }
 ```

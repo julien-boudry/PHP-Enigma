@@ -3,7 +3,7 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L62)
 
 ```php
-public function EnigmaPlugboard->processLetter( int $letter ): int
+public function EnigmaPlugboard->processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter
 ```
 
 ## Description
@@ -14,13 +14,13 @@ processLetter1stPass() or processLetter2ndPass() is used.
 
 ### **letter:**
 ```php
-int $letter
+JulienBoudry\Enigma\Letter $letter
 ```
-**Type:** `int`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 letter to process
 
 ## Return
-**Type:** `int`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 resulting letter

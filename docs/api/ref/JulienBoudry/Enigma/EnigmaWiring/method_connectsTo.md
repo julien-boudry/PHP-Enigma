@@ -1,22 +1,22 @@
 > JulienBoudry \ [EnigmaWiring](class_EnigmaWiring.md)
 # Method connectsTo()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L69)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaWiring.php#L72)
 
 ```php
-public function EnigmaWiring->connectsTo( int $pin ): int
+public function EnigmaWiring->connectsTo( JulienBoudry\Enigma\Letter $pin ): JulienBoudry\Enigma\Letter
 ```
 
 ## Parameters
 
 ### **pin:**
 ```php
-int $pin
+JulienBoudry\Enigma\Letter $pin
 ```
-**Type:** `int`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 start of the connection
 
 ## Return
-**Type:** `int`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 the connected pin

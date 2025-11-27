@@ -1,9 +1,9 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method encodeLetter()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L179)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L117)
 
 ```php
-public function Enigma->encodeLetter( string $letter ): string
+public function Enigma->encodeLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter
 ```
 
 ## Description
@@ -14,14 +14,14 @@ Every encoding triggers the advancemechanism.
 
 ### **letter:**
 ```php
-string $letter
+JulienBoudry\Enigma\Letter $letter
 ```
-**Type:** `string`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 letter to encode
 
 ## Return
-**Type:** `string`
+**Type:** [`JulienBoudry\Enigma\Letter`](../Letter/enum_Letter.md)
 
 encoded letter
 
