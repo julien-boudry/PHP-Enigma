@@ -1,9 +1,9 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method mountReflector()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L121)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L127)
 
 ```php
-public function Enigma->mountReflector( JulienBoudry\Enigma\ReflectorType $reflector ): void
+public function Enigma->mountReflector( JulienBoudry\Enigma\ReflectorType|JulienBoudry\Enigma\Reflector\AbstractReflector $reflector ): void
 ```
 
 ## Description
@@ -13,11 +13,11 @@ The previously used reflector will be replaced.
 
 ### **reflector:**
 ```php
-JulienBoudry\Enigma\ReflectorType $reflector
+JulienBoudry\Enigma\ReflectorType|JulienBoudry\Enigma\Reflector\AbstractReflector $reflector
 ```
-**Type:** [`JulienBoudry\Enigma\ReflectorType`](../ReflectorType/enum_ReflectorType.md)
+**Type:** [`JulienBoudry\Enigma\ReflectorType`](../ReflectorType/enum_ReflectorType.md) | [`JulienBoudry\Enigma\Reflector\AbstractReflector`](../Reflector/AbstractReflector/class_AbstractReflector.md)
 
-The reflector type to mount
+The reflector type or instance to mount
 
 ## Return
 **Type:** `void`

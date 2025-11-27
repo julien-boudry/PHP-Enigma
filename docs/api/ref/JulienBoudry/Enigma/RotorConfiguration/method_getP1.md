@@ -1,9 +1,9 @@
 > JulienBoudry \ [RotorConfiguration](class_RotorConfiguration.md)
-# Method getMiddle()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L216)
+# Method getP1()
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorConfiguration.php#L206)
 
 ```php
-public function RotorConfiguration->getMiddle( ): JulienBoudry\Enigma\Rotor\AbstractRotor
+public function RotorConfiguration->getP1( ): JulienBoudry\Enigma\Rotor\AbstractRotor
 ```
 
 ## Return

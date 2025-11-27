@@ -57,7 +57,7 @@ class JulienBoudry\Enigma\Enigma
     public function encodeLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
     public function encodeLetters( string $letters ): string;
     public function getPosition( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Letter;
-    public function mountReflector( JulienBoudry\Enigma\ReflectorType $reflector ): void;
+    public function mountReflector( JulienBoudry\Enigma\ReflectorType|JulienBoudry\Enigma\Reflector\AbstractReflector $reflector ): void;
     public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;
     public function setPosition( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\Letter $letter ): void;
     public function unplugLetters( JulienBoudry\Enigma\Letter $letter ): void;
@@ -84,7 +84,7 @@ class JulienBoudry\Enigma\Enigma
     public function encodeLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
     public function encodeLetters( string $letters ): string;
     public function getPosition( JulienBoudry\Enigma\RotorPosition $position ): JulienBoudry\Enigma\Letter;
-    public function mountReflector( JulienBoudry\Enigma\ReflectorType $reflector ): void;
+    public function mountReflector( JulienBoudry\Enigma\ReflectorType|JulienBoudry\Enigma\Reflector\AbstractReflector $reflector ): void;
     public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;
     public function setPosition( JulienBoudry\Enigma\RotorPosition $position, JulienBoudry\Enigma\Letter $letter ): void;
     public function unplugLetters( JulienBoudry\Enigma\Letter $letter ): void;

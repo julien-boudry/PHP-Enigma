@@ -14,7 +14,7 @@
 | [EnigmaModel](ref/JulienBoudry/Enigma/EnigmaModel/enum_EnigmaModel.md) | _Defines the different historical Enigma machine variants that can be emulated. Each model has its own specific set of available rotors and reflectors._ |
 | [Letter](ref/JulienBoudry/Enigma/Letter/enum_Letter.md) | _This backed enum provides type-safe letter handling for all Enigma operations. The integer backing values (0-25) are used internally for efficient wiring calculations.  Note: PHP enums cannot implemen..._ |
 | [ReflectorType](ref/JulienBoudry/Enigma/ReflectorType/enum_ReflectorType.md) | _Defines the different reflector variants (Umkehrwalze) available for Enigma machines. Different Enigma models support different reflector types._ |
-| [RotorPosition](ref/JulienBoudry/Enigma/RotorPosition/enum_RotorPosition.md) | _Defines the slots where rotors can be mounted. Most Enigma models have 3 positions (P1, P2, P3), while the Kriegsmarine M4 has an additional fourth "Greek" position that never rotates._ |
+| [RotorPosition](ref/JulienBoudry/Enigma/RotorPosition/enum_RotorPosition.md) | _Defines the slots where rotors can be mounted. Most Enigma models have 3 positions (P1, P2, P3), while the Kriegsmarine M4 has an additional fourth "Greek" position that never rotates.  Signal flow: K..._ |
 | [RotorType](ref/JulienBoudry/Enigma/RotorType/enum_RotorType.md) | _Defines the different rotor variants (Walzen) available for Enigma machines. Each rotor has unique internal wiring and notch positions. Different Enigma models support different subsets of these rotor..._ |
 
 ## JulienBoudry\Enigma\Reflector
@@ -25,6 +25,7 @@
 | [ReflectorBThin](ref/JulienBoudry/Enigma/Reflector/ReflectorBThin/class_ReflectorBThin.md) | _Thin reflector used exclusively with the Kriegsmarine M4 model. The thin design allows space for the fourth rotor._ |
 | [ReflectorC](ref/JulienBoudry/Enigma/Reflector/ReflectorC/class_ReflectorC.md) | _Alternative reflector used with Wehrmacht/Luftwaffe and Kriegsmarine M3 models._ |
 | [ReflectorCThin](ref/JulienBoudry/Enigma/Reflector/ReflectorCThin/class_ReflectorCThin.md) | _Thin reflector used exclusively with the Kriegsmarine M4 model. The thin design allows space for the fourth rotor._ |
+| [ReflectorDora](ref/JulienBoudry/Enigma/Reflector/ReflectorDora/class_ReflectorDora.md) | _The UKW-D was a rewirable reflector introduced by the Wehrmacht/Luftwaffe in January 1944. Unlike fixed reflectors (B, C), operators could configure their own wiring using plug cables.  The physical d..._ |
 
 
 ## JulienBoudry\Enigma\Rotor

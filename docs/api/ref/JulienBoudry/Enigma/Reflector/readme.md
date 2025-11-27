@@ -10,4 +10,5 @@
 | [ReflectorBThin](ReflectorBThin/class_ReflectorBThin.md) | _Thin reflector used exclusively with the Kriegsmarine M4 model. The thin design allows space for the fourth rotor._ |
 | [ReflectorC](ReflectorC/class_ReflectorC.md) | _Alternative reflector used with Wehrmacht/Luftwaffe and Kriegsmarine M3 models._ |
 | [ReflectorCThin](ReflectorCThin/class_ReflectorCThin.md) | _Thin reflector used exclusively with the Kriegsmarine M4 model. The thin design allows space for the fourth rotor._ |
+| [ReflectorDora](ReflectorDora/class_ReflectorDora.md) | _The UKW-D was a rewirable reflector introduced by the Wehrmacht/Luftwaffe in January 1944. Unlike fixed reflectors (B, C), operators could configure their own wiring using plug cables.  The physical d..._ |
 

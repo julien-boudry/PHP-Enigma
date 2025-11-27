@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaModel](enum_EnigmaModel.md)
 # Method isReflectorCompatible()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaModel.php#L65)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaModel.php#L66)
 
 ```php
 public function EnigmaModel->isReflectorCompatible( JulienBoudry\Enigma\ReflectorType $reflector ): bool
