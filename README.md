@@ -21,6 +21,10 @@ A PHP implementation of the historic Enigma cipher machine, supporting multiple 
 - [Usage](#usage)
   - [Basic Setup](#basic-setup)
   - [Encoding and Decoding](#encoding-and-decoding)
+    - [Standard Text (A-Z)](#standard-text-a-z)
+    - [Human-Readable Text](#human-readable-text)
+    - [Binary Data](#binary-data)
+    - [File Encoding and Decoding](#file-encoding-and-decoding)
   - [Configuration & State](#configuration--state)
   - [Advanced Features](#advanced-features)
 - [Technical Specifications](#technical-specifications)
@@ -152,6 +156,47 @@ $ciphertext = $enigmaEncoder->encodeBinary($binaryData);
 $decryptedString = $enigmaDecoder->encodeLetters($ciphertext);
 $originalBinary = EnigmaTextConverter::enigmaFormatToBinary($decryptedString);
 // $originalBinary === $binaryData
+```
+
+### File Encoding and Decoding
+
+For large files, use `encodeFile()` and `decodeFile()` which process data in chunks to minimize memory usage.
+
+```php
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, ReflectorType, RotorConfiguration, RotorType};
+
+// Create two identical Enigma instances (one for encoding, one for decoding)
+$enigmaEncoder = new Enigma(
+    EnigmaModel::WMLW,
+    new RotorConfiguration(RotorType::I, RotorType::II, RotorType::III),
+    ReflectorType::B
+);
+$enigmaDecoder = clone $enigmaEncoder;
+
+// Encode a file
+$enigmaEncoder->encodeFile('/path/to/input.bin', '/path/to/encoded.enigma');
+
+// Decode the file (using the cloned instance with same initial state)
+$enigmaDecoder->decodeFile('/path/to/encoded.enigma', '/path/to/decoded.bin');
+```
+
+You can also use `SplFileObject` for more control:
+
+```php
+$source = new \SplFileObject('/path/to/input.bin', 'rb');
+$destination = new \SplFileObject('/path/to/encoded.enigma', 'wb');
+$enigmaEncoder->encodeFile($source, $destination);
+```
+
+**Important considerations:**
+
+- **State advancement**: Each call to `encodeFile()` or `decodeFile()` advances the rotor positions. You cannot decode on the same Enigma instance that just encoded—the rotors will have moved.
+- **Solution**: Clone the Enigma before encoding (`$decoder = clone $encoder`), or create a new instance with the same configuration.
+- **Chunk size**: Adjust `Enigma::$fileChunkSize` (default: 1MB) to balance memory usage vs. performance.
+
+```php
+// Reduce chunk size for lower memory usage
+Enigma::$fileChunkSize = 65536; // 64KB chunks
 ```
 
 ## Configuration & State

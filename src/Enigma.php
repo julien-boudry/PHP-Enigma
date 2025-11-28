@@ -66,6 +66,14 @@ class Enigma
     public bool $strictMode;
 
     /**
+     * Default chunk size for file encoding operations (1MB).
+     *
+     * This value determines how many bytes are read at a time when using encodeFile().
+     * Adjust this value to balance memory usage vs. performance.
+     */
+    public static int $fileChunkSize = 1_048_576;
+
+    /**
      * Constructor sets up the plugboard and creates the rotors and reflectros available for the given model.
      * The initital rotors and reflectros are mounted.
      *
@@ -411,6 +419,173 @@ class Enigma
         }
 
         return $encoded;
+    }
+
+    /**
+     * Encode a file through the Enigma machine, reading and writing sequentially.
+     *
+     * This method processes the source file in chunks to minimize memory usage,
+     * making it suitable for encoding large files. Each chunk is converted to
+     * Enigma format and encoded before being written to the destination file.
+     *
+     * Note: This method advances the machine state (rotor positions) as it encodes.
+     * Calling this method twice on the same Enigma instance will produce different
+     * results. To decode, use a fresh Enigma with the same initial configuration,
+     * or clone the Enigma before encoding.
+     *
+     * @param string|\SplFileObject $source Source file path or SplFileObject to read from
+     * @param string|\SplFileObject $destination Destination file path or SplFileObject to write to
+     *
+     * @throws \RuntimeException If the source file cannot be read or destination cannot be written
+     *
+     * @return int Total number of encoded letters written
+     *
+     * @see Enigma::encodeBinary() For the underlying encoding method
+     * @see Enigma::$fileChunkSize For configuring the chunk size
+     */
+    public function encodeFile(
+        string|\SplFileObject $source,
+        string|\SplFileObject $destination,
+    ): int {
+        $sourceFile = $this->openFileForReading($source);
+        $destinationFile = $this->openFileForWriting($destination);
+
+        $totalWritten = 0;
+
+        // Process file in chunks
+        while (!$sourceFile->eof()) {
+            $chunk = $sourceFile->fread(self::$fileChunkSize);
+
+            if ($chunk === false || $chunk === '') {
+                break;
+            }
+
+            // Encode the chunk using binary encoding (no formatting to allow seamless concatenation)
+            $encoded = $this->encodeBinary($chunk, false);
+
+            $bytesWritten = $destinationFile->fwrite($encoded);
+            if ($bytesWritten === false) {
+                throw new \RuntimeException('Failed to write to destination file');
+            }
+
+            $totalWritten += \strlen($encoded);
+        }
+
+        return $totalWritten;
+    }
+
+    /**
+     * Decode an Enigma-encoded file back to binary, reading and writing sequentially.
+     *
+     * This method is the inverse of encodeFile(). It reads an Enigma-encoded file,
+     * decodes it through the Enigma machine, and converts the result back to binary.
+     *
+     * IMPORTANT: The Enigma machine must be in the exact same state (rotor positions)
+     * as when the file was encoded. You cannot call decodeFile() on the same Enigma
+     * instance that was just used to encodeFile(), as the rotor positions will have
+     * advanced during encoding. Instead, clone the Enigma instance before encoding,
+     * create a new instance with the same initial configuration, or manually reset
+     * the rotor positions before decoding.
+     *
+     * Note: This method advances the machine state (rotor positions) as it decodes.
+     * Calling this method twice on the same Enigma instance will produce different
+     * results. To decode the same file again, reset the rotor positions or use
+     * a fresh Enigma with the same initial configuration.
+     *
+     * @param string|\SplFileObject $source Source file path or SplFileObject containing Enigma-encoded data
+     * @param string|\SplFileObject $destination Destination file path or SplFileObject to write decoded binary to
+     *
+     * @throws \RuntimeException If the source file cannot be read, destination cannot be written, or decoding fails
+     *
+     * @return int Total number of bytes written to destination
+     *
+     * @see Enigma::encodeFile() For the encoding method
+     * @see Enigma::$fileChunkSize For configuring the chunk size
+     */
+    public function decodeFile(
+        string|\SplFileObject $source,
+        string|\SplFileObject $destination,
+    ): int {
+        $sourceFile = $this->openFileForReading($source);
+        $destinationFile = $this->openFileForWriting($destination);
+
+        $totalWritten = 0;
+
+        // Each binary byte becomes 2 Enigma letters, so we read chunks that are multiples of 2
+        // to ensure we can decode complete bytes
+        $enigmaChunkSize = self::$fileChunkSize * 2;
+
+        // Process file in chunks
+        while (!$sourceFile->eof()) {
+            $chunk = $sourceFile->fread($enigmaChunkSize);
+
+            if ($chunk === false || $chunk === '') {
+                break;
+            }
+
+            // Decode through Enigma (same operation as encoding due to reciprocal nature)
+            $decoded = $this->encodeLetters($chunk);
+
+            // Convert from Enigma format back to binary
+            $binary = EnigmaTextConverter::enigmaFormatToBinary($decoded);
+
+            if ($binary === null) {
+                throw new \RuntimeException('Failed to decode Enigma format to binary - invalid format');
+            }
+
+            $bytesWritten = $destinationFile->fwrite($binary);
+            if ($bytesWritten === false) {
+                throw new \RuntimeException('Failed to write to destination file');
+            }
+
+            $totalWritten += \strlen($binary);
+        }
+
+        return $totalWritten;
+    }
+
+    /**
+     * Open a file for reading.
+     *
+     * @param string|\SplFileObject $file File path or SplFileObject
+     *
+     * @throws \RuntimeException If the file cannot be opened
+     *
+     * @return \SplFileObject The opened file object
+     */
+    private function openFileForReading(string|\SplFileObject $file): \SplFileObject
+    {
+        if (\is_string($file)) {
+            try {
+                return new \SplFileObject($file, 'rb');
+            } catch (\RuntimeException $e) {
+                throw new \RuntimeException("Cannot open source file '{$file}' for reading: " . $e->getMessage(), 0, $e);
+            }
+        }
+
+        return $file;
+    }
+
+    /**
+     * Open a file for writing.
+     *
+     * @param string|\SplFileObject $file File path or SplFileObject
+     *
+     * @throws \RuntimeException If the file cannot be opened
+     *
+     * @return \SplFileObject The opened file object
+     */
+    private function openFileForWriting(string|\SplFileObject $file): \SplFileObject
+    {
+        if (\is_string($file)) {
+            try {
+                return new \SplFileObject($file, 'wb');
+            } catch (\RuntimeException $e) {
+                throw new \RuntimeException("Cannot open destination file '{$file}' for writing: " . $e->getMessage(), 0, $e);
+            }
+        }
+
+        return $file;
     }
 
     /**
