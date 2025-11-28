@@ -7,6 +7,8 @@ public function RotorConfiguration->__construct( JulienBoudry\EnigmaMachine\Roto
 ```
 
 ## Description
+Creates a new rotor configuration.
+
 Each rotor can be specified as:
 - A RotorType enum (will be created with the corresponding ringstellung parameter)
 - An AbstractRotor instance (for pre-configured rotors, ringstellung parameter is ignored)

@@ -6,6 +6,9 @@
 public function RotorConfiguration->has( JulienBoudry\EnigmaMachine\RotorPosition $position ): bool
 ```
 
+## Description
+Check if a rotor is mounted at the given position.
+
 ## Parameters
 
 ### **position:**

@@ -7,6 +7,8 @@ public function Enigma->encodeBinary( string $binaryData, [ bool $formatOutput =
 ```
 
 ## Description
+Encode binary data through the Enigma machine.
+
 This method converts binary data to Enigma-compatible format and encodes it.
 Useful for encoding arbitrary data that isn't text.
 

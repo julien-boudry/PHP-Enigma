@@ -7,6 +7,8 @@ public function AbstractReflector->processLetter( JulienBoudry\EnigmaMachine\Let
 ```
 
 ## Description
+Send a letter through the wiring.
+
 Because pins are connected in pairs, there is no difference if
 processLetter1stPass() or processLetter2ndPass() is used.
 

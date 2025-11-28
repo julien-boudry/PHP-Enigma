@@ -6,6 +6,9 @@
 abstract public static function AbstractRotor::getCompatibleModels( ): array
 ```
 
+## Description
+The compatible Enigma models for this rotor.
+
 ## Return
 **Type:** `array`
 

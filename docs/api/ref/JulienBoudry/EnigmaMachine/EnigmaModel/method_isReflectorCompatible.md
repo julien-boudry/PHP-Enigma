@@ -6,6 +6,9 @@
 public function EnigmaModel->isReflectorCompatible( JulienBoudry\EnigmaMachine\ReflectorType $reflector ): bool
 ```
 
+## Description
+Check if a reflector type is compatible with this model.
+
 ## Parameters
 
 ### **reflector:**

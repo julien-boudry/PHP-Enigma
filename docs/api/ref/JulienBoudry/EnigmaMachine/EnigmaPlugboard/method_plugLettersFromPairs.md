@@ -7,6 +7,8 @@ public function EnigmaPlugboard->plugLettersFromPairs( array|string $pairs ): vo
 ```
 
 ## Description
+Connect multiple letter pairs from string notation.
+
 Accepts pairs in various formats:
 - Space-separated: "AV BS CG DL"
 - Array of pairs: ['AV', 'BS', 'CG', 'DL']

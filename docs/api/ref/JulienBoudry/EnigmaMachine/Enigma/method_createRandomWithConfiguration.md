@@ -7,6 +7,8 @@ public static function Enigma::createRandomWithConfiguration( JulienBoudry\Enigm
 ```
 
 ## Description
+Create an Enigma machine with a random configuration and return both.
+
 Same as createRandom() but also returns the configuration object,
 which is useful for logging, debugging, or recreating the same setup.
 

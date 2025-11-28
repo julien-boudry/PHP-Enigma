@@ -6,6 +6,9 @@
 public static function EnigmaTextConverter::formatInGroups( string $text, [ int $groupSize = 5 ] ): string
 ```
 
+## Description
+Format Enigma output into traditional 5-letter groups.
+
 ## Parameters
 
 ### **text:**

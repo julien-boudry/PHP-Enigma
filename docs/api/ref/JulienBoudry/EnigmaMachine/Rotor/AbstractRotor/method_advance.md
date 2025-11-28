@@ -7,6 +7,8 @@ public function AbstractRotor->advance( ): void
 ```
 
 ## Description
+Advance the rotor by 1 step.
+
 When position reaches Letter::count(), it is reset to 0.
 
 ## Return

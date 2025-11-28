@@ -5,3 +5,6 @@
 ```php
 public function AbstractEntryWheel->__construct( )
 ```
+
+## Description
+Constructor creates the entry wheel wiring.

@@ -6,6 +6,9 @@
 public static function EnigmaTextConverter::isValidEnigmaFormat( string $text ): bool
 ```
 
+## Description
+Check if a string is already in valid Enigma format (A-Z only).
+
 ## Parameters
 
 ### **text:**

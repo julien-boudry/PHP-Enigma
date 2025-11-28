@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/AbstractReflector.php#L21)
 
 ## Description
+Abstract base class for Enigma Reflectors (Umkehrwalze).
+
 After passing through the plugboard and all rotors, the reflector redirects the signal
 back through the rotors in reverse order. Because no letter connects to itself,
 the signal always takes a different return path.
@@ -14,10 +16,10 @@ using the same settings—encoding the same message twice returns the original t
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__clone(...)](method___clone.md) | __ |
-| [__construct(...)](method___construct.md) | __ |
-| [getType(...)](method_getType.md) | __ |
-| [processLetter(...)](method_processLetter.md) | _Because pins are connected in pairs, there is no difference if processLetter1stPass() or processLetter2ndPass() is used._ |
+| [__clone(...)](method___clone.md) | _Deep clone the reflector._ |
+| [__construct(...)](method___construct.md) | _Constructor creates a new Wiring with the setup from the concrete class._ |
+| [getType(...)](method_getType.md) | _Get the reflector type._ |
+| [processLetter(...)](method_processLetter.md) | _Send a letter through the wiring._ |
 
 
 ## Public Representation

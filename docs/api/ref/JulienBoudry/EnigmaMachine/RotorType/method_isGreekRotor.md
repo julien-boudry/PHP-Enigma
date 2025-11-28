@@ -6,6 +6,9 @@
 public function RotorType->isGreekRotor( ): bool
 ```
 
+## Description
+Check if this rotor type is a Greek rotor (BETA or GAMMA).
+
 ## Return
 **Type:** `bool`
 

@@ -3,84 +3,84 @@
 ## JulienBoudry\EnigmaMachine
 | Class Name | Description |
 | ------------- | ------------- |
-| [Enigma](ref/JulienBoudry/EnigmaMachine/Enigma/class_Enigma.md) | _This class emulates the historical Enigma machine used during World War II. Multiple models can be emulated: - Military models (Wehrmacht/Luftwaffe, Kriegsmarine M3/M4) with plugboard - Commercial mod..._ |
-| [EnigmaConfiguration](ref/JulienBoudry/EnigmaMachine/EnigmaConfiguration/class_EnigmaConfiguration.md) | _This immutable value object holds all the configuration parameters needed to set up an Enigma machine. It can be created from scratch, generated randomly, or extracted from an existing Enigma machine._ |
-| [EnigmaPlugboard](ref/JulienBoudry/EnigmaMachine/EnigmaPlugboard/class_EnigmaPlugboard.md) | _The plugboard allows the operator to swap pairs of letters before and after the signal passes through the rotors. This adds an additional layer of encryption.  The initial setup has no swaps (each let..._ |
-| [EnigmaRandomConfigurator](ref/JulienBoudry/EnigmaMachine/EnigmaRandomConfigurator/class_EnigmaRandomConfigurator.md) | _This class provides methods to generate cryptographically secure random configurations compatible with specific Enigma models. For testing purposes, a deterministic random engine can be injected.  Gen..._ |
-| [EnigmaTextConverter](ref/JulienBoudry/EnigmaMachine/EnigmaTextConverter/class_EnigmaTextConverter.md) | _Historical Enigma machines could only process the 26 letters A-Z. This class provides conversion utilities to transform any input text into a format suitable for Enigma encryption.  Common historical ..._ |
-| [EnigmaWiring](ref/JulienBoudry/EnigmaMachine/EnigmaWiring/class_EnigmaWiring.md) | _This class implements the wiring used by rotors, reflectors, and the plugboard. Each wiring provides a monoalphabetical substitution, mapping each input letter to a different output letter.  Example w..._ |
-| [RotorConfiguration](ref/JulienBoudry/EnigmaMachine/RotorConfiguration/class_RotorConfiguration.md) | _This class encapsulates the collection of rotors and provides type-safe access to rotors by their position. It accepts either RotorType enums (which will be converted to AbstractRotor instances) or pr..._ |
+| [Enigma](ref/JulienBoudry/EnigmaMachine/Enigma/class_Enigma.md) | _Represents an Enigma cipher machine._ |
+| [EnigmaConfiguration](ref/JulienBoudry/EnigmaMachine/EnigmaConfiguration/class_EnigmaConfiguration.md) | _Represents an Enigma machine configuration._ |
+| [EnigmaPlugboard](ref/JulienBoudry/EnigmaMachine/EnigmaPlugboard/class_EnigmaPlugboard.md) | _Represents the Plugboard (Steckerbrett) of an Enigma machine._ |
+| [EnigmaRandomConfigurator](ref/JulienBoudry/EnigmaMachine/EnigmaRandomConfigurator/class_EnigmaRandomConfigurator.md) | _Generates random configurations for Enigma machines._ |
+| [EnigmaTextConverter](ref/JulienBoudry/EnigmaMachine/EnigmaTextConverter/class_EnigmaTextConverter.md) | _Converts arbitrary text to Enigma-compatible format (A-Z only)._ |
+| [EnigmaWiring](ref/JulienBoudry/EnigmaMachine/EnigmaWiring/class_EnigmaWiring.md) | _Represents the internal wiring of Enigma components._ |
+| [RotorConfiguration](ref/JulienBoudry/EnigmaMachine/RotorConfiguration/class_RotorConfiguration.md) | _Represents the configuration of rotors for an Enigma machine._ |
 
 | Enum Name | Description |
 | ------------- | ------------- |
-| [EnigmaModel](ref/JulienBoudry/EnigmaMachine/EnigmaModel/enum_EnigmaModel.md) | _Defines the different historical Enigma machine variants that can be emulated. Each model has its own specific set of available rotors and reflectors._ |
-| [EntryWheelType](ref/JulienBoudry/EnigmaMachine/EntryWheelType/enum_EntryWheelType.md) | _The entry wheel is the first component the signal passes through when entering the rotor assembly. Different Enigma models use different entry wheel types._ |
-| [Letter](ref/JulienBoudry/EnigmaMachine/Letter/enum_Letter.md) | _This backed enum provides type-safe letter handling for all Enigma operations. The integer backing values (0-25) are used internally for efficient wiring calculations.  Note: PHP enums cannot implemen..._ |
-| [ReflectorType](ref/JulienBoudry/EnigmaMachine/ReflectorType/enum_ReflectorType.md) | _Defines the different reflector variants (Umkehrwalze) available for Enigma machines. Different Enigma models support different reflector types._ |
-| [RotorPosition](ref/JulienBoudry/EnigmaMachine/RotorPosition/enum_RotorPosition.md) | _Defines the slots where rotors can be mounted. Most Enigma models have 3 positions (P1, P2, P3), while the Kriegsmarine M4 has an additional fourth "Greek" position that never rotates.  Signal flow: K..._ |
-| [RotorType](ref/JulienBoudry/EnigmaMachine/RotorType/enum_RotorType.md) | _Defines the different rotor variants (Walzen) available for Enigma machines. Each rotor has unique internal wiring and notch positions. Different Enigma models support different subsets of these rotor..._ |
+| [EnigmaModel](ref/JulienBoudry/EnigmaMachine/EnigmaModel/enum_EnigmaModel.md) | _Enumeration of Enigma machine models._ |
+| [EntryWheelType](ref/JulienBoudry/EnigmaMachine/EntryWheelType/enum_EntryWheelType.md) | _Types of Entry Wheels (Eintrittswalze, ETW) used in Enigma machines._ |
+| [Letter](ref/JulienBoudry/EnigmaMachine/Letter/enum_Letter.md) | _Enumeration representing the 26 letters of the Enigma alphabet._ |
+| [ReflectorType](ref/JulienBoudry/EnigmaMachine/ReflectorType/enum_ReflectorType.md) | _Enumeration of available reflector types._ |
+| [RotorPosition](ref/JulienBoudry/EnigmaMachine/RotorPosition/enum_RotorPosition.md) | _Enumeration of rotor positions in the Enigma machine._ |
+| [RotorType](ref/JulienBoudry/EnigmaMachine/RotorType/enum_RotorType.md) | _Enumeration of available rotor types._ |
 
 ## JulienBoudry\EnigmaMachine\EntryWheel
 | Class Name | Description |
 | ------------- | ------------- |
-| [AbstractEntryWheel](ref/JulienBoudry/EnigmaMachine/EntryWheel/AbstractEntryWheel/class_AbstractEntryWheel.md) | _The entry wheel is the first component the signal passes through when entering the rotor assembly. It maps keyboard positions to rotor contact positions.  Different Enigma models use different entry w..._ |
-| [AlphabeticalEntryWheel](ref/JulienBoudry/EnigmaMachine/EntryWheel/AlphabeticalEntryWheel/class_AlphabeticalEntryWheel.md) | _Military Enigma models (Wehrmacht, Kriegsmarine) use alphabetical order: A→0, B→1, C→2, ... (identity mapping)  This is effectively a pass-through - the letter position equals the contact position...._ |
-| [QwertzEntryWheel](ref/JulienBoudry/EnigmaMachine/EntryWheel/QwertzEntryWheel/class_QwertzEntryWheel.md) | _Commercial models (Enigma K, Swiss-K, Railway) use QWERTZ keyboard order: Q→0, W→1, E→2, R→3, T→4, Z→5, U→6, I→7, O→8, A→9, S→10, D→11, F→12, G→13, H→14, J→15, K→16, P→17, Y→18, X→19, C→20, V→21, B→22..._ |
-| [TirpitzEntryWheel](ref/JulienBoudry/EnigmaMachine/EntryWheel/TirpitzEntryWheel/class_TirpitzEntryWheel.md) | _The Enigma T was used for communication between Germany and Japan. It uses a unique entry wheel order that is neither alphabetical nor QWERTZ: K→0, Z→1, R→2, O→3, U→4, Q→5, H→6, Y→7, A→8, I→9, G→10, B..._ |
+| [AbstractEntryWheel](ref/JulienBoudry/EnigmaMachine/EntryWheel/AbstractEntryWheel/class_AbstractEntryWheel.md) | _Abstract base class for Entry Wheels (Eintrittswalze, ETW)._ |
+| [AlphabeticalEntryWheel](ref/JulienBoudry/EnigmaMachine/EntryWheel/AlphabeticalEntryWheel/class_AlphabeticalEntryWheel.md) | _Alphabetical Entry Wheel used in military Enigma models._ |
+| [QwertzEntryWheel](ref/JulienBoudry/EnigmaMachine/EntryWheel/QwertzEntryWheel/class_QwertzEntryWheel.md) | _QWERTZ Entry Wheel used in commercial Enigma models._ |
+| [TirpitzEntryWheel](ref/JulienBoudry/EnigmaMachine/EntryWheel/TirpitzEntryWheel/class_TirpitzEntryWheel.md) | _Tirpitz Entry Wheel used in the Enigma T (Tirpitz)._ |
 
 
 ## JulienBoudry\EnigmaMachine\Exception
 | Class Name | Description |
 | ------------- | ------------- |
-| [EnigmaConfigurationException](ref/JulienBoudry/EnigmaMachine/Exception/EnigmaConfigurationException/class_EnigmaConfigurationException.md) | _This includes: - Incompatible rotor/model combinations - Incompatible reflector/model combinations - Invalid rotor positions (e.g., Greek rotor in wrong position) - Duplicate rotors  These errors can ..._ |
-| [EnigmaWiringException](ref/JulienBoudry/EnigmaMachine/Exception/EnigmaWiringException/class_EnigmaWiringException.md) | _This exception is thrown for hardware-level wiring errors that cannot be bypassed, such as: - Invalid DORA reflector pairs (wrong count, duplicate letters, self-connections) - Invalid rotor wiring con..._ |
+| [EnigmaConfigurationException](ref/JulienBoudry/EnigmaMachine/Exception/EnigmaConfigurationException/class_EnigmaConfigurationException.md) | _Exception thrown when an Enigma machine configuration is invalid._ |
+| [EnigmaWiringException](ref/JulienBoudry/EnigmaMachine/Exception/EnigmaWiringException/class_EnigmaWiringException.md) | _Exception thrown when wiring configuration is invalid._ |
 
 
 ## JulienBoudry\EnigmaMachine\Reflector
 | Class Name | Description |
 | ------------- | ------------- |
-| [AbstractReflector](ref/JulienBoudry/EnigmaMachine/Reflector/AbstractReflector/class_AbstractReflector.md) | _After passing through the plugboard and all rotors, the reflector redirects the signal back through the rotors in reverse order. Because no letter connects to itself, the signal always takes a differe..._ |
-| [ReflectorB](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorB/class_ReflectorB.md) | _Standard reflector used with Wehrmacht/Luftwaffe and Kriegsmarine M3 models._ |
-| [ReflectorBThin](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorBThin/class_ReflectorBThin.md) | _Thin reflector used exclusively with the Kriegsmarine M4 model. The thin design allows space for the fourth rotor._ |
-| [ReflectorC](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorC/class_ReflectorC.md) | _Alternative reflector used with Wehrmacht/Luftwaffe and Kriegsmarine M3 models._ |
-| [ReflectorCThin](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorCThin/class_ReflectorCThin.md) | _Thin reflector used exclusively with the Kriegsmarine M4 model. The thin design allows space for the fourth rotor._ |
-| [ReflectorDora](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorDora/class_ReflectorDora.md) | _The UKW-D was a rewirable reflector introduced by the Wehrmacht/Luftwaffe in January 1944. Unlike fixed reflectors (B, C), operators could configure their own wiring using plug cables.  The physical d..._ |
-| [ReflectorK](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorK/class_ReflectorK.md) | _Standard commercial wiring (handelsübliche Schaltung). Also used by Swiss-K (the Swiss only rewired the rotors, not the reflector).  Note: The commercial models use QWERTZ entry wheel, but the reflect..._ |
-| [ReflectorRailway](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorRailway/class_ReflectorRailway.md) | _Rewired reflector used by the German Reichsbahn (Railway). Wiring recovered in 2023 from physical measurement of UKW K456._ |
-| [ReflectorSwissK](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorSwissK/class_ReflectorSwissK.md) | _The Swiss used the same reflector wiring as the commercial Enigma K. They only modified the rotor wirings for additional security._ |
-| [ReflectorTirpitz](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorTirpitz/class_ReflectorTirpitz.md) | _The Enigma T was used for German-Japanese military communications during WW2. It has a unique reflector wiring and uses the Tirpitz entry wheel._ |
+| [AbstractReflector](ref/JulienBoudry/EnigmaMachine/Reflector/AbstractReflector/class_AbstractReflector.md) | _Abstract base class for Enigma Reflectors (Umkehrwalze)._ |
+| [ReflectorB](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorB/class_ReflectorB.md) | _Reflector B (Umkehrwalze B)._ |
+| [ReflectorBThin](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorBThin/class_ReflectorBThin.md) | _Reflector B Thin (Umkehrwalze B Dünn)._ |
+| [ReflectorC](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorC/class_ReflectorC.md) | _Reflector C (Umkehrwalze C)._ |
+| [ReflectorCThin](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorCThin/class_ReflectorCThin.md) | _Reflector C Thin (Umkehrwalze C Dünn)._ |
+| [ReflectorDora](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorDora/class_ReflectorDora.md) | _UKW-D (Umkehrwalze Dora) - Rewirable Reflector._ |
+| [ReflectorK](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorK/class_ReflectorK.md) | _Commercial Enigma K (A27) Reflector (Umkehrwalze)._ |
+| [ReflectorRailway](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorRailway/class_ReflectorRailway.md) | _Railway Enigma (Rocket) Reflector (Umkehrwalze)._ |
+| [ReflectorSwissK](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorSwissK/class_ReflectorSwissK.md) | _Swiss-K Reflector (Umkehrwalze)._ |
+| [ReflectorTirpitz](ref/JulienBoudry/EnigmaMachine/Reflector/ReflectorTirpitz/class_ReflectorTirpitz.md) | _Enigma T (Tirpitz) Reflector (Umkehrwalze)._ |
 
 
 ## JulienBoudry\EnigmaMachine\Rotor
 | Class Name | Description |
 | ------------- | ------------- |
-| [AbstractRotor](ref/JulienBoudry/EnigmaMachine/Rotor/AbstractRotor/class_AbstractRotor.md) | _The rotors are the key element of the Enigma. Each provides a monoalphabetical substitution through its internal wiring, but unlike the plugboard and reflector, rotors move, causing the substitution t..._ |
-| [RotorBeta](ref/JulienBoudry/EnigmaMachine/Rotor/RotorBeta/class_RotorBeta.md) | _This rotor is placed in the leftmost (Greek) position and does not rotate. No notches (never triggers turnover)._ |
-| [RotorGamma](ref/JulienBoudry/EnigmaMachine/Rotor/RotorGamma/class_RotorGamma.md) | _This rotor is placed in the leftmost (Greek) position and does not rotate. No notches (never triggers turnover)._ |
-| [RotorI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorI/class_RotorI.md) | _Notch at position Q (turnover at R)._ |
-| [RotorII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorII/class_RotorII.md) | _Notch at position E (turnover at F)._ |
-| [RotorIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorIII/class_RotorIII.md) | _Notch at position V (turnover at W)._ |
-| [RotorIV](ref/JulienBoudry/EnigmaMachine/Rotor/RotorIV/class_RotorIV.md) | _Notch at position J (turnover at K)._ |
-| [RotorKI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorKI/class_RotorKI.md) | _Standard commercial wiring (handelsübliche Schaltung). Used in Enigma K (A27) from 1927-1944. Notch at position G (turnover at Y)._ |
-| [RotorKII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorKII/class_RotorKII.md) | _Standard commercial wiring (handelsübliche Schaltung). Used in Enigma K (A27) from 1927-1944. Notch at position M (turnover at E)._ |
-| [RotorKIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorKIII/class_RotorKIII.md) | _Standard commercial wiring (handelsübliche Schaltung). Used in Enigma K (A27) from 1927-1944. Notch at position V (turnover at N)._ |
-| [RotorRailwayI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorRailwayI/class_RotorRailwayI.md) | _Rewired rotor used by the German Reichsbahn (Railway). Wiring recovered in 2023 from Enigma K serial number K438. Notch at position G (turnover at Y)._ |
-| [RotorRailwayII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorRailwayII/class_RotorRailwayII.md) | _Rewired rotor used by the German Reichsbahn (Railway). Wiring recovered in 2023 from Enigma K serial number K438. Notch at position M (turnover at E)._ |
-| [RotorRailwayIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorRailwayIII/class_RotorRailwayIII.md) | _Rewired rotor used by the German Reichsbahn (Railway). Wiring recovered in 2023 from Enigma K serial number K438. Notch at position V (turnover at N)._ |
-| [RotorSwissKI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorSwissKI/class_RotorSwissKI.md) | _Modified wiring used by the Swiss Army, Air Force, and Foreign Ministry. The Swiss rewired the rotors after receiving the machines from Germany. Notch at position G (turnover at Y)._ |
-| [RotorSwissKII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorSwissKII/class_RotorSwissKII.md) | _Modified wiring used by the Swiss Army, Air Force, and Foreign Ministry. The Swiss rewired the rotors after receiving the machines from Germany. Notch at position M (turnover at E)._ |
-| [RotorSwissKIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorSwissKIII/class_RotorSwissKIII.md) | _Modified wiring used by the Swiss Army, Air Force, and Foreign Ministry. The Swiss rewired the rotors after receiving the machines from Germany. Notch at position V (turnover at N)._ |
-| [RotorTirpitzI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzI/class_RotorTirpitzI.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzII/class_RotorTirpitzII.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzIII/class_RotorTirpitzIII.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzIV](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzIV/class_RotorTirpitzIV.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzV](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzV/class_RotorTirpitzV.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzVI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzVI/class_RotorTirpitzVI.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzVII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzVII/class_RotorTirpitzVII.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzVIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzVIII/class_RotorTirpitzVIII.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorV](ref/JulienBoudry/EnigmaMachine/Rotor/RotorV/class_RotorV.md) | _Notch at position Z (turnover at A)._ |
-| [RotorVI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorVI/class_RotorVI.md) | _Double notch at positions M and Z (turnovers at N and A)._ |
-| [RotorVII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorVII/class_RotorVII.md) | _Double notch at positions M and Z (turnovers at N and A)._ |
-| [RotorVIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorVIII/class_RotorVIII.md) | _Double notch at positions M and Z (turnovers at N and A)._ |
+| [AbstractRotor](ref/JulienBoudry/EnigmaMachine/Rotor/AbstractRotor/class_AbstractRotor.md) | _Abstract base class for Enigma rotors (Walzen)._ |
+| [RotorBeta](ref/JulienBoudry/EnigmaMachine/Rotor/RotorBeta/class_RotorBeta.md) | _Rotor Beta - Greek rotor for Kriegsmarine M4 only._ |
+| [RotorGamma](ref/JulienBoudry/EnigmaMachine/Rotor/RotorGamma/class_RotorGamma.md) | _Rotor Gamma - Greek rotor for Kriegsmarine M4 only._ |
+| [RotorI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorI/class_RotorI.md) | _Rotor I - Available on all Enigma models._ |
+| [RotorII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorII/class_RotorII.md) | _Rotor II - Available on all Enigma models._ |
+| [RotorIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorIII/class_RotorIII.md) | _Rotor III - Available on all Enigma models._ |
+| [RotorIV](ref/JulienBoudry/EnigmaMachine/Rotor/RotorIV/class_RotorIV.md) | _Rotor IV - Available on all Enigma models._ |
+| [RotorKI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorKI/class_RotorKI.md) | _Commercial Enigma K Rotor I._ |
+| [RotorKII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorKII/class_RotorKII.md) | _Commercial Enigma K Rotor II._ |
+| [RotorKIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorKIII/class_RotorKIII.md) | _Commercial Enigma K Rotor III._ |
+| [RotorRailwayI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorRailwayI/class_RotorRailwayI.md) | _Railway Enigma (Rocket) Rotor I._ |
+| [RotorRailwayII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorRailwayII/class_RotorRailwayII.md) | _Railway Enigma (Rocket) Rotor II._ |
+| [RotorRailwayIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorRailwayIII/class_RotorRailwayIII.md) | _Railway Enigma (Rocket) Rotor III._ |
+| [RotorSwissKI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorSwissKI/class_RotorSwissKI.md) | _Swiss-K Rotor I (Swiss Air Force wiring)._ |
+| [RotorSwissKII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorSwissKII/class_RotorSwissKII.md) | _Swiss-K Rotor II (Swiss Air Force wiring)._ |
+| [RotorSwissKIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorSwissKIII/class_RotorSwissKIII.md) | _Swiss-K Rotor III (Swiss Air Force wiring)._ |
+| [RotorTirpitzI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzI/class_RotorTirpitzI.md) | _Rotor I for Enigma T (Tirpitz)._ |
+| [RotorTirpitzII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzII/class_RotorTirpitzII.md) | _Rotor II for Enigma T (Tirpitz)._ |
+| [RotorTirpitzIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzIII/class_RotorTirpitzIII.md) | _Rotor III for Enigma T (Tirpitz)._ |
+| [RotorTirpitzIV](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzIV/class_RotorTirpitzIV.md) | _Rotor IV for Enigma T (Tirpitz)._ |
+| [RotorTirpitzV](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzV/class_RotorTirpitzV.md) | _Rotor V for Enigma T (Tirpitz)._ |
+| [RotorTirpitzVI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzVI/class_RotorTirpitzVI.md) | _Rotor VI for Enigma T (Tirpitz)._ |
+| [RotorTirpitzVII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzVII/class_RotorTirpitzVII.md) | _Rotor VII for Enigma T (Tirpitz)._ |
+| [RotorTirpitzVIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorTirpitzVIII/class_RotorTirpitzVIII.md) | _Rotor VIII for Enigma T (Tirpitz)._ |
+| [RotorV](ref/JulienBoudry/EnigmaMachine/Rotor/RotorV/class_RotorV.md) | _Rotor V - Available on all Enigma models._ |
+| [RotorVI](ref/JulienBoudry/EnigmaMachine/Rotor/RotorVI/class_RotorVI.md) | _Rotor VI - Available on Kriegsmarine M3 and M4 only._ |
+| [RotorVII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorVII/class_RotorVII.md) | _Rotor VII - Available on Kriegsmarine M3 and M4 only._ |
+| [RotorVIII](ref/JulienBoudry/EnigmaMachine/Rotor/RotorVIII/class_RotorVIII.md) | _Rotor VIII - Available on Kriegsmarine M3 and M4 only._ |
 
 

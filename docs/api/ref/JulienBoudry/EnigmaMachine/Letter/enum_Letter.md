@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Letter.php#L15)
 
 ## Description
+Enumeration representing the 26 letters of the Enigma alphabet.
+
 This backed enum provides type-safe letter handling for all Enigma operations.
 The integer backing values (0-25) are used internally for efficient wiring calculations.
 
@@ -42,9 +44,9 @@ Note: PHP enums cannot implement Stringable. Use ->toChar() for string conversio
 ### Public Static Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [count(...)](method_count.md) | __ |
-| [fromChar(...)](method_fromChar.md) | __ |
-| [fromPosition(...)](method_fromPosition.md) | _This is useful for rotor calculations where positions wrap around._ |
+| [count(...)](method_count.md) | _Get the total number of letters in the Enigma alphabet._ |
+| [fromChar(...)](method_fromChar.md) | _Create a Letter from a single character string._ |
+| [fromPosition(...)](method_fromPosition.md) | _Get the letter at a given position (with modulo wrapping)._ |
 
 ### Public Properties
 | Property Name | Description |
@@ -55,7 +57,7 @@ Note: PHP enums cannot implement Stringable. Use ->toChar() for string conversio
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [toChar(...)](method_toChar.md) | __ |
+| [toChar(...)](method_toChar.md) | _Convert this letter to its character representation._ |
 
 
 ## Public Representation
@@ -117,13 +119,13 @@ enum JulienBoudry\EnigmaMachine\Letter: int implements UnitEnum, BackedEnum
     public const Z = \JulienBoudry\EnigmaMachine\Letter::Z;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
-    public protected(set) readonly protected(set) int $value;
+    public readonly protected(set) string $name;
+    public readonly protected(set) int $value;
 
     // Static Methods
     public static function count( ): int;
-    public static function fromChar( string $char ): JulienBoudry\EnigmaMachine\Letter;
-    public static function fromPosition( int $position ): JulienBoudry\EnigmaMachine\Letter;
+    public static function fromChar( string $char ): self;
+    public static function fromPosition( int $position ): self;
 
     // Methods
     public function toChar( ): string;
@@ -190,13 +192,13 @@ enum JulienBoudry\EnigmaMachine\Letter: int implements UnitEnum, BackedEnum
     public const Z = \JulienBoudry\EnigmaMachine\Letter::Z;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
-    public protected(set) readonly protected(set) int $value;
+    public readonly protected(set) string $name;
+    public readonly protected(set) int $value;
 
     // Static Methods
     public static function count( ): int;
-    public static function fromChar( string $char ): JulienBoudry\EnigmaMachine\Letter;
-    public static function fromPosition( int $position ): JulienBoudry\EnigmaMachine\Letter;
+    public static function fromChar( string $char ): self;
+    public static function fromPosition( int $position ): self;
 
     // Methods
     public function toChar( ): string;

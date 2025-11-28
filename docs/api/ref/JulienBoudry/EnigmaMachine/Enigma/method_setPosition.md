@@ -6,6 +6,9 @@
 public function Enigma->setPosition( JulienBoudry\EnigmaMachine\RotorPosition $position, JulienBoudry\EnigmaMachine\Letter $letter ): void
 ```
 
+## Description
+Turn a rotor to a new position.
+
 ## Parameters
 
 ### **position:**

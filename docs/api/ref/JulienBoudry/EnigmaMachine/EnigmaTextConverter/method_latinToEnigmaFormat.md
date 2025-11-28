@@ -7,6 +7,8 @@ public static function EnigmaTextConverter::latinToEnigmaFormat( string $text, [
 ```
 
 ## Description
+Convert Latin text to Enigma-compatible format.
+
 Handles Latin alphabet, accented characters (é, ü, ß, etc.), numbers,
 and common punctuation. Non-Latin scripts (Cyrillic, Chinese, Arabic, etc.)
 will be converted to X or skipped depending on $keepUnknownAsX.

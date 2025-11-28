@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/ReflectorType.php#L15)
 
 ## Description
+Enumeration of available reflector types.
+
 Defines the different reflector variants (Umkehrwalze) available for Enigma machines.
 Different Enigma models support different reflector types.
 ## Elements
@@ -11,20 +13,20 @@ Different Enigma models support different reflector types.
 | Constant Name | Signature | Description |
 | ------------- | ------------- | ------------- |
 | B | `public const B = \JulienBoudry\EnigmaMachine\ReflectorType::B` | __ |
-| BTHIN | `public const BTHIN = \JulienBoudry\EnigmaMachine\ReflectorType::BTHIN` | __ |
+| BTHIN | `public const BTHIN = \JulienBoudry\EnigmaMachine\ReflectorType::BTHIN` | _ID Reflector B Thin only available in model Kriegsmarine M4._ |
 | C | `public const C = \JulienBoudry\EnigmaMachine\ReflectorType::C` | __ |
-| CTHIN | `public const CTHIN = \JulienBoudry\EnigmaMachine\ReflectorType::CTHIN` | __ |
-| DORA | `public const DORA = \JulienBoudry\EnigmaMachine\ReflectorType::DORA` | _Only available in Wehrmacht/Luftwaffe model. Use createDoraReflector() to create with custom wiring._ |
-| K | `public const K = \JulienBoudry\EnigmaMachine\ReflectorType::K` | _Standard commercial wiring (handelsübliche Schaltung). Used by various customers from 1927-1944._ |
-| RAILWAY | `public const RAILWAY = \JulienBoudry\EnigmaMachine\ReflectorType::RAILWAY` | _Rewired reflector used by German Reichsbahn._ |
-| SWISS_K | `public const SWISS_K = \JulienBoudry\EnigmaMachine\ReflectorType::SWISS_K` | _Same wiring as commercial K - the Swiss only rewired the rotors._ |
-| TIRPITZ | `public const TIRPITZ = \JulienBoudry\EnigmaMachine\ReflectorType::TIRPITZ` | _Used for German-Japanese military communications._ |
+| CTHIN | `public const CTHIN = \JulienBoudry\EnigmaMachine\ReflectorType::CTHIN` | _ID Reflector C Thin only available in model Kriegsmarine M4._ |
+| DORA | `public const DORA = \JulienBoudry\EnigmaMachine\ReflectorType::DORA` | _UKW-D (Umkehrwalze Dora) - Rewirable reflector._ |
+| K | `public const K = \JulienBoudry\EnigmaMachine\ReflectorType::K` | _Commercial Enigma K (A27) reflector._ |
+| RAILWAY | `public const RAILWAY = \JulienBoudry\EnigmaMachine\ReflectorType::RAILWAY` | _Railway Enigma (Rocket) reflector._ |
+| SWISS_K | `public const SWISS_K = \JulienBoudry\EnigmaMachine\ReflectorType::SWISS_K` | _Swiss Enigma K reflector._ |
+| TIRPITZ | `public const TIRPITZ = \JulienBoudry\EnigmaMachine\ReflectorType::TIRPITZ` | _Enigma T (Tirpitz) reflector._ |
 
 ### Public Static Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [createDoraReflector(...)](method_createDoraReflector.md) | __ |
-| [createDoraReflectorFromString(...)](method_createDoraReflectorFromString.md) | __ |
+| [createDoraReflector(...)](method_createDoraReflector.md) | _Create a UKW-D (Dora) reflector with custom wiring._ |
+| [createDoraReflectorFromString(...)](method_createDoraReflectorFromString.md) | _Create a UKW-D (Dora) reflector from a pairs string._ |
 
 ### Public Properties
 | Property Name | Description |
@@ -34,7 +36,7 @@ Different Enigma models support different reflector types.
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [createReflector(...)](method_createReflector.md) | _For DORA reflector, this creates an instance with default wiring. Use createDoraReflector() for custom wiring configurations._ |
+| [createReflector(...)](method_createReflector.md) | _Create a reflector instance for this type._ |
 
 
 ## Public Representation
@@ -62,7 +64,7 @@ enum JulienBoudry\EnigmaMachine\ReflectorType implements UnitEnum
     public const TIRPITZ = \JulienBoudry\EnigmaMachine\ReflectorType::TIRPITZ;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
+    public readonly protected(set) string $name;
 
     // Static Methods
     public static function createDoraReflector( array $pairs ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
@@ -99,7 +101,7 @@ enum JulienBoudry\EnigmaMachine\ReflectorType implements UnitEnum
     public const TIRPITZ = \JulienBoudry\EnigmaMachine\ReflectorType::TIRPITZ;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
+    public readonly protected(set) string $name;
 
     // Static Methods
     public static function createDoraReflector( array $pairs ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;

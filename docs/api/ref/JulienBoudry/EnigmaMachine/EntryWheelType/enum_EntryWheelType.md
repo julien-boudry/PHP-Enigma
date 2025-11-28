@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EntryWheelType.php#L15)
 
 ## Description
+Types of Entry Wheels (Eintrittswalze, ETW) used in Enigma machines.
+
 The entry wheel is the first component the signal passes through when entering
 the rotor assembly. Different Enigma models use different entry wheel types.
 ## Elements
@@ -10,9 +12,9 @@ the rotor assembly. Different Enigma models use different entry wheel types.
 ### Public Constants
 | Constant Name | Signature | Description |
 | ------------- | ------------- | ------------- |
-| ALPHABETICAL | `public const ALPHABETICAL = \JulienBoudry\EnigmaMachine\EntryWheelType::ALPHABETICAL` | __ |
-| QWERTZ | `public const QWERTZ = \JulienBoudry\EnigmaMachine\EntryWheelType::QWERTZ` | __ |
-| TIRPITZ | `public const TIRPITZ = \JulienBoudry\EnigmaMachine\EntryWheelType::TIRPITZ` | __ |
+| ALPHABETICAL | `public const ALPHABETICAL = \JulienBoudry\EnigmaMachine\EntryWheelType::ALPHABETICAL` | _Alphabetical order (A→0, B→1, C→2...) - used in military models._ |
+| QWERTZ | `public const QWERTZ = \JulienBoudry\EnigmaMachine\EntryWheelType::QWERTZ` | _QWERTZ keyboard order (Q→0, W→1, E→2...) - used in commercial models._ |
+| TIRPITZ | `public const TIRPITZ = \JulienBoudry\EnigmaMachine\EntryWheelType::TIRPITZ` | _Tirpitz order (K→0, Z→1, R→2...) - used in Enigma T (Tirpitz)._ |
 
 ### Public Properties
 | Property Name | Description |
@@ -23,7 +25,7 @@ the rotor assembly. Different Enigma models use different entry wheel types.
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [createEntryWheel(...)](method_createEntryWheel.md) | __ |
+| [createEntryWheel(...)](method_createEntryWheel.md) | _Create the entry wheel instance for this type._ |
 
 
 ## Public Representation
@@ -39,8 +41,8 @@ enum JulienBoudry\EnigmaMachine\EntryWheelType: string implements UnitEnum, Back
     public const TIRPITZ = \JulienBoudry\EnigmaMachine\EntryWheelType::TIRPITZ;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
-    public protected(set) readonly protected(set) string $value;
+    public readonly protected(set) string $name;
+    public readonly protected(set) string $value;
 
     // Methods
     public function createEntryWheel( ): JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel;
@@ -61,8 +63,8 @@ enum JulienBoudry\EnigmaMachine\EntryWheelType: string implements UnitEnum, Back
     public const TIRPITZ = \JulienBoudry\EnigmaMachine\EntryWheelType::TIRPITZ;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
-    public protected(set) readonly protected(set) string $value;
+    public readonly protected(set) string $name;
+    public readonly protected(set) string $value;
 
     // Methods
     public function createEntryWheel( ): JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel;

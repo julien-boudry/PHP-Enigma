@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Exception/EnigmaWiringException.php#L18)
 
 ## Description
+Exception thrown when wiring configuration is invalid.
+
 This exception is thrown for hardware-level wiring errors that cannot be
 bypassed, such as:
 - Invalid DORA reflector pairs (wrong count, duplicate letters, self-connections)

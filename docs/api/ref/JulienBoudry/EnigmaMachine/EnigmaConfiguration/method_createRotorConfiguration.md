@@ -6,6 +6,9 @@
 public function EnigmaConfiguration->createRotorConfiguration( ): JulienBoudry\EnigmaMachine\RotorConfiguration
 ```
 
+## Description
+Create a RotorConfiguration from this configuration.
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\RotorConfiguration`](../RotorConfiguration/class_RotorConfiguration.md)
 

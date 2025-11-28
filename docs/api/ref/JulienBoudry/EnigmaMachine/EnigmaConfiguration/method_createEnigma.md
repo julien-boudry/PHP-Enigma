@@ -6,6 +6,9 @@
 public function EnigmaConfiguration->createEnigma( ): JulienBoudry\EnigmaMachine\Enigma
 ```
 
+## Description
+Create and configure a complete Enigma machine from this configuration.
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\Enigma`](../Enigma/class_Enigma.md)
 

@@ -6,6 +6,9 @@
 public static function ReflectorType::createDoraReflectorFromString( string $pairsString ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora
 ```
 
+## Description
+Create a UKW-D (Dora) reflector from a pairs string.
+
 ## Parameters
 
 ### **pairsString:**

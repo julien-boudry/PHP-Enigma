@@ -6,6 +6,9 @@
 abstract public static function AbstractRotor::getNotches( ): array
 ```
 
+## Description
+The notch positions for this rotor.
+
 ## Return
 **Type:** `array`
 

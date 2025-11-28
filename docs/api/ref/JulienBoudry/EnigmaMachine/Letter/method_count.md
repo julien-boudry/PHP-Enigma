@@ -6,6 +6,9 @@
 public static function Letter::count( ): int
 ```
 
+## Description
+Get the total number of letters in the Enigma alphabet.
+
 ## Return
 **Type:** `int`
 

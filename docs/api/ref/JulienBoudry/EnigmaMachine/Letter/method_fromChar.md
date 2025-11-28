@@ -3,8 +3,11 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Letter.php#L65)
 
 ```php
-public static function Letter::fromChar( string $char ): JulienBoudry\EnigmaMachine\Letter
+public static function Letter::fromChar( string $char ): self
 ```
+
+## Description
+Create a Letter from a single character string.
 
 ## Parameters
 
@@ -17,7 +20,7 @@ string $char
 A single character (A-Z, case-insensitive)
 
 ## Return
-**Type:** [`JulienBoudry\EnigmaMachine\Letter`](enum_Letter.md)
+**Type:** `self`
 
 
 

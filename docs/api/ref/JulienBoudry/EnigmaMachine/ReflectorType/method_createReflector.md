@@ -7,6 +7,8 @@ public function ReflectorType->createReflector( ): JulienBoudry\EnigmaMachine\Re
 ```
 
 ## Description
+Create a reflector instance for this type.
+
 For DORA reflector, this creates an instance with default wiring.
 Use createDoraReflector() for custom wiring configurations.
 

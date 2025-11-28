@@ -6,6 +6,9 @@
 public function RotorConfiguration->get( JulienBoudry\EnigmaMachine\RotorPosition $position ): JulienBoudry\EnigmaMachine\Rotor\AbstractRotor
 ```
 
+## Description
+Get a rotor by its position.
+
 ## Parameters
 
 ### **position:**

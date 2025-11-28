@@ -6,6 +6,9 @@
 public function RotorType->createRotor( [ JulienBoudry\EnigmaMachine\Letter $ringstellung = \JulienBoudry\EnigmaMachine\Letter::A ] ): JulienBoudry\EnigmaMachine\Rotor\AbstractRotor
 ```
 
+## Description
+Create a rotor instance for this type.
+
 ## Parameters
 
 ### **ringstellung:**

@@ -6,6 +6,9 @@
 public function Letter->toChar( ): string
 ```
 
+## Description
+Convert this letter to its character representation.
+
 ## Return
 **Type:** `string`
 

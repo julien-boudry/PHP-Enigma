@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaConfiguration.php#L16)
 
 ## Description
+Represents an Enigma machine configuration.
+
 This immutable value object holds all the configuration parameters
 needed to set up an Enigma machine. It can be created from scratch,
 generated randomly, or extracted from an existing Enigma machine.
@@ -11,7 +13,7 @@ generated randomly, or extracted from an existing Enigma machine.
 ### Public Static Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [fromEnigma(...)](method_fromEnigma.md) | _Extracts the current state of the Enigma machine including rotor types, ring settings, positions, reflector, and plugboard._ |
+| [fromEnigma(...)](method_fromEnigma.md) | _Create a configuration from an existing Enigma machine._ |
 
 ### Public Properties
 | Property Name | Description |
@@ -28,9 +30,9 @@ generated randomly, or extracted from an existing Enigma machine.
 | Method Name | Description |
 | ------------- | ------------- |
 | [__construct(...)](method___construct.md) | __ |
-| [createEnigma(...)](method_createEnigma.md) | __ |
-| [createRotorConfiguration(...)](method_createRotorConfiguration.md) | __ |
-| [getSummary(...)](method_getSummary.md) | __ |
+| [createEnigma(...)](method_createEnigma.md) | _Create and configure a complete Enigma machine from this configuration._ |
+| [createRotorConfiguration(...)](method_createRotorConfiguration.md) | _Create a RotorConfiguration from this configuration._ |
+| [getSummary(...)](method_getSummary.md) | _Get a human-readable summary of the configuration._ |
 
 
 ## Public Representation
@@ -39,16 +41,16 @@ final readonly class JulienBoudry\EnigmaMachine\EnigmaConfiguration
 {
 
     // Properties
-    public protected(set) readonly protected(set) ?array $doraWiringPairs;
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
-    public protected(set) readonly protected(set) array $plugboardPairs;
-    public protected(set) readonly protected(set) array $positions;
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\ReflectorType $reflector;
-    public protected(set) readonly protected(set) array $ringstellungen;
-    public protected(set) readonly protected(set) array $rotorTypes;
+    public readonly protected(set) ?array $doraWiringPairs;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
+    public readonly protected(set) array $plugboardPairs;
+    public readonly protected(set) array $positions;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\ReflectorType $reflector;
+    public readonly protected(set) array $ringstellungen;
+    public readonly protected(set) array $rotorTypes;
 
     // Static Methods
-    public static function fromEnigma( JulienBoudry\EnigmaMachine\Enigma $enigma ): JulienBoudry\EnigmaMachine\EnigmaConfiguration;
+    public static function fromEnigma( JulienBoudry\EnigmaMachine\Enigma $enigma ): self;
 
     // Methods
     public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, array $rotorTypes, array $ringstellungen, array $positions, JulienBoudry\EnigmaMachine\ReflectorType $reflector, array $plugboardPairs, [ ?array $doraWiringPairs = null ] );
@@ -65,16 +67,16 @@ final readonly class JulienBoudry\EnigmaMachine\EnigmaConfiguration
 {
 
     // Properties
-    public protected(set) readonly protected(set) ?array $doraWiringPairs;
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
-    public protected(set) readonly protected(set) array $plugboardPairs;
-    public protected(set) readonly protected(set) array $positions;
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\ReflectorType $reflector;
-    public protected(set) readonly protected(set) array $ringstellungen;
-    public protected(set) readonly protected(set) array $rotorTypes;
+    public readonly protected(set) ?array $doraWiringPairs;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
+    public readonly protected(set) array $plugboardPairs;
+    public readonly protected(set) array $positions;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\ReflectorType $reflector;
+    public readonly protected(set) array $ringstellungen;
+    public readonly protected(set) array $rotorTypes;
 
     // Static Methods
-    public static function fromEnigma( JulienBoudry\EnigmaMachine\Enigma $enigma ): JulienBoudry\EnigmaMachine\EnigmaConfiguration;
+    public static function fromEnigma( JulienBoudry\EnigmaMachine\Enigma $enigma ): self;
 
     // Methods
     public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, array $rotorTypes, array $ringstellungen, array $positions, JulienBoudry\EnigmaMachine\ReflectorType $reflector, array $plugboardPairs, [ ?array $doraWiringPairs = null ] );

@@ -6,6 +6,9 @@
 public function RotorConfiguration->hasGreekRotor( ): bool
 ```
 
+## Description
+Check if a Greek rotor is configured (M4 model).
+
 ## Return
 **Type:** `bool`
 

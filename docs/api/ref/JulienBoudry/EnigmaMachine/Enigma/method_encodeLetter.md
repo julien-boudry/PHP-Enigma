@@ -7,6 +7,8 @@ public function Enigma->encodeLetter( JulienBoudry\EnigmaMachine\Letter $letter 
 ```
 
 ## Description
+Encode a single letter.
+
 The letter passes the plugboard (if available), entry wheel, rotors, reflector,
 rotors in the opposite direction, entry wheel again, and plugboard (if available).
 Every encoding triggers the advance mechanism.

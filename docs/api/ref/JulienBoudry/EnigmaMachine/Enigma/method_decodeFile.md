@@ -1,12 +1,14 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method decodeFile()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L503)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L505)
 
 ```php
 public function Enigma->decodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int
 ```
 
 ## Description
+Decode an Enigma-encoded file back to binary, reading and writing sequentially.
+
 This method is the inverse of encodeFile(). It reads an Enigma-encoded file,
 decodes it through the Enigma machine, and converts the result back to binary.
 
@@ -50,3 +52,4 @@ Total number of bytes written to destination
 
 ## Related
 - **[\JulienBoudry\EnigmaMachine\Enigma::encodeFile()](method_encodeFile.md)** _For the encoding method_
+- **[\JulienBoudry\EnigmaMachine\Enigma::$fileChunkSize](static_property_fileChunkSize.md)** _For configuring the chunk size_

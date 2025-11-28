@@ -7,6 +7,8 @@ public function Enigma->mountReflector( JulienBoudry\EnigmaMachine\ReflectorType
 ```
 
 ## Description
+Mount a reflector into the enigma.
+
 The previously used reflector will be replaced.
 
 ## Parameters

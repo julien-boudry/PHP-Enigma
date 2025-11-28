@@ -7,6 +7,8 @@ public function EnigmaWiring->__construct( string $wiring )
 ```
 
 ## Description
+Constructor connects the pins according to the list in $wiring.
+
 example string EKMFLGDQVZNTOWYHXUSPAIBRCJ leads to [0]=Letter::E, [1]=Letter::K, [2]=Letter::M, ...
 
 ## Parameters

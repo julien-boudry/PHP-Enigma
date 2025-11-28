@@ -7,6 +7,8 @@ public function Enigma->unplugLetters( JulienBoudry\EnigmaMachine\Letter $letter
 ```
 
 ## Description
+Disconnects 2 letters on the plugboard.
+
 Because letters are connected in pairs, we only need to know one of them.
 
 Only available on military models (Wehrmacht, Kriegsmarine).

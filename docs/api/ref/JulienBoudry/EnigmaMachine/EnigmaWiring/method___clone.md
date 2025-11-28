@@ -6,6 +6,9 @@
 public function EnigmaWiring->__clone( ): void
 ```
 
+## Description
+Clone the wiring array for deep cloning support.
+
 ## Return
 **Type:** `void`
 

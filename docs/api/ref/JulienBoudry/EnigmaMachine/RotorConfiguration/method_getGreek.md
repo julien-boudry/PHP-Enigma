@@ -6,6 +6,9 @@
 public function RotorConfiguration->getGreek( ): JulienBoudry\EnigmaMachine\Rotor\AbstractRotor
 ```
 
+## Description
+Get the Greek rotor (M4 only, never rotates).
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\Rotor\AbstractRotor`](../Rotor/AbstractRotor/class_AbstractRotor.md)
 

@@ -6,6 +6,9 @@
 public function AbstractEntryWheel->processOutward( JulienBoudry\EnigmaMachine\Letter $letter ): JulienBoudry\EnigmaMachine\Letter
 ```
 
+## Description
+Process a letter exiting the rotor assembly (rotors → lamps).
+
 ## Parameters
 
 ### **letter:**

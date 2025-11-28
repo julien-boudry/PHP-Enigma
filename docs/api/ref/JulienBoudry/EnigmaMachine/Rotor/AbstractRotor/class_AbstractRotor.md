@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Rotor/AbstractRotor.php#L30)
 
 ## Description
+Abstract base class for Enigma rotors (Walzen).
+
 The rotors are the key element of the Enigma. Each provides a monoalphabetical substitution
 through its internal wiring, but unlike the plugboard and reflector, rotors move,
 causing the substitution to change with each keypress.
@@ -25,30 +27,30 @@ The Ringstellung (ring setting) offsets the wiring relative to the notches and v
 ### Public Static Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [getCompatibleModels(...)](method_getCompatibleModels.md) | __ |
-| [getNotches(...)](method_getNotches.md) | __ |
+| [getCompatibleModels(...)](method_getCompatibleModels.md) | _The compatible Enigma models for this rotor._ |
+| [getNotches(...)](method_getNotches.md) | _The notch positions for this rotor._ |
 
 ### Public Properties
 | Property Name | Description |
 | ------------- | ------------- |
-| [inUse(...)](property_inUse.md) | __ |
+| [inUse(...)](property_inUse.md) | _A rotor is in use or available._ |
 
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__clone(...)](method___clone.md) | __ |
-| [__construct(...)](method___construct.md) | __ |
-| [advance(...)](method_advance.md) | _When position reaches Letter::count(), it is reset to 0._ |
-| [getPosition(...)](method_getPosition.md) | __ |
-| [getRingstellung(...)](method_getRingstellung.md) | __ |
-| [getType(...)](method_getType.md) | __ |
-| [isCompatibleWithModel(...)](method_isCompatibleWithModel.md) | __ |
-| [isGreekRotor(...)](method_isGreekRotor.md) | __ |
-| [isNotchOpen(...)](method_isNotchOpen.md) | _Returns true if the rotor is in a turnover position for the next rotor._ |
-| [processLetter1stPass(...)](method_processLetter1stPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account. + Letter::count() and % Letter::count() keep the value positive and in b..._ |
-| [processLetter2ndPass(...)](method_processLetter2ndPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account. + Letter::count() and % Letter::count() keep the value positive and in b..._ |
-| [setPosition(...)](method_setPosition.md) | __ |
-| [setRingstellung(...)](method_setRingstellung.md) | __ |
+| [__clone(...)](method___clone.md) | _Deep clone the rotor._ |
+| [__construct(...)](method___construct.md) | _Constructor creates a new Wiring with the setup from the WIRING constant._ |
+| [advance(...)](method_advance.md) | _Advance the rotor by 1 step._ |
+| [getPosition(...)](method_getPosition.md) | _Retrieve current position of the rotor._ |
+| [getRingstellung(...)](method_getRingstellung.md) | _Retrieve current ringstellung (ring setting) of the rotor._ |
+| [getType(...)](method_getType.md) | _Get the rotor type enum value._ |
+| [isCompatibleWithModel(...)](method_isCompatibleWithModel.md) | _Check if this rotor is compatible with the given Enigma model._ |
+| [isGreekRotor(...)](method_isGreekRotor.md) | _Check if this rotor is a Greek rotor (BETA or GAMMA)._ |
+| [isNotchOpen(...)](method_isNotchOpen.md) | _A notch is open._ |
+| [processLetter1stPass(...)](method_processLetter1stPass.md) | _Send a letter from side A through the wiring to side B._ |
+| [processLetter2ndPass(...)](method_processLetter2ndPass.md) | _Send a letter from side B through the wiring to side A._ |
+| [setPosition(...)](method_setPosition.md) | _Set the rotor to a given position._ |
+| [setRingstellung(...)](method_setRingstellung.md) | _Sets the ringstellung to a given position._ |
 
 
 ## Public Representation

@@ -6,6 +6,9 @@
 public function EnigmaWiring->connectsTo( JulienBoudry\EnigmaMachine\Letter $pin ): JulienBoudry\EnigmaMachine\Letter
 ```
 
+## Description
+Get the connected pin.
+
 ## Parameters
 
 ### **pin:**

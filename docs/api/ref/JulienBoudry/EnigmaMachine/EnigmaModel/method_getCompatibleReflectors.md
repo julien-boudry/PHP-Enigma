@@ -6,6 +6,9 @@
 public function EnigmaModel->getCompatibleReflectors( ): array
 ```
 
+## Description
+Get the compatible reflector types for this model.
+
 ## Return
 **Type:** `array`
 

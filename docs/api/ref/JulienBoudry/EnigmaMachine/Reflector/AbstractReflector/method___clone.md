@@ -6,6 +6,9 @@
 public function AbstractReflector->__clone( ): void
 ```
 
+## Description
+Deep clone the reflector.
+
 ## Return
 **Type:** `void`
 

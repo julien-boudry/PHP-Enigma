@@ -6,6 +6,9 @@
 public function RotorConfiguration->getP1( ): JulienBoudry\EnigmaMachine\Rotor\AbstractRotor
 ```
 
+## Description
+Get the P1 rotor (rightmost, fastest rotating).
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\Rotor\AbstractRotor`](../Rotor/AbstractRotor/class_AbstractRotor.md)
 

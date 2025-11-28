@@ -5,32 +5,32 @@
 
 | Class Name | Description |
 | ------------- | ------------- |
-| [AbstractRotor](AbstractRotor/class_AbstractRotor.md) | _The rotors are the key element of the Enigma. Each provides a monoalphabetical substitution through its internal wiring, but unlike the plugboard and reflector, rotors move, causing the substitution t..._ |
-| [RotorBeta](RotorBeta/class_RotorBeta.md) | _This rotor is placed in the leftmost (Greek) position and does not rotate. No notches (never triggers turnover)._ |
-| [RotorGamma](RotorGamma/class_RotorGamma.md) | _This rotor is placed in the leftmost (Greek) position and does not rotate. No notches (never triggers turnover)._ |
-| [RotorI](RotorI/class_RotorI.md) | _Notch at position Q (turnover at R)._ |
-| [RotorII](RotorII/class_RotorII.md) | _Notch at position E (turnover at F)._ |
-| [RotorIII](RotorIII/class_RotorIII.md) | _Notch at position V (turnover at W)._ |
-| [RotorIV](RotorIV/class_RotorIV.md) | _Notch at position J (turnover at K)._ |
-| [RotorKI](RotorKI/class_RotorKI.md) | _Standard commercial wiring (handelsübliche Schaltung). Used in Enigma K (A27) from 1927-1944. Notch at position G (turnover at Y)._ |
-| [RotorKII](RotorKII/class_RotorKII.md) | _Standard commercial wiring (handelsübliche Schaltung). Used in Enigma K (A27) from 1927-1944. Notch at position M (turnover at E)._ |
-| [RotorKIII](RotorKIII/class_RotorKIII.md) | _Standard commercial wiring (handelsübliche Schaltung). Used in Enigma K (A27) from 1927-1944. Notch at position V (turnover at N)._ |
-| [RotorRailwayI](RotorRailwayI/class_RotorRailwayI.md) | _Rewired rotor used by the German Reichsbahn (Railway). Wiring recovered in 2023 from Enigma K serial number K438. Notch at position G (turnover at Y)._ |
-| [RotorRailwayII](RotorRailwayII/class_RotorRailwayII.md) | _Rewired rotor used by the German Reichsbahn (Railway). Wiring recovered in 2023 from Enigma K serial number K438. Notch at position M (turnover at E)._ |
-| [RotorRailwayIII](RotorRailwayIII/class_RotorRailwayIII.md) | _Rewired rotor used by the German Reichsbahn (Railway). Wiring recovered in 2023 from Enigma K serial number K438. Notch at position V (turnover at N)._ |
-| [RotorSwissKI](RotorSwissKI/class_RotorSwissKI.md) | _Modified wiring used by the Swiss Army, Air Force, and Foreign Ministry. The Swiss rewired the rotors after receiving the machines from Germany. Notch at position G (turnover at Y)._ |
-| [RotorSwissKII](RotorSwissKII/class_RotorSwissKII.md) | _Modified wiring used by the Swiss Army, Air Force, and Foreign Ministry. The Swiss rewired the rotors after receiving the machines from Germany. Notch at position M (turnover at E)._ |
-| [RotorSwissKIII](RotorSwissKIII/class_RotorSwissKIII.md) | _Modified wiring used by the Swiss Army, Air Force, and Foreign Ministry. The Swiss rewired the rotors after receiving the machines from Germany. Notch at position V (turnover at N)._ |
-| [RotorTirpitzI](RotorTirpitzI/class_RotorTirpitzI.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzII](RotorTirpitzII/class_RotorTirpitzII.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzIII](RotorTirpitzIII/class_RotorTirpitzIII.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzIV](RotorTirpitzIV/class_RotorTirpitzIV.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzV](RotorTirpitzV/class_RotorTirpitzV.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzVI](RotorTirpitzVI/class_RotorTirpitzVI.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzVII](RotorTirpitzVII/class_RotorTirpitzVII.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorTirpitzVIII](RotorTirpitzVIII/class_RotorTirpitzVIII.md) | _Used for German-Japanese military communications during WW2. Has 5 notches at positions E, H, K, N, Q._ |
-| [RotorV](RotorV/class_RotorV.md) | _Notch at position Z (turnover at A)._ |
-| [RotorVI](RotorVI/class_RotorVI.md) | _Double notch at positions M and Z (turnovers at N and A)._ |
-| [RotorVII](RotorVII/class_RotorVII.md) | _Double notch at positions M and Z (turnovers at N and A)._ |
-| [RotorVIII](RotorVIII/class_RotorVIII.md) | _Double notch at positions M and Z (turnovers at N and A)._ |
+| [AbstractRotor](AbstractRotor/class_AbstractRotor.md) | _Abstract base class for Enigma rotors (Walzen)._ |
+| [RotorBeta](RotorBeta/class_RotorBeta.md) | _Rotor Beta - Greek rotor for Kriegsmarine M4 only._ |
+| [RotorGamma](RotorGamma/class_RotorGamma.md) | _Rotor Gamma - Greek rotor for Kriegsmarine M4 only._ |
+| [RotorI](RotorI/class_RotorI.md) | _Rotor I - Available on all Enigma models._ |
+| [RotorII](RotorII/class_RotorII.md) | _Rotor II - Available on all Enigma models._ |
+| [RotorIII](RotorIII/class_RotorIII.md) | _Rotor III - Available on all Enigma models._ |
+| [RotorIV](RotorIV/class_RotorIV.md) | _Rotor IV - Available on all Enigma models._ |
+| [RotorKI](RotorKI/class_RotorKI.md) | _Commercial Enigma K Rotor I._ |
+| [RotorKII](RotorKII/class_RotorKII.md) | _Commercial Enigma K Rotor II._ |
+| [RotorKIII](RotorKIII/class_RotorKIII.md) | _Commercial Enigma K Rotor III._ |
+| [RotorRailwayI](RotorRailwayI/class_RotorRailwayI.md) | _Railway Enigma (Rocket) Rotor I._ |
+| [RotorRailwayII](RotorRailwayII/class_RotorRailwayII.md) | _Railway Enigma (Rocket) Rotor II._ |
+| [RotorRailwayIII](RotorRailwayIII/class_RotorRailwayIII.md) | _Railway Enigma (Rocket) Rotor III._ |
+| [RotorSwissKI](RotorSwissKI/class_RotorSwissKI.md) | _Swiss-K Rotor I (Swiss Air Force wiring)._ |
+| [RotorSwissKII](RotorSwissKII/class_RotorSwissKII.md) | _Swiss-K Rotor II (Swiss Air Force wiring)._ |
+| [RotorSwissKIII](RotorSwissKIII/class_RotorSwissKIII.md) | _Swiss-K Rotor III (Swiss Air Force wiring)._ |
+| [RotorTirpitzI](RotorTirpitzI/class_RotorTirpitzI.md) | _Rotor I for Enigma T (Tirpitz)._ |
+| [RotorTirpitzII](RotorTirpitzII/class_RotorTirpitzII.md) | _Rotor II for Enigma T (Tirpitz)._ |
+| [RotorTirpitzIII](RotorTirpitzIII/class_RotorTirpitzIII.md) | _Rotor III for Enigma T (Tirpitz)._ |
+| [RotorTirpitzIV](RotorTirpitzIV/class_RotorTirpitzIV.md) | _Rotor IV for Enigma T (Tirpitz)._ |
+| [RotorTirpitzV](RotorTirpitzV/class_RotorTirpitzV.md) | _Rotor V for Enigma T (Tirpitz)._ |
+| [RotorTirpitzVI](RotorTirpitzVI/class_RotorTirpitzVI.md) | _Rotor VI for Enigma T (Tirpitz)._ |
+| [RotorTirpitzVII](RotorTirpitzVII/class_RotorTirpitzVII.md) | _Rotor VII for Enigma T (Tirpitz)._ |
+| [RotorTirpitzVIII](RotorTirpitzVIII/class_RotorTirpitzVIII.md) | _Rotor VIII for Enigma T (Tirpitz)._ |
+| [RotorV](RotorV/class_RotorV.md) | _Rotor V - Available on all Enigma models._ |
+| [RotorVI](RotorVI/class_RotorVI.md) | _Rotor VI - Available on Kriegsmarine M3 and M4 only._ |
+| [RotorVII](RotorVII/class_RotorVII.md) | _Rotor VII - Available on Kriegsmarine M3 and M4 only._ |
+| [RotorVIII](RotorVIII/class_RotorVIII.md) | _Rotor VIII - Available on Kriegsmarine M3 and M4 only._ |
 

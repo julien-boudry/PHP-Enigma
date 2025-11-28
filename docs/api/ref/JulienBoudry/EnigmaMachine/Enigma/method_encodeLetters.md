@@ -7,6 +7,8 @@ public function Enigma->encodeLetters( string $letters ): string
 ```
 
 ## Description
+Encode a sequence of letters (A-Z only).
+
 This method processes each character in the input through the Enigma machine.
 The input must contain only valid Enigma alphabet characters (A-Z).
 Use encodeText() for arbitrary text that needs conversion first.

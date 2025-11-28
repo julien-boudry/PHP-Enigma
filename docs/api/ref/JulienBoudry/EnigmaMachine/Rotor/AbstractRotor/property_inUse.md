@@ -3,3 +3,6 @@
 ```php
 public bool $inUse = false
 ```
+
+## Description
+A rotor is in use or available.

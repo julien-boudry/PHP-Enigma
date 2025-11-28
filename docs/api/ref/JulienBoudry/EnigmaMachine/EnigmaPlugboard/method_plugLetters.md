@@ -6,6 +6,9 @@
 public function EnigmaPlugboard->plugLetters( JulienBoudry\EnigmaMachine\Letter $letter1, JulienBoudry\EnigmaMachine\Letter $letter2 ): void
 ```
 
+## Description
+Connect 2 letters.
+
 ## Parameters
 
 ### **letter1:**

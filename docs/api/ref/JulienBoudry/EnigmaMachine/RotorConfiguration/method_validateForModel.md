@@ -6,6 +6,9 @@
 public function RotorConfiguration->validateForModel( JulienBoudry\EnigmaMachine\EnigmaModel $model ): void
 ```
 
+## Description
+Validate that the configuration is complete for the given model.
+
 ## Parameters
 
 ### **model:**

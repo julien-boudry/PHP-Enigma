@@ -6,6 +6,9 @@
 public function Enigma->getPosition( JulienBoudry\EnigmaMachine\RotorPosition $position ): JulienBoudry\EnigmaMachine\Letter
 ```
 
+## Description
+Get the current position of a rotor.
+
 ## Parameters
 
 ### **position:**

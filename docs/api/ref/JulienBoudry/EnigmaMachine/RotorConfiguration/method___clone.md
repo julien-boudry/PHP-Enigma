@@ -6,6 +6,9 @@
 public function RotorConfiguration->__clone( ): void
 ```
 
+## Description
+Deep clone all rotors.
+
 ## Return
 **Type:** `void`
 

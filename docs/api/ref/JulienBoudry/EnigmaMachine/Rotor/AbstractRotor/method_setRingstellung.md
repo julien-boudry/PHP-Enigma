@@ -6,6 +6,9 @@
 public function AbstractRotor->setRingstellung( JulienBoudry\EnigmaMachine\Letter $letter ): void
 ```
 
+## Description
+Sets the ringstellung to a given position.
+
 ## Parameters
 
 ### **letter:**

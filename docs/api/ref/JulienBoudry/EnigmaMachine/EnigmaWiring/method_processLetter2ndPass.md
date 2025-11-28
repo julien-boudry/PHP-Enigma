@@ -6,6 +6,9 @@
 public function EnigmaWiring->processLetter2ndPass( JulienBoudry\EnigmaMachine\Letter $pin ): JulienBoudry\EnigmaMachine\Letter
 ```
 
+## Description
+Pass the given letter form side B to side A by following the connection of the pins.
+
 ## Parameters
 
 ### **pin:**

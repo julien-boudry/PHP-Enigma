@@ -6,6 +6,9 @@
 public function EnigmaModel->requiresGreekRotor( ): bool
 ```
 
+## Description
+Check if this model requires a Greek rotor.
+
 ## Return
 **Type:** `bool`
 

@@ -7,6 +7,8 @@ public function EnigmaModel->getEntryWheelType( ): JulienBoudry\EnigmaMachine\En
 ```
 
 ## Description
+Get the entry wheel type for this model.
+
 Commercial models use QWERTZ keyboard order for the entry wheel.
 Enigma T uses its own unique entry wheel order.
 Military models use alphabetical (ABCDEF...) order.

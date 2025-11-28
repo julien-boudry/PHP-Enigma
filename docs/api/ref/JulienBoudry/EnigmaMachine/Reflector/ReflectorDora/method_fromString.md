@@ -3,8 +3,11 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorDora.php#L194)
 
 ```php
-public static function ReflectorDora::fromString( string $pairsString ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora
+public static function ReflectorDora::fromString( string $pairsString ): self
 ```
+
+## Description
+Create a ReflectorDora from a simple string of pairs.
 
 ## Parameters
 
@@ -17,7 +20,7 @@ string $pairsString
 13 pairs as a string, e.g., "AC BO DE FG HI JK LM NP QR ST UV WX YZ"
 
 ## Return
-**Type:** [`JulienBoudry\EnigmaMachine\Reflector\ReflectorDora`](class_ReflectorDora.md)
+**Type:** `self`
 
 
 

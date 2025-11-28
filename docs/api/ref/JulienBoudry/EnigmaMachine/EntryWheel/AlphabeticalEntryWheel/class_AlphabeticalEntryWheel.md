@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EntryWheel/AlphabeticalEntryWheel.php#L17)
 
 ## Description
+Alphabetical Entry Wheel used in military Enigma models.
+
 Military Enigma models (Wehrmacht, Kriegsmarine) use alphabetical order:
 A→0, B→1, C→2, ... (identity mapping)
 
@@ -12,15 +14,15 @@ This is effectively a pass-through - the letter position equals the contact posi
 ### Public Constants
 | Constant Name | Signature | Description |
 | ------------- | ------------- | ------------- |
-| WIRING | `public const string WIRING = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'` | __ |
+| WIRING | `public const string WIRING = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'` | _Alphabetical order (identity mapping)._ |
 
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__clone(...)](../AbstractEntryWheel/method___clone.md) | __ |
-| [__construct(...)](../AbstractEntryWheel/method___construct.md) | __ |
-| [processInward(...)](../AbstractEntryWheel/method_processInward.md) | __ |
-| [processOutward(...)](../AbstractEntryWheel/method_processOutward.md) | __ |
+| [__clone(...)](../AbstractEntryWheel/method___clone.md) | _Deep clone the entry wheel._ |
+| [__construct(...)](../AbstractEntryWheel/method___construct.md) | _Constructor creates the entry wheel wiring._ |
+| [processInward(...)](../AbstractEntryWheel/method_processInward.md) | _Process a letter entering the rotor assembly (keyboard → rotors)._ |
+| [processOutward(...)](../AbstractEntryWheel/method_processOutward.md) | _Process a letter exiting the rotor assembly (rotors → lamps)._ |
 
 
 ## Public Representation

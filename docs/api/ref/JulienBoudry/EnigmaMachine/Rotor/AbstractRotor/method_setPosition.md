@@ -6,6 +6,9 @@
 public function AbstractRotor->setPosition( JulienBoudry\EnigmaMachine\Letter $letter ): void
 ```
 
+## Description
+Set the rotor to a given position.
+
 ## Parameters
 
 ### **letter:**

@@ -6,6 +6,9 @@
 public function EnigmaPlugboard->__clone( ): void
 ```
 
+## Description
+Deep clone the plugboard.
+
 ## Return
 **Type:** `void`
 

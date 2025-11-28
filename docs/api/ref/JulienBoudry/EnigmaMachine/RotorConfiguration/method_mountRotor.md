@@ -6,6 +6,9 @@
 public function RotorConfiguration->mountRotor( JulienBoudry\EnigmaMachine\RotorPosition $position, JulienBoudry\EnigmaMachine\RotorType|JulienBoudry\EnigmaMachine\Rotor\AbstractRotor $rotor, [ JulienBoudry\EnigmaMachine\Letter $ringstellung = \JulienBoudry\EnigmaMachine\Letter::A ] ): void
 ```
 
+## Description
+Mount a rotor at the given position, replacing any existing rotor.
+
 ## Parameters
 
 ### **position:**

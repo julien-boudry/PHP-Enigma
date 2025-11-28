@@ -7,6 +7,8 @@ public function ReflectorDora->getType( ): JulienBoudry\EnigmaMachine\ReflectorT
 ```
 
 ## Description
+Get the reflector type.
+
 Returns DORA for default wiring, null for custom configurations.
 
 ## Return

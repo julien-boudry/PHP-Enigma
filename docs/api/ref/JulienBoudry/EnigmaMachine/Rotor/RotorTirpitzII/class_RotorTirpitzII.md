@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Rotor/RotorTirpitzII.php#L15)
 
 ## Description
+Rotor II for Enigma T (Tirpitz).
+
 Used for German-Japanese military communications during WW2.
 Has 5 notches at positions E, H, K, N, Q.
 ## Elements
@@ -16,24 +18,24 @@ Has 5 notches at positions E, H, K, N, Q.
 ### Public Properties
 | Property Name | Description |
 | ------------- | ------------- |
-| [inUse(...)](../AbstractRotor/property_inUse.md) | __ |
+| [inUse(...)](../AbstractRotor/property_inUse.md) | _A rotor is in use or available._ |
 
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__clone(...)](../AbstractRotor/method___clone.md) | __ |
-| [__construct(...)](../AbstractRotor/method___construct.md) | __ |
-| [advance(...)](../AbstractRotor/method_advance.md) | _When position reaches Letter::count(), it is reset to 0._ |
-| [getPosition(...)](../AbstractRotor/method_getPosition.md) | __ |
-| [getRingstellung(...)](../AbstractRotor/method_getRingstellung.md) | __ |
+| [__clone(...)](../AbstractRotor/method___clone.md) | _Deep clone the rotor._ |
+| [__construct(...)](../AbstractRotor/method___construct.md) | _Constructor creates a new Wiring with the setup from the WIRING constant._ |
+| [advance(...)](../AbstractRotor/method_advance.md) | _Advance the rotor by 1 step._ |
+| [getPosition(...)](../AbstractRotor/method_getPosition.md) | _Retrieve current position of the rotor._ |
+| [getRingstellung(...)](../AbstractRotor/method_getRingstellung.md) | _Retrieve current ringstellung (ring setting) of the rotor._ |
 | [getType(...)](method_getType.md) | __ |
-| [isCompatibleWithModel(...)](../AbstractRotor/method_isCompatibleWithModel.md) | __ |
-| [isGreekRotor(...)](../AbstractRotor/method_isGreekRotor.md) | __ |
-| [isNotchOpen(...)](../AbstractRotor/method_isNotchOpen.md) | _Returns true if the rotor is in a turnover position for the next rotor._ |
-| [processLetter1stPass(...)](../AbstractRotor/method_processLetter1stPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account. + Letter::count() and % Letter::count() keep the value positive and in b..._ |
-| [processLetter2ndPass(...)](../AbstractRotor/method_processLetter2ndPass.md) | _To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account. + Letter::count() and % Letter::count() keep the value positive and in b..._ |
-| [setPosition(...)](../AbstractRotor/method_setPosition.md) | __ |
-| [setRingstellung(...)](../AbstractRotor/method_setRingstellung.md) | __ |
+| [isCompatibleWithModel(...)](../AbstractRotor/method_isCompatibleWithModel.md) | _Check if this rotor is compatible with the given Enigma model._ |
+| [isGreekRotor(...)](../AbstractRotor/method_isGreekRotor.md) | _Check if this rotor is a Greek rotor (BETA or GAMMA)._ |
+| [isNotchOpen(...)](../AbstractRotor/method_isNotchOpen.md) | _A notch is open._ |
+| [processLetter1stPass(...)](../AbstractRotor/method_processLetter1stPass.md) | _Send a letter from side A through the wiring to side B._ |
+| [processLetter2ndPass(...)](../AbstractRotor/method_processLetter2ndPass.md) | _Send a letter from side B through the wiring to side A._ |
+| [setPosition(...)](../AbstractRotor/method_setPosition.md) | _Set the rotor to a given position._ |
+| [setRingstellung(...)](../AbstractRotor/method_setRingstellung.md) | _Sets the ringstellung to a given position._ |
 
 
 ## Public Representation

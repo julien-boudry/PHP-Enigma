@@ -6,6 +6,9 @@
 public function RotorConfiguration->toArray( ): array
 ```
 
+## Description
+Get all rotors as an array indexed by position value.
+
 ## Return
 **Type:** `array`
 

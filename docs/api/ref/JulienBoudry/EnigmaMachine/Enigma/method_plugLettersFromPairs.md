@@ -7,6 +7,8 @@ public function Enigma->plugLettersFromPairs( array|string $pairs ): void
 ```
 
 ## Description
+Connect multiple letter pairs on the plugboard.
+
 Only available on military models (Wehrmacht, Kriegsmarine).
 Commercial models (Enigma K, Swiss-K, Railway) do not have a plugboard.
 

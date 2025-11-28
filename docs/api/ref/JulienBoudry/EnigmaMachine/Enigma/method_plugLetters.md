@@ -7,6 +7,8 @@ public function Enigma->plugLetters( JulienBoudry\EnigmaMachine\Letter $letter1,
 ```
 
 ## Description
+Connect 2 letters on the plugboard.
+
 Only available on military models (Wehrmacht, Kriegsmarine).
 Commercial models (Enigma K, Swiss-K, Railway) do not have a plugboard.
 

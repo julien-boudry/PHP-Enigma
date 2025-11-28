@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorDora.php#L36)
 
 ## Description
+UKW-D (Umkehrwalze Dora) - Rewirable Reflector.
+
 The UKW-D was a rewirable reflector introduced by the Wehrmacht/Luftwaffe in January 1944.
 Unlike fixed reflectors (B, C), operators could configure their own wiring using plug cables.
 
@@ -28,17 +30,17 @@ This reflector was compatible with 3-rotor Enigma models (Wehrmacht/Luftwaffe).
 ### Public Static Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [fromString(...)](method_fromString.md) | __ |
-| [withDefaultWiring(...)](method_withDefaultWiring.md) | _This uses a historically plausible configuration including the B↔O pair (or J↔Y depending on notation) which was fixed on the physical device due to mechanical constraints._ |
+| [fromString(...)](method_fromString.md) | _Create a ReflectorDora from a simple string of pairs._ |
+| [withDefaultWiring(...)](method_withDefaultWiring.md) | _Get a default wiring configuration._ |
 
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__clone(...)](../AbstractReflector/method___clone.md) | __ |
-| [__construct(...)](method___construct.md) | __ |
-| [getType(...)](method_getType.md) | _Returns DORA for default wiring, null for custom configurations._ |
-| [getWiringPairs(...)](method_getWiringPairs.md) | __ |
-| [processLetter(...)](../AbstractReflector/method_processLetter.md) | _Because pins are connected in pairs, there is no difference if processLetter1stPass() or processLetter2ndPass() is used._ |
+| [__clone(...)](../AbstractReflector/method___clone.md) | _Deep clone the reflector._ |
+| [__construct(...)](method___construct.md) | _Create a UKW-D reflector with custom wiring._ |
+| [getType(...)](method_getType.md) | _Get the reflector type._ |
+| [getWiringPairs(...)](method_getWiringPairs.md) | _Get the wiring pairs as an array of Letter tuples._ |
+| [processLetter(...)](../AbstractReflector/method_processLetter.md) | _Send a letter through the wiring._ |
 
 
 ## Public Representation
@@ -47,8 +49,8 @@ final class JulienBoudry\EnigmaMachine\Reflector\ReflectorDora extends JulienBou
 {
 
     // Static Methods
-    public static function fromString( string $pairsString ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
-    public static function withDefaultWiring( ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
+    public static function fromString( string $pairsString ): self;
+    public static function withDefaultWiring( ): self;
 
     // Methods
     public function __construct( array $pairs );
@@ -71,8 +73,8 @@ final class JulienBoudry\EnigmaMachine\Reflector\ReflectorDora extends JulienBou
     private string $customWiring;
 
     // Static Methods
-    public static function fromString( string $pairsString ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
-    public static function withDefaultWiring( ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
+    public static function fromString( string $pairsString ): self;
+    public static function withDefaultWiring( ): self;
 
     // Methods
     public function __construct( array $pairs );

@@ -6,6 +6,9 @@
 public function ReflectorDora->getWiringPairs( ): array
 ```
 
+## Description
+Get the wiring pairs as an array of Letter tuples.
+
 ## Return
 **Type:** `array`
 

@@ -6,6 +6,9 @@
 public function AbstractRotor->isCompatibleWithModel( JulienBoudry\EnigmaMachine\EnigmaModel $model ): bool
 ```
 
+## Description
+Check if this rotor is compatible with the given Enigma model.
+
 ## Parameters
 
 ### **model:**

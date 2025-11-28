@@ -6,6 +6,9 @@
 public function AbstractRotor->__clone( ): void
 ```
 
+## Description
+Deep clone the rotor.
+
 ## Return
 **Type:** `void`
 

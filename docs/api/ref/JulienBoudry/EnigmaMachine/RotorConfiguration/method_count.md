@@ -6,6 +6,9 @@
 public function RotorConfiguration->count( ): int
 ```
 
+## Description
+Get the number of mounted rotors.
+
 ## Return
 **Type:** `int`
 

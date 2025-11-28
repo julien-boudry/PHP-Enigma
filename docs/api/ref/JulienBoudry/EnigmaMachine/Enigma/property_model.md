@@ -1,5 +1,8 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Property model
 ```php
-public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model
+public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model
 ```
+
+## Description
+The model of the Enigma machine.

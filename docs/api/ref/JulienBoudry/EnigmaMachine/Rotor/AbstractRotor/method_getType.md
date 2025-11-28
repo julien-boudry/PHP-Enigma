@@ -6,6 +6,9 @@
 abstract public function AbstractRotor->getType( ): JulienBoudry\EnigmaMachine\RotorType
 ```
 
+## Description
+Get the rotor type enum value.
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\RotorType`](../../RotorType/enum_RotorType.md)
 

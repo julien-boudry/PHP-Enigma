@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaModel.php#L13)
 
 ## Description
+Enumeration of Enigma machine models.
+
 Defines the different historical Enigma machine variants that can be emulated.
 Each model has its own specific set of available rotors and reflectors.
 ## Elements
@@ -10,13 +12,13 @@ Each model has its own specific set of available rotors and reflectors.
 ### Public Constants
 | Constant Name | Signature | Description |
 | ------------- | ------------- | ------------- |
-| ENIGMA_K | `public const ENIGMA_K = \JulienBoudry\EnigmaMachine\EnigmaModel::ENIGMA_K` | _The commercial Enigma K was sold to various customers from 1927-1944. Features QWERTZ entry wheel and settable reflector._ |
-| KMM3 | `public const KMM3 = \JulienBoudry\EnigmaMachine\EnigmaModel::KMM3` | __ |
-| KMM4 | `public const KMM4 = \JulienBoudry\EnigmaMachine\EnigmaModel::KMM4` | __ |
-| RAILWAY | `public const RAILWAY = \JulienBoudry\EnigmaMachine\EnigmaModel::RAILWAY` | _Special variant of Enigma K used by the German Reichsbahn (Railway). Features rewired rotors and reflector._ |
-| SWISS_K | `public const SWISS_K = \JulienBoudry\EnigmaMachine\EnigmaModel::SWISS_K` | _Modified version of Enigma K used by the Swiss Army, Air Force, and Foreign Ministry. Rotors were rewired by the Swiss for additional security._ |
-| TIRPITZ | `public const TIRPITZ = \JulienBoudry\EnigmaMachine\EnigmaModel::TIRPITZ` | _Used for communications between Germany and Japan during WW2. Features a unique entry wheel, 8 rotors with 5 notches each, and unique reflector._ |
-| WMLW | `public const WMLW = \JulienBoudry\EnigmaMachine\EnigmaModel::WMLW` | __ |
+| ENIGMA_K | `public const ENIGMA_K = \JulienBoudry\EnigmaMachine\EnigmaModel::ENIGMA_K` | _Enigma K Commercial (A27) - 3-rotor model without plugboard._ |
+| KMM3 | `public const KMM3 = \JulienBoudry\EnigmaMachine\EnigmaModel::KMM3` | _Kriegsmarine M3 (3-rotor model)._ |
+| KMM4 | `public const KMM4 = \JulienBoudry\EnigmaMachine\EnigmaModel::KMM4` | _Kriegsmarine M4 (4-rotor model)._ |
+| RAILWAY | `public const RAILWAY = \JulienBoudry\EnigmaMachine\EnigmaModel::RAILWAY` | _Railway Enigma (Rocket) - 3-rotor model without plugboard._ |
+| SWISS_K | `public const SWISS_K = \JulienBoudry\EnigmaMachine\EnigmaModel::SWISS_K` | _Swiss Enigma K - 3-rotor model without plugboard._ |
+| TIRPITZ | `public const TIRPITZ = \JulienBoudry\EnigmaMachine\EnigmaModel::TIRPITZ` | _Enigma T (Tirpitz) - 3-rotor model without plugboard._ |
+| WMLW | `public const WMLW = \JulienBoudry\EnigmaMachine\EnigmaModel::WMLW` | _Wehrmacht/Luftwaffe (3-rotor model)._ |
 
 ### Public Properties
 | Property Name | Description |
@@ -26,12 +28,12 @@ Each model has its own specific set of available rotors and reflectors.
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [getCompatibleReflectors(...)](method_getCompatibleReflectors.md) | __ |
-| [getEntryWheelType(...)](method_getEntryWheelType.md) | _Commercial models use QWERTZ keyboard order for the entry wheel. Enigma T uses its own unique entry wheel order. Military models use alphabetical (ABCDEF...) order._ |
-| [getExpectedRotorCount(...)](method_getExpectedRotorCount.md) | __ |
-| [hasPlugboard(...)](method_hasPlugboard.md) | _Military Enigma models (Wehrmacht, Kriegsmarine) have plugboards. Commercial models (Enigma K, Swiss-K, Railway) and Enigma T do not._ |
-| [isReflectorCompatible(...)](method_isReflectorCompatible.md) | __ |
-| [requiresGreekRotor(...)](method_requiresGreekRotor.md) | __ |
+| [getCompatibleReflectors(...)](method_getCompatibleReflectors.md) | _Get the compatible reflector types for this model._ |
+| [getEntryWheelType(...)](method_getEntryWheelType.md) | _Get the entry wheel type for this model._ |
+| [getExpectedRotorCount(...)](method_getExpectedRotorCount.md) | _Get the expected number of rotors for this model._ |
+| [hasPlugboard(...)](method_hasPlugboard.md) | _Check if this model has a plugboard._ |
+| [isReflectorCompatible(...)](method_isReflectorCompatible.md) | _Check if a reflector type is compatible with this model._ |
+| [requiresGreekRotor(...)](method_requiresGreekRotor.md) | _Check if this model requires a Greek rotor._ |
 
 
 ## Public Representation
@@ -55,7 +57,7 @@ enum JulienBoudry\EnigmaMachine\EnigmaModel implements UnitEnum
     public const WMLW = \JulienBoudry\EnigmaMachine\EnigmaModel::WMLW;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
+    public readonly protected(set) string $name;
 
     // Methods
     public function getCompatibleReflectors( ): array;
@@ -89,7 +91,7 @@ enum JulienBoudry\EnigmaMachine\EnigmaModel implements UnitEnum
     public const WMLW = \JulienBoudry\EnigmaMachine\EnigmaModel::WMLW;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
+    public readonly protected(set) string $name;
 
     // Methods
     public function getCompatibleReflectors( ): array;

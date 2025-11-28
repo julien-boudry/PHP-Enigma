@@ -1,12 +1,14 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method encodeFile()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L445)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L446)
 
 ```php
 public function Enigma->encodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int
 ```
 
 ## Description
+Encode a file through the Enigma machine, reading and writing sequentially.
+
 This method processes the source file in chunks to minimize memory usage,
 making it suitable for encoding large files. Each chunk is converted to
 Enigma format and encoded before being written to the destination file.
@@ -44,3 +46,4 @@ Total number of encoded letters written
 
 ## Related
 - **[\JulienBoudry\EnigmaMachine\Enigma::encodeBinary()](method_encodeBinary.md)** _For the underlying encoding method_
+- **[\JulienBoudry\EnigmaMachine\Enigma::$fileChunkSize](static_property_fileChunkSize.md)** _For configuring the chunk size_

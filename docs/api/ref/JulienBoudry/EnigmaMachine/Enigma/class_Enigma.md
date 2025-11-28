@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L28)
 
 ## Description
+Represents an Enigma cipher machine.
+
 This class emulates the historical Enigma machine used during World War II.
 Multiple models can be emulated:
 - Military models (Wehrmacht/Luftwaffe, Kriegsmarine M3/M4) with plugboard
@@ -18,43 +20,43 @@ After each encoded letter, the advance mechanism changes the internal setup by r
 ### Public Static Properties
 | Properties Name | Description |
 | ------------- | ------------- |
-| [fileChunkSize(...)](static_property_fileChunkSize.md) | _This value determines how many bytes are read at a time when using encodeFile(). Adjust this value to balance memory usage vs. performance._ |
+| [fileChunkSize(...)](static_property_fileChunkSize.md) | _Default chunk size for file encoding operations (1MB)._ |
 
 ### Public Static Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [createRandom(...)](method_createRandom.md) | _Generates cryptographically secure random settings including: - Random rotor selection and order (compatible with model) - Random ring settings (Ringstellung) - Random initial positions (Grundstellung..._ |
-| [createRandomWithConfiguration(...)](method_createRandomWithConfiguration.md) | _Same as createRandom() but also returns the configuration object, which is useful for logging, debugging, or recreating the same setup._ |
+| [createRandom(...)](method_createRandom.md) | _Create an Enigma machine with a random configuration._ |
+| [createRandomWithConfiguration(...)](method_createRandomWithConfiguration.md) | _Create an Enigma machine with a random configuration and return both._ |
 
 ### Public Properties
 | Property Name | Description |
 | ------------- | ------------- |
-| [entryWheel(...)](property_entryWheel.md) | _Uses QWERTZ order for commercial models, alphabetical for military._ |
-| [model(...)](property_model.md) | __ |
-| [plugboard(...)](property_plugboard.md) | _Always present but empty by default on commercial models. In strictMode, commercial models cannot use the plugboard._ |
-| [reflector(...)](property_reflector.md) | __ |
-| [rotors(...)](property_rotors.md) | __ |
-| [strictMode(...)](property_strictMode.md) | _When true (default), validates that rotors and reflectors are compatible with the selected model. When false, bypasses all compatibility checks and allows any configuration (including plugboard on com..._ |
+| [entryWheel(...)](property_entryWheel.md) | _The entry wheel (Eintrittswalze) that maps keyboard to rotor contacts._ |
+| [model(...)](property_model.md) | _The model of the Enigma machine._ |
+| [plugboard(...)](property_plugboard.md) | _The plugboard that connects input and output to the entry wheel._ |
+| [reflector(...)](property_reflector.md) | _The reflector used by the Enigma._ |
+| [rotors(...)](property_rotors.md) | _The rotors used by the Enigma._ |
+| [strictMode(...)](property_strictMode.md) | _Whether to enforce compatibility checks._ |
 
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__clone(...)](method___clone.md) | _This ensures all internal components (plugboard, entry wheel, rotors, reflector) are properly cloned so the cloned machine operates independently._ |
-| [__construct(...)](method___construct.md) | _The initital rotors and reflectros are mounted._ |
-| [decodeFile(...)](method_decodeFile.md) | _This method is the inverse of encodeFile(). It reads an Enigma-encoded file, decodes it through the Enigma machine, and converts the result back to binary.  IMPORTANT: The Enigma machine must be in th..._ |
-| [encodeBinary(...)](method_encodeBinary.md) | _This method converts binary data to Enigma-compatible format and encodes it. Useful for encoding arbitrary data that isn't text._ |
-| [encodeFile(...)](method_encodeFile.md) | _This method processes the source file in chunks to minimize memory usage, making it suitable for encoding large files. Each chunk is converted to Enigma format and encoded before being written to the ..._ |
-| [encodeLatinText(...)](method_encodeLatinText.md) | _This method accepts Latin-based text (including numbers, accented characters, punctuation, spaces, etc.) and converts it to Enigma-compatible format before encoding. Non-Latin characters (Cyrillic, Ch..._ |
-| [encodeLetter(...)](method_encodeLetter.md) | _The letter passes the plugboard (if available), entry wheel, rotors, reflector, rotors in the opposite direction, entry wheel again, and plugboard (if available). Every encoding triggers the advance m..._ |
-| [encodeLetters(...)](method_encodeLetters.md) | _This method processes each character in the input through the Enigma machine. The input must contain only valid Enigma alphabet characters (A-Z). Use encodeText() for arbitrary text that needs convers..._ |
-| [getConfiguration(...)](method_getConfiguration.md) | _Extracts the complete state including rotor types, ring settings, current positions, reflector, and plugboard configuration._ |
-| [getPosition(...)](method_getPosition.md) | __ |
-| [hasPlugboard(...)](method_hasPlugboard.md) | _Military models have plugboards, commercial models do not. Note: The plugboard object always exists internally, but this method indicates whether it should be used according to historical accuracy._ |
-| [mountReflector(...)](method_mountReflector.md) | _The previously used reflector will be replaced._ |
-| [plugLetters(...)](method_plugLetters.md) | _Only available on military models (Wehrmacht, Kriegsmarine). Commercial models (Enigma K, Swiss-K, Railway) do not have a plugboard._ |
-| [plugLettersFromPairs(...)](method_plugLettersFromPairs.md) | _Only available on military models (Wehrmacht, Kriegsmarine). Commercial models (Enigma K, Swiss-K, Railway) do not have a plugboard.  Accepts pairs in various formats: - Space-separated string: "AV BS..._ |
-| [setPosition(...)](method_setPosition.md) | __ |
-| [unplugLetters(...)](method_unplugLetters.md) | _Because letters are connected in pairs, we only need to know one of them.  Only available on military models (Wehrmacht, Kriegsmarine). Commercial models (Enigma K, Swiss-K, Railway) do not have a plu..._ |
+| [__clone(...)](method___clone.md) | _Deep clone the Enigma machine._ |
+| [__construct(...)](method___construct.md) | _Constructor sets up the plugboard and creates the rotors and reflectros available for the given model._ |
+| [decodeFile(...)](method_decodeFile.md) | _Decode an Enigma-encoded file back to binary, reading and writing sequentially._ |
+| [encodeBinary(...)](method_encodeBinary.md) | _Encode binary data through the Enigma machine._ |
+| [encodeFile(...)](method_encodeFile.md) | _Encode a file through the Enigma machine, reading and writing sequentially._ |
+| [encodeLatinText(...)](method_encodeLatinText.md) | _Encode Latin text by first converting it to Enigma format._ |
+| [encodeLetter(...)](method_encodeLetter.md) | _Encode a single letter._ |
+| [encodeLetters(...)](method_encodeLetters.md) | _Encode a sequence of letters (A-Z only)._ |
+| [getConfiguration(...)](method_getConfiguration.md) | _Get the current configuration of this Enigma machine._ |
+| [getPosition(...)](method_getPosition.md) | _Get the current position of a rotor._ |
+| [hasPlugboard(...)](method_hasPlugboard.md) | _Check if this model historically has a plugboard._ |
+| [mountReflector(...)](method_mountReflector.md) | _Mount a reflector into the enigma._ |
+| [plugLetters(...)](method_plugLetters.md) | _Connect 2 letters on the plugboard._ |
+| [plugLettersFromPairs(...)](method_plugLettersFromPairs.md) | _Connect multiple letter pairs on the plugboard._ |
+| [setPosition(...)](method_setPosition.md) | _Turn a rotor to a new position._ |
+| [unplugLetters(...)](method_unplugLetters.md) | _Disconnects 2 letters on the plugboard._ |
 
 
 ## Public Representation
@@ -66,15 +68,15 @@ class JulienBoudry\EnigmaMachine\Enigma
     public static int $fileChunkSize = 1048576;
 
     // Properties
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard;
-    final public private(set) private(set) JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector;
-    final public private(set) private(set) JulienBoudry\EnigmaMachine\RotorConfiguration $rotors;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard;
+    final public private(set) JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector;
+    final public private(set) JulienBoudry\EnigmaMachine\RotorConfiguration $rotors;
     public bool $strictMode;
 
     // Static Methods
-    public static function createRandom( JulienBoudry\EnigmaMachine\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): JulienBoudry\EnigmaMachine\Enigma;
+    public static function createRandom( JulienBoudry\EnigmaMachine\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): self;
     public static function createRandomWithConfiguration( JulienBoudry\EnigmaMachine\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): array;
 
     // Methods
@@ -107,15 +109,15 @@ class JulienBoudry\EnigmaMachine\Enigma
     public static int $fileChunkSize = 1048576;
 
     // Properties
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
-    public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard;
-    final public private(set) private(set) JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector;
-    final public private(set) private(set) JulienBoudry\EnigmaMachine\RotorConfiguration $rotors;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
+    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard;
+    final public private(set) JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector;
+    final public private(set) JulienBoudry\EnigmaMachine\RotorConfiguration $rotors;
     public bool $strictMode;
 
     // Static Methods
-    public static function createRandom( JulienBoudry\EnigmaMachine\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): JulienBoudry\EnigmaMachine\Enigma;
+    public static function createRandom( JulienBoudry\EnigmaMachine\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): self;
     public static function createRandomWithConfiguration( JulienBoudry\EnigmaMachine\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): array;
 
     // Methods

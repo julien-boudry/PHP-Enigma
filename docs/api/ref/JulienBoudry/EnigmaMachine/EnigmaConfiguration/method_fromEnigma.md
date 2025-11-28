@@ -3,10 +3,12 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaConfiguration.php#L47)
 
 ```php
-public static function EnigmaConfiguration::fromEnigma( JulienBoudry\EnigmaMachine\Enigma $enigma ): JulienBoudry\EnigmaMachine\EnigmaConfiguration
+public static function EnigmaConfiguration::fromEnigma( JulienBoudry\EnigmaMachine\Enigma $enigma ): self
 ```
 
 ## Description
+Create a configuration from an existing Enigma machine.
+
 Extracts the current state of the Enigma machine including
 rotor types, ring settings, positions, reflector, and plugboard.
 
@@ -21,6 +23,6 @@ JulienBoudry\EnigmaMachine\Enigma $enigma
 The Enigma machine to extract configuration from
 
 ## Return
-**Type:** [`JulienBoudry\EnigmaMachine\EnigmaConfiguration`](class_EnigmaConfiguration.md)
+**Type:** `self`
 
 The extracted configuration

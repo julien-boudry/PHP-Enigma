@@ -6,6 +6,9 @@
 public function RotorConfiguration->getP3( ): JulienBoudry\EnigmaMachine\Rotor\AbstractRotor
 ```
 
+## Description
+Get the P3 rotor (leftmost in 3-rotor models).
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\Rotor\AbstractRotor`](../Rotor/AbstractRotor/class_AbstractRotor.md)
 

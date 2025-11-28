@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorPosition.php#L21)
 
 ## Description
+Enumeration of rotor positions in the Enigma machine.
+
 Defines the slots where rotors can be mounted. Most Enigma models have 3 positions (P1, P2, P3),
 while the Kriegsmarine M4 has an additional fourth "Greek" position that never rotates.
 
@@ -18,10 +20,10 @@ Rotation behavior:
 ### Public Constants
 | Constant Name | Signature | Description |
 | ------------- | ------------- | ------------- |
-| GREEK | `public const GREEK = \JulienBoudry\EnigmaMachine\RotorPosition::GREEK` | _This rotor never rotates. Only BETA and GAMMA rotors can be mounted here._ |
-| P1 | `public const P1 = \JulienBoudry\EnigmaMachine\RotorPosition::P1` | _Rotates on every keypress._ |
-| P2 | `public const P2 = \JulienBoudry\EnigmaMachine\RotorPosition::P2` | _Rotates when P1 reaches its notch, or due to double-stepping when P3 rotates._ |
-| P3 | `public const P3 = \JulienBoudry\EnigmaMachine\RotorPosition::P3` | _Rotates when P2 reaches its notch._ |
+| GREEK | `public const GREEK = \JulienBoudry\EnigmaMachine\RotorPosition::GREEK` | _Greek position - Leftmost rotor in Kriegsmarine M4 model only._ |
+| P1 | `public const P1 = \JulienBoudry\EnigmaMachine\RotorPosition::P1` | _Position 1 - Rightmost rotor, fastest rotating._ |
+| P2 | `public const P2 = \JulienBoudry\EnigmaMachine\RotorPosition::P2` | _Position 2 - Middle rotor._ |
+| P3 | `public const P3 = \JulienBoudry\EnigmaMachine\RotorPosition::P3` | _Position 3 - Leftmost rotor in 3-rotor models, slowest rotating._ |
 
 ### Public Properties
 | Property Name | Description |
@@ -45,8 +47,8 @@ enum JulienBoudry\EnigmaMachine\RotorPosition: int implements UnitEnum, BackedEn
     public const P3 = \JulienBoudry\EnigmaMachine\RotorPosition::P3;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
-    public protected(set) readonly protected(set) int $value;
+    public readonly protected(set) string $name;
+    public readonly protected(set) int $value;
 
 }
 ```
@@ -66,8 +68,8 @@ enum JulienBoudry\EnigmaMachine\RotorPosition: int implements UnitEnum, BackedEn
     public const P3 = \JulienBoudry\EnigmaMachine\RotorPosition::P3;
 
     // Properties
-    public protected(set) readonly protected(set) string $name;
-    public protected(set) readonly protected(set) int $value;
+    public readonly protected(set) string $name;
+    public readonly protected(set) int $value;
 
 }
 ```

@@ -5,6 +5,8 @@ public bool $strictMode
 ```
 
 ## Description
+Whether to enforce compatibility checks.
+
 When true (default), validates that rotors and reflectors are compatible
 with the selected model. When false, bypasses all compatibility checks
 and allows any configuration (including plugboard on commercial models).

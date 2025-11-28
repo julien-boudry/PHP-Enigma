@@ -7,6 +7,8 @@ public static function EnigmaTextConverter::enigmaFormatToBinary( string $enigma
 ```
 
 ## Description
+Convert Enigma format back to binary data.
+
 This is the reverse of binaryToEnigmaFormat().
 
 ## Parameters

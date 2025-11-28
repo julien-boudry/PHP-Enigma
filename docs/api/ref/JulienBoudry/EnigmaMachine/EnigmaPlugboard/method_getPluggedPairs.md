@@ -7,6 +7,8 @@ public function EnigmaPlugboard->getPluggedPairs( ): array
 ```
 
 ## Description
+Get all plugged letter pairs.
+
 Returns pairs where the first letter is alphabetically before the second
 to avoid duplicates (e.g., returns [A, Z] not [Z, A]).
 

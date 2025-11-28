@@ -6,6 +6,9 @@
 public function EnigmaWiring->connect( JulienBoudry\EnigmaMachine\Letter $pin1, JulienBoudry\EnigmaMachine\Letter $pin2 ): void
 ```
 
+## Description
+Manually connect 2 pins.
+
 ## Parameters
 
 ### **pin1:**

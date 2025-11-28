@@ -6,6 +6,9 @@
 abstract public function AbstractReflector->getType( ): JulienBoudry\EnigmaMachine\ReflectorType
 ```
 
+## Description
+Get the reflector type.
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\ReflectorType`](../../ReflectorType/enum_ReflectorType.md)
 

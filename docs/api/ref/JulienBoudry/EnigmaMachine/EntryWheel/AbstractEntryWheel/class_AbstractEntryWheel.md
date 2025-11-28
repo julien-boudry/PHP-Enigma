@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EntryWheel/AbstractEntryWheel.php#L19)
 
 ## Description
+Abstract base class for Entry Wheels (Eintrittswalze, ETW).
+
 The entry wheel is the first component the signal passes through when entering
 the rotor assembly. It maps keyboard positions to rotor contact positions.
 
@@ -14,10 +16,10 @@ Different Enigma models use different entry wheel configurations:
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__clone(...)](method___clone.md) | __ |
-| [__construct(...)](method___construct.md) | __ |
-| [processInward(...)](method_processInward.md) | __ |
-| [processOutward(...)](method_processOutward.md) | __ |
+| [__clone(...)](method___clone.md) | _Deep clone the entry wheel._ |
+| [__construct(...)](method___construct.md) | _Constructor creates the entry wheel wiring._ |
+| [processInward(...)](method_processInward.md) | _Process a letter entering the rotor assembly (keyboard → rotors)._ |
+| [processOutward(...)](method_processOutward.md) | _Process a letter exiting the rotor assembly (rotors → lamps)._ |
 
 
 ## Public Representation

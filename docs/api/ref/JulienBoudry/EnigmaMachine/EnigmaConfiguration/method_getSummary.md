@@ -6,6 +6,9 @@
 public function EnigmaConfiguration->getSummary( ): string
 ```
 
+## Description
+Get a human-readable summary of the configuration.
+
 ## Return
 **Type:** `string`
 

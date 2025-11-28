@@ -6,6 +6,9 @@
 public function AbstractRotor->__construct( [ JulienBoudry\EnigmaMachine\Letter $ringstellung = \JulienBoudry\EnigmaMachine\Letter::A ] )
 ```
 
+## Description
+Constructor creates a new Wiring with the setup from the WIRING constant.
+
 ## Parameters
 
 ### **ringstellung:**

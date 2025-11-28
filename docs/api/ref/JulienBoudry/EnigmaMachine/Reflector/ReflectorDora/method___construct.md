@@ -6,6 +6,9 @@
 public function ReflectorDora->__construct( array $pairs )
 ```
 
+## Description
+Create a UKW-D reflector with custom wiring.
+
 ## Parameters
 
 ### **pairs:**

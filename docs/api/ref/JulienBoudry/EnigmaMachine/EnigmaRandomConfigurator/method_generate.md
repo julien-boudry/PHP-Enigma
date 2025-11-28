@@ -6,6 +6,9 @@
 public function EnigmaRandomConfigurator->generate( JulienBoudry\EnigmaMachine\EnigmaModel $model ): JulienBoudry\EnigmaMachine\EnigmaConfiguration
 ```
 
+## Description
+Generate a complete random Enigma configuration for a model.
+
 ## Parameters
 
 ### **model:**

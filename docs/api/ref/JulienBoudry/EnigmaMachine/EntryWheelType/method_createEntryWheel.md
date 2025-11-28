@@ -6,6 +6,9 @@
 public function EntryWheelType->createEntryWheel( ): JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel
 ```
 
+## Description
+Create the entry wheel instance for this type.
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel`](../EntryWheel/AbstractEntryWheel/class_AbstractEntryWheel.md)
 

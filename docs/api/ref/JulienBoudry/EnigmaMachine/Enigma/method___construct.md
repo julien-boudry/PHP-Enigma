@@ -7,6 +7,8 @@ public function Enigma->__construct( JulienBoudry\EnigmaMachine\EnigmaModel $mod
 ```
 
 ## Description
+Constructor sets up the plugboard and creates the rotors and reflectros available for the given model.
+
 The initital rotors and reflectros are mounted.
 
 ## Parameters

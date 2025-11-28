@@ -6,6 +6,9 @@
 public function AbstractRotor->getRingstellung( ): JulienBoudry\EnigmaMachine\Letter
 ```
 
+## Description
+Retrieve current ringstellung (ring setting) of the rotor.
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\Letter`](../../Letter/enum_Letter.md)
 

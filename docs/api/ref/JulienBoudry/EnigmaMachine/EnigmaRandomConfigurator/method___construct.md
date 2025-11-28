@@ -6,6 +6,9 @@
 public function EnigmaRandomConfigurator->__construct( [ ?Random\Engine $engine = null ] )
 ```
 
+## Description
+Create a new random configurator.
+
 ## Parameters
 
 ### **engine:**

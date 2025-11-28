@@ -6,6 +6,9 @@
 public static function EnigmaTextConverter::removeGroupFormatting( string $text ): string
 ```
 
+## Description
+Remove group formatting (spaces) from Enigma text.
+
 ## Parameters
 
 ### **text:**

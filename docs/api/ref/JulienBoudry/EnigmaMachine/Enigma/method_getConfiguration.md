@@ -7,6 +7,8 @@ public function Enigma->getConfiguration( ): JulienBoudry\EnigmaMachine\EnigmaCo
 ```
 
 ## Description
+Get the current configuration of this Enigma machine.
+
 Extracts the complete state including rotor types, ring settings,
 current positions, reflector, and plugboard configuration.
 

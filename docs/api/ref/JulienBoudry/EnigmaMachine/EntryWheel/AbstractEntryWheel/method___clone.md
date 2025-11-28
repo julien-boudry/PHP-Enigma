@@ -6,6 +6,9 @@
 public function AbstractEntryWheel->__clone( ): void
 ```
 
+## Description
+Deep clone the entry wheel.
+
 ## Return
 **Type:** `void`
 

@@ -7,6 +7,8 @@ public function Enigma->encodeLatinText( string $text, [ string $spaceReplacemen
 ```
 
 ## Description
+Encode Latin text by first converting it to Enigma format.
+
 This method accepts Latin-based text (including numbers, accented characters,
 punctuation, spaces, etc.) and converts it to Enigma-compatible format
 before encoding. Non-Latin characters (Cyrillic, Chinese, etc.) will be

@@ -6,6 +6,9 @@
 public static function ReflectorType::createDoraReflector( array $pairs ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora
 ```
 
+## Description
+Create a UKW-D (Dora) reflector with custom wiring.
+
 ## Parameters
 
 ### **pairs:**

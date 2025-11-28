@@ -7,6 +7,8 @@ public function AbstractRotor->processLetter1stPass( JulienBoudry\EnigmaMachine\
 ```
 
 ## Description
+Send a letter from side A through the wiring to side B.
+
 To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.
 + Letter::count() and % Letter::count() keep the value positive and in bounds.
 

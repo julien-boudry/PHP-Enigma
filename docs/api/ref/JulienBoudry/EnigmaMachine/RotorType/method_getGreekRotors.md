@@ -6,6 +6,9 @@
 public static function RotorType::getGreekRotors( ): array
 ```
 
+## Description
+Get all Greek rotor types (BETA and GAMMA).
+
 ## Return
 **Type:** `array`
 

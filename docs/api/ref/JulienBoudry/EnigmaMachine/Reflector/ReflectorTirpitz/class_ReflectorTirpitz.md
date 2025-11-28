@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorTirpitz.php#L17)
 
 ## Description
+Enigma T (Tirpitz) Reflector (Umkehrwalze).
+
 The Enigma T was used for German-Japanese military communications during WW2.
 It has a unique reflector wiring and uses the Tirpitz entry wheel.
 ## Elements
@@ -10,10 +12,10 @@ It has a unique reflector wiring and uses the Tirpitz entry wheel.
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__clone(...)](../AbstractReflector/method___clone.md) | __ |
-| [__construct(...)](../AbstractReflector/method___construct.md) | __ |
+| [__clone(...)](../AbstractReflector/method___clone.md) | _Deep clone the reflector._ |
+| [__construct(...)](../AbstractReflector/method___construct.md) | _Constructor creates a new Wiring with the setup from the concrete class._ |
 | [getType(...)](method_getType.md) | __ |
-| [processLetter(...)](../AbstractReflector/method_processLetter.md) | _Because pins are connected in pairs, there is no difference if processLetter1stPass() or processLetter2ndPass() is used._ |
+| [processLetter(...)](../AbstractReflector/method_processLetter.md) | _Send a letter through the wiring._ |
 
 
 ## Public Representation

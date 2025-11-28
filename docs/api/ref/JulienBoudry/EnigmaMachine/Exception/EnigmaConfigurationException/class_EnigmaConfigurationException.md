@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Exception/EnigmaConfigurationException.php#L18)
 
 ## Description
+Exception thrown when an Enigma machine configuration is invalid.
+
 This includes:
 - Incompatible rotor/model combinations
 - Incompatible reflector/model combinations

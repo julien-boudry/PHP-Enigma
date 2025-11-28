@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorRailway.php#L17)
 
 ## Description
+Railway Enigma (Rocket) Reflector (Umkehrwalze).
+
 Rewired reflector used by the German Reichsbahn (Railway).
 Wiring recovered in 2023 from physical measurement of UKW K456.
 ## Elements
@@ -10,10 +12,10 @@ Wiring recovered in 2023 from physical measurement of UKW K456.
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__clone(...)](../AbstractReflector/method___clone.md) | __ |
-| [__construct(...)](../AbstractReflector/method___construct.md) | __ |
+| [__clone(...)](../AbstractReflector/method___clone.md) | _Deep clone the reflector._ |
+| [__construct(...)](../AbstractReflector/method___construct.md) | _Constructor creates a new Wiring with the setup from the concrete class._ |
 | [getType(...)](method_getType.md) | __ |
-| [processLetter(...)](../AbstractReflector/method_processLetter.md) | _Because pins are connected in pairs, there is no difference if processLetter1stPass() or processLetter2ndPass() is used._ |
+| [processLetter(...)](../AbstractReflector/method_processLetter.md) | _Send a letter through the wiring._ |
 
 
 ## Public Representation

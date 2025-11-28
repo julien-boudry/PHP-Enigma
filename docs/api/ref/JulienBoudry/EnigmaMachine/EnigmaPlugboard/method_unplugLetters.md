@@ -7,6 +7,8 @@ public function EnigmaPlugboard->unplugLetters( JulienBoudry\EnigmaMachine\Lette
 ```
 
 ## Description
+Disconnect 2 letters.
+
 Because letters are connected in pairs, we only need to know one of them.
 
 ## Parameters

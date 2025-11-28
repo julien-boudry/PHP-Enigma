@@ -3,6 +3,8 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaRandomConfigurator.php#L24)
 
 ## Description
+Generates random configurations for Enigma machines.
+
 This class provides methods to generate cryptographically secure random
 configurations compatible with specific Enigma models. For testing purposes,
 a deterministic random engine can be injected.
@@ -18,13 +20,13 @@ Generated configurations include:
 ### Public Constants
 | Constant Name | Signature | Description |
 | ------------- | ------------- | ------------- |
-| PLUGBOARD_PAIRS | `private const int PLUGBOARD_PAIRS = 10` | __ |
+| PLUGBOARD_PAIRS | `private const int PLUGBOARD_PAIRS = 10` | _Number of plugboard pairs (historical standard)._ |
 
 ### Public Methods
 | Method Name | Description |
 | ------------- | ------------- |
-| [__construct(...)](method___construct.md) | __ |
-| [generate(...)](method_generate.md) | __ |
+| [__construct(...)](method___construct.md) | _Create a new random configurator._ |
+| [generate(...)](method_generate.md) | _Generate a complete random Enigma configuration for a model._ |
 
 
 ## Public Representation

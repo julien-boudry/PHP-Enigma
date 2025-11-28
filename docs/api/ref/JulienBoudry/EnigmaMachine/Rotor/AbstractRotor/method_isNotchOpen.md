@@ -7,6 +7,8 @@ public function AbstractRotor->isNotchOpen( ): bool
 ```
 
 ## Description
+A notch is open.
+
 Returns true if the rotor is in a turnover position for the next rotor.
 
 ## Return

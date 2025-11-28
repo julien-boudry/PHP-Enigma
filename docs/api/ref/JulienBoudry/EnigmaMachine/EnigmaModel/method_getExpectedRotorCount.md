@@ -6,6 +6,9 @@
 public function EnigmaModel->getExpectedRotorCount( ): int
 ```
 
+## Description
+Get the expected number of rotors for this model.
+
 ## Return
 **Type:** `int`
 

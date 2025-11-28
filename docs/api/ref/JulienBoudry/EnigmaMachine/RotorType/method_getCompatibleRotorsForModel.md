@@ -7,6 +7,8 @@ public static function RotorType::getCompatibleRotorsForModel( JulienBoudry\Enig
 ```
 
 ## Description
+Get all non-Greek rotor types compatible with a given Enigma model.
+
 This method dynamically filters rotors based on their getCompatibleModels() method,
 excluding Greek rotors (Beta/Gamma) which have special positioning rules.
 

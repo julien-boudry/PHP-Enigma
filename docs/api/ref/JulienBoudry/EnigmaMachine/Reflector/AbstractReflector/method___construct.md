@@ -5,3 +5,6 @@
 ```php
 public function AbstractReflector->__construct( )
 ```
+
+## Description
+Constructor creates a new Wiring with the setup from the concrete class.

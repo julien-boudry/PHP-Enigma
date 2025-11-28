@@ -6,6 +6,9 @@
 public function RotorConfiguration->getP2( ): JulienBoudry\EnigmaMachine\Rotor\AbstractRotor
 ```
 
+## Description
+Get the P2 rotor (middle).
+
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\Rotor\AbstractRotor`](../Rotor/AbstractRotor/class_AbstractRotor.md)
 

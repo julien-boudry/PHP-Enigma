@@ -5,3 +5,6 @@
 ```php
 public function EnigmaPlugboard->__construct( )
 ```
+
+## Description
+Constructor creates a new Wiring and connects the pins in pairs.

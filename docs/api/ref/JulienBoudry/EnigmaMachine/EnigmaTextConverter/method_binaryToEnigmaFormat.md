@@ -7,6 +7,8 @@ public static function EnigmaTextConverter::binaryToEnigmaFormat( string $binary
 ```
 
 ## Description
+Convert binary data to Enigma format using base64-like encoding.
+
 This encodes arbitrary binary data into A-Z characters only.
 Each byte is converted to a 2-3 letter representation.
 
