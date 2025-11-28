@@ -106,17 +106,7 @@ final class EnigmaRandomConfigurator
      */
     private function getAvailableRotors(EnigmaModel $model): array
     {
-        return match ($model) {
-            EnigmaModel::WMLW => [RotorType::I, RotorType::II, RotorType::III, RotorType::IV, RotorType::V],
-            EnigmaModel::KMM3, EnigmaModel::KMM4 => [
-                RotorType::I, RotorType::II, RotorType::III, RotorType::IV,
-                RotorType::V, RotorType::VI, RotorType::VII, RotorType::VIII,
-            ],
-            EnigmaModel::ENIGMA_K => RotorType::getEnigmaKRotors(),
-            EnigmaModel::SWISS_K => RotorType::getSwissKRotors(),
-            EnigmaModel::RAILWAY => RotorType::getRailwayRotors(),
-            EnigmaModel::TIRPITZ => RotorType::getTirpitzRotors(),
-        };
+        return RotorType::getCompatibleRotorsForModel($model);
     }
 
     /**

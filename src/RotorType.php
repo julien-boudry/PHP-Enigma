@@ -273,4 +273,33 @@ enum RotorType
     {
         return [self::TIRPITZ_I, self::TIRPITZ_II, self::TIRPITZ_III, self::TIRPITZ_IV, self::TIRPITZ_V, self::TIRPITZ_VI, self::TIRPITZ_VII, self::TIRPITZ_VIII];
     }
+
+    /**
+     * Get all non-Greek rotor types compatible with a given Enigma model.
+     *
+     * This method dynamically filters rotors based on their getCompatibleModels() method,
+     * excluding Greek rotors (Beta/Gamma) which have special positioning rules.
+     *
+     * @param EnigmaModel $model The Enigma model to get compatible rotors for
+     *
+     * @return list<self> List of compatible non-Greek rotor types
+     */
+    public static function getCompatibleRotorsForModel(EnigmaModel $model): array
+    {
+        $compatible = [];
+
+        foreach (self::cases() as $rotorType) {
+            // Skip Greek rotors - they're handled separately
+            if ($rotorType->isGreekRotor()) {
+                continue;
+            }
+
+            $rotor = $rotorType->createRotor();
+            if ($rotor->isCompatibleWithModel($model)) {
+                $compatible[] = $rotorType;
+            }
+        }
+
+        return $compatible;
+    }
 }
