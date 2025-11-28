@@ -29,10 +29,10 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      * Whether to enforce configuration checks.
      *
      * When true (default), validates that rotors are not duplicated and that
-     * Greek rotors are only in GREEK position. Set to false to bypass these checks
-     * and allow any configuration.
+     * Greek rotors are only in GREEK position. When false, bypasses these checks
+     * and allows any configuration.
      */
-    public bool $strictMode = true;
+    public bool $strictMode;
 
     /**
      * Creates a new rotor configuration.

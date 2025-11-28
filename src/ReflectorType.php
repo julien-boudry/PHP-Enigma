@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma;
 
-use JulienBoudry\Enigma\Reflector\{AbstractReflector, ReflectorB, ReflectorBThin, ReflectorC, ReflectorCThin, ReflectorDora};
+use JulienBoudry\Enigma\Reflector\{AbstractReflector, ReflectorB, ReflectorBThin, ReflectorC, ReflectorCThin, ReflectorDora, ReflectorK, ReflectorSwissK, ReflectorRailway, ReflectorTirpitz};
 
 /**
  * Enumeration of available reflector types.
@@ -38,6 +38,31 @@ enum ReflectorType
     case DORA;
 
     /**
+     * Commercial Enigma K (A27) reflector.
+     * Standard commercial wiring (handelsübliche Schaltung).
+     * Used by various customers from 1927-1944.
+     */
+    case K;
+
+    /**
+     * Swiss Enigma K reflector.
+     * Same wiring as commercial K - the Swiss only rewired the rotors.
+     */
+    case SWISS_K;
+
+    /**
+     * Railway Enigma (Rocket) reflector.
+     * Rewired reflector used by German Reichsbahn.
+     */
+    case RAILWAY;
+
+    /**
+     * Enigma T (Tirpitz) reflector.
+     * Used for German-Japanese military communications.
+     */
+    case TIRPITZ;
+
+    /**
      * Create a reflector instance for this type.
      *
      * For DORA reflector, this creates an instance with default wiring.
@@ -53,6 +78,10 @@ enum ReflectorType
             self::BTHIN => new ReflectorBThin,
             self::CTHIN => new ReflectorCThin,
             self::DORA => ReflectorDora::withDefaultWiring(),
+            self::K => new ReflectorK,
+            self::SWISS_K => new ReflectorSwissK,
+            self::RAILWAY => new ReflectorRailway,
+            self::TIRPITZ => new ReflectorTirpitz,
         };
     }
 

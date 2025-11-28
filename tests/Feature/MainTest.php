@@ -191,6 +191,24 @@ test('strictMode false allows incompatible reflector', function (): void {
     expect($enigma)->toBeInstanceOf(Enigma::class);
 });
 
+test('strictMode false allows mounting incompatible reflector', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+
+    // Must set strictMode at construction to allow incompatible reflector
+    $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B, strictMode: false);
+
+    expect($enigma->strictMode)->toBeFalse();
+
+    // Now we can mount an incompatible reflector
+    $enigma->mountReflector(ReflectorType::BTHIN); // Not compatible with WMLW
+
+    expect($enigma->reflector)->toBeInstanceOf(JulienBoudry\Enigma\Reflector\AbstractReflector::class);
+});
+
 test('strictMode can be changed after construction', function (): void {
     $rotorsConfiguration = new RotorConfiguration(
         p1: RotorType::I,
@@ -202,13 +220,12 @@ test('strictMode can be changed after construction', function (): void {
 
     expect($enigma->strictMode)->toBeTrue();
 
+    // strictMode can be changed after construction
     $enigma->strictMode = false;
-
     expect($enigma->strictMode)->toBeFalse();
 
     // Now we can mount an incompatible reflector
-    $enigma->mountReflector(ReflectorType::BTHIN); // Not compatible with WMLW
-
+    $enigma->mountReflector(ReflectorType::BTHIN); // Would normally throw for WMLW model
     expect($enigma->reflector)->toBeInstanceOf(JulienBoudry\Enigma\Reflector\AbstractReflector::class);
 });
 

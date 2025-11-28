@@ -76,13 +76,16 @@ final readonly class EnigmaConfiguration
             $doraWiringPairs = $enigma->reflector->getWiringPairs();
         }
 
+        // Extract plugboard pairs (only for military models with plugboard)
+        $plugboardPairs = $enigma->plugboard->getPluggedPairs();
+
         return new self(
             model: $enigma->model,
             rotorTypes: $rotorTypes,
             ringstellungen: $ringstellungen,
             positions: $positions,
             reflector: $enigma->reflector->getType(),
-            plugboardPairs: $enigma->plugboard->getPluggedPairs(),
+            plugboardPairs: $plugboardPairs,
             doraWiringPairs: $doraWiringPairs,
         );
     }
@@ -138,9 +141,11 @@ final readonly class EnigmaConfiguration
             $enigma->setPosition(RotorPosition::GREEK, $this->positions['greek']);
         }
 
-        // Configure plugboard
-        foreach ($this->plugboardPairs as [$letter1, $letter2]) {
-            $enigma->plugLetters($letter1, $letter2);
+        // Configure plugboard (only for military models with plugboard)
+        if ($enigma->hasPlugboard()) {
+            foreach ($this->plugboardPairs as [$letter1, $letter2]) {
+                $enigma->plugLetters($letter1, $letter2);
+            }
         }
 
         return $enigma;
@@ -176,19 +181,24 @@ final readonly class EnigmaConfiguration
             $position = $this->positions['greek']->toChar() . $position;
         }
 
-        $plugs = implode(' ', array_map(
-            static fn(array $pair): string => $pair[0]->toChar() . $pair[1]->toChar(),
-            $this->plugboardPairs
-        ));
-
-        return \sprintf(
-            'Model: %s | Rotors: %s | Ring: %s | Position: %s | Reflector: %s | Plugs: %s',
+        $summary = \sprintf(
+            'Model: %s | Rotors: %s | Ring: %s | Position: %s | Reflector: %s',
             $this->model->name,
             $rotors,
             $ringstellung,
             $position,
-            $this->reflector->name,
-            $plugs ?: '(none)'
+            $this->reflector->name
         );
+
+        // Only show plugboard for military models
+        if ($this->model->hasPlugboard()) {
+            $plugs = implode(' ', array_map(
+                static fn(array $pair): string => $pair[0]->toChar() . $pair[1]->toChar(),
+                $this->plugboardPairs
+            ));
+            $summary .= ' | Plugs: ' . ($plugs ?: '(none)');
+        }
+
+        return $summary;
     }
 }

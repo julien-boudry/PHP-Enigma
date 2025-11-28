@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace JulienBoudry\Enigma;
 
 use JulienBoudry\Enigma\Rotor\{AbstractRotor, RotorBeta, RotorGamma, RotorI, RotorII, RotorIII, RotorIV, RotorV, RotorVI, RotorVII, RotorVIII};
+use JulienBoudry\Enigma\Rotor\{RotorKI, RotorKII, RotorKIII, RotorSwissKI, RotorSwissKII, RotorSwissKIII, RotorRailwayI, RotorRailwayII, RotorRailwayIII};
+use JulienBoudry\Enigma\Rotor\{RotorTirpitzI, RotorTirpitzII, RotorTirpitzIII, RotorTirpitzIV, RotorTirpitzV, RotorTirpitzVI, RotorTirpitzVII, RotorTirpitzVIII};
 
 /**
  * Enumeration of available rotor types.
@@ -62,6 +64,116 @@ enum RotorType
 
     case GAMMA;
 
+    // Commercial Enigma K rotors (handelsübliche Schaltung)
+
+    /**
+     * Commercial Enigma K Rotor I.
+     * Notch at G (turnover at Y).
+     */
+    case K_I;
+
+    /**
+     * Commercial Enigma K Rotor II.
+     * Notch at M (turnover at E).
+     */
+    case K_II;
+
+    /**
+     * Commercial Enigma K Rotor III.
+     * Notch at V (turnover at N).
+     */
+    case K_III;
+
+    // Swiss-K rotors (Swiss Air Force wiring)
+
+    /**
+     * Swiss-K Rotor I (Swiss Air Force wiring).
+     * Notch at G (turnover at Y).
+     */
+    case SWISS_K_I;
+
+    /**
+     * Swiss-K Rotor II (Swiss Air Force wiring).
+     * Notch at M (turnover at E).
+     */
+    case SWISS_K_II;
+
+    /**
+     * Swiss-K Rotor III (Swiss Air Force wiring).
+     * Notch at V (turnover at N).
+     */
+    case SWISS_K_III;
+
+    // Railway Enigma (Rocket) rotors
+
+    /**
+     * Railway Enigma Rotor I.
+     * Notch at G (turnover at Y).
+     */
+    case RAILWAY_I;
+
+    /**
+     * Railway Enigma Rotor II.
+     * Notch at M (turnover at E).
+     */
+    case RAILWAY_II;
+
+    /**
+     * Railway Enigma Rotor III.
+     * Notch at V (turnover at N).
+     */
+    case RAILWAY_III;
+
+    // Enigma T (Tirpitz) rotors - used for German-Japanese communications
+
+    /**
+     * Enigma T (Tirpitz) Rotor I.
+     * 5 notches at E, H, K, N, Q.
+     */
+    case TIRPITZ_I;
+
+    /**
+     * Enigma T (Tirpitz) Rotor II.
+     * 5 notches at E, H, K, N, Q.
+     */
+    case TIRPITZ_II;
+
+    /**
+     * Enigma T (Tirpitz) Rotor III.
+     * 5 notches at E, H, K, N, Q.
+     */
+    case TIRPITZ_III;
+
+    /**
+     * Enigma T (Tirpitz) Rotor IV.
+     * 5 notches at E, H, K, N, Q.
+     */
+    case TIRPITZ_IV;
+
+    /**
+     * Enigma T (Tirpitz) Rotor V.
+     * 5 notches at E, H, K, N, Q.
+     */
+    case TIRPITZ_V;
+
+    /**
+     * Enigma T (Tirpitz) Rotor VI.
+     * 5 notches at E, H, K, N, Q.
+     */
+    case TIRPITZ_VI;
+
+    /**
+     * Enigma T (Tirpitz) Rotor VII.
+     * 5 notches at E, H, K, N, Q.
+     */
+    case TIRPITZ_VII;
+
+    /**
+     * Enigma T (Tirpitz) Rotor VIII.
+     * 5 notches at E, H, K, N, Q.
+     */
+    case TIRPITZ_VIII;
+
     /**
      * Create a rotor instance for this type.
      *
@@ -82,6 +194,23 @@ enum RotorType
             self::VIII => new RotorVIII($ringstellung),
             self::BETA => new RotorBeta($ringstellung),
             self::GAMMA => new RotorGamma($ringstellung),
+            self::K_I => new RotorKI($ringstellung),
+            self::K_II => new RotorKII($ringstellung),
+            self::K_III => new RotorKIII($ringstellung),
+            self::SWISS_K_I => new RotorSwissKI($ringstellung),
+            self::SWISS_K_II => new RotorSwissKII($ringstellung),
+            self::SWISS_K_III => new RotorSwissKIII($ringstellung),
+            self::RAILWAY_I => new RotorRailwayI($ringstellung),
+            self::RAILWAY_II => new RotorRailwayII($ringstellung),
+            self::RAILWAY_III => new RotorRailwayIII($ringstellung),
+            self::TIRPITZ_I => new RotorTirpitzI($ringstellung),
+            self::TIRPITZ_II => new RotorTirpitzII($ringstellung),
+            self::TIRPITZ_III => new RotorTirpitzIII($ringstellung),
+            self::TIRPITZ_IV => new RotorTirpitzIV($ringstellung),
+            self::TIRPITZ_V => new RotorTirpitzV($ringstellung),
+            self::TIRPITZ_VI => new RotorTirpitzVI($ringstellung),
+            self::TIRPITZ_VII => new RotorTirpitzVII($ringstellung),
+            self::TIRPITZ_VIII => new RotorTirpitzVIII($ringstellung),
         };
     }
 
@@ -103,5 +232,45 @@ enum RotorType
     public static function getGreekRotors(): array
     {
         return [self::BETA, self::GAMMA];
+    }
+
+    /**
+     * Get all commercial Enigma K rotor types.
+     *
+     * @return list<self>
+     */
+    public static function getEnigmaKRotors(): array
+    {
+        return [self::K_I, self::K_II, self::K_III];
+    }
+
+    /**
+     * Get all Swiss-K rotor types.
+     *
+     * @return list<self>
+     */
+    public static function getSwissKRotors(): array
+    {
+        return [self::SWISS_K_I, self::SWISS_K_II, self::SWISS_K_III];
+    }
+
+    /**
+     * Get all Railway Enigma rotor types.
+     *
+     * @return list<self>
+     */
+    public static function getRailwayRotors(): array
+    {
+        return [self::RAILWAY_I, self::RAILWAY_II, self::RAILWAY_III];
+    }
+
+    /**
+     * Get all Enigma T (Tirpitz) rotor types.
+     *
+     * @return list<self>
+     */
+    public static function getTirpitzRotors(): array
+    {
+        return [self::TIRPITZ_I, self::TIRPITZ_II, self::TIRPITZ_III, self::TIRPITZ_IV, self::TIRPITZ_V, self::TIRPITZ_VI, self::TIRPITZ_VII, self::TIRPITZ_VIII];
     }
 }

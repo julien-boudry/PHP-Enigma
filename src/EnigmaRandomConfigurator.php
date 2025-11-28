@@ -53,7 +53,11 @@ final class EnigmaRandomConfigurator
         $ringstellungen = $this->generateRandomRingstellungen($model);
         $positions = $this->generateRandomPositions($model);
         $reflector = $this->selectRandomReflector($model);
-        $plugboardPairs = $this->generateRandomPlugboardPairs();
+
+        // Generate plugboard pairs only for military models
+        $plugboardPairs = $model->hasPlugboard()
+            ? $this->generateRandomPlugboardPairs()
+            : [];
 
         // Generate DORA wiring if DORA reflector is selected
         $doraWiringPairs = $reflector === ReflectorType::DORA
@@ -108,6 +112,10 @@ final class EnigmaRandomConfigurator
                 RotorType::I, RotorType::II, RotorType::III, RotorType::IV,
                 RotorType::V, RotorType::VI, RotorType::VII, RotorType::VIII,
             ],
+            EnigmaModel::ENIGMA_K => RotorType::getEnigmaKRotors(),
+            EnigmaModel::SWISS_K => RotorType::getSwissKRotors(),
+            EnigmaModel::RAILWAY => RotorType::getRailwayRotors(),
+            EnigmaModel::TIRPITZ => RotorType::getTirpitzRotors(),
         };
     }
 

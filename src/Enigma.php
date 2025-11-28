@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\Enigma;
 
+use JulienBoudry\Enigma\EntryWheel\AbstractEntryWheel;
 use JulienBoudry\Enigma\Exception\EnigmaConfigurationException;
 use JulienBoudry\Enigma\Reflector\AbstractReflector;
 use Random\Engine;
@@ -12,12 +13,13 @@ use Random\Engine;
  * Represents an Enigma cipher machine.
  *
  * This class emulates the historical Enigma machine used during World War II.
- * Three different models can be emulated (Wehrmacht/Luftwaffe, Kriegsmarine M3, and Kriegsmarine M4),
- * each with its own set of rotors and reflectors.
+ * Multiple models can be emulated:
+ * - Military models (Wehrmacht/Luftwaffe, Kriegsmarine M3/M4) with plugboard
+ * - Commercial models (Enigma K, Swiss-K, Railway) without plugboard
  *
  * Depending on the model, 3 or 4 rotors are mounted. Only the first three rotors can be triggered
  * by the advance mechanism. A letter is encoded by sending its corresponding signal through:
- * plugboard → rotors 1..3(4) → reflector → rotors 3(4)..1 → plugboard.
+ * [plugboard →] entry wheel → rotors 1..3(4) → reflector → rotors 3(4)..1 → entry wheel [→ plugboard].
  *
  * After each encoded letter, the advance mechanism changes the internal setup by rotating the rotors.
  *
@@ -26,11 +28,18 @@ use Random\Engine;
 class Enigma
 {
     /**
-     * The plugboard that connects input and output to the 1st rotor.
+     * The plugboard that connects input and output to the entry wheel.
      *
-     * @var EnigmaPlugboard
+     * Always present but empty by default on commercial models.
+     * In strictMode, commercial models cannot use the plugboard.
      */
     public readonly EnigmaPlugboard $plugboard;
+
+    /**
+     * The entry wheel (Eintrittswalze) that maps keyboard to rotor contacts.
+     * Uses QWERTZ order for commercial models, alphabetical for military.
+     */
+    public readonly AbstractEntryWheel $entryWheel;
 
     /**
      * The rotors used by the Enigma.
@@ -51,10 +60,10 @@ class Enigma
      * Whether to enforce compatibility checks.
      *
      * When true (default), validates that rotors and reflectors are compatible
-     * with the selected model. Set to false to bypass all compatibility checks
-     * and allow any configuration.
+     * with the selected model. When false, bypasses all compatibility checks
+     * and allows any configuration (including plugboard on commercial models).
      */
-    public bool $strictMode = true;
+    public bool $strictMode;
 
     /**
      * Constructor sets up the plugboard and creates the rotors and reflectros available for the given model.
@@ -70,6 +79,11 @@ class Enigma
         $this->model = $model;
         $this->strictMode = $strictMode;
         $this->rotors = $rotors;
+
+        // Create entry wheel based on model type
+        $this->entryWheel = $model->getEntryWheelType()->createEntryWheel();
+
+        // Plugboard always exists but is empty on commercial models
         $this->plugboard = new EnigmaPlugboard;
 
         if ($this->strictMode) {
@@ -160,8 +174,9 @@ class Enigma
 
     /**
      * Encode a single letter.
-     * The letter passes the plugboard, the rotors, the reflector, the rotors in the opposite direction and again the plugboard.
-     * Every encoding triggers the advancemechanism.
+     * The letter passes the plugboard (if available), entry wheel, rotors, reflector,
+     * rotors in the opposite direction, entry wheel again, and plugboard (if available).
+     * Every encoding triggers the advance mechanism.
      *
      * @see Enigma::advance()
      *
@@ -172,19 +187,31 @@ class Enigma
     public function encodeLetter(Letter $letter): Letter
     {
         $this->advance();
+
+        // Pass through plugboard (military models only - no effect if empty)
         $value = $this->plugboard->processLetter($letter);
 
+        // Pass through entry wheel (keyboard → rotor contacts)
+        $value = $this->entryWheel->processInward($value);
+
+        // Pass through rotors (right to left)
         $rotorArray = $this->rotors->toArray();
         foreach ($rotorArray as $rotor) {
             $value = $rotor->processLetter1stPass($value);
         }
 
+        // Pass through reflector
         $value = $this->reflector->processLetter($value);
 
+        // Pass through rotors in reverse (left to right)
         foreach (array_reverse($rotorArray) as $rotor) {
             $value = $rotor->processLetter2ndPass($value);
         }
 
+        // Pass through entry wheel (rotor contacts → keyboard)
+        $value = $this->entryWheel->processOutward($value);
+
+        // Pass through plugboard (military models only - no effect if empty)
         return $this->plugboard->processLetter($value);
     }
 
@@ -237,25 +264,45 @@ class Enigma
     /**
      * Connect 2 letters on the plugboard.
      *
+     * Only available on military models (Wehrmacht, Kriegsmarine).
+     * Commercial models (Enigma K, Swiss-K, Railway) do not have a plugboard.
+     *
      * @param Letter $letter1 letter 1 to connect
      * @param Letter $letter2 letter 2 to connect
+     *
+     * @throws EnigmaConfigurationException If this model does not have a plugboard
      */
     public function plugLetters(Letter $letter1, Letter $letter2): void
     {
+        if ($this->strictMode && !$this->model->hasPlugboard()) {
+            throw new EnigmaConfigurationException(
+                "Model {$this->model->name} does not have a plugboard (disable strictMode to override)"
+            );
+        }
         $this->plugboard->plugLetters($letter1, $letter2);
     }
 
     /**
      * Connect multiple letter pairs on the plugboard.
      *
+     * Only available on military models (Wehrmacht, Kriegsmarine).
+     * Commercial models (Enigma K, Swiss-K, Railway) do not have a plugboard.
+     *
      * Accepts pairs in various formats:
      * - Space-separated string: "AV BS CG DL FU HZ IN KM OW RX"
      * - Array of pairs: ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX']
      *
      * @param string|array<string> $pairs Pairs to connect
+     *
+     * @throws EnigmaConfigurationException If this model does not have a plugboard
      */
     public function plugLettersFromPairs(string|array $pairs): void
     {
+        if ($this->strictMode && !$this->model->hasPlugboard()) {
+            throw new EnigmaConfigurationException(
+                "Model {$this->model->name} does not have a plugboard (disable strictMode to override)"
+            );
+        }
         $this->plugboard->plugLettersFromPairs($pairs);
     }
 
@@ -263,10 +310,20 @@ class Enigma
      * Disconnects 2 letters on the plugboard.
      * Because letters are connected in pairs, we only need to know one of them.
      *
+     * Only available on military models (Wehrmacht, Kriegsmarine).
+     * Commercial models (Enigma K, Swiss-K, Railway) do not have a plugboard.
+     *
      * @param Letter $letter 1 of the 2 letters to disconnect
+     *
+     * @throws EnigmaConfigurationException If this model does not have a plugboard
      */
     public function unplugLetters(Letter $letter): void
     {
+        if ($this->strictMode && !$this->model->hasPlugboard()) {
+            throw new EnigmaConfigurationException(
+                "Model {$this->model->name} does not have a plugboard (disable strictMode to override)"
+            );
+        }
         $this->plugboard->unplugLetters($letter);
     }
 
@@ -357,18 +414,36 @@ class Enigma
     }
 
     /**
+     * Check if this model historically has a plugboard.
+     *
+     * Military models have plugboards, commercial models do not.
+     * Note: The plugboard object always exists internally, but this method
+     * indicates whether it should be used according to historical accuracy.
+     */
+    public function hasPlugboard(): bool
+    {
+        return $this->model->hasPlugboard();
+    }
+
+    /**
      * Deep clone the Enigma machine.
      *
-     * This ensures all internal components (plugboard, rotors, reflector) are
+     * This ensures all internal components (plugboard, entry wheel, rotors, reflector) are
      * properly cloned so the cloned machine operates independently.
      */
     public function __clone(): void
     {
+        $reflection = new \ReflectionClass($this);
+
         // Clone the plugboard (readonly property requires reflection)
         $plugboardClone = clone $this->plugboard;
-        $reflection = new \ReflectionClass($this);
         $plugboardProperty = $reflection->getProperty('plugboard');
         $plugboardProperty->setValue($this, $plugboardClone);
+
+        // Clone the entry wheel (readonly property requires reflection)
+        $entryWheelClone = clone $this->entryWheel;
+        $entryWheelProperty = $reflection->getProperty('entryWheel');
+        $entryWheelProperty->setValue($this, $entryWheelClone);
 
         // Clone mounted rotors
         $this->rotors = clone $this->rotors;
