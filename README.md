@@ -108,9 +108,9 @@ $enigma->plugLettersFromPairs('AV BS CG DL FU HZ IN KM OW RX');
 $ciphertext = 'EDPUDNRGYSZRCXNUYTPOMRMBOFKTBZREZKMLXLVEFGUEY';
 $plaintext = $enigma->encodeLetters($ciphertext);
 echo $plaintext;
-// "AUFKLXABTEILUNGXVONXKABOROWOAUFLKBXGFSJTNUEUN"
-// German: "Aufklärungsabteilung von Kaborowo..."
-// Translation: "Reconnaissance division from Kaborowo..."
+// "AUFKLXABTEILUNGXVONXKURTINOWAXKURTINOWAXNORDW"
+// German: "Aufklärungsabteilung von Kurtinowa, Kurtinowa, Nordwest..."
+// Translation: "Reconnaissance division from Kurtinowa, Kurtinowa, northwest..."
 ```
 
 ### Human-Readable Text
