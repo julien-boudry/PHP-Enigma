@@ -302,11 +302,11 @@ The UKW-D (Umkehrwalze Dora) was a rewirable reflector introduced in January 194
 use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorConfiguration, RotorType};
 use JulienBoudry\Enigma\Reflector\ReflectorDora;
 
-// Using default wiring (includes historical B↔O pair)
+// Using default wiring (includes historical B↔O pair, or J↔Y depending on notation)
 $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::DORA);
 
 // Or with custom wiring (13 letter pairs)
-$customDora = ReflectorDora::fromString('AZ BY CX DW EV FU GT HS IR JQ KP LO MN');
+$customDora = ReflectorDora::fromString('AZ BO CX DW EV FU GT HS IR JQ KP LY MN');
 $enigma->mountReflector($customDora);
 ```
 

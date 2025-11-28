@@ -14,8 +14,16 @@ use JulienBoudry\Enigma\{Letter, ReflectorType};
  * Unlike fixed reflectors (B, C), operators could configure their own wiring using plug cables.
  *
  * The physical device had 12 plug cables connecting 24 sockets. The remaining 2 positions
- * (B and O in Bletchley Park notation) were occupied by spring-loaded balls holding the
- * inner core in place, creating a fixed B↔O pair on the physical device.
+ * (B and O in Bletchley Park notation, or J and Y) were occupied by spring-loaded balls holding the
+ * inner core in place, creating a fixed B↔O (or J↔Y) pair on the physical device.
+ *
+ * Mapping between Bletchley Park (BP) notation and German (DE) index ring:
+ * BP: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+ * DE: A - Z X W V U T S R Q P O N - M L K I H G F E D C B
+ *
+ * In BP notation (standard A-Z), the fixed pair is B↔O.
+ * In German notation, the letters J and Y are omitted from the ring, and the
+ * physical gaps (marked '-') correspond to the fixed connections.
  *
  * This software implementation allows full flexibility with 13 configurable pairs,
  * though the default wiring includes the historical B↔O pair.
@@ -211,7 +219,8 @@ final class ReflectorDora extends AbstractReflector
      * Get a default wiring configuration.
      *
      * This uses a historically plausible configuration including the B↔O pair
-     * which was fixed on the physical device due to mechanical constraints.
+     * (or J↔Y depending on notation) which was fixed on the physical device
+     * due to mechanical constraints.
      *
      * @return self
      */
