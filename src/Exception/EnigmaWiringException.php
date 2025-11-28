@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\Exception;
+namespace JulienBoudry\EnigmaMachine\Exception;
 
 /**
  * Exception thrown when wiring configuration is invalid.

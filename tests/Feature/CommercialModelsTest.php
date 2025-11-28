@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaPlugboard, Letter, ReflectorType, RotorConfiguration, RotorType, RotorPosition};
-use JulienBoudry\Enigma\EntryWheel\{AlphabeticalEntryWheel, QwertzEntryWheel};
-use JulienBoudry\Enigma\Exception\EnigmaConfigurationException;
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, EnigmaPlugboard, Letter, ReflectorType, RotorConfiguration, RotorType, RotorPosition};
+use JulienBoudry\EnigmaMachine\EntryWheel\{AlphabeticalEntryWheel, QwertzEntryWheel};
+use JulienBoudry\EnigmaMachine\Exception\EnigmaConfigurationException;
 
 describe('Commercial Enigma Models', function (): void {
 

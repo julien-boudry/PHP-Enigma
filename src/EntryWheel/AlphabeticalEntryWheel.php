@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\EntryWheel;
+namespace JulienBoudry\EnigmaMachine\EntryWheel;
 
-use JulienBoudry\Enigma\Letter;
+use JulienBoudry\EnigmaMachine\Letter;
 
 /**
  * Alphabetical Entry Wheel used in military Enigma models.

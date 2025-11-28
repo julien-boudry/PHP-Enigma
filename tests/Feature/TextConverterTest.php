@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\EnigmaTextConverter;
+use JulienBoudry\EnigmaMachine\EnigmaTextConverter;
 
 describe('EnigmaTextConverter', function (): void {
     describe('latinToEnigmaFormat', function (): void {

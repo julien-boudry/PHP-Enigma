@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\EntryWheel;
+namespace JulienBoudry\EnigmaMachine\EntryWheel;
 
-use JulienBoudry\Enigma\{EnigmaWiring, Letter};
+use JulienBoudry\EnigmaMachine\{EnigmaWiring, Letter};
 
 /**
  * Abstract base class for Entry Wheels (Eintrittswalze, ETW).

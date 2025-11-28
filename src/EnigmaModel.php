@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma;
+namespace JulienBoudry\EnigmaMachine;
 
 /**
  * Enumeration of Enigma machine models.

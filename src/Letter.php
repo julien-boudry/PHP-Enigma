@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma;
+namespace JulienBoudry\EnigmaMachine;
 
 /**
  * Enumeration representing the 26 letters of the Enigma alphabet.

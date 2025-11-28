@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\Exception\EnigmaConfigurationException;
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\Exception\EnigmaConfigurationException;
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 test('general', function (): void {
     $rotorsConfiguration = new RotorConfiguration(
@@ -206,7 +206,7 @@ test('strictMode false allows mounting incompatible reflector', function (): voi
     // Now we can mount an incompatible reflector
     $enigma->mountReflector(ReflectorType::BTHIN); // Not compatible with WMLW
 
-    expect($enigma->reflector)->toBeInstanceOf(JulienBoudry\Enigma\Reflector\AbstractReflector::class);
+    expect($enigma->reflector)->toBeInstanceOf(JulienBoudry\EnigmaMachine\Reflector\AbstractReflector::class);
 });
 
 test('strictMode can be changed after construction', function (): void {
@@ -226,7 +226,7 @@ test('strictMode can be changed after construction', function (): void {
 
     // Now we can mount an incompatible reflector
     $enigma->mountReflector(ReflectorType::BTHIN); // Would normally throw for WMLW model
-    expect($enigma->reflector)->toBeInstanceOf(JulienBoudry\Enigma\Reflector\AbstractReflector::class);
+    expect($enigma->reflector)->toBeInstanceOf(JulienBoudry\EnigmaMachine\Reflector\AbstractReflector::class);
 });
 
 test('RotorConfiguration strictMode false allows duplicate rotors in constructor', function (): void {

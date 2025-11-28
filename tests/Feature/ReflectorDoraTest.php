@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\Exception\{EnigmaConfigurationException, EnigmaWiringException};
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorType};
-use JulienBoudry\Enigma\Reflector\ReflectorDora;
+use JulienBoudry\EnigmaMachine\Exception\{EnigmaConfigurationException, EnigmaWiringException};
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorType};
+use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
 
 describe('ReflectorDora', function (): void {
     describe('construction', function (): void {
@@ -265,9 +265,9 @@ describe('ReflectorDora', function (): void {
                 $enigma->mountReflector($ukwD);
 
                 // Set initial rotor positions (Grundstellung)
-                $enigma->setPosition(JulienBoudry\Enigma\RotorPosition::P1, Letter::A);
-                $enigma->setPosition(JulienBoudry\Enigma\RotorPosition::P2, Letter::A);
-                $enigma->setPosition(JulienBoudry\Enigma\RotorPosition::P3, Letter::A);
+                $enigma->setPosition(JulienBoudry\EnigmaMachine\RotorPosition::P1, Letter::A);
+                $enigma->setPosition(JulienBoudry\EnigmaMachine\RotorPosition::P2, Letter::A);
+                $enigma->setPosition(JulienBoudry\EnigmaMachine\RotorPosition::P3, Letter::A);
 
                 // Add some plugboard connections (Stecker)
                 $enigma->plugLettersFromPairs('AM ET GZ');

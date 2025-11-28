@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma;
+namespace JulienBoudry\EnigmaMachine;
 
-use JulienBoudry\Enigma\Rotor\{AbstractRotor, RotorBeta, RotorGamma, RotorI, RotorII, RotorIII, RotorIV, RotorV, RotorVI, RotorVII, RotorVIII};
-use JulienBoudry\Enigma\Rotor\{RotorKI, RotorKII, RotorKIII, RotorSwissKI, RotorSwissKII, RotorSwissKIII, RotorRailwayI, RotorRailwayII, RotorRailwayIII};
-use JulienBoudry\Enigma\Rotor\{RotorTirpitzI, RotorTirpitzII, RotorTirpitzIII, RotorTirpitzIV, RotorTirpitzV, RotorTirpitzVI, RotorTirpitzVII, RotorTirpitzVIII};
+use JulienBoudry\EnigmaMachine\Rotor\{AbstractRotor, RotorBeta, RotorGamma, RotorI, RotorII, RotorIII, RotorIV, RotorV, RotorVI, RotorVII, RotorVIII};
+use JulienBoudry\EnigmaMachine\Rotor\{RotorKI, RotorKII, RotorKIII, RotorSwissKI, RotorSwissKII, RotorSwissKIII, RotorRailwayI, RotorRailwayII, RotorRailwayIII};
+use JulienBoudry\EnigmaMachine\Rotor\{RotorTirpitzI, RotorTirpitzII, RotorTirpitzIII, RotorTirpitzIV, RotorTirpitzV, RotorTirpitzVI, RotorTirpitzVII, RotorTirpitzVIII};
 
 /**
  * Enumeration of available rotor types.

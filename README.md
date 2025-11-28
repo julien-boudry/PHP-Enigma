@@ -51,7 +51,7 @@ composer require julien-boudry/enigma-machine
 To create a new instance, you need to configure the rotors and the reflector.
 
 ```php
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 require_once 'vendor/autoload.php';
 
@@ -92,7 +92,7 @@ The library provides convenient methods to encode entire messages.
 Use `encodeLetters()` for text that contains only valid Enigma characters (A-Z).
 
 ```php
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 // Historical settings from Operation Barbarossa, 1941
 $rotorsConfiguration = new RotorConfiguration(
@@ -233,7 +233,7 @@ $sameEnigma = $config->createEnigma();
 The `EnigmaTextConverter` class exposes the text processing logic directly:
 
 ```php
-use JulienBoudry\Enigma\EnigmaTextConverter;
+use JulienBoudry\EnigmaMachine\EnigmaTextConverter;
 
 // Convert to Enigma format
 echo EnigmaTextConverter::latinToEnigmaFormat('U-Boot 47'); // "UYYBOOTXVIERSIEBEN"
@@ -279,7 +279,7 @@ Commercial Enigma machines were sold to governments and businesses before and du
 - **QWERTZ entry wheel**: Uses `QWERTZUIOASDFGHJKPYXCVBNML` order instead of alphabetical
 
 ```php
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 // Create an Enigma K Commercial machine
 $rotorsConfiguration = new RotorConfiguration(
@@ -319,7 +319,7 @@ The Enigma T (also called "Tirpitz") was a special variant used for communicatio
 - **8 rotors with 5 notches each**: More frequent stepping than standard rotors
 
 ```php
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 // Create an Enigma T (Tirpitz) machine
 $rotorsConfiguration = new RotorConfiguration(
@@ -438,8 +438,8 @@ Each Rotor can be only used in one position at a time. For military models, roto
 The UKW-D (Umkehrwalze Dora) was a rewirable reflector introduced in January 1944. Unlike fixed reflectors, operators could configure their own wiring using 12 plug cables connecting 24 sockets.
 
 ```php
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, ReflectorType, RotorConfiguration, RotorType};
-use JulienBoudry\Enigma\Reflector\ReflectorDora;
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, ReflectorType, RotorConfiguration, RotorType};
+use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
 
 // Using default wiring (includes historical B↔O pair, or J↔Y depending on notation)
 $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::DORA);

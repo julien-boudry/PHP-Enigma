@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JulienBoudry\\Enigma\\": "src/"
+            "JulienBoudry\\EnigmaMachine\\": "src/"
         }
     },
     "autoload-dev": {

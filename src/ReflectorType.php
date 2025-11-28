@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma;
+namespace JulienBoudry\EnigmaMachine;
 
-use JulienBoudry\Enigma\Reflector\{AbstractReflector, ReflectorB, ReflectorBThin, ReflectorC, ReflectorCThin, ReflectorDora, ReflectorK, ReflectorSwissK, ReflectorRailway, ReflectorTirpitz};
+use JulienBoudry\EnigmaMachine\Reflector\{AbstractReflector, ReflectorB, ReflectorBThin, ReflectorC, ReflectorCThin, ReflectorDora, ReflectorK, ReflectorSwissK, ReflectorRailway, ReflectorTirpitz};
 
 /**
  * Enumeration of available reflector types.

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma;
+namespace JulienBoudry\EnigmaMachine;
 
-use JulienBoudry\Enigma\EntryWheel\AbstractEntryWheel;
-use JulienBoudry\Enigma\Exception\EnigmaConfigurationException;
-use JulienBoudry\Enigma\Reflector\AbstractReflector;
+use JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel;
+use JulienBoudry\EnigmaMachine\Exception\EnigmaConfigurationException;
+use JulienBoudry\EnigmaMachine\Reflector\AbstractReflector;
 use Random\Engine;
 
 /**

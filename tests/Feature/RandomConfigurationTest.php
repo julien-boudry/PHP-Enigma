@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaConfiguration, EnigmaModel, EnigmaRandomConfigurator, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
-use JulienBoudry\Enigma\Reflector\ReflectorDora;
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaConfiguration, EnigmaModel, EnigmaRandomConfigurator, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
 use Random\Engine\Mt19937;
 
 describe('EnigmaRandomConfigurator', function (): void {

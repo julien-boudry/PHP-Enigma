@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\Rotor;
+namespace JulienBoudry\EnigmaMachine\Rotor;
 
-use JulienBoudry\Enigma\{EnigmaModel, RotorType};
+use JulienBoudry\EnigmaMachine\{EnigmaModel, RotorType};
 
 /**
  * Rotor Gamma - Greek rotor for Kriegsmarine M4 only.

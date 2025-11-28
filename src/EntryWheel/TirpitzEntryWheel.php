@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\EntryWheel;
+namespace JulienBoudry\EnigmaMachine\EntryWheel;
 
 /**
  * Tirpitz Entry Wheel used in the Enigma T (Tirpitz).

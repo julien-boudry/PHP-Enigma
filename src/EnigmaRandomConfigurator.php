@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma;
+namespace JulienBoudry\EnigmaMachine;
 
 use Random\{Engine, Randomizer};
 use Random\Engine\Secure;

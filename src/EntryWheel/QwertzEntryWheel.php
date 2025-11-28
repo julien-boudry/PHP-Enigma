@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\EntryWheel;
+namespace JulienBoudry\EnigmaMachine\EntryWheel;
 
 /**
  * QWERTZ Entry Wheel used in commercial Enigma models.

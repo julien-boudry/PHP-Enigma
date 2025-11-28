@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\Reflector;
+namespace JulienBoudry\EnigmaMachine\Reflector;
 
-use JulienBoudry\Enigma\Exception\EnigmaWiringException;
-use JulienBoudry\Enigma\{Letter, ReflectorType};
+use JulienBoudry\EnigmaMachine\Exception\EnigmaWiringException;
+use JulienBoudry\EnigmaMachine\{Letter, ReflectorType};
 
 /**
  * UKW-D (Umkehrwalze Dora) - Rewirable Reflector.

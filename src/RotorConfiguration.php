@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma;
+namespace JulienBoudry\EnigmaMachine;
 
-use JulienBoudry\Enigma\Exception\EnigmaConfigurationException;
-use JulienBoudry\Enigma\Rotor\AbstractRotor;
+use JulienBoudry\EnigmaMachine\Exception\EnigmaConfigurationException;
+use JulienBoudry\EnigmaMachine\Rotor\AbstractRotor;
 
 /**
  * Represents the configuration of rotors for an Enigma machine.

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 test('message from dönitz1 may1945', function (): void {
     $rotorsConfiguration = new RotorConfiguration(

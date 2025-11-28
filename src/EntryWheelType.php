@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma;
+namespace JulienBoudry\EnigmaMachine;
 
-use JulienBoudry\Enigma\EntryWheel\{AbstractEntryWheel, AlphabeticalEntryWheel, QwertzEntryWheel, TirpitzEntryWheel};
+use JulienBoudry\EnigmaMachine\EntryWheel\{AbstractEntryWheel, AlphabeticalEntryWheel, QwertzEntryWheel, TirpitzEntryWheel};
 
 /**
  * Types of Entry Wheels (Eintrittswalze, ETW) used in Enigma machines.

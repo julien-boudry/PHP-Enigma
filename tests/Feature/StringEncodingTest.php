@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use JulienBoudry\Enigma\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 
 describe('Enigma string encoding', function (): void {
     beforeEach(function (): void {

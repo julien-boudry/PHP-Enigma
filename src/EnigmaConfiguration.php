@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma;
+namespace JulienBoudry\EnigmaMachine;
 
-use JulienBoudry\Enigma\Reflector\ReflectorDora;
+use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
 
 /**
  * Represents an Enigma machine configuration.

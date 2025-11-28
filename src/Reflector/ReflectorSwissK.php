@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\Reflector;
+namespace JulienBoudry\EnigmaMachine\Reflector;
 
-use JulienBoudry\Enigma\ReflectorType;
+use JulienBoudry\EnigmaMachine\ReflectorType;
 
 /**
  * Swiss-K Reflector (Umkehrwalze).

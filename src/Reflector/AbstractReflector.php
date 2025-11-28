@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\Reflector;
+namespace JulienBoudry\EnigmaMachine\Reflector;
 
-use JulienBoudry\Enigma\{EnigmaWiring, Letter, ReflectorType};
+use JulienBoudry\EnigmaMachine\{EnigmaWiring, Letter, ReflectorType};
 
 /**
  * Abstract base class for Enigma Reflectors (Umkehrwalze).

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JulienBoudry\Enigma\Rotor;
+namespace JulienBoudry\EnigmaMachine\Rotor;
 
-use JulienBoudry\Enigma\{EnigmaModel, EnigmaWiring, Letter, RotorType};
+use JulienBoudry\EnigmaMachine\{EnigmaModel, EnigmaWiring, Letter, RotorType};
 
 /**
  * Abstract base class for Enigma rotors (Walzen).
