@@ -291,8 +291,8 @@ Rotors can have notches, which indicate the position where the next rotor is adv
 
 Each Rotor can be only used in one position at a time. Rotors I..VIII can be mounted at position 1, 2 or 3, whereas rotors Beta and Gamma can only be used at position 4\. Additionally, Beta and Gamma can only be used in combination with reflector B Thin or C Thin, the others only with reflector B or C.
 
-**!!!important!!!**
-These conditions only apply if a proper emulation of the original Enigma is desired. This implementation allows to setup the rotors in any order, so it's up to the user to take care of the order of rotors.
+> [!IMPORTANT]
+> By default, this library enforces these historical constraints via strict mode validation (see [Strict Mode](#strict-mode)). You can disable these checks to allow experimental or non-historical configurations.
 
 ## UKW-D (Rewirable Reflector)
 
