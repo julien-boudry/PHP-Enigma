@@ -260,8 +260,8 @@ describe('Enigma string encoding', function (): void {
             $destFile = sys_get_temp_dir() . '/enigma_test_encoded_spl_' . uniqid() . '.txt';
 
 
-            $source = new \SplFileObject($sourceFile, 'rb');
-            $dest = new \SplTempFileObject();
+            $source = new SplFileObject($sourceFile, 'rb');
+            $dest = new SplTempFileObject;
 
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
@@ -283,8 +283,8 @@ describe('Enigma string encoding', function (): void {
 
         test('roundtrip file encoding/decoding preserves integrity', function (): void {
             $sourceFile = __DIR__ . '/../Assets/Enigma-logo.png';
-            $encoded = new \SplTempFileObject();
-            $decoded = new \SplTempFileObject();
+            $encoded = new SplTempFileObject;
+            $decoded = new SplTempFileObject;
 
             // Create encoder
             $encoder = new Enigma(
@@ -320,7 +320,7 @@ describe('Enigma string encoding', function (): void {
 
         test('produces same output as encodeBinary for small files', function (): void {
             $sourceFile = __DIR__ . '/../Assets/Enigma-logo.png';
-            $dest = new \SplTempFileObject();
+            $dest = new SplTempFileObject;
 
             // Method 1: encodeFile with small chunks
             $originalChunkSize = Enigma::$fileChunkSize;
@@ -378,7 +378,7 @@ describe('Enigma string encoding', function (): void {
             );
 
             expect(fn() => $encoder->encodeFile('/nonexistent/file.txt', '/tmp/output.txt'))
-                ->toThrow(\RuntimeException::class, 'Cannot open source file');
+                ->toThrow(RuntimeException::class, 'Cannot open source file');
         });
 
         test('throws exception for non-writable destination', function (): void {
@@ -394,12 +394,12 @@ describe('Enigma string encoding', function (): void {
             $sourceFile = __DIR__ . '/../Assets/Enigma-logo.png';
 
             expect(fn() => $encoder->encodeFile($sourceFile, '/nonexistent/directory/output.txt'))
-                ->toThrow(\RuntimeException::class, 'Cannot open destination file');
+                ->toThrow(RuntimeException::class, 'Cannot open destination file');
         });
 
         test('returns correct byte count', function (): void {
             $sourceFile = __DIR__ . '/../Assets/Enigma-logo.png';
-            $dest = new \SplTempFileObject();
+            $dest = new SplTempFileObject;
 
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
@@ -419,8 +419,8 @@ describe('Enigma string encoding', function (): void {
 
         test('handles empty file', function (): void {
             // Create empty source using SplTempFileObject
-            $source = new \SplTempFileObject();
-            $dest = new \SplTempFileObject();
+            $source = new SplTempFileObject;
+            $dest = new SplTempFileObject;
 
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
@@ -442,8 +442,8 @@ describe('Enigma string encoding', function (): void {
     describe('decodeFile', function (): void {
         test('decodes file using SplFileObject', function (): void {
             $sourceFile = __DIR__ . '/../Assets/Enigma-logo.png';
-            $encoded = new \SplTempFileObject();
-            $decoded = new \SplTempFileObject();
+            $encoded = new SplTempFileObject;
+            $decoded = new SplTempFileObject;
 
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
@@ -473,12 +473,12 @@ describe('Enigma string encoding', function (): void {
 
         test('decodes to identical binary as original', function (): void {
             $originalData = file_get_contents(__DIR__ . '/../Assets/Enigma-logo.png');
-            $source = new \SplTempFileObject();
+            $source = new SplTempFileObject;
             $source->fwrite($originalData);
             $source->rewind();
 
-            $encoded = new \SplTempFileObject();
-            $decoded = new \SplTempFileObject();
+            $encoded = new SplTempFileObject;
+            $decoded = new SplTempFileObject;
 
             $encoder = new Enigma(
                 EnigmaModel::WMLW,
@@ -510,8 +510,8 @@ describe('Enigma string encoding', function (): void {
         });
 
         test('handles empty encoded file', function (): void {
-            $source = new \SplTempFileObject();
-            $dest = new \SplTempFileObject();
+            $source = new SplTempFileObject;
+            $dest = new SplTempFileObject;
 
             $decoder = new Enigma(
                 EnigmaModel::WMLW,
@@ -541,11 +541,11 @@ describe('Enigma string encoding', function (): void {
             );
 
             expect(fn() => $decoder->decodeFile('/nonexistent/file.txt', '/tmp/output.bin'))
-                ->toThrow(\RuntimeException::class, 'Cannot open source file');
+                ->toThrow(RuntimeException::class, 'Cannot open source file');
         });
 
         test('throws exception for non-writable destination', function (): void {
-            $source = new \SplTempFileObject();
+            $source = new SplTempFileObject;
             $source->fwrite('ABCD'); // Valid Enigma format
             $source->rewind();
 
@@ -560,7 +560,7 @@ describe('Enigma string encoding', function (): void {
             );
 
             expect(fn() => $decoder->decodeFile($source, '/nonexistent/directory/output.bin'))
-                ->toThrow(\RuntimeException::class, 'Cannot open destination file');
+                ->toThrow(RuntimeException::class, 'Cannot open destination file');
         });
     });
 });
