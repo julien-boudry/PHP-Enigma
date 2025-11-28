@@ -235,46 +235,6 @@ enum RotorType
     }
 
     /**
-     * Get all commercial Enigma K rotor types.
-     *
-     * @return list<self>
-     */
-    public static function getEnigmaKRotors(): array
-    {
-        return [self::K_I, self::K_II, self::K_III];
-    }
-
-    /**
-     * Get all Swiss-K rotor types.
-     *
-     * @return list<self>
-     */
-    public static function getSwissKRotors(): array
-    {
-        return [self::SWISS_K_I, self::SWISS_K_II, self::SWISS_K_III];
-    }
-
-    /**
-     * Get all Railway Enigma rotor types.
-     *
-     * @return list<self>
-     */
-    public static function getRailwayRotors(): array
-    {
-        return [self::RAILWAY_I, self::RAILWAY_II, self::RAILWAY_III];
-    }
-
-    /**
-     * Get all Enigma T (Tirpitz) rotor types.
-     *
-     * @return list<self>
-     */
-    public static function getTirpitzRotors(): array
-    {
-        return [self::TIRPITZ_I, self::TIRPITZ_II, self::TIRPITZ_III, self::TIRPITZ_IV, self::TIRPITZ_V, self::TIRPITZ_VI, self::TIRPITZ_VII, self::TIRPITZ_VIII];
-    }
-
-    /**
      * Get all non-Greek rotor types compatible with a given Enigma model.
      *
      * This method dynamically filters rotors based on their getCompatibleModels() method,

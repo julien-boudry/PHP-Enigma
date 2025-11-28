@@ -99,7 +99,7 @@ describe('Enigma T (Tirpitz)', function (): void {
     describe('8 Rotors', function (): void {
 
         it('supports all 8 Tirpitz rotors', function (): void {
-            $allRotors = RotorType::getTirpitzRotors();
+            $allRotors = RotorType::getCompatibleRotorsForModel(EnigmaModel::TIRPITZ);
 
             expect($allRotors)->toHaveCount(8);
             expect($allRotors)->toBe([
@@ -133,7 +133,7 @@ describe('Enigma T (Tirpitz)', function (): void {
         });
 
         it('each rotor has 5 notches', function (): void {
-            $rotorTypes = RotorType::getTirpitzRotors();
+            $rotorTypes = RotorType::getCompatibleRotorsForModel(EnigmaModel::TIRPITZ);
 
             foreach ($rotorTypes as $rotorType) {
                 $rotor = $rotorType->createRotor();
@@ -209,7 +209,7 @@ describe('Enigma T (Tirpitz)', function (): void {
             $enigma = Enigma::createRandom(EnigmaModel::TIRPITZ);
             $config = $enigma->getConfiguration();
 
-            $tirpitzRotors = RotorType::getTirpitzRotors();
+            $tirpitzRotors = RotorType::getCompatibleRotorsForModel(EnigmaModel::TIRPITZ);
 
             expect(\in_array($config->rotorTypes['p1'], $tirpitzRotors, true))->toBeTrue();
             expect(\in_array($config->rotorTypes['p2'], $tirpitzRotors, true))->toBeTrue();
