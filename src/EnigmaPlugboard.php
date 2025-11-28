@@ -101,7 +101,7 @@ class EnigmaPlugboard
     public function plugLettersFromPairs(string|array $pairs): void
     {
         if (\is_string($pairs)) {
-            $pairs = preg_split('/\s+/', trim($pairs), -1, \PREG_SPLIT_NO_EMPTY);
+            $pairs = preg_split('/\s+/', trim($pairs), -1, \PREG_SPLIT_NO_EMPTY) ?: [];
         }
 
         foreach ($pairs as $pair) {
