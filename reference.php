@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 return [
-    'namespace' => 'JulienBoudry\\Enigma',
+    'namespace' => 'JulienBoudry\\EnigmaMachine',
     'output' => __DIR__ . '/docs/api',
     'api' => 'IsPubliclyAccessible', // 'HasTagApi' (default) or 'IsPubliclyAccessible'
     'index-file-name' => 'readme',
