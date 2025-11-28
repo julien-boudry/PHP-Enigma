@@ -519,21 +519,6 @@ The test suite includes:
 composer test
 ```
 
-Run specific test suites:
-```shell
-# Military historical messages
-composer test -- tests/Feature/HistoricalMessagesTest.php
-
-# Commercial and specialized models historical messages
-composer test -- tests/Feature/CommercialHistoricalMessagesTest.php
-
-# Tirpitz model
-composer test -- tests/Feature/TirpitzTest.php
-
-# All commercial models
-composer test -- tests/Feature/CommercialModelsTest.php
-```
-
 # Historical Context
 
 ## History
