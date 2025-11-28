@@ -461,9 +461,32 @@ The UKW-D is only compatible with the Wehrmacht/Luftwaffe 3-rotor model (WMLW).
 
 This library includes comprehensive automated test suites using [Pest PHP](https://pestphp.com/), including tests based on historical messages and official Enigma examples to ensure accuracy.
 
-Run the tests:
+## Test Coverage
+
+The test suite includes:
+- **Historical Military Messages**: Authenticated WWII intercepts from Operation Barbarossa (1941), U-264 (1942), Scharnhorst (1943), and Admiral Dönitz (1945)
+- **Commercial Models**: Test messages for Enigma K, Swiss-K, Railway (Rocket), and Tirpitz models based on preserved documentation and training materials
+- **Official Examples**: Verification against documented Enigma test patterns and operational procedures
+- **Functional Tests**: Comprehensive validation of rotor mechanics, plugboard operations, reflectors, and model-specific features
+
+## Run the test
 ```shell
 composer test
+```
+
+Run specific test suites:
+```shell
+# Military historical messages
+composer test -- tests/Feature/HistoricalMessagesTest.php
+
+# Commercial and specialized models historical messages
+composer test -- tests/Feature/CommercialHistoricalMessagesTest.php
+
+# Tirpitz model
+composer test -- tests/Feature/TirpitzTest.php
+
+# All commercial models
+composer test -- tests/Feature/CommercialModelsTest.php
 ```
 
 # Historical Context
