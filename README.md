@@ -5,6 +5,12 @@
 Enigma Machine
 ==================
 
+[![Latest Stable Version](https://poser.pugx.org/julien-boudry/enigma-machine/v)](https://packagist.org/packages/julien-boudry/enigma-machine)
+[![License](https://poser.pugx.org/julien-boudry/enigma-machine/license)](LICENSE)
+[![Tests](https://github.com/julien-boudry/Enigma-Machine/actions/workflows/tests.yml/badge.svg)](https://github.com/julien-boudry/Enigma-Machine/actions/workflows/tests.yml)
+[![Code Style](https://github.com/julien-boudry/Enigma-Machine/actions/workflows/code-style.yml/badge.svg)](https://github.com/julien-boudry/Enigma-Machine/actions/workflows/code-style.yml)
+[![PHPStan Level 9](https://github.com/julien-boudry/Enigma-Machine/actions/workflows/analyse.yml/badge.svg)](https://github.com/julien-boudry/Enigma-Machine/actions/workflows/analyse.yml)
+
 > **Original Project**: This library is a maintained fork of [rafalmasiarek/PHP-Enigma](https://github.com/rafalmasiarek/PHP-Enigma), originally created by [Rafal Masiarek](http://rafal.masiarek.pl). The code has been modernized, extended, and restructured as a proper PHP library.
 
 A PHP implementation of the historic Enigma cipher machine, supporting multiple models including Wehrmacht/Luftwaffe 3-rotor, Kriegsmarine 3-rotor, Kriegsmarine 4-rotor military variants, commercial variants (Enigma K, Swiss-K, Railway/Rocket), and the Enigma T (Tirpitz) used for German-Japanese communications.
