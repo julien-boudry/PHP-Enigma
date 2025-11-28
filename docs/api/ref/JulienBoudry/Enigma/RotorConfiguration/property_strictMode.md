@@ -1,10 +1,10 @@
 > JulienBoudry \ [RotorConfiguration](class_RotorConfiguration.md)
 # Property strictMode
 ```php
-public bool $strictMode = true
+public bool $strictMode
 ```
 
 ## Description
 When true (default), validates that rotors are not duplicated and that
-Greek rotors are only in GREEK position. Set to false to bypass these checks
-and allow any configuration.
+Greek rotors are only in GREEK position. When false, bypasses these checks
+and allows any configuration.

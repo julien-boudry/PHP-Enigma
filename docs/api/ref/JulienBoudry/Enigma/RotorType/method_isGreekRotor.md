@@ -1,6 +1,6 @@
 > JulienBoudry \ [RotorType](enum_RotorType.md)
 # Method isGreekRotor()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L93)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L222)
 
 ```php
 public function RotorType->isGreekRotor( ): bool

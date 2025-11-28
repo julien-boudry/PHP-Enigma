@@ -1,6 +1,6 @@
 > JulienBoudry \ [RotorType](enum_RotorType.md)
 # Method createRotor()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L72)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L184)
 
 ```php
 public function RotorType->createRotor( [ JulienBoudry\Enigma\Letter $ringstellung = \JulienBoudry\Enigma\Letter::A ] ): JulienBoudry\Enigma\Rotor\AbstractRotor

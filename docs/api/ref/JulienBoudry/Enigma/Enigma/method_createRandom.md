@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method createRandom()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L97)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L111)
 
 ```php
 public static function Enigma::createRandom( JulienBoudry\Enigma\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): JulienBoudry\Enigma\Enigma

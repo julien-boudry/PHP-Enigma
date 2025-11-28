@@ -1,6 +1,6 @@
 > JulienBoudry \ **RotorType**
 # Enum RotorType
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L16)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/RotorType.php#L18)
 
 ## Description
 Defines the different rotor variants (Walzen) available for Enigma machines.
@@ -17,6 +17,23 @@ Different Enigma models support different subsets of these rotors.
 | II | `public const II = \JulienBoudry\Enigma\RotorType::II` | __ |
 | III | `public const III = \JulienBoudry\Enigma\RotorType::III` | __ |
 | IV | `public const IV = \JulienBoudry\Enigma\RotorType::IV` | __ |
+| K_I | `public const K_I = \JulienBoudry\Enigma\RotorType::K_I` | _Notch at G (turnover at Y)._ |
+| K_II | `public const K_II = \JulienBoudry\Enigma\RotorType::K_II` | _Notch at M (turnover at E)._ |
+| K_III | `public const K_III = \JulienBoudry\Enigma\RotorType::K_III` | _Notch at V (turnover at N)._ |
+| RAILWAY_I | `public const RAILWAY_I = \JulienBoudry\Enigma\RotorType::RAILWAY_I` | _Notch at G (turnover at Y)._ |
+| RAILWAY_II | `public const RAILWAY_II = \JulienBoudry\Enigma\RotorType::RAILWAY_II` | _Notch at M (turnover at E)._ |
+| RAILWAY_III | `public const RAILWAY_III = \JulienBoudry\Enigma\RotorType::RAILWAY_III` | _Notch at V (turnover at N)._ |
+| SWISS_K_I | `public const SWISS_K_I = \JulienBoudry\Enigma\RotorType::SWISS_K_I` | _Notch at G (turnover at Y)._ |
+| SWISS_K_II | `public const SWISS_K_II = \JulienBoudry\Enigma\RotorType::SWISS_K_II` | _Notch at M (turnover at E)._ |
+| SWISS_K_III | `public const SWISS_K_III = \JulienBoudry\Enigma\RotorType::SWISS_K_III` | _Notch at V (turnover at N)._ |
+| TIRPITZ_I | `public const TIRPITZ_I = \JulienBoudry\Enigma\RotorType::TIRPITZ_I` | _5 notches at E, H, K, N, Q._ |
+| TIRPITZ_II | `public const TIRPITZ_II = \JulienBoudry\Enigma\RotorType::TIRPITZ_II` | _5 notches at E, H, K, N, Q._ |
+| TIRPITZ_III | `public const TIRPITZ_III = \JulienBoudry\Enigma\RotorType::TIRPITZ_III` | _5 notches at E, H, K, N, Q._ |
+| TIRPITZ_IV | `public const TIRPITZ_IV = \JulienBoudry\Enigma\RotorType::TIRPITZ_IV` | _5 notches at E, H, K, N, Q._ |
+| TIRPITZ_V | `public const TIRPITZ_V = \JulienBoudry\Enigma\RotorType::TIRPITZ_V` | _5 notches at E, H, K, N, Q._ |
+| TIRPITZ_VI | `public const TIRPITZ_VI = \JulienBoudry\Enigma\RotorType::TIRPITZ_VI` | _5 notches at E, H, K, N, Q._ |
+| TIRPITZ_VII | `public const TIRPITZ_VII = \JulienBoudry\Enigma\RotorType::TIRPITZ_VII` | _5 notches at E, H, K, N, Q._ |
+| TIRPITZ_VIII | `public const TIRPITZ_VIII = \JulienBoudry\Enigma\RotorType::TIRPITZ_VIII` | _5 notches at E, H, K, N, Q._ |
 | V | `public const V = \JulienBoudry\Enigma\RotorType::V` | __ |
 | VI | `public const VI = \JulienBoudry\Enigma\RotorType::VI` | __ |
 | VII | `public const VII = \JulienBoudry\Enigma\RotorType::VII` | __ |
@@ -25,6 +42,7 @@ Different Enigma models support different subsets of these rotors.
 ### Public Static Methods
 | Method Name | Description |
 | ------------- | ------------- |
+| [getCompatibleRotorsForModel(...)](method_getCompatibleRotorsForModel.md) | _This method dynamically filters rotors based on their getCompatibleModels() method, excluding Greek rotors (Beta/Gamma) which have special positioning rules._ |
 | [getGreekRotors(...)](method_getGreekRotors.md) | __ |
 
 ### Public Properties
@@ -53,6 +71,23 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
     case VIII;
     case BETA;
     case GAMMA;
+    case K_I;
+    case K_II;
+    case K_III;
+    case SWISS_K_I;
+    case SWISS_K_II;
+    case SWISS_K_III;
+    case RAILWAY_I;
+    case RAILWAY_II;
+    case RAILWAY_III;
+    case TIRPITZ_I;
+    case TIRPITZ_II;
+    case TIRPITZ_III;
+    case TIRPITZ_IV;
+    case TIRPITZ_V;
+    case TIRPITZ_VI;
+    case TIRPITZ_VII;
+    case TIRPITZ_VIII;
     // Constants
     public const BETA = \JulienBoudry\Enigma\RotorType::BETA;
     public const GAMMA = \JulienBoudry\Enigma\RotorType::GAMMA;
@@ -60,6 +95,23 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
     public const II = \JulienBoudry\Enigma\RotorType::II;
     public const III = \JulienBoudry\Enigma\RotorType::III;
     public const IV = \JulienBoudry\Enigma\RotorType::IV;
+    public const K_I = \JulienBoudry\Enigma\RotorType::K_I;
+    public const K_II = \JulienBoudry\Enigma\RotorType::K_II;
+    public const K_III = \JulienBoudry\Enigma\RotorType::K_III;
+    public const RAILWAY_I = \JulienBoudry\Enigma\RotorType::RAILWAY_I;
+    public const RAILWAY_II = \JulienBoudry\Enigma\RotorType::RAILWAY_II;
+    public const RAILWAY_III = \JulienBoudry\Enigma\RotorType::RAILWAY_III;
+    public const SWISS_K_I = \JulienBoudry\Enigma\RotorType::SWISS_K_I;
+    public const SWISS_K_II = \JulienBoudry\Enigma\RotorType::SWISS_K_II;
+    public const SWISS_K_III = \JulienBoudry\Enigma\RotorType::SWISS_K_III;
+    public const TIRPITZ_I = \JulienBoudry\Enigma\RotorType::TIRPITZ_I;
+    public const TIRPITZ_II = \JulienBoudry\Enigma\RotorType::TIRPITZ_II;
+    public const TIRPITZ_III = \JulienBoudry\Enigma\RotorType::TIRPITZ_III;
+    public const TIRPITZ_IV = \JulienBoudry\Enigma\RotorType::TIRPITZ_IV;
+    public const TIRPITZ_V = \JulienBoudry\Enigma\RotorType::TIRPITZ_V;
+    public const TIRPITZ_VI = \JulienBoudry\Enigma\RotorType::TIRPITZ_VI;
+    public const TIRPITZ_VII = \JulienBoudry\Enigma\RotorType::TIRPITZ_VII;
+    public const TIRPITZ_VIII = \JulienBoudry\Enigma\RotorType::TIRPITZ_VIII;
     public const V = \JulienBoudry\Enigma\RotorType::V;
     public const VI = \JulienBoudry\Enigma\RotorType::VI;
     public const VII = \JulienBoudry\Enigma\RotorType::VII;
@@ -69,6 +121,7 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
     public protected(set) readonly protected(set) string $name;
 
     // Static Methods
+    public static function getCompatibleRotorsForModel( JulienBoudry\Enigma\EnigmaModel $model ): array;
     public static function getGreekRotors( ): array;
 
     // Methods
@@ -92,6 +145,23 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
     case VIII;
     case BETA;
     case GAMMA;
+    case K_I;
+    case K_II;
+    case K_III;
+    case SWISS_K_I;
+    case SWISS_K_II;
+    case SWISS_K_III;
+    case RAILWAY_I;
+    case RAILWAY_II;
+    case RAILWAY_III;
+    case TIRPITZ_I;
+    case TIRPITZ_II;
+    case TIRPITZ_III;
+    case TIRPITZ_IV;
+    case TIRPITZ_V;
+    case TIRPITZ_VI;
+    case TIRPITZ_VII;
+    case TIRPITZ_VIII;
     // Constants
     public const BETA = \JulienBoudry\Enigma\RotorType::BETA;
     public const GAMMA = \JulienBoudry\Enigma\RotorType::GAMMA;
@@ -99,6 +169,23 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
     public const II = \JulienBoudry\Enigma\RotorType::II;
     public const III = \JulienBoudry\Enigma\RotorType::III;
     public const IV = \JulienBoudry\Enigma\RotorType::IV;
+    public const K_I = \JulienBoudry\Enigma\RotorType::K_I;
+    public const K_II = \JulienBoudry\Enigma\RotorType::K_II;
+    public const K_III = \JulienBoudry\Enigma\RotorType::K_III;
+    public const RAILWAY_I = \JulienBoudry\Enigma\RotorType::RAILWAY_I;
+    public const RAILWAY_II = \JulienBoudry\Enigma\RotorType::RAILWAY_II;
+    public const RAILWAY_III = \JulienBoudry\Enigma\RotorType::RAILWAY_III;
+    public const SWISS_K_I = \JulienBoudry\Enigma\RotorType::SWISS_K_I;
+    public const SWISS_K_II = \JulienBoudry\Enigma\RotorType::SWISS_K_II;
+    public const SWISS_K_III = \JulienBoudry\Enigma\RotorType::SWISS_K_III;
+    public const TIRPITZ_I = \JulienBoudry\Enigma\RotorType::TIRPITZ_I;
+    public const TIRPITZ_II = \JulienBoudry\Enigma\RotorType::TIRPITZ_II;
+    public const TIRPITZ_III = \JulienBoudry\Enigma\RotorType::TIRPITZ_III;
+    public const TIRPITZ_IV = \JulienBoudry\Enigma\RotorType::TIRPITZ_IV;
+    public const TIRPITZ_V = \JulienBoudry\Enigma\RotorType::TIRPITZ_V;
+    public const TIRPITZ_VI = \JulienBoudry\Enigma\RotorType::TIRPITZ_VI;
+    public const TIRPITZ_VII = \JulienBoudry\Enigma\RotorType::TIRPITZ_VII;
+    public const TIRPITZ_VIII = \JulienBoudry\Enigma\RotorType::TIRPITZ_VIII;
     public const V = \JulienBoudry\Enigma\RotorType::V;
     public const VI = \JulienBoudry\Enigma\RotorType::VI;
     public const VII = \JulienBoudry\Enigma\RotorType::VII;
@@ -108,6 +195,7 @@ enum JulienBoudry\Enigma\RotorType implements UnitEnum
     public protected(set) readonly protected(set) string $name;
 
     // Static Methods
+    public static function getCompatibleRotorsForModel( JulienBoudry\Enigma\EnigmaModel $model ): array;
     public static function getGreekRotors( ): array;
 
     // Methods

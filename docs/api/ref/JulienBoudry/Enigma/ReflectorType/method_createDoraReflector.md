@@ -1,6 +1,6 @@
 > JulienBoudry \ [ReflectorType](enum_ReflectorType.md)
 # Method createDoraReflector()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/ReflectorType.php#L67)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/ReflectorType.php#L96)
 
 ```php
 public static function ReflectorType::createDoraReflector( array $pairs ): JulienBoudry\Enigma\Reflector\ReflectorDora

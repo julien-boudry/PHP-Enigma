@@ -11,7 +11,7 @@ converted to AbstractRotor instances) or pre-configured AbstractRotor objects.
 ### Public Properties
 | Property Name | Description |
 | ------------- | ------------- |
-| [strictMode(...)](property_strictMode.md) | _When true (default), validates that rotors are not duplicated and that Greek rotors are only in GREEK position. Set to false to bypass these checks and allow any configuration._ |
+| [strictMode(...)](property_strictMode.md) | _When true (default), validates that rotors are not duplicated and that Greek rotors are only in GREEK position. When false, bypasses these checks and allows any configuration._ |
 
 ### Public Methods
 | Method Name | Description |
@@ -38,7 +38,7 @@ class JulienBoudry\Enigma\RotorConfiguration implements Countable, IteratorAggre
 {
 
     // Properties
-    public bool $strictMode = true;
+    public bool $strictMode;
 
     // Methods
     public function __clone( ): void;
@@ -65,7 +65,7 @@ class JulienBoudry\Enigma\RotorConfiguration implements Countable, IteratorAggre
 {
 
     // Properties
-    public bool $strictMode = true;
+    public bool $strictMode;
     private array $rotors = [];
 
     // Methods

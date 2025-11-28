@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaPlugboard](class_EnigmaPlugboard.md)
 # Method getPluggedPairs()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L100)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/EnigmaPlugboard.php#L123)
 
 ```php
 public function EnigmaPlugboard->getPluggedPairs( ): array

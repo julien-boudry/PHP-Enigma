@@ -15,6 +15,10 @@ Different Enigma models support different reflector types.
 | C | `public const C = \JulienBoudry\Enigma\ReflectorType::C` | __ |
 | CTHIN | `public const CTHIN = \JulienBoudry\Enigma\ReflectorType::CTHIN` | __ |
 | DORA | `public const DORA = \JulienBoudry\Enigma\ReflectorType::DORA` | _Only available in Wehrmacht/Luftwaffe model. Use createDoraReflector() to create with custom wiring._ |
+| K | `public const K = \JulienBoudry\Enigma\ReflectorType::K` | _Standard commercial wiring (handelsübliche Schaltung). Used by various customers from 1927-1944._ |
+| RAILWAY | `public const RAILWAY = \JulienBoudry\Enigma\ReflectorType::RAILWAY` | _Rewired reflector used by German Reichsbahn._ |
+| SWISS_K | `public const SWISS_K = \JulienBoudry\Enigma\ReflectorType::SWISS_K` | _Same wiring as commercial K - the Swiss only rewired the rotors._ |
+| TIRPITZ | `public const TIRPITZ = \JulienBoudry\Enigma\ReflectorType::TIRPITZ` | _Used for German-Japanese military communications._ |
 
 ### Public Static Methods
 | Method Name | Description |
@@ -42,12 +46,20 @@ enum JulienBoudry\Enigma\ReflectorType implements UnitEnum
     case BTHIN;
     case CTHIN;
     case DORA;
+    case K;
+    case SWISS_K;
+    case RAILWAY;
+    case TIRPITZ;
     // Constants
     public const B = \JulienBoudry\Enigma\ReflectorType::B;
     public const BTHIN = \JulienBoudry\Enigma\ReflectorType::BTHIN;
     public const C = \JulienBoudry\Enigma\ReflectorType::C;
     public const CTHIN = \JulienBoudry\Enigma\ReflectorType::CTHIN;
     public const DORA = \JulienBoudry\Enigma\ReflectorType::DORA;
+    public const K = \JulienBoudry\Enigma\ReflectorType::K;
+    public const RAILWAY = \JulienBoudry\Enigma\ReflectorType::RAILWAY;
+    public const SWISS_K = \JulienBoudry\Enigma\ReflectorType::SWISS_K;
+    public const TIRPITZ = \JulienBoudry\Enigma\ReflectorType::TIRPITZ;
 
     // Properties
     public protected(set) readonly protected(set) string $name;
@@ -71,12 +83,20 @@ enum JulienBoudry\Enigma\ReflectorType implements UnitEnum
     case BTHIN;
     case CTHIN;
     case DORA;
+    case K;
+    case SWISS_K;
+    case RAILWAY;
+    case TIRPITZ;
     // Constants
     public const B = \JulienBoudry\Enigma\ReflectorType::B;
     public const BTHIN = \JulienBoudry\Enigma\ReflectorType::BTHIN;
     public const C = \JulienBoudry\Enigma\ReflectorType::C;
     public const CTHIN = \JulienBoudry\Enigma\ReflectorType::CTHIN;
     public const DORA = \JulienBoudry\Enigma\ReflectorType::DORA;
+    public const K = \JulienBoudry\Enigma\ReflectorType::K;
+    public const RAILWAY = \JulienBoudry\Enigma\ReflectorType::RAILWAY;
+    public const SWISS_K = \JulienBoudry\Enigma\ReflectorType::SWISS_K;
+    public const TIRPITZ = \JulienBoudry\Enigma\ReflectorType::TIRPITZ;
 
     // Properties
     public protected(set) readonly protected(set) string $name;

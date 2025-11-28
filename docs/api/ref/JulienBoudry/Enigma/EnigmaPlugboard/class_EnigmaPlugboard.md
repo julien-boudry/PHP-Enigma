@@ -30,6 +30,7 @@ Unplugging one of the two letters restores the original state.
 | [__construct(...)](method___construct.md) | __ |
 | [getPluggedPairs(...)](method_getPluggedPairs.md) | _Returns pairs where the first letter is alphabetically before the second to avoid duplicates (e.g., returns [A, Z] not [Z, A])._ |
 | [plugLetters(...)](method_plugLetters.md) | __ |
+| [plugLettersFromPairs(...)](method_plugLettersFromPairs.md) | _Accepts pairs in various formats: - Space-separated: "AV BS CG DL" - Array of pairs: ['AV', 'BS', 'CG', 'DL']_ |
 | [processLetter(...)](method_processLetter.md) | _Because pins are connected in pairs, there is no difference if processLetter1stPass() or processLetter2ndPass() is used._ |
 | [unplugLetters(...)](method_unplugLetters.md) | _Because letters are connected in pairs, we only need to know one of them._ |
 
@@ -44,6 +45,7 @@ class JulienBoudry\Enigma\EnigmaPlugboard
     public function __construct( );
     public function getPluggedPairs( ): array;
     public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;
+    public function plugLettersFromPairs( array|string $pairs ): void;
     public function processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
     public function unplugLetters( JulienBoudry\Enigma\Letter $letter ): void;
 
@@ -63,6 +65,7 @@ class JulienBoudry\Enigma\EnigmaPlugboard
     public function __construct( );
     public function getPluggedPairs( ): array;
     public function plugLetters( JulienBoudry\Enigma\Letter $letter1, JulienBoudry\Enigma\Letter $letter2 ): void;
+    public function plugLettersFromPairs( array|string $pairs ): void;
     public function processLetter( JulienBoudry\Enigma\Letter $letter ): JulienBoudry\Enigma\Letter;
     public function unplugLetters( JulienBoudry\Enigma\Letter $letter ): void;
 
