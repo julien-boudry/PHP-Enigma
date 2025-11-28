@@ -141,8 +141,6 @@ $enigmaDecoder = clone $enigmaEncoder;
 $binaryData = "\x00\x0F\xFF";
 $ciphertext = $enigmaEncoder->encodeBinary($binaryData);
 
-// To decrypt:
-
 // 2. Decode (Enigma is reciprocal) and convert back to binary
 $decryptedString = $enigmaDecoder->encodeLetters($ciphertext);
 $originalBinary = EnigmaTextConverter::enigmaFormatToBinary($decryptedString);
@@ -175,16 +173,36 @@ $rotorsConfiguration->mountRotor(RotorPosition::P1, RotorType::V);
 
 ### Strict Mode
 
-By default, the Enigma constructor validates that rotors and reflectors are compatible with the selected model. You can disable these checks for experimental configurations:
+By default, the library validates configurations at multiple levels to ensure historical accuracy:
+
+**Enigma strict mode** validates that rotors and reflectors are compatible with the selected model:
 
 ```php
-// Disable compatibility checks
+// Disable compatibility checks on the Enigma instance
 $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B, strictMode: false);
 
 // Or change it after construction
 $enigma->strictMode = false;
 $enigma->mountReflector(ReflectorType::BTHIN); // Would normally throw for WMLW model
 ```
+
+**RotorConfiguration strict mode** validates that rotors are not duplicated and that Greek rotors (Beta/Gamma) are only used in the Greek position:
+
+```php
+// Disable rotor configuration checks
+$rotorsConfiguration = new RotorConfiguration(
+    p1: RotorType::I,
+    p2: RotorType::I, // Same rotor twice - would normally throw
+    p3: RotorType::III,
+    strictMode: false
+);
+
+// Or change it after construction
+$rotorsConfiguration->strictMode = false;
+$rotorsConfiguration->mountRotor(RotorPosition::P1, RotorType::BETA); // Would normally throw
+```
+
+Both strict modes are enabled by default. Disable them for experimental or non-historical configurations.
 
 ### Random Configuration
 
