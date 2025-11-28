@@ -11,7 +11,7 @@
         "pestphp/pest": "^4.1",
         "phpstan/phpstan": "^2.1",
         "julien-boudry/php-reference": ">0.1",
-        "friendsofphp/php-cs-fixer": "^3.90"
+        "friendsofphp/php-cs-fixer": "^3.91"
     },
     "autoload": {
         "psr-4": {
