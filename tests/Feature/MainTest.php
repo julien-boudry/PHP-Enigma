@@ -293,6 +293,139 @@ test('RotorConfiguration strictMode is true by default', function (): void {
     expect($rotorsConfiguration->strictMode)->toBeTrue();
 });
 
+test('plugLetters connects two letters on the plugboard', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+    $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
+
+    $enigma->plugLetters(Letter::A, Letter::Z);
+
+    $pairs = $enigma->plugboard->getPluggedPairs();
+    expect($pairs)->toHaveCount(1);
+    expect($pairs[0])->toBe([Letter::A, Letter::Z]);
+});
+
+test('unplugLetters disconnects a letter pair', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+    $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
+
+    $enigma->plugLetters(Letter::A, Letter::Z);
+    $enigma->plugLetters(Letter::B, Letter::Y);
+    expect($enigma->plugboard->getPluggedPairs())->toHaveCount(2);
+
+    // Unplug using one of the letters in the pair
+    $enigma->unplugLetters(Letter::A);
+
+    $pairs = $enigma->plugboard->getPluggedPairs();
+    expect($pairs)->toHaveCount(1);
+    expect($pairs[0])->toBe([Letter::B, Letter::Y]);
+});
+
+test('plugLetters affects encoding', function (): void {
+    $createEnigma = function () {
+        $rotorsConfiguration = new RotorConfiguration(
+            p1: RotorType::I,
+            p2: RotorType::II,
+            p3: RotorType::III,
+        );
+        $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
+        $enigma->setPosition(RotorPosition::P1, Letter::A);
+        $enigma->setPosition(RotorPosition::P2, Letter::A);
+        $enigma->setPosition(RotorPosition::P3, Letter::A);
+
+        return $enigma;
+    };
+
+    $enigmaWithoutPlug = $createEnigma();
+    $enigmaWithPlug = $createEnigma();
+    $enigmaWithPlug->plugLetters(Letter::A, Letter::Z);
+
+    // Same input should produce different output
+    $resultWithoutPlug = $enigmaWithoutPlug->encodeLetter(Letter::A);
+    $resultWithPlug = $enigmaWithPlug->encodeLetter(Letter::A);
+
+    expect($resultWithoutPlug)->not->toBe($resultWithPlug);
+});
+
+test('plugLettersFromPairs accepts space-separated string', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+    $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
+    $enigma->setPosition(RotorPosition::P1, Letter::A);
+
+    $enigma->plugLettersFromPairs('AB CD EF');
+
+    $pairs = $enigma->plugboard->getPluggedPairs();
+    expect($pairs)->toHaveCount(3);
+    expect($pairs[0])->toBe([Letter::A, Letter::B]);
+    expect($pairs[1])->toBe([Letter::C, Letter::D]);
+    expect($pairs[2])->toBe([Letter::E, Letter::F]);
+});
+
+test('plugLettersFromPairs accepts array of pairs', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+    $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
+    $enigma->setPosition(RotorPosition::P1, Letter::A);
+
+    $enigma->plugLettersFromPairs(['XY', 'WZ']);
+
+    $pairs = $enigma->plugboard->getPluggedPairs();
+    expect($pairs)->toHaveCount(2);
+    expect($pairs[0])->toBe([Letter::W, Letter::Z]);
+    expect($pairs[1])->toBe([Letter::X, Letter::Y]);
+});
+
+test('plugLettersFromPairs throws exception for invalid pair format', function (): void {
+    $rotorsConfiguration = new RotorConfiguration(
+        p1: RotorType::I,
+        p2: RotorType::II,
+        p3: RotorType::III,
+    );
+    $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
+
+    expect(fn() => $enigma->plugLettersFromPairs('AB CDE'))
+        ->toThrow(InvalidArgumentException::class, "Invalid pair format: 'CDE'. Expected 2 characters.");
+});
+
+test('plugLettersFromPairs produces same result as individual plugLetters calls', function (): void {
+    $createEnigma = function () {
+        $rotorsConfiguration = new RotorConfiguration(
+            p1: RotorType::I,
+            p2: RotorType::II,
+            p3: RotorType::III,
+        );
+
+        return new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::B);
+    };
+
+    $enigma1 = $createEnigma();
+    $enigma1->setPosition(RotorPosition::P1, Letter::A);
+    $enigma1->plugLetters(Letter::A, Letter::V);
+    $enigma1->plugLetters(Letter::B, Letter::S);
+    $enigma1->plugLetters(Letter::C, Letter::G);
+
+    $enigma2 = $createEnigma();
+    $enigma2->setPosition(RotorPosition::P1, Letter::A);
+    $enigma2->plugLettersFromPairs('AV BS CG');
+
+    $message = 'HELLOWORLD';
+    expect($enigma1->encodeLetters($message))->toBe($enigma2->encodeLetters($message));
+});
+
 // https://cryptii.com/pipes/enigma-machine
 // public function testRandom(): void
 // {

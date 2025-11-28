@@ -90,6 +90,29 @@ class EnigmaPlugboard
     }
 
     /**
+     * Connect multiple letter pairs from string notation.
+     *
+     * Accepts pairs in various formats:
+     * - Space-separated: "AV BS CG DL"
+     * - Array of pairs: ['AV', 'BS', 'CG', 'DL']
+     *
+     * @param string|array<string> $pairs Pairs to connect
+     */
+    public function plugLettersFromPairs(string|array $pairs): void
+    {
+        if (\is_string($pairs)) {
+            $pairs = preg_split('/\s+/', trim($pairs), -1, \PREG_SPLIT_NO_EMPTY);
+        }
+
+        foreach ($pairs as $pair) {
+            if (\strlen($pair) !== 2) {
+                throw new \InvalidArgumentException("Invalid pair format: '{$pair}'. Expected 2 characters.");
+            }
+            $this->plugLetters(Letter::fromChar($pair[0]), Letter::fromChar($pair[1]));
+        }
+    }
+
+    /**
      * Get all plugged letter pairs.
      *
      * Returns pairs where the first letter is alphabetically before the second

@@ -270,9 +270,7 @@ describe('ReflectorDora', function (): void {
                 $enigma->setPosition(JulienBoudry\Enigma\RotorPosition::P3, Letter::A);
 
                 // Add some plugboard connections (Stecker)
-                $enigma->plugLetters(Letter::A, Letter::M);
-                $enigma->plugLetters(Letter::E, Letter::T);
-                $enigma->plugLetters(Letter::G, Letter::Z);
+                $enigma->plugLettersFromPairs('AM ET GZ');
 
                 return $enigma;
             };

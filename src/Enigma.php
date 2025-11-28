@@ -246,6 +246,20 @@ class Enigma
     }
 
     /**
+     * Connect multiple letter pairs on the plugboard.
+     *
+     * Accepts pairs in various formats:
+     * - Space-separated string: "AV BS CG DL FU HZ IN KM OW RX"
+     * - Array of pairs: ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX']
+     *
+     * @param string|array<string> $pairs Pairs to connect
+     */
+    public function plugLettersFromPairs(string|array $pairs): void
+    {
+        $this->plugboard->plugLettersFromPairs($pairs);
+    }
+
+    /**
      * Disconnects 2 letters on the plugboard.
      * Because letters are connected in pairs, we only need to know one of them.
      *

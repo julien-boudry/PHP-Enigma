@@ -22,16 +22,7 @@ test('message from dönitz1 may1945', function (): void {
     $enigma->setPosition(RotorPosition::P3, Letter::A);
     $enigma->setPosition(RotorPosition::GREEK, Letter::N);
 
-    $enigma->plugLetters(Letter::A, Letter::E);
-    $enigma->plugLetters(Letter::B, Letter::F);
-    $enigma->plugLetters(Letter::C, Letter::M);
-    $enigma->plugLetters(Letter::D, Letter::Q);
-    $enigma->plugLetters(Letter::H, Letter::U);
-    $enigma->plugLetters(Letter::J, Letter::N);
-    $enigma->plugLetters(Letter::L, Letter::X);
-    $enigma->plugLetters(Letter::P, Letter::R);
-    $enigma->plugLetters(Letter::S, Letter::Z);
-    $enigma->plugLetters(Letter::V, Letter::W);
+    $enigma->plugLettersFromPairs('AE BF CM DQ HU JN LX PR SZ VW');
 
     self::assertSame(Letter::C, $enigma->encodeLetter(Letter::Q));
     self::assertSame(Letter::D, $enigma->encodeLetter(Letter::E));
@@ -65,10 +56,7 @@ test('Operation Barbarossa (1941)', function (): void {
     $enigma->setPosition(RotorPosition::P3, Letter::B);
 
     // Plugboard
-    $plugs = ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX'];
-    foreach ($plugs as $plug) {
-        $enigma->plugLetters(Letter::fromChar($plug[0]), Letter::fromChar($plug[1]));
-    }
+    $enigma->plugLettersFromPairs('AV BS CG DL FU HZ IN KM OW RX');
 
     $ciphertext = str_replace(' ', '', 'EDPUD NRGYS ZRCXN UYTPO MRMBO FKTBZ REZKM LXLVE FGUEY SIOZV EQMIK UBPMM YLKLT TDEIS MDICA GYKUA CTCDO MOHWX MUUIA UBSTS LRNBZ SZWNR FXWFY SSXJZ VIJHI DISHP RKLKA YUPAD TXQSP INQMA TLPIF SVKDA SCTAC DPBOP VHJK');
     $expectedPlaintext = str_replace(' ', '', 'AUFKL XABTE ILUNG XVONX KURTI NOWAX KURTI NOWAX NORDW ESTLX SEBEZ XSEBE ZXUAF FLIEG ERSTR ASZER IQTUN GXDUB ROWKI XDUBR OWKIX OPOTS CHKAX OPOTS CHKAX UMXEI NSAQT DREIN ULLXU HRANG ETRET ENXAN GRIFF XINFX RGTX');
@@ -110,10 +98,7 @@ test('U-264 (Kapitänleutnant Hartwig Looks) (1942)', function (): void {
     $enigma->setPosition(RotorPosition::GREEK, Letter::V);
 
     // Plugboard
-    $plugs = ['AT', 'BL', 'DF', 'GJ', 'HM', 'NW', 'OP', 'QY', 'RZ', 'VX'];
-    foreach ($plugs as $plug) {
-        $enigma->plugLetters(Letter::fromChar($plug[0]), Letter::fromChar($plug[1]));
-    }
+    $enigma->plugLettersFromPairs('AT BL DF GJ HM NW OP QY RZ VX');
 
     $ciphertext = str_replace(' ', '', 'NCZW VUSX PNYM INHZ XMQX SFWX WLKJ AHSH NMCO CCAK UQPM KCSM HKSE INJU SBLK IOSX CKUB HMLL XCSJ USRR DVKO HULX WCCB GVLI YXEO AHXR HKKF VDRE WEZL XOBA FGYU JQUK GRTV UKAM EURB VEKS UHHV OYHA BCJW MAKL FKLM YFVN RIZR VVRT KOFD ANJM OLBG FFLE OPRG TFLV RHOW OPBE KVWM UQFM PWPA RMFH AGKX IIBG');
     $expectedPlaintext = str_replace(' ', '', 'VONV ONJL OOKS JHFF TTTE INSE INSD REIZ WOYY QNNS NEUN INHA LTXX BEIA NGRI FFUN TERW ASSE RGED RUEC KTYW ABOS XLET ZTER GEGN ERST ANDN ULAC HTDR EINU LUHR MARQ UANT ONJO TANE UNAC HTSE YHSD REIY ZWOZ WONU LGRA DYAC HTSM YSTO SSEN ACHX EKNS VIER MBFA ELLT YNNN NNNO OOVI ERYS ICHT EINS NULL');
@@ -152,10 +137,7 @@ test('Scharnhorst (Konteradmiral Erich Bey) (1943)', function (): void {
     $enigma->setPosition(RotorPosition::P3, Letter::U);
 
     // Plugboard
-    $plugs = ['AN', 'EZ', 'HK', 'IJ', 'LR', 'MQ', 'OT', 'PV', 'SW', 'UX'];
-    foreach ($plugs as $plug) {
-        $enigma->plugLetters(Letter::fromChar($plug[0]), Letter::fromChar($plug[1]));
-    }
+    $enigma->plugLettersFromPairs('AN EZ HK IJ LR MQ OT PV SW UX');
 
     $ciphertext = str_replace(' ', '', 'YKAE NZAP MSCH ZBFO CUVM RMDP YCOF HADZ IZME FXTH FLOL PZLF GGBO TGOX GRET DWTJ IQHL MXVJ WKZU ASTR');
     $expectedPlaintext = str_replace(' ', '', 'STEUE REJTA NAFJO RDJAN STAND ORTQU AAACC CVIER NEUNN EUNZW OFAHR TZWON ULSMX XSCHA RNHOR STHCO');

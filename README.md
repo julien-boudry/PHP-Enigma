@@ -101,15 +101,13 @@ $enigma->setPosition(RotorPosition::P1, Letter::A);
 $enigma->setPosition(RotorPosition::P2, Letter::L);
 $enigma->setPosition(RotorPosition::P3, Letter::B);
 
-// Plugboard
-foreach (['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX'] as $plug) {
-    $enigma->plugLetters(Letter::fromChar($plug[0]), Letter::fromChar($plug[1]));
-}
+// Plugboard (accepts space-separated pairs or array)
+$enigma->plugLettersFromPairs('AV BS CG DL FU HZ IN KM OW RX');
 
 // Decode a message
 $ciphertext = 'EDPUDNRGYSZRCXNUYTPOMRMBOFKTBZREZKMLXLVEFGUEY';
 $plaintext = $enigma->encodeLetters($ciphertext);
-echo $plaintext; 
+echo $plaintext;
 // "AUFKLXABTEILUNGXVONXKABOROWOAUFLKBXGFSJTNUEUN"
 // German: "Aufklärungsabteilung von Kaborowo..."
 // Translation: "Reconnaissance division from Kaborowo..."

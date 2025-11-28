@@ -203,10 +203,7 @@ describe('Enigma string encoding', function (): void {
             $encoder->setPosition(RotorPosition::P1, Letter::C);
             $encoder->setPosition(RotorPosition::P2, Letter::F);
             $encoder->setPosition(RotorPosition::P3, Letter::G);
-            $encoder->plugLetters(Letter::A, Letter::B);
-            $encoder->plugLetters(Letter::C, Letter::D);
-            $encoder->plugLetters(Letter::E, Letter::F);
-            $encoder->plugLetters(Letter::G, Letter::H);
+            $encoder->plugLettersFromPairs('AB CD EF GH');
 
             // Clone encoder to create decoder with same initial state
             $decoder = clone $encoder;
