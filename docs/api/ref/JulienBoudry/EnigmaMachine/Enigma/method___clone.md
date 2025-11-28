@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method __clone()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L434)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L607)
 
 ```php
 public function Enigma->__clone( ): void

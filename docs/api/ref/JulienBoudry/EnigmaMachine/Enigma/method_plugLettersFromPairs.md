@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method plugLettersFromPairs()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L299)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L307)
 
 ```php
 public function Enigma->plugLettersFromPairs( array|string $pairs ): void

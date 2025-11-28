@@ -15,6 +15,11 @@ by the advance mechanism. A letter is encoded by sending its corresponding signa
 After each encoded letter, the advance mechanism changes the internal setup by rotating the rotors.
 ## Elements
 
+### Public Static Properties
+| Properties Name | Description |
+| ------------- | ------------- |
+| [fileChunkSize(...)](static_property_fileChunkSize.md) | _This value determines how many bytes are read at a time when using encodeFile(). Adjust this value to balance memory usage vs. performance._ |
+
 ### Public Static Methods
 | Method Name | Description |
 | ------------- | ------------- |
@@ -36,7 +41,9 @@ After each encoded letter, the advance mechanism changes the internal setup by r
 | ------------- | ------------- |
 | [__clone(...)](method___clone.md) | _This ensures all internal components (plugboard, entry wheel, rotors, reflector) are properly cloned so the cloned machine operates independently._ |
 | [__construct(...)](method___construct.md) | _The initital rotors and reflectros are mounted._ |
+| [decodeFile(...)](method_decodeFile.md) | _This method is the inverse of encodeFile(). It reads an Enigma-encoded file, decodes it through the Enigma machine, and converts the result back to binary.  IMPORTANT: The Enigma machine must be in th..._ |
 | [encodeBinary(...)](method_encodeBinary.md) | _This method converts binary data to Enigma-compatible format and encodes it. Useful for encoding arbitrary data that isn't text._ |
+| [encodeFile(...)](method_encodeFile.md) | _This method processes the source file in chunks to minimize memory usage, making it suitable for encoding large files. Each chunk is converted to Enigma format and encoded before being written to the ..._ |
 | [encodeLatinText(...)](method_encodeLatinText.md) | _This method accepts Latin-based text (including numbers, accented characters, punctuation, spaces, etc.) and converts it to Enigma-compatible format before encoding. Non-Latin characters (Cyrillic, Ch..._ |
 | [encodeLetter(...)](method_encodeLetter.md) | _The letter passes the plugboard (if available), entry wheel, rotors, reflector, rotors in the opposite direction, entry wheel again, and plugboard (if available). Every encoding triggers the advance m..._ |
 | [encodeLetters(...)](method_encodeLetters.md) | _This method processes each character in the input through the Enigma machine. The input must contain only valid Enigma alphabet characters (A-Z). Use encodeText() for arbitrary text that needs convers..._ |
@@ -55,6 +62,9 @@ After each encoded letter, the advance mechanism changes the internal setup by r
 class JulienBoudry\EnigmaMachine\Enigma
 {
 
+    // Static Properties
+    public static int $fileChunkSize = 1048576;
+
     // Properties
     public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
     public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
@@ -70,7 +80,9 @@ class JulienBoudry\EnigmaMachine\Enigma
     // Methods
     public function __clone( ): void;
     public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, JulienBoudry\EnigmaMachine\RotorConfiguration $rotors, JulienBoudry\EnigmaMachine\ReflectorType $reflector, [ bool $strictMode = true ] );
+    public function decodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int;
     public function encodeBinary( string $binaryData, [ bool $formatOutput = false ] ): string;
+    public function encodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int;
     public function encodeLatinText( string $text, [ string $spaceReplacement = 'X', bool $formatOutput = false ] ): string;
     public function encodeLetter( JulienBoudry\EnigmaMachine\Letter $letter ): JulienBoudry\EnigmaMachine\Letter;
     public function encodeLetters( string $letters ): string;
@@ -91,6 +103,9 @@ class JulienBoudry\EnigmaMachine\Enigma
 class JulienBoudry\EnigmaMachine\Enigma
 {
 
+    // Static Properties
+    public static int $fileChunkSize = 1048576;
+
     // Properties
     public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
     public protected(set) readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
@@ -106,7 +121,9 @@ class JulienBoudry\EnigmaMachine\Enigma
     // Methods
     public function __clone( ): void;
     public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, JulienBoudry\EnigmaMachine\RotorConfiguration $rotors, JulienBoudry\EnigmaMachine\ReflectorType $reflector, [ bool $strictMode = true ] );
+    public function decodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int;
     public function encodeBinary( string $binaryData, [ bool $formatOutput = false ] ): string;
+    public function encodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int;
     public function encodeLatinText( string $text, [ string $spaceReplacement = 'X', bool $formatOutput = false ] ): string;
     public function encodeLetter( JulienBoudry\EnigmaMachine\Letter $letter ): JulienBoudry\EnigmaMachine\Letter;
     public function encodeLetters( string $letters ): string;

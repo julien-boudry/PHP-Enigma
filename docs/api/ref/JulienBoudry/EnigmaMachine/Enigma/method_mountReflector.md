@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method mountReflector()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L226)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L234)
 
 ```php
 public function Enigma->mountReflector( JulienBoudry\EnigmaMachine\ReflectorType|JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector ): void

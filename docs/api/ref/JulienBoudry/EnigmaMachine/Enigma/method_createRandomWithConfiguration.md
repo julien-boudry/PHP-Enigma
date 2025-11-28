@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method createRandomWithConfiguration()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L130)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L138)
 
 ```php
 public static function Enigma::createRandomWithConfiguration( JulienBoudry\EnigmaMachine\EnigmaModel $model, [ ?Random\Engine $randomEngine = null ] ): array
