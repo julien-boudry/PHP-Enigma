@@ -249,13 +249,13 @@ This package provides the functionality of 3 different Enigma models:
 
 Each model can be equipped with a different set of rotors and reflectors. All in all are 10 types of rotors and 4 types of reflectors available.
 
-*   Wehrmacht / Luftwaffe 3 rotor model uses:
+*   Wehrmacht / Luftwaffe 3 rotor model (`WMLW`) uses:
     *   rotors: I, II, III, IV, V
     *   reflectors: B, C, DORA (rewirable)
-*   Kriegsmarine 3 rotor model uses:
+*   Kriegsmarine 3 rotor model (`KMM3`) uses:
     *   rotors: I, II, III, IV, V, VI, VII, VIII
     *   reflectors: B, C
-*   Kriegsmarine 4 rotor model uses:
+*   Kriegsmarine 4 rotor model (`KMM4`) uses:
     *   rotors: I, II, III, IV, V, VI, VII, VIII, Beta, Gamma
     *   reflectors: B Thin, C Thin
 
