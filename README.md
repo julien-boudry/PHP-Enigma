@@ -77,7 +77,7 @@ $enigma->plugLetters(Letter::B, Letter::Z);
 
 // Encode a single letter
 $encoded = $enigma->encodeLetter(Letter::A);
-echo $encoded->toChar(); // Output: "W"
+echo $encoded->toChar(); // Output: "U"
 ```
 
 ## Encoding and Decoding
@@ -125,7 +125,7 @@ $ciphertext = $enigma->encodeLatinText($message);
 
 // With formatted output (traditional 5-letter groups)
 $formatted = $enigma->encodeLatinText($message, formatOutput: true);
-// Output: "CTLOP HZGAC EHCIA EGDWY QDERG HXASO AQSDT H"
+// Output: "GGOCS FFPLK ZFLHG UBMDA HHVRB WWGGM MAWOO L"
 ```
 
 ### Binary Data
@@ -227,7 +227,7 @@ The `EnigmaTextConverter` class exposes the text processing logic directly:
 use JulienBoudry\Enigma\EnigmaTextConverter;
 
 // Convert to Enigma format
-echo EnigmaTextConverter::latinToEnigmaFormat('U-Boot 47'); // "UXBOOTXVIERSIEBEN"
+echo EnigmaTextConverter::latinToEnigmaFormat('U-Boot 47'); // "UYYBOOTXVIERSIEBEN"
 
 // Format in groups
 echo EnigmaTextConverter::formatInGroups('HELLOWORLD'); // "HELLO WORLD"
