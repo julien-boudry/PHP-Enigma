@@ -96,7 +96,7 @@ class EnigmaPlugboard
      * - Space-separated: "AV BS CG DL"
      * - Array of pairs: ['AV', 'BS', 'CG', 'DL']
      *
-     * @param $pairs Pairs to connect
+     * @param string|array<string> $pairs Pairs to connect
      */
     public function plugLettersFromPairs(string|array $pairs): void
     {

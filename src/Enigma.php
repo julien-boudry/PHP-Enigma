@@ -298,7 +298,7 @@ class Enigma
      * - Space-separated string: "AV BS CG DL FU HZ IN KM OW RX"
      * - Array of pairs: ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX']
      *
-     * @param $pairs Pairs to connect
+     * @param string|array<string> $pairs Pairs to connect
      *
      * @throws EnigmaConfigurationException If this model does not have a plugboard
      */
