@@ -42,7 +42,8 @@ describe('EncodeCommand', function (): void {
         it('encodes text and decodes back to original (reciprocal)', function (): void {
             // Encode
             $output = executeAndGetOutput($this->commandTester, $this->promptOutput, ['text' => 'HELLOWORLD']);
-            $encoded = trim(preg_replace('/.*▶\s*(\w+).*/s', '$1', $this->commandTester->getDisplay()));
+            // Extract encoded text from the new military-style output (│ RESULT format)
+            $encoded = trim(preg_replace('/.*│\s*(\w+).*/s', '$1', $this->commandTester->getDisplay()));
 
             // Decode with same settings
             $output = executeAndGetOutput($this->commandTester, $this->promptOutput, ['text' => $encoded]);
@@ -361,8 +362,8 @@ describe('EncodeCommand', function (): void {
             ]);
             $encoded = $this->commandTester->getDisplay();
 
-            // Extract the formatted output
-            preg_match('/▶\s*([A-Z\s]+)\s*$/m', $encoded, $matches);
+            // Extract the formatted output from military-style format (│ RESULT format)
+            preg_match('/│\s*([A-Z\s]+)\s*$/m', $encoded, $matches);
             $formattedOutput = trim($matches[1] ?? '');
 
             // Decode with strip-spaces

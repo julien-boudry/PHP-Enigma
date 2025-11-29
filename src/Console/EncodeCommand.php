@@ -10,8 +10,6 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use function Laravel\Prompts\{error, info, intro, note, outro, spin, table, warning};
-
 /**
  * Command to encode text using the Enigma machine.
  *
@@ -29,6 +27,7 @@ use function Laravel\Prompts\{error, info, intro, note, outro, spin, table, warn
 )]
 class EncodeCommand extends Command
 {
+    protected EnigmaStyle $io;
     protected function configure(): void
     {
         $modelChoices = implode(', ', array_map(fn(EnigmaModel $m) => $m->name, EnigmaModel::cases()));
@@ -255,6 +254,8 @@ class EncodeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->io = new EnigmaStyle($input, $output);
+
         try {
             /** @var bool $isRandom */
             $isRandom = $input->getOption('random');
@@ -270,21 +271,21 @@ class EncodeCommand extends Command
 
             // Binary file mode: use Enigma's encodeFile/decodeFile methods
             if ($inputBinaryFile !== null) {
-                return $this->executeBinaryFileMode($input, $output, $inputBinaryFile, $outputFile, $toBinary, $isRandom);
+                return $this->executeBinaryFileMode($input, $inputBinaryFile, $outputFile, $toBinary, $isRandom);
             }
 
             // Text mode (from argument or text file)
-            return $this->executeTextMode($input, $output, $isRandom);
+            return $this->executeTextMode($input, $isRandom);
         } catch (\InvalidArgumentException|\ValueError $e) {
-            error($e->getMessage());
+            $this->io->militaryError($e->getMessage());
 
             return Command::FAILURE;
         } catch (\RuntimeException $e) {
-            error($e->getMessage());
+            $this->io->militaryError($e->getMessage());
 
             return Command::FAILURE;
         } catch (\Throwable $e) {
-            error('An unexpected error occurred: ' . $e->getMessage());
+            $this->io->militaryError('An unexpected error occurred: ' . $e->getMessage());
 
             if ($output->isVerbose()) {
                 $output->writeln($e->getTraceAsString());
@@ -297,7 +298,7 @@ class EncodeCommand extends Command
     /**
      * Execute text encoding mode (from command-line argument or file).
      */
-    private function executeTextMode(InputInterface $input, OutputInterface $output, bool $isRandom): int
+    private function executeTextMode(InputInterface $input, bool $isRandom): int
     {
         /** @var string|null $inputTextFile */
         $inputTextFile = $input->getOption('input-text-file');
@@ -346,23 +347,23 @@ class EncodeCommand extends Command
         }
 
         // Show intro
-        intro('⚙ Enigma Machine');
+        $this->io->enigmaTitle();
 
         // Show random note
         if ($isRandom) {
-            note('Using randomly generated configuration');
+            $this->io->militaryNote('Using randomly generated configuration');
         }
 
         // Show file source if from file
         if ($inputTextFile !== null) {
-            info("Reading text from: {$inputTextFile}");
+            $this->io->militaryInfo("Reading text from: {$inputTextFile}");
 
             // Warn about non-Enigma characters if not using latin mode
             if (!$useLatin) {
                 $nonAlphaCount = preg_match_all('/[^A-Za-z]/', $text);
                 if ($nonAlphaCount > 0) {
-                    warning("File contains {$nonAlphaCount} non-alphabetic characters that will be stripped.");
-                    warning('Use --latin (-l) to convert spaces, numbers, and accents automatically.');
+                    $this->io->militaryWarning("File contains {$nonAlphaCount} non-alphabetic characters that will be stripped.");
+                    $this->io->militaryWarning('Use --latin (-l) to convert spaces, numbers, and accents automatically.');
                 }
             }
         }
@@ -373,22 +374,12 @@ class EncodeCommand extends Command
         }
 
         // Encode the text
-        $textLength = \strlen($text);
-        $useSpinner = $textLength > 1000; // Use spinner for longer texts
-
-        if ($useSpinner) {
-            $result = spin(
-                fn() => $this->encodeText($enigma, $text, $useLatin, $formatOutput),
-                'Encoding...'
-            );
-        } else {
-            $result = $this->encodeText($enigma, $text, $useLatin, $formatOutput);
-        }
+        $result = $this->encodeText($enigma, $text, $useLatin, $formatOutput);
 
         // Output result
-        $this->outputResult($output, $result, $outputFile);
+        $this->outputResult($result, $outputFile);
 
-        outro('Encoding complete!');
+        $this->io->missionComplete('Encoding complete');
 
         return Command::SUCCESS;
     }
@@ -398,7 +389,6 @@ class EncodeCommand extends Command
      */
     private function executeBinaryFileMode(
         InputInterface $input,
-        OutputInterface $output,
         string $inputFile,
         ?string $outputFile,
         bool $toBinary,
@@ -414,11 +404,11 @@ class EncodeCommand extends Command
         $showConfig = $input->getOption('show-config');
 
         // Show intro
-        intro('⚙ Enigma Machine');
+        $this->io->enigmaTitle();
 
         // Show random note
         if ($isRandom) {
-            note('Using randomly generated configuration');
+            $this->io->militaryNote('Using randomly generated configuration');
         }
 
         // Show configuration
@@ -428,24 +418,33 @@ class EncodeCommand extends Command
 
         // Show file info
         $mode = $toBinary ? 'Converting to binary' : 'Encoding binary';
-        info("{$mode}: {$inputFile}");
+        $this->io->militaryInfo("{$mode}: {$inputFile}");
 
-        // Use Enigma's file encoding methods with spinner
+        // Use Enigma's file encoding methods with progress bar
+        $this->io->writeln('');
+        $progressBar = $this->io->createProgressBar();
+        $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% -- %message%');
+        $progressBar->setMessage($toBinary ? 'Decoding file...' : 'Encoding file...');
+        $progressBar->start(100);
+
+        // Simulate progress (actual operation is atomic)
+        $progressBar->advance(30);
+
         if ($toBinary) {
-            $bytesWritten = spin(
-                fn() => $enigma->decodeFile($inputFile, $outputFile),
-                'Decoding file...'
-            );
-            info("Converted {$bytesWritten} bytes to: {$outputFile}");
+            $bytesWritten = $enigma->decodeFile($inputFile, $outputFile);
+            $progressBar->advance(70);
+            $progressBar->finish();
+            $this->io->writeln('');
+            $this->io->militaryInfo("Converted {$bytesWritten} bytes to: {$outputFile}");
         } else {
-            $bytesWritten = spin(
-                fn() => $enigma->encodeFile($inputFile, $outputFile),
-                'Encoding file...'
-            );
-            info("Encoded to {$bytesWritten} characters: {$outputFile}");
+            $bytesWritten = $enigma->encodeFile($inputFile, $outputFile);
+            $progressBar->advance(70);
+            $progressBar->finish();
+            $this->io->writeln('');
+            $this->io->militaryInfo("Encoded to {$bytesWritten} characters: {$outputFile}");
         }
 
-        outro('File processing complete!');
+        $this->io->missionComplete('Operation complete');
 
         return Command::SUCCESS;
     }
@@ -473,7 +472,7 @@ class EncodeCommand extends Command
     /**
      * Output the result to console or file.
      */
-    private function outputResult(OutputInterface $output, string $result, ?string $outputFile): void
+    private function outputResult(string $result, ?string $outputFile): void
     {
         if ($outputFile !== null) {
             $dir = \dirname($outputFile);
@@ -486,11 +485,9 @@ class EncodeCommand extends Command
                 throw new \InvalidArgumentException("Failed to write output file: {$outputFile}");
             }
 
-            info("Written to: {$outputFile}");
+            $this->io->militaryInfo("Written to: {$outputFile}");
         } else {
-            $output->writeln('');
-            $output->writeln("  <fg=yellow>▶</> <options=bold>{$result}</>");
-            $output->writeln('');
+            $this->io->encodedResult($result);
         }
     }
 
@@ -499,18 +496,7 @@ class EncodeCommand extends Command
      */
     private function displayConfiguration(Enigma $enigma): void
     {
-        $config = $enigma->getConfiguration();
-        table(
-            ['Setting', 'Value'],
-            [
-                ['Model', $config->model->name],
-                ['Rotors', $config->getRotorString()],
-                ['Ring', $config->getRingString()],
-                ['Position', $config->getPositionString()],
-                ['Reflector', $config->reflector->name],
-                ['Plugboard', $config->getPlugboardString() ?: '(none)'],
-            ]
-        );
+        $this->io->configTable($enigma);
     }
 
     /**
@@ -615,7 +601,7 @@ class EncodeCommand extends Command
         $plugboardStr = trim($plugboardOption);
         if ($plugboardStr !== '') {
             if (!$model->hasPlugboard()) {
-                warning("Model {$model->name} does not have a plugboard. Ignoring plugboard settings.");
+                $this->io->militaryWarning("Model {$model->name} does not have a plugboard. Ignoring plugboard settings.");
             } else {
                 $enigma->plugLettersFromPairs($plugboardStr);
             }
