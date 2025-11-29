@@ -3,8 +3,11 @@
     "description": "Enigma cipher machine was invented by a German engineer. This PHP package simulates its operation.",
     "license": "MIT",
     "type": "library",
+    "bin": ["bin/enigma"],
     "require": {
-        "php": "^8.4"
+        "php": "^8.4",
+        "symfony/console": "^7.4|^8.0",
+        "laravel/prompts": "^0.3.8"
     },
     "require-dev": {
         "league/commonmark": "^2.7",

@@ -156,6 +156,28 @@ final readonly class EnigmaConfiguration
      */
     public function getSummary(): string
     {
+        $summary = \sprintf(
+            'Model: %s | Rotors: %s | Ring: %s | Position: %s | Reflector: %s',
+            $this->model->name,
+            $this->getRotorString(),
+            $this->getRingString(),
+            $this->getPositionString(),
+            $this->reflector->name
+        );
+
+        // Only show plugboard for military models
+        if ($this->model->hasPlugboard()) {
+            $summary .= ' | Plugs: ' . ($this->getPlugboardString() ?: '(none)');
+        }
+
+        return $summary;
+    }
+
+    /**
+     * Get rotor types as a formatted string (left to right: P3-P2-P1 or GREEK-P3-P2-P1).
+     */
+    public function getRotorString(): string
+    {
         $rotors = implode('-', array_map(
             static fn(RotorType $r): string => $r->name,
             [$this->rotorTypes['p3'], $this->rotorTypes['p2'], $this->rotorTypes['p1']]
@@ -165,6 +187,14 @@ final readonly class EnigmaConfiguration
             $rotors = $this->rotorTypes['greek']->name . '-' . $rotors;
         }
 
+        return $rotors;
+    }
+
+    /**
+     * Get ring settings as a formatted string (left to right).
+     */
+    public function getRingString(): string
+    {
         $ringstellung = $this->ringstellungen['p3']->toChar()
             . $this->ringstellungen['p2']->toChar()
             . $this->ringstellungen['p1']->toChar();
@@ -173,6 +203,14 @@ final readonly class EnigmaConfiguration
             $ringstellung = $this->ringstellungen['greek']->toChar() . $ringstellung;
         }
 
+        return $ringstellung;
+    }
+
+    /**
+     * Get initial positions as a formatted string (left to right).
+     */
+    public function getPositionString(): string
+    {
         $position = $this->positions['p3']->toChar()
             . $this->positions['p2']->toChar()
             . $this->positions['p1']->toChar();
@@ -181,24 +219,17 @@ final readonly class EnigmaConfiguration
             $position = $this->positions['greek']->toChar() . $position;
         }
 
-        $summary = \sprintf(
-            'Model: %s | Rotors: %s | Ring: %s | Position: %s | Reflector: %s',
-            $this->model->name,
-            $rotors,
-            $ringstellung,
-            $position,
-            $this->reflector->name
-        );
+        return $position;
+    }
 
-        // Only show plugboard for military models
-        if ($this->model->hasPlugboard()) {
-            $plugs = implode(' ', array_map(
-                static fn(array $pair): string => $pair[0]->toChar() . $pair[1]->toChar(),
-                $this->plugboardPairs
-            ));
-            $summary .= ' | Plugs: ' . ($plugs ?: '(none)');
-        }
-
-        return $summary;
+    /**
+     * Get plugboard pairs as a formatted string.
+     */
+    public function getPlugboardString(): string
+    {
+        return implode(' ', array_map(
+            static fn(array $pair): string => $pair[0]->toChar() . $pair[1]->toChar(),
+            $this->plugboardPairs
+        ));
     }
 }

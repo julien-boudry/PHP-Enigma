@@ -18,7 +18,9 @@ A PHP implementation of the historic Enigma cipher machine, supporting multiple 
 # Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
+- [Quick Start](#quick-start)
+- [Command-Line Interface (CLI)](#command-line-interface-cli)
+- [PHP Library Usage](#php-library-usage)
   - [Basic Setup](#basic-setup)
   - [Encoding and Decoding](#encoding-and-decoding)
     - [Standard Text (A-Z)](#standard-text-a-z)
@@ -54,7 +56,64 @@ Require [Composer PHP](https://getcomposer.org/):
 composer require julien-boudry/enigma-machine
 ```
 
-# Usage
+# Quick Start
+
+This package can be used in two ways:
+
+| Usage | Best For | Documentation |
+|-------|----------|---------------|
+| **🖥️ Command-Line (CLI)** | Quick encoding/decoding, scripting, testing configurations | [CLI Section](#command-line-interface-cli) |
+| **📦 PHP Library** | Integration into applications, custom workflows, programmatic access | [Library Section](#php-library-usage) |
+
+---
+
+# Command-Line Interface (CLI)
+
+> 🖥️ Encode and decode Enigma messages directly from your terminal — no PHP code required!
+
+## Quick Examples
+
+```bash
+# Simple encoding with default settings
+./bin/enigma encode "HELLOWORLD"
+# Output: MFNCZBBFZM
+
+# Decode (same operation with same settings)
+./bin/enigma encode "MFNCZBBFZM"
+# Output: HELLOWORLD
+
+# Military Enigma with full configuration
+./bin/enigma encode "SECRET" \
+  --model=WMLW \
+  --rotors=V-II-IV \
+  --ring=BUL \
+  --position=ABC \
+  --plugboard="AV BS CG DL FU"
+
+# Random configuration (great for testing)
+./bin/enigma encode "SECRET" --random --show-config
+
+# Latin text with accents and numbers
+./bin/enigma encode "Panzer Division 7" --latin --format
+```
+
+## CLI Features
+
+| Feature | Description |
+|---------|-------------|
+| **All Models** | Wehrmacht, Kriegsmarine M3/M4, Commercial (K, Swiss-K, Railway), Tirpitz |
+| **Full Configuration** | Rotors, ring settings, positions, reflectors, plugboard |
+| **Random Mode** | Generate cryptographically secure random configurations |
+| **Latin Conversion** | Automatically convert accents, numbers, and punctuation |
+| **Formatted Output** | Traditional 5-letter groups for authentic messages |
+
+📖 **[Complete CLI Documentation →](CLI.md)**
+
+---
+
+# PHP Library Usage
+
+> 📦 Integrate Enigma encoding into your PHP applications with full programmatic control.
 
 ## Basic Setup
 
@@ -292,6 +351,8 @@ echo EnigmaTextConverter::latinToEnigmaFormat('U-Boot 47'); // "UYYBOOTXVIERSIEB
 // Format in groups
 echo EnigmaTextConverter::formatInGroups('HELLOWORLD'); // "HELLO WORLD"
 ```
+
+---
 
 # Technical Specifications
 

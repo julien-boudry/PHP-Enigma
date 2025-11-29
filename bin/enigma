@@ -1,0 +1,36 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Enigma Machine CLI Application.
+ *
+ * This command-line interface allows you to encode and decode messages
+ * using the historical Enigma cipher machine.
+ */
+
+// Find autoloader
+$autoloadPaths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+];
+
+$autoloaderFound = false;
+foreach ($autoloadPaths as $autoloadPath) {
+    if (file_exists($autoloadPath)) {
+        require $autoloadPath;
+        $autoloaderFound = true;
+        break;
+    }
+}
+
+if (!$autoloaderFound) {
+    fwrite(STDERR, "Autoloader not found. Run 'composer install' first.\n");
+    exit(1);
+}
+
+use JulienBoudry\EnigmaMachine\Console\Application;
+
+$application = new Application;
+$application->run();
