@@ -23,6 +23,6 @@ JulienBoudry\EnigmaMachine\Enigma $enigma
 The Enigma machine to extract configuration from
 
 ## Return
-**Type:** `self`
+**Type:** [`JulienBoudry\EnigmaMachine\EnigmaConfiguration`](class_EnigmaConfiguration.md)
 
 The extracted configuration

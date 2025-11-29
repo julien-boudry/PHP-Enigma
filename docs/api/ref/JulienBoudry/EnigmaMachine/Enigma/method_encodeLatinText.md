@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method encodeLatinText()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L384)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L382)
 
 ```php
 public function Enigma->encodeLatinText( string $text, [ string $spaceReplacement = 'X', bool $formatOutput = false ] ): string

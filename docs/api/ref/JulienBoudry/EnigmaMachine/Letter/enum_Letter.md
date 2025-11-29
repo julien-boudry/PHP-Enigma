@@ -119,8 +119,8 @@ enum JulienBoudry\EnigmaMachine\Letter: int implements UnitEnum, BackedEnum
     public const Z = \JulienBoudry\EnigmaMachine\Letter::Z;
 
     // Properties
-    public readonly protected(set) string $name;
-    public readonly protected(set) int $value;
+    public protected(set) readonly string $name;
+    public protected(set) readonly int $value;
 
     // Static Methods
     public static function count( ): int;
@@ -192,8 +192,8 @@ enum JulienBoudry\EnigmaMachine\Letter: int implements UnitEnum, BackedEnum
     public const Z = \JulienBoudry\EnigmaMachine\Letter::Z;
 
     // Properties
-    public readonly protected(set) string $name;
-    public readonly protected(set) int $value;
+    public protected(set) readonly string $name;
+    public protected(set) readonly int $value;
 
     // Static Methods
     public static function count( ): int;

@@ -41,13 +41,13 @@ final readonly class JulienBoudry\EnigmaMachine\EnigmaConfiguration
 {
 
     // Properties
-    public readonly protected(set) ?array $doraWiringPairs;
-    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
-    public readonly protected(set) array $plugboardPairs;
-    public readonly protected(set) array $positions;
-    public readonly protected(set) JulienBoudry\EnigmaMachine\ReflectorType $reflector;
-    public readonly protected(set) array $ringstellungen;
-    public readonly protected(set) array $rotorTypes;
+    public protected(set) readonly ?array $doraWiringPairs;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\EnigmaModel $model;
+    public protected(set) readonly array $plugboardPairs;
+    public protected(set) readonly array $positions;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\ReflectorType $reflector;
+    public protected(set) readonly array $ringstellungen;
+    public protected(set) readonly array $rotorTypes;
 
     // Static Methods
     public static function fromEnigma( JulienBoudry\EnigmaMachine\Enigma $enigma ): self;
@@ -67,13 +67,13 @@ final readonly class JulienBoudry\EnigmaMachine\EnigmaConfiguration
 {
 
     // Properties
-    public readonly protected(set) ?array $doraWiringPairs;
-    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
-    public readonly protected(set) array $plugboardPairs;
-    public readonly protected(set) array $positions;
-    public readonly protected(set) JulienBoudry\EnigmaMachine\ReflectorType $reflector;
-    public readonly protected(set) array $ringstellungen;
-    public readonly protected(set) array $rotorTypes;
+    public protected(set) readonly ?array $doraWiringPairs;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\EnigmaModel $model;
+    public protected(set) readonly array $plugboardPairs;
+    public protected(set) readonly array $positions;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\ReflectorType $reflector;
+    public protected(set) readonly array $ringstellungen;
+    public protected(set) readonly array $rotorTypes;
 
     // Static Methods
     public static function fromEnigma( JulienBoudry\EnigmaMachine\Enigma $enigma ): self;

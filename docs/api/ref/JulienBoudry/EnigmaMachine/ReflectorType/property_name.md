@@ -1,5 +1,5 @@
 > JulienBoudry \ [ReflectorType](enum_ReflectorType.md)
 # Property name
 ```php
-public readonly protected(set) string $name
+public protected(set) readonly string $name
 ```

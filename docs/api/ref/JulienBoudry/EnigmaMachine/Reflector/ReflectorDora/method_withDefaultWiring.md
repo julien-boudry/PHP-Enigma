@@ -14,6 +14,6 @@ This uses a historically plausible configuration including the B↔O pair
 due to mechanical constraints.
 
 ## Return
-**Type:** `self`
+**Type:** [`JulienBoudry\EnigmaMachine\Reflector\ReflectorDora`](class_ReflectorDora.md)
 
 

@@ -120,7 +120,7 @@ enum JulienBoudry\EnigmaMachine\RotorType implements UnitEnum
     public const VIII = \JulienBoudry\EnigmaMachine\RotorType::VIII;
 
     // Properties
-    public readonly protected(set) string $name;
+    public protected(set) readonly string $name;
 
     // Static Methods
     public static function getCompatibleRotorsForModel( JulienBoudry\EnigmaMachine\EnigmaModel $model ): array;
@@ -194,7 +194,7 @@ enum JulienBoudry\EnigmaMachine\RotorType implements UnitEnum
     public const VIII = \JulienBoudry\EnigmaMachine\RotorType::VIII;
 
     // Properties
-    public readonly protected(set) string $name;
+    public protected(set) readonly string $name;
 
     // Static Methods
     public static function getCompatibleRotorsForModel( JulienBoudry\EnigmaMachine\EnigmaModel $model ): array;

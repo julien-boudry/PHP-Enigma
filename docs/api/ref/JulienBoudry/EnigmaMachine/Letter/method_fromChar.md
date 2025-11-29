@@ -20,7 +20,7 @@ string $char
 A single character (A-Z, case-insensitive)
 
 ## Return
-**Type:** `self`
+**Type:** [`JulienBoudry\EnigmaMachine\Letter`](enum_Letter.md)
 
 
 

@@ -35,6 +35,6 @@ The Enigma model to create
 Random engine for testing (null = secure random)
 
 ## Return
-**Type:** `self`
+**Type:** [`JulienBoudry\EnigmaMachine\Enigma`](class_Enigma.md)
 
 A fully configured Enigma machine

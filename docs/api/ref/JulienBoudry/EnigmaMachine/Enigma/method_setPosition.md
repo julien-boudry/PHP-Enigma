@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method setPosition()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L255)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L253)
 
 ```php
 public function Enigma->setPosition( JulienBoudry\EnigmaMachine\RotorPosition $position, JulienBoudry\EnigmaMachine\Letter $letter ): void

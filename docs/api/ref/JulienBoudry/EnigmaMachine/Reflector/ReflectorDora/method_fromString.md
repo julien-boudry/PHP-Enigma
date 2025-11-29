@@ -20,7 +20,7 @@ string $pairsString
 13 pairs as a string, e.g., "AC BO DE FG HI JK LM NP QR ST UV WX YZ"
 
 ## Return
-**Type:** `self`
+**Type:** [`JulienBoudry\EnigmaMachine\Reflector\ReflectorDora`](class_ReflectorDora.md)
 
 
 

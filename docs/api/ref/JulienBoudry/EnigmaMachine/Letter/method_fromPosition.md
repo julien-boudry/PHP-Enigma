@@ -22,6 +22,6 @@ int $position
 The position (will be wrapped to 0-25)
 
 ## Return
-**Type:** `self`
+**Type:** [`JulienBoudry\EnigmaMachine\Letter`](enum_Letter.md)
 
 

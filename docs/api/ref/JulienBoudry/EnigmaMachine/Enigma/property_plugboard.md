@@ -1,7 +1,7 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Property plugboard
 ```php
-public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard
+public protected(set) readonly JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard
 ```
 
 ## Description

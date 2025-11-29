@@ -1,6 +1,6 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Method getConfiguration()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L154)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L152)
 
 ```php
 public function Enigma->getConfiguration( ): JulienBoudry\EnigmaMachine\EnigmaConfiguration
@@ -15,4 +15,4 @@ current positions, reflector, and plugboard configuration.
 ## Return
 **Type:** [`JulienBoudry\EnigmaMachine\EnigmaConfiguration`](../EnigmaConfiguration/class_EnigmaConfiguration.md)
 
-The current configuration
+

@@ -1,5 +1,5 @@
 > JulienBoudry \ [Letter](enum_Letter.md)
 # Property value
 ```php
-public readonly protected(set) int $value
+public protected(set) readonly int $value
 ```

@@ -41,8 +41,8 @@ enum JulienBoudry\EnigmaMachine\EntryWheelType: string implements UnitEnum, Back
     public const TIRPITZ = \JulienBoudry\EnigmaMachine\EntryWheelType::TIRPITZ;
 
     // Properties
-    public readonly protected(set) string $name;
-    public readonly protected(set) string $value;
+    public protected(set) readonly string $name;
+    public protected(set) readonly string $value;
 
     // Methods
     public function createEntryWheel( ): JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel;
@@ -63,8 +63,8 @@ enum JulienBoudry\EnigmaMachine\EntryWheelType: string implements UnitEnum, Back
     public const TIRPITZ = \JulienBoudry\EnigmaMachine\EntryWheelType::TIRPITZ;
 
     // Properties
-    public readonly protected(set) string $name;
-    public readonly protected(set) string $value;
+    public protected(set) readonly string $name;
+    public protected(set) readonly string $value;
 
     // Methods
     public function createEntryWheel( ): JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel;

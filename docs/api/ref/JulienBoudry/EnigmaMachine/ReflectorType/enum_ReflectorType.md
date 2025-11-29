@@ -64,7 +64,7 @@ enum JulienBoudry\EnigmaMachine\ReflectorType implements UnitEnum
     public const TIRPITZ = \JulienBoudry\EnigmaMachine\ReflectorType::TIRPITZ;
 
     // Properties
-    public readonly protected(set) string $name;
+    public protected(set) readonly string $name;
 
     // Static Methods
     public static function createDoraReflector( array $pairs ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
@@ -101,7 +101,7 @@ enum JulienBoudry\EnigmaMachine\ReflectorType implements UnitEnum
     public const TIRPITZ = \JulienBoudry\EnigmaMachine\ReflectorType::TIRPITZ;
 
     // Properties
-    public readonly protected(set) string $name;
+    public protected(set) readonly string $name;
 
     // Static Methods
     public static function createDoraReflector( array $pairs ): JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;

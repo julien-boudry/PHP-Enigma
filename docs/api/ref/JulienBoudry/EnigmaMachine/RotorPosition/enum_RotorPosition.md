@@ -47,8 +47,8 @@ enum JulienBoudry\EnigmaMachine\RotorPosition: int implements UnitEnum, BackedEn
     public const P3 = \JulienBoudry\EnigmaMachine\RotorPosition::P3;
 
     // Properties
-    public readonly protected(set) string $name;
-    public readonly protected(set) int $value;
+    public protected(set) readonly string $name;
+    public protected(set) readonly int $value;
 
 }
 ```
@@ -68,8 +68,8 @@ enum JulienBoudry\EnigmaMachine\RotorPosition: int implements UnitEnum, BackedEn
     public const P3 = \JulienBoudry\EnigmaMachine\RotorPosition::P3;
 
     // Properties
-    public readonly protected(set) string $name;
-    public readonly protected(set) int $value;
+    public protected(set) readonly string $name;
+    public protected(set) readonly int $value;
 
 }
 ```

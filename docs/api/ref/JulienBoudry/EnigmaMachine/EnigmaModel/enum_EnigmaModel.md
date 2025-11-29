@@ -57,7 +57,7 @@ enum JulienBoudry\EnigmaMachine\EnigmaModel implements UnitEnum
     public const WMLW = \JulienBoudry\EnigmaMachine\EnigmaModel::WMLW;
 
     // Properties
-    public readonly protected(set) string $name;
+    public protected(set) readonly string $name;
 
     // Methods
     public function getCompatibleReflectors( ): array;
@@ -91,7 +91,7 @@ enum JulienBoudry\EnigmaMachine\EnigmaModel implements UnitEnum
     public const WMLW = \JulienBoudry\EnigmaMachine\EnigmaModel::WMLW;
 
     // Properties
-    public readonly protected(set) string $name;
+    public protected(set) readonly string $name;
 
     // Methods
     public function getCompatibleReflectors( ): array;

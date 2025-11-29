@@ -68,9 +68,9 @@ class JulienBoudry\EnigmaMachine\Enigma
     public static int $fileChunkSize = 1048576;
 
     // Properties
-    public readonly protected(set) JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
-    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
-    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\EnigmaModel $model;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard;
     final public private(set) JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector;
     final public private(set) JulienBoudry\EnigmaMachine\RotorConfiguration $rotors;
     public bool $strictMode;
@@ -109,9 +109,9 @@ class JulienBoudry\EnigmaMachine\Enigma
     public static int $fileChunkSize = 1048576;
 
     // Properties
-    public readonly protected(set) JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
-    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaModel $model;
-    public readonly protected(set) JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\EnigmaModel $model;
+    public protected(set) readonly JulienBoudry\EnigmaMachine\EnigmaPlugboard $plugboard;
     final public private(set) JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector;
     final public private(set) JulienBoudry\EnigmaMachine\RotorConfiguration $rotors;
     public bool $strictMode;

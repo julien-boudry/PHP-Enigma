@@ -1,7 +1,7 @@
 > JulienBoudry \ [Enigma](class_Enigma.md)
 # Property entryWheel
 ```php
-public readonly protected(set) JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel
+public protected(set) readonly JulienBoudry\EnigmaMachine\EntryWheel\AbstractEntryWheel $entryWheel
 ```
 
 ## Description
