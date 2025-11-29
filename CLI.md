@@ -1,6 +1,8 @@
 # Enigma Machine CLI
 
-A powerful command-line interface for encoding and decoding messages using the Enigma cipher machine.
+A powerful command-line interface for encoding messages using the Enigma cipher machine.
+
+> **⚡ Reciprocal Cipher:** Enigma is a *reciprocal cipher* — encoding and decoding are the **same operation**. To decode a message, simply pass it through Enigma again with identical settings. This is a fundamental property of Enigma's electrical circuit design.
 
 ## Table of Contents
 
@@ -60,17 +62,16 @@ Decode it back (Enigma is reciprocal - same settings decode the message):
 
 ```
 Usage:
-  encode [options] [--] <text>
-  decode    (alias)
-  encipher  (alias)
-  decipher  (alias)
+  encode [options] [--] [<text>]
 ```
+
+> **Note:** There is no separate `decode` command. Enigma's reciprocal nature means the same `encode` command decodes when given encoded text with identical settings.
 
 ### Arguments
 
 | Argument | Description |
 |----------|-------------|
-| `text` | The text to encode/decode. Use A-Z only, or combine with `--latin` for automatic conversion. |
+| `text` | The text to encode. Use A-Z only, or combine with `--latin` for automatic conversion. To decode, pass the encoded text with the same settings. |
 
 ### Options
 
@@ -339,22 +340,21 @@ Random configuration for M4:
 
 ### Decoding Messages
 
-Since Enigma is reciprocal, decoding uses the exact same settings as encoding:
+**Enigma is a reciprocal cipher** — there is no separate decode operation. The same `encode` command decodes when you pass encoded text with identical settings:
 
 ```bash
-# Encode
+# Step 1: Encode
 ./bin/enigma encode "HELLOWORLD" --rotors=III-II-I --position=AAA
 # Output: MFNCZBBFZM
 
-# Decode (same settings)
+# Step 2: Decode (same command, same settings!)
 ./bin/enigma encode "MFNCZBBFZM" --rotors=III-II-I --position=AAA
 # Output: HELLOWORLD
 ```
 
-The command also has aliases for clarity:
-```bash
-./bin/enigma decode "MFNCZBBFZM" --rotors=III-II-I --position=AAA
-```
+This works because of Enigma's electrical design: current flows through the rotors, reflects, and returns — if A encodes to M, then M encodes back to A (with the same rotor positions).
+
+> **ℹ️ Why no `decode` alias?** Having aliases like `decode` or `decipher` could mislead users into thinking there's a different operation. Enigma fundamentally has only ONE operation that serves both purposes.
 
 ## Available Models
 

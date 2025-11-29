@@ -18,8 +18,14 @@ class Application extends BaseApplication
     {
         parent::__construct(self::NAME, self::VERSION);
 
+        $encodeCommand = new EncodeCommand;
+
         $this->addCommands([
-            new EncodeCommand,
+            $encodeCommand,
         ]);
+
+        if ($encodeCommand->getName()) {
+            $this->setDefaultCommand($encodeCommand->getName(), true);
+        }
     }
 }

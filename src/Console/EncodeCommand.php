@@ -13,15 +13,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use function Laravel\Prompts\{error, info, intro, note, outro, spin, table, warning};
 
 /**
- * Command to encode/decode text using the Enigma machine.
+ * Command to encode text using the Enigma machine.
  *
- * Due to the reciprocal nature of Enigma, encoding and decoding
- * use the same operation - just ensure the same settings are used.
+ * The Enigma cipher is reciprocal: encoding and decoding are the SAME operation.
+ * To decode a message, simply run it through Enigma again with identical settings.
+ * This is a fundamental property of the Enigma machine's electrical circuit design.
+ *
+ * Example:
+ *   encode("HELLO") → "MFNCZ"
+ *   encode("MFNCZ") → "HELLO"  (same settings)
  */
 #[AsCommand(
     name: 'encode',
-    description: 'Encode or decode text using the Enigma machine',
-    aliases: ['decode', 'encipher', 'decipher']
+    description: 'Encode text using the Enigma machine (decoding uses the same command with identical settings)'
 )]
 class EncodeCommand extends Command
 {
@@ -42,7 +46,7 @@ class EncodeCommand extends Command
             ->addArgument(
                 'text',
                 InputArgument::OPTIONAL,
-                'The text to encode/decode (A-Z only, or use --latin for automatic conversion). Omit when using file mode.'
+                'The text to encode (A-Z only, or use --latin for automatic conversion). To decode, pass the encoded text with the same settings. Omit when using file mode.'
             )
             ->addOption(
                 'input-binary-file',
@@ -142,26 +146,28 @@ class EncodeCommand extends Command
             )
             ->setHelp(
                 <<<HELP
-                    The <info>%command.name%</info> command encodes or decodes text using the Enigma cipher machine.
+                    The <info>%command.name%</info> command encodes text using the Enigma cipher machine.
 
-                    Due to Enigma's reciprocal nature, encoding and decoding are the same operation.
-                    To decode a message, use the same settings that were used to encode it.
+                    <comment>⚡ RECIPROCAL CIPHER:</comment>
+                    Enigma is a <options=bold>reciprocal cipher</> - encoding and decoding are the SAME operation.
+                    To decode a message, simply pass it through Enigma again with <options=bold>identical settings</>.
+                    This is a fundamental property of Enigma's electrical circuit design.
+
+                    <comment>Example - Encode then Decode:</comment>
+                      <info>%command.full_name% "HELLOWORLD"</info>              → MFNCZBBFZM
+                      <info>%command.full_name% "MFNCZBBFZM"</info>              → HELLOWORLD (decoded!)
 
                     <comment>Basic usage:</comment>
                       <info>%command.full_name% "HELLO WORLD"</info>
                       <info>%command.full_name% "HELLOWORLD" --rotors=I-II-III --position=ABC</info>
 
-                    <comment>Text file encoding (letter by letter):</comment>
+                    <comment>Text file encoding:</comment>
                       <info>%command.full_name% -I message.txt</info>
                       <info>%command.full_name% --input-text-file=message.txt --latin -o encoded.txt</info>
 
                     <comment>Binary file encoding (byte → 2 letters):</comment>
                       <info>%command.full_name% -i photo.jpg -o photo.jpg.enigma</info>
-                      <info>%command.full_name% --input-binary-file=secret.pdf --output-file=secret.pdf.enigma</info>
-
-                    <comment>Convert Enigma file back to binary:</comment>
-                      <info>%command.full_name% -i photo.jpg.enigma -o photo_decoded.jpg -t</info>
-                      <info>%command.full_name% --input-binary-file=secret.pdf.enigma --output-file=secret.pdf --to-binary</info>
+                      <info>%command.full_name% -i photo.jpg.enigma -o photo_decoded.jpg -t</info>  (decode back)
 
                     <comment>Random configuration:</comment>
                       <info>%command.full_name% "SECRET" --random --show-config</info>

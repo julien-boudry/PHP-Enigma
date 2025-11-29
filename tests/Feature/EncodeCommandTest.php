@@ -696,32 +696,6 @@ describe('EncodeCommand', function (): void {
         });
     });
 
-    describe('Command Aliases', function (): void {
-        it('supports decode alias', function (): void {
-            $application = new Application;
-            $application->addCommand(new EncodeCommand);
-            $command = $application->find('decode');
-
-            expect($command)->toBeInstanceOf(EncodeCommand::class);
-        });
-
-        it('supports encipher alias', function (): void {
-            $application = new Application;
-            $application->addCommand(new EncodeCommand);
-            $command = $application->find('encipher');
-
-            expect($command)->toBeInstanceOf(EncodeCommand::class);
-        });
-
-        it('supports decipher alias', function (): void {
-            $application = new Application;
-            $application->addCommand(new EncodeCommand);
-            $command = $application->find('decipher');
-
-            expect($command)->toBeInstanceOf(EncodeCommand::class);
-        });
-    });
-
     describe('Historical Accuracy', function (): void {
         it('encodes Operation Barbarossa message correctly', function (): void {
             $this->commandTester->execute([

@@ -3,6 +3,8 @@
 
 declare(strict_types=1);
 
+use JulienBoudry\EnigmaMachine\Console\Application;
+
 /**
  * Enigma Machine CLI Application.
  *
@@ -29,8 +31,6 @@ if (!$autoloaderFound) {
     fwrite(STDERR, "Autoloader not found. Run 'composer install' first.\n");
     exit(1);
 }
-
-use JulienBoudry\EnigmaMachine\Console\Application;
 
 $application = new Application;
 $application->run();
