@@ -101,7 +101,7 @@ enum ReflectorType
     /**
      * Create a UKW-D (Dora) reflector from a pairs string.
      *
-     * @param string $pairsString 12 pairs as a string, e.g., "AB CD EF GH IK LM NO PQ RS TU VW XZ"
+     * @param $pairsString 12 pairs as a string, e.g., "AB CD EF GH IK LM NO PQ RS TU VW XZ"
      *                            (J↔Y is added automatically)
      *
      * @return ReflectorDora The configured reflector

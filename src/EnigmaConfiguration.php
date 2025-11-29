@@ -16,11 +16,11 @@ use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
 final readonly class EnigmaConfiguration
 {
     /**
-     * @param EnigmaModel $model The Enigma model
+     * @param $model The Enigma model
      * @param array<string, RotorType> $rotorTypes Rotor types keyed by position (p1, p2, p3, greek)
      * @param array<string, Letter> $ringstellungen Ring settings keyed by position
      * @param array<string, Letter> $positions Initial positions keyed by position
-     * @param ReflectorType $reflector The reflector type
+     * @param $reflector The reflector type
      * @param list<array{Letter, Letter}> $plugboardPairs Plugboard letter pairs
      * @param list<array{Letter, Letter}>|null $doraWiringPairs Custom DORA wiring pairs (13 pairs), null for default
      */
@@ -40,7 +40,7 @@ final readonly class EnigmaConfiguration
      * Extracts the current state of the Enigma machine including
      * rotor types, ring settings, positions, reflector, and plugboard.
      *
-     * @param Enigma $enigma The Enigma machine to extract configuration from
+     * @param $enigma The Enigma machine to extract configuration from
      *
      * @return self The extracted configuration
      */

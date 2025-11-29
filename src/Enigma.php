@@ -77,10 +77,10 @@ class Enigma
      * Constructor sets up the plugboard and creates the rotors and reflectros available for the given model.
      * The initital rotors and reflectros are mounted.
      *
-     * @param EnigmaModel $model ID for the model to emulate
-     * @param RotorConfiguration $rotors The rotor configuration
-     * @param ReflectorType $reflector ID for the reflector for the initial setup
-     * @param bool $strictMode Whether to enforce compatibility checks (default: true)
+     * @param $model ID for the model to emulate
+     * @param $rotors The rotor configuration
+     * @param $reflector ID for the reflector for the initial setup
+     * @param $strictMode Whether to enforce compatibility checks (default: true)
      */
     public function __construct(EnigmaModel $model, RotorConfiguration $rotors, ReflectorType $reflector, bool $strictMode = true)
     {
@@ -111,8 +111,8 @@ class Enigma
      * - Random plugboard connections (10 pairs)
      * - Random reflector (compatible with model)
      *
-     * @param EnigmaModel $model The Enigma model to create
-     * @param Engine|null $randomEngine Random engine for testing (null = secure random)
+     * @param $model The Enigma model to create
+     * @param $randomEngine Random engine for testing (null = secure random)
      *
      * @return self A fully configured Enigma machine
      */
@@ -130,8 +130,8 @@ class Enigma
      * Same as createRandom() but also returns the configuration object,
      * which is useful for logging, debugging, or recreating the same setup.
      *
-     * @param EnigmaModel $model The Enigma model to create
-     * @param Engine|null $randomEngine Random engine for testing (null = secure random)
+     * @param $model The Enigma model to create
+     * @param $randomEngine Random engine for testing (null = secure random)
      *
      * @return array{Enigma, EnigmaConfiguration} The Enigma and its configuration
      */
@@ -148,8 +148,6 @@ class Enigma
      *
      * Extracts the complete state including rotor types, ring settings,
      * current positions, reflector, and plugboard configuration.
-     *
-     * @return EnigmaConfiguration The current configuration
      */
     public function getConfiguration(): EnigmaConfiguration
     {
@@ -188,7 +186,7 @@ class Enigma
      *
      * @see Enigma::advance()
      *
-     * @param Letter $letter letter to encode
+     * @param $letter letter to encode
      *
      * @return Letter encoded letter
      */
@@ -227,7 +225,7 @@ class Enigma
      * Mount a reflector into the enigma.
      * The previously used reflector will be replaced.
      *
-     * @param ReflectorType|AbstractReflector $reflector The reflector type or instance to mount
+     * @param $reflector The reflector type or instance to mount
      *
      * @throws \InvalidArgumentException If the reflector is not compatible with this model (when strictMode is enabled)
      */
@@ -249,8 +247,8 @@ class Enigma
     /**
      * Turn a rotor to a new position.
      *
-     * @param RotorPosition $position ID of the rotor to turn
-     * @param Letter $letter letter to turn to
+     * @param $position ID of the rotor to turn
+     * @param $letter letter to turn to
      */
     public function setPosition(RotorPosition $position, Letter $letter): void
     {
@@ -260,7 +258,7 @@ class Enigma
     /**
      * Get the current position of a rotor.
      *
-     * @param RotorPosition $position ID of the rotor
+     * @param $position ID of the rotor
      *
      * @return Letter current position
      */
@@ -275,8 +273,8 @@ class Enigma
      * Only available on military models (Wehrmacht, Kriegsmarine).
      * Commercial models (Enigma K, Swiss-K, Railway) do not have a plugboard.
      *
-     * @param Letter $letter1 letter 1 to connect
-     * @param Letter $letter2 letter 2 to connect
+     * @param $letter1 letter 1 to connect
+     * @param $letter2 letter 2 to connect
      *
      * @throws EnigmaConfigurationException If this model does not have a plugboard
      */
@@ -300,7 +298,7 @@ class Enigma
      * - Space-separated string: "AV BS CG DL FU HZ IN KM OW RX"
      * - Array of pairs: ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX']
      *
-     * @param string|array<string> $pairs Pairs to connect
+     * @param $pairs Pairs to connect
      *
      * @throws EnigmaConfigurationException If this model does not have a plugboard
      */
@@ -321,7 +319,7 @@ class Enigma
      * Only available on military models (Wehrmacht, Kriegsmarine).
      * Commercial models (Enigma K, Swiss-K, Railway) do not have a plugboard.
      *
-     * @param Letter $letter 1 of the 2 letters to disconnect
+     * @param $letter 1 of the 2 letters to disconnect
      *
      * @throws EnigmaConfigurationException If this model does not have a plugboard
      */
@@ -342,7 +340,7 @@ class Enigma
      * The input must contain only valid Enigma alphabet characters (A-Z).
      * Use encodeText() for arbitrary text that needs conversion first.
      *
-     * @param string $letters The letters to encode (A-Z only, no spaces or other characters)
+     * @param $letters The letters to encode (A-Z only, no spaces or other characters)
      *
      * @throws \ValueError If the input contains invalid characters
      *
@@ -373,9 +371,9 @@ class Enigma
      * Numbers are converted to German words (historical convention):
      * 0=NULL, 1=EINS, 2=ZWEI, 3=DREI, 4=VIER, 5=FUENF, 6=SECHS, 7=SIEBEN, 8=ACHT, 9=NEUN
      *
-     * @param string $text The text to encode (Latin characters, numbers, accents, punctuation)
-     * @param string $spaceReplacement Character(s) to replace spaces with (default: 'X')
-     * @param bool $formatOutput Whether to format output in 5-letter groups (default: false)
+     * @param $text The text to encode (Latin characters, numbers, accents, punctuation)
+     * @param $spaceReplacement Character(s) to replace spaces with (default: 'X')
+     * @param $formatOutput Whether to format output in 5-letter groups (default: false)
      *
      * @return string The encoded text
      *
@@ -402,8 +400,8 @@ class Enigma
      * This method converts binary data to Enigma-compatible format and encodes it.
      * Useful for encoding arbitrary data that isn't text.
      *
-     * @param string $binaryData Raw binary data to encode
-     * @param bool $formatOutput Whether to format output in 5-letter groups (default: false)
+     * @param $binaryData Raw binary data to encode
+     * @param $formatOutput Whether to format output in 5-letter groups (default: false)
      *
      * @return string The encoded data in Enigma format
      *
@@ -433,8 +431,8 @@ class Enigma
      * results. To decode, use a fresh Enigma with the same initial configuration,
      * or clone the Enigma before encoding.
      *
-     * @param string|\SplFileObject $source Source file path or SplFileObject to read from
-     * @param string|\SplFileObject $destination Destination file path or SplFileObject to write to
+     * @param $source Source file path or SplFileObject to read from
+     * @param $destination Destination file path or SplFileObject to write to
      *
      * @throws \RuntimeException If the source file cannot be read or destination cannot be written
      *
@@ -492,8 +490,8 @@ class Enigma
      * results. To decode the same file again, reset the rotor positions or use
      * a fresh Enigma with the same initial configuration.
      *
-     * @param string|\SplFileObject $source Source file path or SplFileObject containing Enigma-encoded data
-     * @param string|\SplFileObject $destination Destination file path or SplFileObject to write decoded binary to
+     * @param $source Source file path or SplFileObject containing Enigma-encoded data
+     * @param $destination Destination file path or SplFileObject to write decoded binary to
      *
      * @throws \RuntimeException If the source file cannot be read, destination cannot be written, or decoding fails
      *
@@ -547,7 +545,7 @@ class Enigma
     /**
      * Open a file for reading.
      *
-     * @param string|\SplFileObject $file File path or SplFileObject
+     * @param $file File path or SplFileObject
      *
      * @throws \RuntimeException If the file cannot be opened
      *
@@ -569,7 +567,7 @@ class Enigma
     /**
      * Open a file for writing.
      *
-     * @param string|\SplFileObject $file File path or SplFileObject
+     * @param $file File path or SplFileObject
      *
      * @throws \RuntimeException If the file cannot be opened
      *

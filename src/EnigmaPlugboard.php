@@ -55,7 +55,7 @@ class EnigmaPlugboard
      * Because pins are connected in pairs, there is no difference if
      * processLetter1stPass() or processLetter2ndPass() is used.
      *
-     * @param Letter $letter letter to process
+     * @param $letter letter to process
      *
      * @return Letter resulting letter
      */
@@ -67,8 +67,8 @@ class EnigmaPlugboard
     /**
      * Connect 2 letters.
      *
-     * @param Letter $letter1 letter 1 to connect
-     * @param Letter $letter2 letter 2 to connect
+     * @param $letter1 letter 1 to connect
+     * @param $letter2 letter 2 to connect
      */
     public function plugLetters(Letter $letter1, Letter $letter2): void
     {
@@ -80,7 +80,7 @@ class EnigmaPlugboard
      * Disconnect 2 letters.
      * Because letters are connected in pairs, we only need to know one of them.
      *
-     * @param Letter $letter 1 of the 2 letters to disconnect
+     * @param $letter 1 of the 2 letters to disconnect
      */
     public function unplugLetters(Letter $letter): void
     {
@@ -96,7 +96,7 @@ class EnigmaPlugboard
      * - Space-separated: "AV BS CG DL"
      * - Array of pairs: ['AV', 'BS', 'CG', 'DL']
      *
-     * @param string|array<string> $pairs Pairs to connect
+     * @param $pairs Pairs to connect
      */
     public function plugLettersFromPairs(string|array $pairs): void
     {

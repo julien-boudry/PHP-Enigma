@@ -52,7 +52,7 @@ abstract class AbstractReflector
      * Because pins are connected in pairs, there is no difference if
      * processLetter1stPass() or processLetter2ndPass() is used.
      *
-     * @param Letter $letter letter to process
+     * @param $letter letter to process
      *
      * @return Letter resulting letter
      */

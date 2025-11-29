@@ -52,8 +52,8 @@ class EnigmaWiring
     /**
      * Manually connect 2 pins.
      *
-     * @param Letter $pin1 pin 1 to connect
-     * @param Letter $pin2 pin 2 to connect
+     * @param $pin1 pin 1 to connect
+     * @param $pin2 pin 2 to connect
      *
      * @return void
      */
@@ -65,7 +65,7 @@ class EnigmaWiring
     /**
      * Get the connected pin.
      *
-     * @param Letter $pin start of the connection
+     * @param $pin start of the connection
      *
      * @return Letter the connected pin
      */
@@ -77,7 +77,7 @@ class EnigmaWiring
     /**
      * Pass the given letter form side A to side B by following the connection of the pins.
      *
-     * @param Letter $pin pin that got activated
+     * @param $pin pin that got activated
      *
      * @return Letter pin that gets activated
      */
@@ -89,7 +89,7 @@ class EnigmaWiring
     /**
      * Pass the given letter form side B to side A by following the connection of the pins.
      *
-     * @param Letter $pin pin that got activated
+     * @param $pin pin that got activated
      *
      * @return Letter pin that gets activated
      */

@@ -39,7 +39,7 @@ abstract class AbstractEntryWheel
     /**
      * Process a letter entering the rotor assembly (keyboard → rotors).
      *
-     * @param Letter $letter The letter from the keyboard/plugboard
+     * @param $letter The letter from the keyboard/plugboard
      *
      * @return Letter The letter mapped to rotor contact position
      */
@@ -51,7 +51,7 @@ abstract class AbstractEntryWheel
     /**
      * Process a letter exiting the rotor assembly (rotors → lamps).
      *
-     * @param Letter $letter The letter from the rotor assembly
+     * @param $letter The letter from the rotor assembly
      *
      * @return Letter The letter mapped to keyboard/lamp position
      */

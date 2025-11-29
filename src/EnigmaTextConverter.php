@@ -93,9 +93,9 @@ final class EnigmaTextConverter
      * Numbers are converted to German words (historical convention):
      * 0=NULL, 1=EINS, 2=ZWEI, 3=DREI, 4=VIER, 5=FUENF, 6=SECHS, 7=SIEBEN, 8=ACHT, 9=NEUN
      *
-     * @param string $text The input text (Latin characters, numbers, accents, punctuation)
-     * @param string $spaceReplacement Character(s) to replace spaces with (default: 'X')
-     * @param bool $keepUnknownAsX Replace unknown/non-Latin characters with X (default: true)
+     * @param $text The input text (Latin characters, numbers, accents, punctuation)
+     * @param $spaceReplacement Character(s) to replace spaces with (default: 'X')
+     * @param $keepUnknownAsX Replace unknown/non-Latin characters with X (default: true)
      *
      * @return string The converted text containing only A-Z characters
      */
@@ -170,7 +170,7 @@ final class EnigmaTextConverter
     /**
      * Check if a string is already in valid Enigma format (A-Z only).
      *
-     * @param string $text The text to check
+     * @param $text The text to check
      *
      * @return bool True if the text contains only A-Z characters
      */
@@ -185,7 +185,7 @@ final class EnigmaTextConverter
      * This encodes arbitrary binary data into A-Z characters only.
      * Each byte is converted to a 2-3 letter representation.
      *
-     * @param string $binaryData Raw binary data
+     * @param $binaryData Raw binary data
      *
      * @return string Enigma-compatible representation
      */
@@ -215,7 +215,7 @@ final class EnigmaTextConverter
      *
      * This is the reverse of binaryToEnigmaFormat().
      *
-     * @param string $enigmaText Text encoded with binaryToEnigmaFormat()
+     * @param $enigmaText Text encoded with binaryToEnigmaFormat()
      *
      * @return string|null Decoded binary data, or null if invalid format
      */
@@ -250,8 +250,8 @@ final class EnigmaTextConverter
     /**
      * Format Enigma output into traditional 5-letter groups.
      *
-     * @param string $text The Enigma text
-     * @param int $groupSize Size of each group (default: 5)
+     * @param $text The Enigma text
+     * @param $groupSize Size of each group (default: 5)
      *
      * @return string Formatted text with spaces between groups
      */
@@ -267,7 +267,7 @@ final class EnigmaTextConverter
     /**
      * Remove group formatting (spaces) from Enigma text.
      *
-     * @param string $text The formatted Enigma text
+     * @param $text The formatted Enigma text
      *
      * @return string Text without spaces
      */

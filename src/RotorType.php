@@ -177,7 +177,7 @@ enum RotorType
     /**
      * Create a rotor instance for this type.
      *
-     * @param Letter $ringstellung The ring setting (default: A)
+     * @param $ringstellung The ring setting (default: A)
      *
      * @return AbstractRotor The rotor instance
      */
@@ -240,7 +240,7 @@ enum RotorType
      * This method dynamically filters rotors based on their getCompatibleModels() method,
      * excluding Greek rotors (Beta/Gamma) which have special positioning rules.
      *
-     * @param EnigmaModel $model The Enigma model to get compatible rotors for
+     * @param $model The Enigma model to get compatible rotors for
      *
      * @return list<self> List of compatible non-Greek rotor types
      */

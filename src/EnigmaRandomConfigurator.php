@@ -33,7 +33,7 @@ final class EnigmaRandomConfigurator
     /**
      * Create a new random configurator.
      *
-     * @param Engine|null $engine Random engine to use. If null, uses cryptographically secure randomness.
+     * @param $engine Random engine to use. If null, uses cryptographically secure randomness.
      */
     public function __construct(?Engine $engine = null)
     {
@@ -43,7 +43,7 @@ final class EnigmaRandomConfigurator
     /**
      * Generate a complete random Enigma configuration for a model.
      *
-     * @param EnigmaModel $model The Enigma model to configure
+     * @param $model The Enigma model to configure
      *
      * @return EnigmaConfiguration The random configuration
      */

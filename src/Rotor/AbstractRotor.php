@@ -76,7 +76,7 @@ abstract class AbstractRotor
     /**
      * Constructor creates a new Wiring with the setup from the WIRING constant.
      *
-     * @param Letter $ringstellung The ring setting (default: A)
+     * @param $ringstellung The ring setting (default: A)
      */
     public function __construct(Letter $ringstellung = Letter::A)
     {
@@ -115,7 +115,7 @@ abstract class AbstractRotor
      * To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.
      * + Letter::count() and % Letter::count() keep the value positive and in bounds.
      *
-     * @param Letter $letter letter to process
+     * @param $letter letter to process
      *
      * @return Letter resulting letter
      */
@@ -133,7 +133,7 @@ abstract class AbstractRotor
      * To get the right pin of the wiring, we have to take the current position and the offset given by the ringstellung into account.
      * + Letter::count() and % Letter::count() keep the value positive and in bounds.
      *
-     * @param Letter $letter letter to process
+     * @param $letter letter to process
      *
      * @return Letter resulting letter
      */
@@ -149,7 +149,7 @@ abstract class AbstractRotor
     /**
      * Set the rotor to a given position.
      *
-     * @param Letter $letter position to go to
+     * @param $letter position to go to
      */
     public function setPosition(Letter $letter): void
     {
@@ -169,7 +169,7 @@ abstract class AbstractRotor
     /**
      * Sets the ringstellung to a given position.
      *
-     * @param Letter $letter position to go to
+     * @param $letter position to go to
      */
     public function setRingstellung(Letter $letter): void
     {
@@ -189,7 +189,7 @@ abstract class AbstractRotor
     /**
      * Check if this rotor is compatible with the given Enigma model.
      *
-     * @param EnigmaModel $model The model to check compatibility with
+     * @param $model The model to check compatibility with
      *
      * @return bool True if compatible, false otherwise
      */

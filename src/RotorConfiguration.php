@@ -41,15 +41,15 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
      * - A RotorType enum (will be created with the corresponding ringstellung parameter)
      * - An AbstractRotor instance (for pre-configured rotors, ringstellung parameter is ignored)
      *
-     * @param RotorType|AbstractRotor $p1 Position 1 rotor (rightmost, fastest rotating)
-     * @param RotorType|AbstractRotor $p2 Position 2 rotor (middle)
-     * @param RotorType|AbstractRotor $p3 Position 3 rotor (leftmost in 3-rotor models)
-     * @param RotorType|AbstractRotor|null $greek Greek position rotor (M4 only, never rotates)
-     * @param Letter $ringstellungP1 Ring setting for P1 rotor (only used if $p1 is RotorType)
-     * @param Letter $ringstellungP2 Ring setting for P2 rotor (only used if $p2 is RotorType)
-     * @param Letter $ringstellungP3 Ring setting for P3 rotor (only used if $p3 is RotorType)
-     * @param Letter $ringstellungGreek Ring setting for Greek rotor (only used if $greek is RotorType)
-     * @param bool $strictMode Whether to enforce configuration checks (default: true)
+     * @param $p1 Position 1 rotor (rightmost, fastest rotating)
+     * @param $p2 Position 2 rotor (middle)
+     * @param $p3 Position 3 rotor (leftmost in 3-rotor models)
+     * @param $greek Greek position rotor (M4 only, never rotates)
+     * @param $ringstellungP1 Ring setting for P1 rotor (only used if $p1 is RotorType)
+     * @param $ringstellungP2 Ring setting for P2 rotor (only used if $p2 is RotorType)
+     * @param $ringstellungP3 Ring setting for P3 rotor (only used if $p3 is RotorType)
+     * @param $ringstellungGreek Ring setting for Greek rotor (only used if $greek is RotorType)
+     * @param $strictMode Whether to enforce configuration checks (default: true)
      */
     public function __construct(
         RotorType|AbstractRotor $p1,
@@ -145,7 +145,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
     /**
      * Get a rotor by its position.
      *
-     * @param RotorPosition $position The position to get
+     * @param $position The position to get
      *
      * @throws \InvalidArgumentException If no rotor is mounted at the given position
      *
@@ -163,7 +163,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
     /**
      * Check if a rotor is mounted at the given position.
      *
-     * @param RotorPosition $position The position to check
+     * @param $position The position to check
      *
      * @return bool True if a rotor is mounted
      */
@@ -175,9 +175,9 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
     /**
      * Mount a rotor at the given position, replacing any existing rotor.
      *
-     * @param RotorPosition $position The position to mount the rotor
-     * @param RotorType|AbstractRotor $rotor The rotor to mount
-     * @param Letter $ringstellung The ring setting (only used if $rotor is RotorType)
+     * @param $position The position to mount the rotor
+     * @param $rotor The rotor to mount
+     * @param $ringstellung The ring setting (only used if $rotor is RotorType)
      *
      * @throws EnigmaConfigurationException If the rotor type is already used or incompatible with position (when strictMode is enabled)
      */
@@ -275,7 +275,7 @@ class RotorConfiguration implements \Countable, \IteratorAggregate
     /**
      * Validate that the configuration is complete for the given model.
      *
-     * @param EnigmaModel $model The model to validate against
+     * @param $model The model to validate against
      *
      * @throws \InvalidArgumentException If the configuration is invalid for the model
      */

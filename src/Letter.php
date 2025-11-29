@@ -58,7 +58,7 @@ enum Letter: int
     /**
      * Create a Letter from a single character string.
      *
-     * @param string $char A single character (A-Z, case-insensitive)
+     * @param $char A single character (A-Z, case-insensitive)
      *
      * @throws \ValueError If the character is not a valid letter
      */
@@ -83,7 +83,7 @@ enum Letter: int
      *
      * This is useful for rotor calculations where positions wrap around.
      *
-     * @param int $position The position (will be wrapped to 0-25)
+     * @param $position The position (will be wrapped to 0-25)
      */
     public static function fromPosition(int $position): self
     {

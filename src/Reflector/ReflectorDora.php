@@ -185,7 +185,7 @@ final class ReflectorDora extends AbstractReflector
     /**
      * Create a ReflectorDora from a simple string of pairs.
      *
-     * @param string $pairsString 13 pairs as a string, e.g., "AC BO DE FG HI JK LM NP QR ST UV WX YZ"
+     * @param $pairsString 13 pairs as a string, e.g., "AC BO DE FG HI JK LM NP QR ST UV WX YZ"
      *
      * @throws EnigmaWiringException If the string format is invalid
      *
