@@ -24,8 +24,9 @@ class Application extends BaseApplication
             $encodeCommand,
         ]);
 
+        // Set encode as default command but allow explicit "encode" syntax too
         if ($encodeCommand->getName()) {
-            $this->setDefaultCommand($encodeCommand->getName(), true);
+            $this->setDefaultCommand($encodeCommand->getName());
         }
     }
 }
