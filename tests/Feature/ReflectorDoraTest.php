@@ -129,6 +129,9 @@ describe('ReflectorDora', function (): void {
         });
 
         it('can be mounted with custom wiring', function (): void {
+            $customDora = ReflectorDora::fromString('AC BO DE FG HI JK LM NP QR ST UV WX YZ');
+
+            // Now we can pass the custom reflector directly to the constructor
             $enigma = new Enigma(
                 EnigmaModel::WMLW,
                 new RotorConfiguration(
@@ -136,11 +139,8 @@ describe('ReflectorDora', function (): void {
                     p2: RotorType::II,
                     p3: RotorType::III,
                 ),
-                ReflectorType::B
+                $customDora
             );
-
-            $customDora = ReflectorDora::fromString('AC BO DE FG HI JK LM NP QR ST UV WX YZ');
-            $enigma->mountReflector($customDora);
 
             $encoded = $enigma->encodeLetters('HELLO');
 
@@ -175,15 +175,12 @@ describe('ReflectorDora', function (): void {
                 p3: RotorType::III,
             );
 
-            $enigma1 = new Enigma(EnigmaModel::WMLW, clone $rotors, ReflectorType::B);
-            $enigma2 = new Enigma(EnigmaModel::WMLW, clone $rotors, ReflectorType::B);
-
-            // Two different UKW-D configurations
+            // Two different UKW-D configurations passed directly to constructor
             $dora1 = ReflectorDora::fromString('AC BO DE FG HI JK LM NP QR ST UV WX YZ');
             $dora2 = ReflectorDora::fromString('AZ BO CE DF GH IJ KL MN PQ RS TU VW XY');
 
-            $enigma1->mountReflector($dora1);
-            $enigma2->mountReflector($dora2);
+            $enigma1 = new Enigma(EnigmaModel::WMLW, clone $rotors, $dora1);
+            $enigma2 = new Enigma(EnigmaModel::WMLW, clone $rotors, $dora2);
 
             $plaintext = 'TESTMESSAGE';
             $output1 = $enigma1->encodeLetters($plaintext);

@@ -79,10 +79,10 @@ class Enigma
      *
      * @param $model ID for the model to emulate
      * @param $rotors The rotor configuration
-     * @param $reflector ID for the reflector for the initial setup
+     * @param $reflector The reflector type or a custom reflector instance (e.g., configured ReflectorDora)
      * @param $strictMode Whether to enforce compatibility checks (default: true)
      */
-    public function __construct(EnigmaModel $model, RotorConfiguration $rotors, ReflectorType $reflector, bool $strictMode = true)
+    public function __construct(EnigmaModel $model, RotorConfiguration $rotors, ReflectorType|AbstractReflector $reflector, bool $strictMode = true)
     {
         $this->model = $model;
         $this->strictMode = $strictMode;

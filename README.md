@@ -274,6 +274,30 @@ $enigma->mountReflector(ReflectorType::C);
 $rotorsConfiguration->mountRotor(RotorPosition::P1, RotorType::V);
 ```
 
+### UKW-D (Dora) Rewirable Reflector
+
+The UKW-D (Umkehrwalze Dora) was a rewirable reflector introduced by the Wehrmacht/Luftwaffe in January 1944. Unlike fixed reflectors, operators could configure their own wiring:
+
+```php
+use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
+
+// Create a custom DORA reflector with specific wiring (13 pairs)
+$customDora = ReflectorDora::fromString('AQ BW CE DT FX GR HU IZ JK LN MO PS VY');
+
+// Pass directly to the Enigma constructor
+$enigma = new Enigma(
+    EnigmaModel::WMLW,
+    $rotorsConfiguration,
+    $customDora  // ReflectorType or AbstractReflector accepted
+);
+
+// Or use default DORA wiring
+$enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::DORA);
+
+// Or mount after construction
+$enigma->mountReflector($customDora);
+```
+
 ## Advanced Features
 
 ### Strict Mode

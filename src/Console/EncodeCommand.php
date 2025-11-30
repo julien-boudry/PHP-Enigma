@@ -1208,22 +1208,17 @@ class EncodeCommand extends Command
         }
 
         // Create custom DORA reflector if wiring is specified
-        $customDoraReflector = null;
+        $reflectorToUse = $reflector;
         if ($reflector === ReflectorType::DORA && $doraWiringStr !== '') {
-            $customDoraReflector = ReflectorDora::fromString($doraWiringStr);
+            $reflectorToUse = ReflectorDora::fromString($doraWiringStr);
         }
 
         $enigma = new Enigma(
             model: $model,
             rotors: $rotorConfig,
-            reflector: $reflector,
+            reflector: $reflectorToUse,
             strictMode: $strictMode,
         );
-
-        // Mount custom DORA reflector after construction
-        if ($customDoraReflector !== null) {
-            $enigma->mountReflector($customDoraReflector);
-        }
 
         // Set initial positions
         $enigma->setPosition(RotorPosition::P1, $positions[0]);
