@@ -267,9 +267,7 @@ class EnigmaStyle extends SymfonyStyle
         $choiceQuestion->setErrorMessage('Invalid selection: %s');
 
         /** @var string $answer */
-        $answer = $this->askQuestion($choiceQuestion);
-
-        return $answer;
+        return $this->askQuestion($choiceQuestion);
     }
 
     /**
@@ -291,9 +289,7 @@ class EnigmaStyle extends SymfonyStyle
         $choiceQuestion->setErrorMessage('Invalid selection: %s');
 
         /** @var array<string> $answer */
-        $answer = $this->askQuestion($choiceQuestion);
-
-        return $answer;
+        return $this->askQuestion($choiceQuestion);
     }
 
     /**
@@ -321,9 +317,7 @@ class EnigmaStyle extends SymfonyStyle
         }
 
         /** @var string $answer */
-        $answer = $this->askQuestion($inputQuestion);
-
-        return $answer;
+        return $this->askQuestion($inputQuestion);
     }
 
     /**
