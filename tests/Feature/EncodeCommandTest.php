@@ -66,7 +66,8 @@ describe('EncodeCommand', function (): void {
         });
 
         it('fails when no text is provided', function (): void {
-            $result = $output = executeAndGetOutput($this->commandTester, $this->promptOutput, []);
+            $this->commandTester->execute([], ['interactive' => false]);
+            $output = $this->commandTester->getDisplay() . $this->promptOutput->fetch();
 
             expect($this->commandTester->getStatusCode())->toBe(1);
             expect($output)->toContain('No text provided');
@@ -287,6 +288,101 @@ describe('EncodeCommand', function (): void {
 
             expect($this->commandTester->getStatusCode())->toBe(0);
             expect($output)->toContain('does not have a plugboard');
+        });
+    });
+
+    describe('DORA Reflector Wiring (--dora-wiring)', function (): void {
+        it('accepts custom DORA wiring', function (): void {
+            $this->commandTester->execute([
+                'text' => 'HELLO',
+                '--model' => 'WMLW',
+                '--reflector' => 'DORA',
+                '--dora-wiring' => 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+        });
+
+        it('custom DORA wiring affects encoding', function (): void {
+            // With default DORA wiring
+            $this->commandTester->execute([
+                'text' => 'HELLO',
+                '--model' => 'WMLW',
+                '--reflector' => 'DORA',
+            ]);
+            $withDefault = $this->commandTester->getDisplay();
+
+            // With custom DORA wiring (different from default)
+            $this->commandTester->execute([
+                'text' => 'HELLO',
+                '--model' => 'WMLW',
+                '--reflector' => 'DORA',
+                '--dora-wiring' => 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY',
+            ]);
+            $withCustom = $this->commandTester->getDisplay();
+
+            expect($withCustom)->not->toBe($withDefault);
+        });
+
+        it('encoding with DORA is reciprocal', function (): void {
+            $customWiring = 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY';
+
+            // Encode
+            $this->commandTester->execute([
+                'text' => 'HELLOWORLD',
+                '--model' => 'WMLW',
+                '--reflector' => 'DORA',
+                '--dora-wiring' => $customWiring,
+            ]);
+
+            // Extract encoded text from the military-style output
+            $encoded = trim(preg_replace('/.*│\s*(\w+).*/s', '$1', $this->commandTester->getDisplay()));
+
+            // Decode with same settings
+            $this->commandTester->execute([
+                'text' => $encoded,
+                '--model' => 'WMLW',
+                '--reflector' => 'DORA',
+                '--dora-wiring' => $customWiring,
+            ]);
+
+            expect($this->commandTester->getDisplay())->toContain('HELLOWORLD');
+        });
+
+        it('warns when --dora-wiring used without DORA reflector', function (): void {
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--model' => 'WMLW',
+                '--reflector' => 'B',
+                '--dora-wiring' => 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('--dora-wiring is only valid with reflector DORA');
+        });
+
+        it('fails with invalid DORA wiring', function (): void {
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--model' => 'WMLW',
+                '--reflector' => 'DORA',
+                '--dora-wiring' => 'INVALID',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(1);
+        });
+
+        it('shows DORA configuration with --show-config', function (): void {
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--model' => 'WMLW',
+                '--reflector' => 'DORA',
+                '--dora-wiring' => 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY',
+                '--show-config' => true,
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('DORA');
         });
     });
 
@@ -881,6 +977,65 @@ describe('EncodeCommand', function (): void {
             ]);
 
             expect($this->commandTester->getStatusCode())->toBe(0);
+        });
+    });
+
+    describe('Interactive Mode', function (): void {
+        it('enters interactive mode when no text argument is provided and interactive is true', function (): void {
+            // Just verify that interactive mode is triggered (shows the welcome banner)
+            // We don't test the full flow as ChoiceQuestion requires complex input simulation
+            $this->commandTester->setInputs([]); // No inputs will cause an error, but we check the banner appears
+
+            try {
+                $this->commandTester->execute([], ['interactive' => true]);
+            } catch (\Exception) {
+                // Expected - questions will fail without proper input
+            }
+
+            expect($this->commandTester->getDisplay())->toContain('Interactive Configuration');
+            expect($this->commandTester->getDisplay())->toContain('Step 1');
+        });
+
+        it('does not enter interactive mode when text is provided', function (): void {
+            $this->commandTester->execute(['text' => 'HELLO'], ['interactive' => true]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($this->commandTester->getDisplay())->not->toContain('Interactive Configuration');
+        });
+
+        it('does not enter interactive mode when --input-text-file is provided', function (): void {
+            $tempFile = sys_get_temp_dir() . '/enigma_test_' . uniqid() . '.txt';
+            file_put_contents($tempFile, 'HELLO');
+
+            try {
+                $this->commandTester->execute(['--input-text-file' => $tempFile], ['interactive' => true]);
+
+                expect($this->commandTester->getStatusCode())->toBe(0);
+                expect($this->commandTester->getDisplay())->not->toContain('Interactive Configuration');
+            } finally {
+                @unlink($tempFile);
+            }
+        });
+
+        it('does not enter interactive mode when --no-interaction is set', function (): void {
+            $this->commandTester->execute([], ['interactive' => false]);
+
+            expect($this->commandTester->getStatusCode())->toBe(1);
+            expect($this->commandTester->getDisplay())->not->toContain('Interactive Configuration');
+            expect($this->commandTester->getDisplay())->toContain('No text provided');
+        });
+
+        it('shows pre-selected options from command line', function (): void {
+            // Providing --model should show it as "from command line"
+            $this->commandTester->setInputs([]);
+
+            try {
+                $this->commandTester->execute(['--model' => 'KMM3'], ['interactive' => true]);
+            } catch (\Exception) {
+                // Expected
+            }
+
+            expect($this->commandTester->getDisplay())->toContain('KMM3 (from command line)');
         });
     });
 });

@@ -133,4 +133,36 @@ enum EnigmaModel
     {
         return \in_array($reflector, $this->getCompatibleReflectors(), true);
     }
+
+    /**
+     * Get a human-readable description of this model.
+     */
+    public function getDescription(): string
+    {
+        return match ($this) {
+            self::WMLW => 'Standard Wehrmacht/Luftwaffe model',
+            self::KMM3 => 'Naval 3-rotor model',
+            self::KMM4 => 'Naval 4-rotor variant (Greek rotor)',
+            self::ENIGMA_K => 'Commercial Enigma K (no plugboard)',
+            self::SWISS_K => 'Swiss Army variant (no plugboard)',
+            self::RAILWAY => 'German Railway Enigma (no plugboard)',
+            self::TIRPITZ => 'German-Japanese communications (no plugboard)',
+        };
+    }
+
+    /**
+     * Get an emoji representing this model.
+     */
+    public function getEmoji(): string
+    {
+        return match ($this) {
+            self::WMLW => '🎖️',
+            self::KMM3 => '⚓',
+            self::KMM4 => '🚢',
+            self::ENIGMA_K => '🏢',
+            self::SWISS_K => '🇨🇭',
+            self::RAILWAY => '🚂',
+            self::TIRPITZ => '🇯🇵',
+        };
+    }
 }

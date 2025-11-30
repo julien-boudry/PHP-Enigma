@@ -8,6 +8,7 @@ A powerful command-line interface for encoding messages using the Enigma cipher 
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Interactive Mode](#interactive-mode)
 - [Command Reference](#command-reference)
 - [Usage Examples](#usage-examples)
 - [Models, Rotors & Reflectors](#models-rotors--reflectors)
@@ -44,6 +45,66 @@ Decode it back (Enigma is reciprocal - same settings decode the message):
 # Output: HELLOWORLD
 ```
 
+## Interactive Mode
+
+When no text argument is provided, the CLI enters **interactive mode** — a beautiful, step-by-step configuration wizard:
+
+```bash
+./bin/enigma encode
+```
+
+```
+╔══════════════════════════════════════════════════════════╗
+║     ⚙ ENIGMA MACHINE ⚙  Interactive Configuration    ║
+╚══════════════════════════════════════════════════════════╝
+
+  Configure your Enigma machine step by step.
+  Use arrow keys to navigate, Enter to select.
+
+  [●○○○○○○] Step 1/7: Select Enigma Model
+
+  💡 Military models (WMLW, KMM3, KMM4) have plugboards for extra security.
+  💡 KMM4 is the famous 4-rotor naval Enigma used by U-boats.
+
+   ▸ Which Enigma model?
+  [WMLW    ] 🎖️  Wehrmacht/Luftwaffe - Standard military model (3R, 🔌 plugboard)
+  [KMM3    ] ⚓ Kriegsmarine M3 - Naval 3-rotor model (3R, 🔌 plugboard)
+  [KMM4    ] 🚢 Kriegsmarine M4 - Naval 4-rotor (U-boats) (4R, 🔌 plugboard)
+  ...
+```
+
+### Interactive Features
+
+- **Visual selectors**: Use arrow keys to browse models, rotors, and reflectors
+- **Smart hints**: Contextual tips at each step
+- **Validation**: Input is validated in real-time (letters A-Z, pair format, etc.)
+- **Progressive disclosure**: Only relevant options are shown based on the selected model
+- **Pre-filled defaults**: Press Enter to accept sensible defaults
+
+### Skipping Steps
+
+Options passed on the command line **skip** the corresponding interactive step:
+
+```bash
+# Interactive mode, but model is pre-selected
+./bin/enigma encode --model=KMM4
+
+# Skip model, rotors, and ring selection
+./bin/enigma encode --model=WMLW --rotors=V-II-IV --ring=XYZ
+```
+
+### Disabling Interactive Mode
+
+Use `--no-interaction` (or `-n`) to disable interactive mode entirely:
+
+```bash
+# This will fail with an error (no text provided)
+./bin/enigma encode -n
+
+# Useful for scripts or non-TTY environments
+echo "HELLO" | ./bin/enigma encode -n  # Piped input requires -n
+```
+
 ## Command Reference
 
 ```
@@ -62,6 +123,7 @@ Usage:
 | `--position` | `-p` | Initial positions (Grundstellung), left to right | `AAA` |
 | `--reflector` | `-u` | Reflector (Umkehrwalze) to use | `B` |
 | `--plugboard` | `-b` | Plugboard pairs, space-separated (e.g., `"AV BS CG"`) | *(empty)* |
+| `--dora-wiring` | `-d` | Custom wiring for UKW-D (Dora) reflector, 13 pairs | *(default wiring)* |
 | `--input-binary-file` | `-i` | Encode a binary file to Enigma letters | |
 | `--input-text-file` | `-I` | Read text from a file and encode | |
 | `--output-file` | `-o` | Write output to a file | |
@@ -72,6 +134,7 @@ Usage:
 | `--random` | | Generate a random configuration | *(off)* |
 | `--show-config` | `-s` | Display the configuration used | *(off)* |
 | `--no-strict` | | Disable strict mode (allow non-historical configurations) | *(off)* |
+| `--no-interaction` | `-n` | Disable interactive mode (for scripts/pipes) | *(off)* |
 
 ## Usage Examples
 
@@ -118,6 +181,23 @@ Usage:
 # Enigma T Tirpitz
 ./bin/enigma encode "MESSAGE" --model=TIRPITZ --rotors=TIRPITZ_VIII-TIRPITZ_V-TIRPITZ_III --reflector=TIRPITZ
 ```
+
+### UKW-D (Dora) Reflector
+
+The UKW-D (Umkehrwalze Dora) was a rewirable reflector used by the Wehrmacht/Luftwaffe from January 1944. Use `--dora-wiring` to specify custom wiring:
+
+```bash
+# With custom DORA wiring (13 letter pairs, J↔Y is fixed internally)
+./bin/enigma encode "SECRETMESSAGE" \
+  --model=WMLW \
+  --reflector=DORA \
+  --dora-wiring="AQ BW CE DT FX GR HU IZ JK LN MO PS VY"
+
+# With default DORA wiring (omit --dora-wiring)
+./bin/enigma encode "SECRETMESSAGE" --model=WMLW --reflector=DORA
+```
+
+> **Note:** `--dora-wiring` is only valid when `--reflector=DORA`. If used with another reflector, a warning is displayed and the option is ignored.
 
 ### Latin Text & Formatting
 

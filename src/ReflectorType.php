@@ -110,4 +110,22 @@ enum ReflectorType
     {
         return ReflectorDora::fromString($pairsString);
     }
+
+    /**
+     * Get a human-readable description of this reflector type.
+     */
+    public function getDescription(): string
+    {
+        return match ($this) {
+            self::B => 'Standard Wehrmacht reflector',
+            self::C => 'Alternative Wehrmacht reflector',
+            self::BTHIN => 'Thin B for M4 naval',
+            self::CTHIN => 'Thin C for M4 naval',
+            self::DORA => 'Rewirable Dora reflector',
+            self::K => 'Commercial Enigma K reflector',
+            self::SWISS_K => 'Swiss Army reflector',
+            self::RAILWAY => 'Railway Enigma reflector',
+            self::TIRPITZ => 'Tirpitz reflector',
+        };
+    }
 }

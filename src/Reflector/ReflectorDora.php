@@ -36,6 +36,14 @@ use JulienBoudry\EnigmaMachine\{Letter, ReflectorType};
 final class ReflectorDora extends AbstractReflector
 {
     /**
+     * Default wiring pairs for UKW-D.
+     *
+     * Historical default: B↔O was fixed on the physical device.
+     * Format: 13 pairs separated by spaces (26 letters total).
+     */
+    public const string DEFAULT_WIRING = 'AC BO DE FG HI JK LM NP QR ST UV WX YZ';
+
+    /**
      * The custom wiring configuration.
      */
     private string $customWiring;
@@ -226,8 +234,6 @@ final class ReflectorDora extends AbstractReflector
      */
     public static function withDefaultWiring(): self
     {
-        // Historical default: B↔O was fixed on physical device
-        // Uses pairs: AC, BO, DE, FG, HI, JK, LM, NP, QR, ST, UV, WX, YZ
-        return self::fromString('AC BO DE FG HI JK LM NP QR ST UV WX YZ');
+        return self::fromString(self::DEFAULT_WIRING);
     }
 }

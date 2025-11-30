@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JulienBoudry\EnigmaMachine\Console;
 
 use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
 use Symfony\Component\Console\Input\{InputArgument, InputInterface, InputOption};
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -28,6 +29,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class EncodeCommand extends Command
 {
     protected EnigmaStyle $io;
+    protected bool $isInteractive = false;
     protected function configure(): void
     {
         $modelChoices = implode(', ', array_map(fn(EnigmaModel $m) => $m->name, EnigmaModel::cases()));
@@ -111,6 +113,13 @@ class EncodeCommand extends Command
                 'b',
                 InputOption::VALUE_REQUIRED,
                 "Plugboard connections (Steckerbrett), space-separated pairs (e.g., 'AV BS CG')",
+                ''
+            )
+            ->addOption(
+                'dora-wiring',
+                'd',
+                InputOption::VALUE_REQUIRED,
+                "Custom wiring for UKW-D (Dora) reflector, 12 pairs (e.g., 'AC BO DE FG HI KL MN PQ RS TU VW XZ'). J↔Y pair is fixed.",
                 ''
             )
             ->addOption(
@@ -275,6 +284,27 @@ class EncodeCommand extends Command
             /** @var bool $toBinary */
             $toBinary = $input->getOption('to-binary');
 
+            /** @var string|null $textArg */
+            $textArg = $input->getArgument('text');
+
+            /** @var string|null $inputTextFile */
+            $inputTextFile = $input->getOption('input-text-file');
+
+            // Determine if we should enter interactive mode
+            // Interactive mode is triggered when:
+            // - No text argument provided
+            // - No input file provided
+            // - Not explicitly disabled with --no-interaction (-n)
+            // - Terminal supports interaction
+            $this->isInteractive = $textArg === null
+                && $inputBinaryFile === null
+                && $inputTextFile === null
+                && $input->isInteractive();
+
+            if ($this->isInteractive) {
+                return $this->executeInteractiveMode($input);
+            }
+
             // Binary file mode: use Enigma's encodeFile/decodeFile methods
             if ($inputBinaryFile !== null) {
                 return $this->executeBinaryFileMode($input, $inputBinaryFile, $outputFile, $toBinary, $isRandom);
@@ -299,6 +329,579 @@ class EncodeCommand extends Command
 
             return Command::FAILURE;
         }
+    }
+
+    /**
+     * Execute in interactive mode - ask for missing options step by step.
+     */
+    private function executeInteractiveMode(InputInterface $input): int
+    {
+        $this->io->interactiveWelcome();
+
+        // Step tracking
+        $totalSteps = 7;
+        $currentStep = 0;
+
+        // =====================================================================
+        // STEP 1: Model Selection
+        // =====================================================================
+        $currentStep++;
+        /** @var string $modelOption */
+        $modelOption = $input->getOption('model');
+        $defaultModel = EnigmaModel::cases()[0];
+        $isModelDefault = $modelOption === $defaultModel->name;
+
+        if ($isModelDefault) {
+            $this->io->interactiveStep($currentStep, $totalSteps, 'Select Enigma Model');
+            $this->io->interactiveHints([
+                'Military models (WMLW, KMM3, KMM4) have plugboards for extra security.',
+                'Commercial models are simpler but historically interesting.',
+                'KMM4 is the famous 4-rotor naval Enigma used by U-boats.',
+            ]);
+
+            $modelChoices = $this->buildModelChoices();
+            $selectedModel = $this->io->interactiveChoice('Which Enigma model?', $modelChoices, $defaultModel->name);
+            $model = $this->parseModel($this->extractModelName($selectedModel));
+        } else {
+            $model = $this->parseModel(strtoupper($modelOption));
+            $this->io->interactiveSelected('Model', $model->name . ' (from command line)');
+        }
+
+        // =====================================================================
+        // STEP 2: Random or Manual Configuration
+        // =====================================================================
+        $currentStep++;
+        /** @var bool $isRandom */
+        $isRandom = $input->getOption('random');
+
+        if (!$isRandom) {
+            $this->io->interactiveStep($currentStep, $totalSteps, 'Configuration Mode');
+            $this->io->interactiveHints([
+                'Random mode generates a secure configuration automatically.',
+                'Manual mode lets you specify exact settings (useful for decoding).',
+            ]);
+
+            $configMode = $this->io->interactiveChoice(
+                'How would you like to configure the machine?',
+                [
+                    'manual' => '🔧 Manual - Specify each setting',
+                    'random' => '🎲 Random - Generate secure random settings',
+                ],
+                'manual'
+            );
+
+            $isRandom = $configMode === 'random';
+        } else {
+            $this->io->interactiveSelected('Mode', 'Random (from command line)');
+        }
+
+        // Get Symfony defaults (from first model - used to detect if user provided options)
+        $symfonyDefaults = $this->getDefaultsForModel(EnigmaModel::cases()[0]);
+
+        // Get defaults for the selected model (used for actual default values)
+        $defaults = $this->getDefaultsForModel($model);
+
+        // Variables to store configuration
+        $rotorsStr = $defaults['rotors'];
+        $ringStr = $defaults['ring'];
+        $positionStr = $defaults['position'];
+        $reflectorStr = $defaults['reflector'];
+        $doraPairsStr = ''; // Custom DORA wiring (if applicable)
+        $plugboardStr = '';
+
+        if (!$isRandom) {
+            // =================================================================
+            // STEP 3: Rotor Selection
+            // =================================================================
+            $currentStep++;
+            /** @var string $rotorsOption */
+            $rotorsOption = $input->getOption('rotors');
+            // User provided rotors if different from Symfony defaults
+            $userProvidedRotors = $rotorsOption !== $symfonyDefaults['rotors'];
+
+            if (!$userProvidedRotors) {
+                $this->io->interactiveStep($currentStep, $totalSteps, 'Select Rotors');
+                $rotorsStr = $this->interactiveSelectRotors($model);
+            } else {
+                $rotorsStr = $rotorsOption;
+                $this->io->interactiveSelected('Rotors', $rotorsStr . ' (from command line)');
+            }
+
+            // =================================================================
+            // STEP 4: Ring Settings (Ringstellung)
+            // =================================================================
+            $currentStep++;
+            /** @var string $ringOption */
+            $ringOption = $input->getOption('ring');
+            // User provided ring if different from Symfony defaults
+            $userProvidedRing = $ringOption !== $symfonyDefaults['ring'];
+            $rotorCount = $model->getExpectedRotorCount();
+
+            if (!$userProvidedRing) {
+                $this->io->interactiveStep($currentStep, $totalSteps, 'Ring Settings (Ringstellung)');
+                $this->io->interactiveHints([
+                    'Ring settings offset the internal wiring of each rotor.',
+                    "Enter {$rotorCount} letters (A-Z), one per rotor from left to right.",
+                    'Default AAA' . ($rotorCount === 4 ? 'A' : '') . ' is a neutral starting point.',
+                ]);
+
+                $ringStr = $this->io->interactiveLetters(
+                    "Ring settings ({$rotorCount} letters)",
+                    $rotorCount,
+                    $defaults['ring']
+                );
+            } else {
+                $ringStr = $ringOption;
+                $this->io->interactiveSelected('Ring', $ringStr . ' (from command line)');
+            }
+
+            // =================================================================
+            // STEP 5: Initial Positions (Grundstellung)
+            // =================================================================
+            $currentStep++;
+            /** @var string $positionOption */
+            $positionOption = $input->getOption('position');
+            // User provided position if different from Symfony defaults
+            $userProvidedPosition = $positionOption !== $symfonyDefaults['position'];
+
+            if (!$userProvidedPosition) {
+                $this->io->interactiveStep($currentStep, $totalSteps, 'Initial Positions (Grundstellung)');
+                $this->io->interactiveHints([
+                    'Initial positions are the visible letters when you start encoding.',
+                    'Both sender and receiver must use the same starting position.',
+                    'This was often transmitted as a message indicator.',
+                ]);
+
+                $positionStr = $this->io->interactiveLetters(
+                    "Starting positions ({$rotorCount} letters)",
+                    $rotorCount,
+                    $defaults['position']
+                );
+            } else {
+                $positionStr = $positionOption;
+                $this->io->interactiveSelected('Position', $positionStr . ' (from command line)');
+            }
+
+            // =================================================================
+            // STEP 6: Reflector Selection
+            // =================================================================
+            $currentStep++;
+            /** @var string $reflectorOption */
+            $reflectorOption = $input->getOption('reflector');
+            // User provided reflector if different from Symfony defaults
+            $userProvidedReflector = $reflectorOption !== $symfonyDefaults['reflector'];
+
+            if (!$userProvidedReflector) {
+                $this->io->interactiveStep($currentStep, $totalSteps, 'Select Reflector (Umkehrwalze)');
+                $reflectorResult = $this->interactiveSelectReflector($model);
+                $reflectorStr = $reflectorResult['reflector'];
+                $doraPairsStr = $reflectorResult['doraPairs'];
+            } else {
+                $reflectorStr = $reflectorOption;
+                $this->io->interactiveSelected('Reflector', $reflectorStr . ' (from command line)');
+            }
+
+            // =================================================================
+            // STEP 7: Plugboard (only for models with plugboard)
+            // =================================================================
+            if ($model->hasPlugboard()) {
+                $currentStep++;
+                /** @var string $plugboardOption */
+                $plugboardOption = $input->getOption('plugboard');
+
+                if ($plugboardOption === '') {
+                    $this->io->interactiveStep($currentStep, $totalSteps, 'Plugboard Connections (Steckerbrett)');
+                    $maxPairs = (int) (count(Letter::cases()) / 2);
+                    $this->io->interactiveHints([
+                        'The plugboard swaps pairs of letters before and after the rotors.',
+                        'Enter pairs like: AB CD EF (swaps A↔B, C↔D, E↔F)',
+                        "Up to {$maxPairs} pairs possible. Leave empty for no plugboard.",
+                        'Historical messages typically used 10 pairs.',
+                    ]);
+
+                    $plugboardStr = $this->io->interactivePlugboard('Plugboard pairs (or empty)');
+                } else {
+                    $plugboardStr = $plugboardOption;
+                    $this->io->interactiveSelected('Plugboard', $plugboardStr ?: '(none)' . ' (from command line)');
+                }
+            } else {
+                $this->io->interactiveSkipped('Plugboard', "Model {$model->name} does not have a plugboard");
+            }
+        } else {
+            // Skip manual steps for random mode
+            $this->io->interactiveSkipped('Manual settings', 'Using random configuration');
+        }
+
+        // =====================================================================
+        // FINAL: Text Input
+        // =====================================================================
+        $this->io->interactiveStep($totalSteps, $totalSteps, 'Enter Message');
+        $this->io->interactiveHints([
+            'Enigma only encodes letters A-Z. Numbers and punctuation will be stripped.',
+            'Use --latin option to automatically convert special characters.',
+            'Remember: encoding and decoding use the SAME settings!',
+        ]);
+
+        /** @var bool $useLatin */
+        $useLatin = $input->getOption('latin');
+        if (!$useLatin) {
+            $useLatin = $this->io->interactiveConfirm('Convert special characters (accents, numbers)?', false);
+        }
+
+        $text = $this->io->interactiveText('Message to encode');
+
+        /** @var bool $formatOutput */
+        $formatOutput = $input->getOption('format');
+        if (!$formatOutput) {
+            $formatOutput = $this->io->interactiveConfirm('Format output in 5-letter groups?', true);
+        }
+
+        // =====================================================================
+        // Build and Execute
+        // =====================================================================
+        $this->io->interactiveDivider();
+        $this->io->newLine();
+
+        /** @var bool $noStrict */
+        $noStrict = $input->getOption('no-strict');
+
+        if ($isRandom) {
+            $enigma = Enigma::createRandom($model);
+            $enigma->strictMode = !$noStrict;
+        } else {
+            // Create Enigma from collected settings
+            $enigma = $this->createEnigmaFromSettings(
+                $model,
+                $rotorsStr,
+                $ringStr,
+                $positionStr,
+                $reflectorStr,
+                $plugboardStr,
+                !$noStrict,
+                $doraPairsStr
+            );
+        }
+
+        // Show configuration summary
+        $this->io->enigmaTitle();
+
+        if ($isRandom) {
+            $this->io->militaryNote('Using randomly generated configuration');
+        }
+
+        $this->displayConfiguration($enigma);
+
+        // Encode and output
+        $result = $this->encodeText($enigma, $text, $useLatin, $formatOutput);
+
+        /** @var string|null $outputFile */
+        $outputFile = $input->getOption('output-file');
+        $this->outputResult($result, $outputFile);
+
+        $this->io->missionComplete('Encoding complete');
+
+        // Show hint for decoding
+        $this->io->newLine();
+        $this->io->militaryNote('To decode, run the same command with the encoded text and identical settings.');
+
+        return Command::SUCCESS;
+    }
+
+    /**
+     * Build model choices with descriptions for interactive selection.
+     *
+     * @return array<string, string>
+     */
+    private function buildModelChoices(): array
+    {
+        $choices = [];
+
+        foreach (EnigmaModel::cases() as $model) {
+            $rotorCount = $model->getExpectedRotorCount();
+            $plugboard = $model->hasPlugboard() ? '🔌 plugboard' : 'no plugboard';
+
+            $choices[$model->name] = "{$model->getEmoji()} {$model->name} - {$model->getDescription()} ({$rotorCount}R, {$plugboard})";
+        }
+
+        return $choices;
+    }
+
+    /**
+     * Extract model name from choice value.
+     */
+    private function extractModelName(string $choice): string
+    {
+        // The choice format is "MODEL_NAME" as the key
+        return $choice;
+    }
+
+    /**
+     * Interactive rotor selection for a given model.
+     */
+    private function interactiveSelectRotors(EnigmaModel $model): string
+    {
+        $rotorCount = $model->getExpectedRotorCount();
+        $compatibleRotors = RotorType::getCompatibleRotorsForModel($model);
+        $selectedRotors = [];
+
+        // Build rotor choices with descriptions
+        $rotorChoices = [];
+        foreach ($compatibleRotors as $rotor) {
+            $rotorChoices[$rotor->name] = $rotor->name;
+        }
+
+        // Handle Greek rotor for M4
+        if ($model->requiresGreekRotor()) {
+            $this->io->interactiveHints([
+                'KMM4 requires a Greek rotor (BETA or GAMMA) in the leftmost position.',
+                'Select the Greek rotor first, then the 3 regular rotors.',
+            ]);
+
+            $greekChoices = [];
+            foreach (RotorType::getGreekRotors() as $greek) {
+                $greekChoices[$greek->name] = $greek->name . ' - Greek rotor';
+            }
+
+            $defaultGreekRotor = RotorType::getGreekRotors()[0]->name;
+            $greekRotor = $this->io->interactiveChoice(
+                'Greek rotor (leftmost position)',
+                $greekChoices,
+                $defaultGreekRotor
+            );
+            $selectedRotors[] = $greekRotor;
+
+            $this->io->interactiveHint('Now select the 3 regular rotors (positions 3, 2, 1 from left).');
+        } else {
+            $this->io->interactiveHints([
+                "Select {$rotorCount} rotors for positions (left to right).",
+                'Each rotor can only be used once.',
+                'Different rotor combinations provide different encryption.',
+            ]);
+        }
+
+        // Select remaining rotors
+        $regularCount = $model->requiresGreekRotor() ? 3 : $rotorCount;
+        $usedRotors = [];
+
+        for ($i = 0; $i < $regularCount; $i++) {
+            $position = $model->requiresGreekRotor() ? $i + 1 : $i + 1;
+            $positionLabel = match ($i) {
+                0 => $model->requiresGreekRotor() ? 'P3 (2nd from left)' : 'P3 (leftmost)',
+                1 => 'P2 (middle)',
+                2 => 'P1 (rightmost)',
+                default => "Position {$position}",
+            };
+
+            // Filter out already used rotors
+            $availableChoices = array_filter(
+                $rotorChoices,
+                fn($name) => !\in_array($name, $usedRotors, true),
+                ARRAY_FILTER_USE_KEY
+            );
+
+            $defaultRotor = array_key_first($availableChoices);
+            $rotor = $this->io->interactiveChoice("Rotor for {$positionLabel}", $availableChoices, $defaultRotor);
+            $selectedRotors[] = $rotor;
+            $usedRotors[] = $rotor;
+        }
+
+        return implode('-', $selectedRotors);
+    }
+
+    /**
+     * Interactive reflector selection for a given model.
+     *
+     * @return array{reflector: string, doraPairs: string} The reflector name and optional DORA pairs
+     */
+    private function interactiveSelectReflector(EnigmaModel $model): array
+    {
+        $compatibleReflectors = $model->getCompatibleReflectors();
+
+        if (\count($compatibleReflectors) === 1) {
+            $reflector = $compatibleReflectors[0]->name;
+            $this->io->interactiveSelected('Reflector', "{$reflector} (only option for {$model->name})");
+
+            return ['reflector' => $reflector, 'doraPairs' => ''];
+        }
+
+        $this->io->interactiveHints([
+            'The reflector sends the signal back through the rotors.',
+            'Different reflectors provide different encryption patterns.',
+        ]);
+
+        $reflectorChoices = [];
+        foreach ($compatibleReflectors as $reflector) {
+            $suffix = $reflector === ReflectorType::DORA ? ' 🔧' : '';
+            $reflectorChoices[$reflector->name] = $reflector->name . ' - ' . $reflector->getDescription() . $suffix;
+        }
+
+        $selectedReflector = $this->io->interactiveChoice(
+            'Select reflector',
+            $reflectorChoices,
+            $compatibleReflectors[0]->name
+        );
+
+        $doraPairs = '';
+
+        // If DORA is selected, ask for custom wiring
+        if ($selectedReflector === 'DORA') {
+            $doraPairs = $this->interactiveConfigureDora();
+        }
+
+        return ['reflector' => $selectedReflector, 'doraPairs' => $doraPairs];
+    }
+
+    /**
+     * Interactive configuration for UKW-D (Dora) reflector wiring.
+     */
+    private function interactiveConfigureDora(): string
+    {
+        $this->io->newLine();
+        $this->io->militarySection('UKW-D (Dora) Reflector Configuration');
+        $defaultWiring = ReflectorDora::DEFAULT_WIRING;
+        $this->io->interactiveHints([
+            'UKW-D is a rewirable reflector with 13 configurable wire pairs.',
+            'Each pair connects two letters (e.g., AB connects A↔B).',
+            'All 26 letters must be used exactly once.',
+            "Default wiring: {$defaultWiring}",
+        ]);
+
+        $useDefault = $this->io->interactiveConfirm('Use default wiring?', true);
+
+        if ($useDefault) {
+            $this->io->interactiveSelected('Dora wiring', "Default ({$defaultWiring})");
+
+            return ''; // Empty string means use default
+        }
+
+        // Custom wiring
+        $this->io->newLine();
+        $this->io->interactiveHints([
+            'Enter 13 letter pairs separated by spaces.',
+            "Example: {$defaultWiring}",
+            'Each letter must appear exactly once.',
+        ]);
+
+        $validator = function (?string $value): string {
+            if ($value === null || trim($value) === '') {
+                throw new \RuntimeException('Please enter the 13 pairs or press Ctrl+C to cancel.');
+            }
+
+            $cleaned = preg_replace('/\s+/', '', strtoupper($value));
+            if ($cleaned === null || \strlen($cleaned) !== 26) {
+                throw new \RuntimeException('You must enter exactly 13 pairs (26 letters total). Got ' . \strlen($cleaned ?? '') . ' letters.');
+            }
+
+            // Validate all letters are used exactly once
+            $letters = str_split($cleaned);
+            $uniqueLetters = array_unique($letters);
+            if (\count($uniqueLetters) !== 26) {
+                $counts = array_count_values($letters);
+                $duplicates = array_filter($counts, fn($c) => $c > 1);
+
+                throw new \RuntimeException('Each letter must appear exactly once. Duplicates: ' . implode(', ', array_keys($duplicates)));
+            }
+
+            // Check all letters A-Z are present
+            $missing = array_diff(range('A', 'Z'), $uniqueLetters);
+            if (!empty($missing)) {
+                throw new \RuntimeException('Missing letters: ' . implode(', ', $missing));
+            }
+
+            // Format nicely with spaces
+            $pairs = str_split($cleaned, 2);
+
+            return implode(' ', $pairs);
+        };
+
+        return $this->io->interactiveInput(
+            'Enter 13 pairs',
+            null,
+            $defaultWiring,
+            $validator
+        );
+    }
+
+    /**
+     * Create an Enigma machine from interactive settings.
+     */
+    private function createEnigmaFromSettings(
+        EnigmaModel $model,
+        string $rotorsStr,
+        string $ringStr,
+        string $positionStr,
+        string $reflectorStr,
+        string $plugboardStr,
+        bool $strictMode = true,
+        string $doraPairsStr = '',
+    ): Enigma {
+        $rotorTypes = $this->parseRotors($rotorsStr, $model);
+        $ringSettings = $this->parseLetters($ringStr, 'ring setting');
+        $positions = $this->parseLetters($positionStr, 'position');
+        $reflectorType = $this->parseReflector($reflectorStr);
+
+        // Validate counts
+        $expectedCount = $model->getExpectedRotorCount();
+
+        // Build rotor configuration (reverse for internal representation)
+        // Input order: left to right (e.g., GREEK-P3-P2-P1 for M4, or P3-P2-P1 for 3-rotor)
+        // After reverse: P1-P2-P3-GREEK for M4, or P1-P2-P3 for 3-rotor
+        $rotorTypes = array_reverse($rotorTypes);
+        $ringSettings = array_reverse($ringSettings);
+        $positions = array_reverse($positions);
+
+        if ($model->requiresGreekRotor()) {
+            // For M4: after reverse, indices are [0]=P1, [1]=P2, [2]=P3, [3]=GREEK
+            $rotorConfig = new RotorConfiguration(
+                p1: $rotorTypes[0],
+                p2: $rotorTypes[1],
+                p3: $rotorTypes[2],
+                greek: $rotorTypes[3],
+                ringstellungP1: $ringSettings[0],
+                ringstellungP2: $ringSettings[1],
+                ringstellungP3: $ringSettings[2],
+                ringstellungGreek: $ringSettings[3],
+            );
+        } else {
+            // For 3-rotor models: indices are [0]=P1, [1]=P2, [2]=P3
+            $rotorConfig = new RotorConfiguration(
+                p1: $rotorTypes[0],
+                p2: $rotorTypes[1],
+                p3: $rotorTypes[2],
+                ringstellungP1: $ringSettings[0],
+                ringstellungP2: $ringSettings[1],
+                ringstellungP3: $ringSettings[2],
+            );
+        }
+
+        $enigma = new Enigma(
+            model: $model,
+            rotors: $rotorConfig,
+            reflector: $reflectorType,
+            strictMode: $strictMode,
+        );
+
+        // If DORA with custom wiring, remount with custom reflector
+        if ($reflectorType === ReflectorType::DORA && $doraPairsStr !== '') {
+            $customDora = ReflectorDora::fromString($doraPairsStr);
+            $enigma->mountReflector($customDora);
+        }
+
+        // Set initial positions
+        $enigma->setPosition(RotorPosition::P1, $positions[0]);
+        $enigma->setPosition(RotorPosition::P2, $positions[1]);
+        $enigma->setPosition(RotorPosition::P3, $positions[2]);
+
+        if ($model->requiresGreekRotor()) {
+            $enigma->setPosition(RotorPosition::GREEK, $positions[3]);
+        }
+
+        // Configure plugboard
+        if ($plugboardStr !== '' && ($strictMode === false || $model->hasPlugboard())) {
+            $enigma->plugLettersFromPairs($plugboardStr);
+        }
+
+        return $enigma;
     }
 
     /**
@@ -543,6 +1146,16 @@ class EncodeCommand extends Command
         $positions = $this->parseLetters($positionOption, 'position');
         $reflector = $this->parseReflector($reflectorOption);
 
+        // Handle custom DORA wiring
+        /** @var string $doraWiringOption */
+        $doraWiringOption = $input->getOption('dora-wiring');
+        $doraWiringStr = trim($doraWiringOption);
+
+        if ($doraWiringStr !== '' && $reflector !== ReflectorType::DORA) {
+            $this->io->militaryWarning('--dora-wiring is only valid with reflector DORA. Ignoring custom wiring.');
+            $doraWiringStr = '';
+        }
+
         // Validate counts
         $expectedCount = $model->getExpectedRotorCount();
         if (\count($rotorTypes) !== $expectedCount) {
@@ -594,12 +1207,23 @@ class EncodeCommand extends Command
             );
         }
 
+        // Create custom DORA reflector if wiring is specified
+        $customDoraReflector = null;
+        if ($reflector === ReflectorType::DORA && $doraWiringStr !== '') {
+            $customDoraReflector = ReflectorDora::fromString($doraWiringStr);
+        }
+
         $enigma = new Enigma(
             model: $model,
             rotors: $rotorConfig,
             reflector: $reflector,
             strictMode: $strictMode,
         );
+
+        // Mount custom DORA reflector after construction
+        if ($customDoraReflector !== null) {
+            $enigma->mountReflector($customDoraReflector);
+        }
 
         // Set initial positions
         $enigma->setPosition(RotorPosition::P1, $positions[0]);

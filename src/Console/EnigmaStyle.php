@@ -11,6 +11,8 @@ use Symfony\Component\Console\Helper\TableStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Military/submarine-themed console style for the Enigma Machine CLI.
@@ -199,5 +201,280 @@ class EnigmaStyle extends SymfonyStyle
     public function processingDone(): void
     {
         $this->writeln('<olive>done</>');
+    }
+
+    // ========================================================================
+    // INTERACTIVE MODE METHODS
+    // ========================================================================
+
+    /**
+     * Display the interactive mode welcome header.
+     */
+    public function interactiveWelcome(): void
+    {
+        $this->newLine();
+        $this->writeln('<military>╔══════════════════════════════════════════════════════════╗</>');
+        $this->writeln('<military>║</>     <steel>⚙</> <military>ENIGMA MACHINE</> <steel>⚙</>  <muted>Interactive Configuration</>    <military>║</>');
+        $this->writeln('<military>╚══════════════════════════════════════════════════════════╝</>');
+        $this->newLine();
+        $this->writeln('  <steel>Configure your Enigma machine step by step.</>');
+        $this->writeln('  <muted>Use arrow keys to navigate, Enter to select.</>');
+        $this->newLine();
+    }
+
+    /**
+     * Display a step header for interactive mode.
+     */
+    public function interactiveStep(int $step, int $total, string $title): void
+    {
+        $this->newLine();
+        $progress = str_repeat('●', $step) . str_repeat('○', $total - $step);
+        $this->writeln("  <military>[{$progress}]</> <steel>Step {$step}/{$total}:</> <military>{$title}</>");
+        $this->newLine();
+    }
+
+    /**
+     * Display a hint/tip for the current step.
+     */
+    public function interactiveHint(string $hint): void
+    {
+        $this->writeln("  <muted>💡 {$hint}</>");
+    }
+
+    /**
+     * Display multiple hints for the current step.
+     *
+     * @param array<string> $hints
+     */
+    public function interactiveHints(array $hints): void
+    {
+        foreach ($hints as $hint) {
+            $this->interactiveHint($hint);
+        }
+        $this->newLine();
+    }
+
+    /**
+     * Ask user to select from a list with visual styling.
+     *
+     * @param array<string> $choices
+     */
+    public function interactiveChoice(string $question, array $choices, ?string $default = null): string
+    {
+        $choiceQuestion = new ChoiceQuestion(
+            "  <olive>▸</> <steel>{$question}</>",
+            $choices,
+            $default
+        );
+        $choiceQuestion->setErrorMessage('Invalid selection: %s');
+
+        /** @var string $answer */
+        $answer = $this->askQuestion($choiceQuestion);
+
+        return $answer;
+    }
+
+    /**
+     * Ask user to select multiple items from a list.
+     *
+     * @param array<string> $choices
+     * @param array<string> $defaults
+     * @return array<string>
+     */
+    public function interactiveMultiChoice(string $question, array $choices, array $defaults = []): array
+    {
+        $choiceQuestion = new ChoiceQuestion(
+            "  <olive>▸</> <steel>{$question}</>",
+            $choices,
+            implode(',', $defaults) ?: null
+        );
+        $choiceQuestion->setMultiselect(true);
+        $choiceQuestion->setErrorMessage('Invalid selection: %s');
+
+        /** @var array<string> $answer */
+        $answer = $this->askQuestion($choiceQuestion);
+
+        return $answer;
+    }
+
+    /**
+     * Ask for text input with validation.
+     *
+     * @param callable|null $validator
+     */
+    public function interactiveInput(
+        string $question,
+        ?string $default = null,
+        ?string $placeholder = null,
+        ?callable $validator = null,
+    ): string {
+        $defaultHint = $default !== null ? " <muted>[{$default}]</>" : '';
+        $prompt = "  <olive>▸</> <steel>{$question}</>{$defaultHint}: ";
+
+        $inputQuestion = new Question($prompt, $default);
+
+        if ($placeholder !== null) {
+            $inputQuestion->setAutocompleterValues([$placeholder]);
+        }
+
+        if ($validator !== null) {
+            $inputQuestion->setValidator($validator);
+        }
+
+        /** @var string $answer */
+        $answer = $this->askQuestion($inputQuestion);
+
+        return $answer;
+    }
+
+    /**
+     * Ask for letters input (A-Z) with validation.
+     */
+    public function interactiveLetters(string $question, int $expectedLength, ?string $default = null): string
+    {
+        $validator = function (?string $value) use ($expectedLength): string {
+            if ($value === null || $value === '') {
+                throw new \RuntimeException('Please enter a value.');
+            }
+
+            $value = strtoupper($value);
+
+            if (!preg_match('/^[A-Z]+$/', $value)) {
+                throw new \RuntimeException('Only letters A-Z are allowed.');
+            }
+
+            if (\strlen($value) !== $expectedLength) {
+                throw new \RuntimeException("Expected exactly {$expectedLength} letters, got " . \strlen($value) . '.');
+            }
+
+            return $value;
+        };
+
+        return $this->interactiveInput(
+            $question,
+            $default,
+            str_repeat('A', $expectedLength),
+            $validator
+        );
+    }
+
+    /**
+     * Ask for plugboard pairs input with validation.
+     */
+    public function interactivePlugboard(string $question): string
+    {
+        $validator = function (?string $value): string {
+            if ($value === null || trim($value) === '') {
+                return '';
+            }
+
+            $value = strtoupper(trim($value));
+            $pairs = preg_split('/[\s,]+/', $value);
+
+            if ($pairs === false) {
+                return '';
+            }
+
+            $usedLetters = [];
+
+            foreach ($pairs as $pair) {
+                if (\strlen($pair) !== 2) {
+                    throw new \RuntimeException("Invalid pair: '{$pair}'. Each pair must be exactly 2 letters.");
+                }
+
+                if (!preg_match('/^[A-Z]{2}$/', $pair)) {
+                    throw new \RuntimeException("Invalid pair: '{$pair}'. Only letters A-Z are allowed.");
+                }
+
+                $letters = str_split($pair);
+                if ($letters[0] === $letters[1]) {
+                    throw new \RuntimeException("Invalid pair: '{$pair}'. A letter cannot be plugged to itself.");
+                }
+
+                foreach ($letters as $letter) {
+                    if (\in_array($letter, $usedLetters, true)) {
+                        throw new \RuntimeException("Letter '{$letter}' is used more than once.");
+                    }
+                    $usedLetters[] = $letter;
+                }
+            }
+
+            return implode(' ', $pairs);
+        };
+
+        return $this->interactiveInput($question, '', null, $validator);
+    }
+
+    /**
+     * Ask for text to encode.
+     */
+    public function interactiveText(string $question, bool $allowEmpty = false): string
+    {
+        $validator = function (?string $value) use ($allowEmpty): string {
+            if ($value === null || $value === '') {
+                if ($allowEmpty) {
+                    return '';
+                }
+
+                throw new \RuntimeException('Please enter the text to encode.');
+            }
+
+            return $value;
+        };
+
+        return $this->interactiveInput($question, null, null, $validator);
+    }
+
+    /**
+     * Display a summary of selected configuration.
+     *
+     * @param array<string, string> $config
+     */
+    public function interactiveSummary(array $config): void
+    {
+        $this->newLine();
+        $this->writeln('  <military>┌──────────────────────────────────────────────┐</>');
+        $this->writeln('  <military>│</>        <steel>📋 Configuration Summary</>             <military>│</>');
+        $this->writeln('  <military>├──────────────────────────────────────────────┤</>');
+
+        foreach ($config as $key => $value) {
+            $paddedKey = str_pad($key, 12);
+            $this->writeln("  <military>│</>  <olive>{$paddedKey}</> <steel>{$value}</>");
+        }
+
+        $this->writeln('  <military>└──────────────────────────────────────────────┘</>');
+        $this->newLine();
+    }
+
+    /**
+     * Ask for confirmation with styled prompt.
+     */
+    public function interactiveConfirm(string $question, bool $default = true): bool
+    {
+        return $this->confirm("  <olive>▸</> <steel>{$question}</>", $default);
+    }
+
+    /**
+     * Display a divider line.
+     */
+    public function interactiveDivider(): void
+    {
+        $this->writeln('  <muted>────────────────────────────────────────────────</>');
+    }
+
+    /**
+     * Display current selection indicator.
+     */
+    public function interactiveSelected(string $label, string $value): void
+    {
+        $this->writeln("  <olive>✓</> <steel>{$label}:</> <military>{$value}</>");
+    }
+
+    /**
+     * Display skipped option indicator.
+     */
+    public function interactiveSkipped(string $label, string $reason): void
+    {
+        $this->writeln("  <muted>○ {$label}: {$reason}</>");
     }
 }
