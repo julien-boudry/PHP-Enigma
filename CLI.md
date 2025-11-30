@@ -71,6 +71,7 @@ Usage:
 | `--format` | `-f` | Format output in traditional 5-letter groups | *(off)* |
 | `--random` | | Generate a random configuration | *(off)* |
 | `--show-config` | `-s` | Display the configuration used | *(off)* |
+| `--no-strict` | | Disable strict mode (allow non-historical configurations) | *(off)* |
 
 ## Usage Examples
 
@@ -172,6 +173,7 @@ Quick reference:
 3. **Ring/Position**: Same convention: `--ring=XYZ` → P3=X, P2=Y, P1=Z
 4. **Formatted output**: Use `--format` for 5-letter groups, `--strip-spaces` to decode them
 5. **File encoding**: Use `-i` for binary, `-I` for text files
+6. **Strict mode**: Use `--no-strict` to allow non-historical configurations (e.g., plugboard on commercial models)
 
 ---
 

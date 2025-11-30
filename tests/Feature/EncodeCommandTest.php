@@ -697,6 +697,108 @@ describe('EncodeCommand', function (): void {
         });
     });
 
+    describe('No Strict Mode (--no-strict)', function (): void {
+        it('allows plugboard on commercial model with --no-strict', function (): void {
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--model' => 'ENIGMA_K',
+                '--rotors' => 'K_III-K_II-K_I',
+                '--reflector' => 'K',
+                '--plugboard' => 'AB CD',
+                '--no-strict' => true,
+                '--show-config' => true,
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            // Should not show warning about plugboard
+            expect($output)->not->toContain('does not have a plugboard');
+            // Plugboard should be applied
+            expect($output)->toContain('AB CD');
+        });
+
+        it('plugboard affects encoding on commercial model with --no-strict', function (): void {
+            // Without plugboard
+            $this->commandTester->execute([
+                'text' => 'HELLO',
+                '--model' => 'ENIGMA_K',
+                '--rotors' => 'K_III-K_II-K_I',
+                '--reflector' => 'K',
+            ]);
+            $withoutPlugboard = $this->commandTester->getDisplay();
+
+            // With plugboard and --no-strict
+            $this->commandTester->execute([
+                'text' => 'HELLO',
+                '--model' => 'ENIGMA_K',
+                '--rotors' => 'K_III-K_II-K_I',
+                '--reflector' => 'K',
+                '--plugboard' => 'AB CD EF GH IJ KL',
+                '--no-strict' => true,
+            ]);
+            $withPlugboard = $this->commandTester->getDisplay();
+
+            // Output should be different due to plugboard
+            expect($withPlugboard)->not->toBe($withoutPlugboard);
+        });
+
+        it('warning mentions --no-strict when plugboard used on commercial model without flag', function (): void {
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--model' => 'ENIGMA_K',
+                '--rotors' => 'K_III-K_II-K_I',
+                '--reflector' => 'K',
+                '--plugboard' => 'AB CD',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('does not have a plugboard');
+            expect($output)->toContain('--no-strict');
+        });
+
+        it('--no-strict works with random configuration', function (): void {
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--model' => 'ENIGMA_K',
+                '--random' => true,
+                '--no-strict' => true,
+                '--show-config' => true,
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('ENIGMA_K');
+        });
+
+        it('--no-strict works with binary file encoding', function (): void {
+            $tempDir = sys_get_temp_dir();
+            $binaryFile = $tempDir . '/enigma_strict_test_' . uniqid() . '.bin';
+            $encodedFile = $tempDir . '/enigma_strict_encoded_' . uniqid() . '.txt';
+
+            try {
+                file_put_contents($binaryFile, 'test data');
+
+                $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                    '--input-binary-file' => $binaryFile,
+                    '--output-file' => $encodedFile,
+                    '--model' => 'ENIGMA_K',
+                    '--rotors' => 'K_III-K_II-K_I',
+                    '--reflector' => 'K',
+                    '--plugboard' => 'AB CD',
+                    '--no-strict' => true,
+                ]);
+
+                expect($this->commandTester->getStatusCode())->toBe(0);
+                expect($output)->not->toContain('does not have a plugboard');
+            } finally {
+                if (file_exists($binaryFile)) {
+                    unlink($binaryFile);
+                }
+                if (file_exists($encodedFile)) {
+                    unlink($encodedFile);
+                }
+            }
+        });
+    });
+
     describe('Historical Accuracy', function (): void {
         it('encodes Operation Barbarossa message correctly', function (): void {
             $this->commandTester->execute([

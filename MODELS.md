@@ -487,7 +487,7 @@ This table shows which rotors and reflectors are compatible with each model.
 | RAILWAY | RAILWAY_I, RAILWAY_II, RAILWAY_III | RAILWAY |
 | TIRPITZ | TIRPITZ_I through TIRPITZ_VIII | TIRPITZ |
 
-> **Note:** By default, this library enforces these historical constraints via strict mode validation. You can disable these checks for experimental or non-historical configurations (see README for details on strict mode).
+> **Note:** By default, this library enforces these historical constraints via strict mode validation. You can disable these checks for experimental or non-historical configurations using `strictMode: false` in PHP or `--no-strict` in the CLI.
 
 **Example - Testing Compatibility:**
 ```php
@@ -509,4 +509,7 @@ $enigma = new Enigma(EnigmaModel::WMLW, $rotors, ReflectorType::B, strictMode: f
 # CLI also validates compatibility
 ./bin/enigma encode "TEST" --model=WMLW --rotors=VIII-VII-VI
 # Error: Rotor VIII is not compatible with model WMLW
+
+# Use --no-strict to bypass compatibility checks
+./bin/enigma encode "TEST" --model=WMLW --rotors=VIII-VII-VI --no-strict
 ```

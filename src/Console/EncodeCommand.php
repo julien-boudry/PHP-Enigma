@@ -143,6 +143,12 @@ class EncodeCommand extends Command
                 InputOption::VALUE_NONE,
                 'Display the configuration used for encoding'
             )
+            ->addOption(
+                'no-strict',
+                null,
+                InputOption::VALUE_NONE,
+                'Disable strict mode (allow non-historical configurations like plugboard on commercial models)'
+            )
             ->setHelp(
                 <<<HELP
                     The <info>%command.name%</info> command encodes text using the Enigma cipher machine.
@@ -324,7 +330,10 @@ class EncodeCommand extends Command
             $text = $textArg;
         }
 
-        $enigma = $this->createEnigma($input, $isRandom);
+        /** @var bool $noStrict */
+        $noStrict = $input->getOption('no-strict');
+
+        $enigma = $this->createEnigma($input, $isRandom, !$noStrict);
 
         /** @var bool $useLatin */
         $useLatin = $input->getOption('latin');
@@ -398,7 +407,10 @@ class EncodeCommand extends Command
             throw new \InvalidArgumentException('Binary file mode requires --output-file (-o) to be specified.');
         }
 
-        $enigma = $this->createEnigma($input, $isRandom);
+        /** @var bool $noStrict */
+        $noStrict = $input->getOption('no-strict');
+
+        $enigma = $this->createEnigma($input, $isRandom, !$noStrict);
 
         /** @var bool $showConfig */
         $showConfig = $input->getOption('show-config');
@@ -502,14 +514,16 @@ class EncodeCommand extends Command
     /**
      * Create and configure the Enigma machine from input options.
      */
-    private function createEnigma(InputInterface $input, bool $isRandom): Enigma
+    private function createEnigma(InputInterface $input, bool $isRandom, bool $strictMode = true): Enigma
     {
         /** @var string $modelName */
         $modelName = $input->getOption('model');
         $model = $this->parseModel(strtoupper($modelName));
 
         if ($isRandom) {
-            return Enigma::createRandom($model);
+            $enigma = Enigma::createRandom($model);
+            $enigma->strictMode = $strictMode;
+            return $enigma;
         }
 
         /** @var string $rotorsOption */
@@ -584,6 +598,7 @@ class EncodeCommand extends Command
             model: $model,
             rotors: $rotorConfig,
             reflector: $reflector,
+            strictMode: $strictMode,
         );
 
         // Set initial positions
@@ -600,8 +615,8 @@ class EncodeCommand extends Command
         $plugboardOption = $input->getOption('plugboard');
         $plugboardStr = trim($plugboardOption);
         if ($plugboardStr !== '') {
-            if (!$model->hasPlugboard()) {
-                $this->io->militaryWarning("Model {$model->name} does not have a plugboard. Ignoring plugboard settings.");
+            if ($strictMode && !$model->hasPlugboard()) {
+                $this->io->militaryWarning("Model {$model->name} does not have a plugboard. Ignoring plugboard settings (use --no-strict to override).");
             } else {
                 $enigma->plugLettersFromPairs($plugboardStr);
             }
