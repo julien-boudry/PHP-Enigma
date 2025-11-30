@@ -266,8 +266,11 @@ class EnigmaStyle extends SymfonyStyle
         );
         $choiceQuestion->setErrorMessage('Invalid selection: %s');
 
-        /** @var string $answer */
         $answer = $this->askQuestion($choiceQuestion);
+
+        if (!\is_string($answer)) {
+            throw new \RuntimeException('Expected string answer from choice question.');
+        }
 
         return $answer;
     }
@@ -290,10 +293,13 @@ class EnigmaStyle extends SymfonyStyle
         $choiceQuestion->setMultiselect(true);
         $choiceQuestion->setErrorMessage('Invalid selection: %s');
 
-        /** @var array<string> $answer */
         $answer = $this->askQuestion($choiceQuestion);
 
-        return $answer;
+        if (!\is_array($answer)) {
+            throw new \RuntimeException('Expected array answer from multi-choice question.');
+        }
+
+        return array_values(array_filter($answer, \is_string(...)));
     }
 
     /**
@@ -320,8 +326,11 @@ class EnigmaStyle extends SymfonyStyle
             $inputQuestion->setValidator($validator);
         }
 
-        /** @var string $answer */
         $answer = $this->askQuestion($inputQuestion);
+
+        if (!\is_string($answer)) {
+            throw new \RuntimeException('Expected string answer from input question.');
+        }
 
         return $answer;
     }
