@@ -1027,6 +1027,8 @@ describe('EncodeCommand', function (): void {
 
         it('shows pre-selected options from command line', function (): void {
             // Providing --model should show it as "from command line"
+            // Tell the command which options were explicitly provided (since CommandTester doesn't set $_SERVER['argv'])
+            $this->command->setExplicitlyProvidedOptions(['model' => 'KMM3']);
             $this->commandTester->setInputs([]);
 
             try {
@@ -1036,6 +1038,37 @@ describe('EncodeCommand', function (): void {
             }
 
             expect($this->commandTester->getDisplay())->toContain('KMM3 (from command line)');
+        });
+
+        it('shows multiple pre-selected options from command line', function (): void {
+            // Providing multiple options should show all of them as "from command line"
+            $this->command->setExplicitlyProvidedOptions([
+                'model' => 'WMLW',
+                'reflector' => 'DORA',
+                'dora-wiring' => 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY',
+                'rotors' => 'V-II-I',
+            ]);
+            $this->commandTester->setInputs([]);
+
+            try {
+                $this->commandTester->execute([
+                    '--model' => 'WMLW',
+                    '--reflector' => 'DORA',
+                    '--dora-wiring' => 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY',
+                    '--rotors' => 'V-II-I',
+                ], ['interactive' => true]);
+            } catch (\Exception) {
+                // Expected - interactive mode will fail without full input
+            }
+
+            $display = $this->commandTester->getDisplay();
+            expect($display)->toContain('WMLW (from command line)');
+            expect($display)->toContain('DORA with custom wiring (from command line)');
+            expect($display)->toContain('V-II-I (from command line)');
+            // Should NOT ask for model, reflector, or rotors selection
+            expect($display)->not->toContain('Which Enigma model?');
+            expect($display)->not->toContain('Select Reflector');
+            expect($display)->not->toContain('Select Rotors');
         });
     });
 });

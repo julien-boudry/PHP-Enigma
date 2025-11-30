@@ -30,6 +30,68 @@ class EncodeCommand extends Command
 {
     protected EnigmaStyle $io;
     protected bool $isInteractive = false;
+
+    /**
+     * Options explicitly provided via execute() for testing purposes.
+     * @var array<string, mixed>
+     */
+    private array $explicitlyProvidedOptions = [];
+
+    /**
+     * Check if an option was explicitly provided on the command line.
+     * This is needed because Symfony doesn't distinguish between default values
+     * and user-provided values that happen to match the default.
+     *
+     * @param string $optionName The option name (without -- prefix)
+     * @param InputInterface $input The input interface to check
+     * @return bool True if the option was explicitly provided
+     */
+    private function wasOptionProvided(string $optionName, InputInterface $input): bool
+    {
+        // First check if it was provided via CommandTester's execute() (for testing)
+        if (isset($this->explicitlyProvidedOptions[$optionName])) {
+            return true;
+        }
+
+        // Then check real command line arguments
+        $argv = $_SERVER['argv'] ?? [];
+        $shortOptions = [
+            'model' => 'm',
+            'rotors' => 'r',
+            'ring' => 'g',
+            'position' => 'p',
+            'reflector' => 'u',
+            'plugboard' => 'b',
+            'random' => 'R',
+            'dora-wiring' => 'd',
+        ];
+
+        foreach ($argv as $arg) {
+            // Check long option forms: --option=value or --option value
+            if (str_starts_with($arg, "--{$optionName}")) {
+                return true;
+            }
+            // Check short option form: -x or -xvalue
+            if (isset($shortOptions[$optionName])) {
+                $short = $shortOptions[$optionName];
+                if ($arg === "-{$short}" || str_starts_with($arg, "-{$short}")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Store options that were explicitly provided (for testing with CommandTester).
+     * @param array<string, mixed> $options
+     */
+    public function setExplicitlyProvidedOptions(array $options): void
+    {
+        $this->explicitlyProvidedOptions = $options;
+    }
+
     protected function configure(): void
     {
         $modelChoices = implode(', ', array_map(fn(EnigmaModel $m) => $m->name, EnigmaModel::cases()));
@@ -349,9 +411,9 @@ class EncodeCommand extends Command
         /** @var string $modelOption */
         $modelOption = $input->getOption('model');
         $defaultModel = EnigmaModel::cases()[0];
-        $isModelDefault = $modelOption === $defaultModel->name;
+        $userProvidedModel = $this->wasOptionProvided('model', $input);
 
-        if ($isModelDefault) {
+        if (!$userProvidedModel) {
             $this->io->interactiveStep($currentStep, $totalSteps, 'Select Enigma Model');
             $this->io->interactiveHints([
                 'Military models (WMLW, KMM3, KMM4) have plugboards for extra security.',
@@ -373,8 +435,9 @@ class EncodeCommand extends Command
         $currentStep++;
         /** @var bool $isRandom */
         $isRandom = $input->getOption('random');
+        $userProvidedRandom = $this->wasOptionProvided('random', $input);
 
-        if (!$isRandom) {
+        if (!$userProvidedRandom && !$isRandom) {
             $this->io->interactiveStep($currentStep, $totalSteps, 'Configuration Mode');
             $this->io->interactiveHints([
                 'Random mode generates a secure configuration automatically.',
@@ -395,9 +458,6 @@ class EncodeCommand extends Command
             $this->io->interactiveSelected('Mode', 'Random (from command line)');
         }
 
-        // Get Symfony defaults (from first model - used to detect if user provided options)
-        $symfonyDefaults = $this->getDefaultsForModel(EnigmaModel::cases()[0]);
-
         // Get defaults for the selected model (used for actual default values)
         $defaults = $this->getDefaultsForModel($model);
 
@@ -416,8 +476,7 @@ class EncodeCommand extends Command
             $currentStep++;
             /** @var string $rotorsOption */
             $rotorsOption = $input->getOption('rotors');
-            // User provided rotors if different from Symfony defaults
-            $userProvidedRotors = $rotorsOption !== $symfonyDefaults['rotors'];
+            $userProvidedRotors = $this->wasOptionProvided('rotors', $input);
 
             if (!$userProvidedRotors) {
                 $this->io->interactiveStep($currentStep, $totalSteps, 'Select Rotors');
@@ -433,8 +492,7 @@ class EncodeCommand extends Command
             $currentStep++;
             /** @var string $ringOption */
             $ringOption = $input->getOption('ring');
-            // User provided ring if different from Symfony defaults
-            $userProvidedRing = $ringOption !== $symfonyDefaults['ring'];
+            $userProvidedRing = $this->wasOptionProvided('ring', $input);
             $rotorCount = $model->getExpectedRotorCount();
 
             if (!$userProvidedRing) {
@@ -461,8 +519,7 @@ class EncodeCommand extends Command
             $currentStep++;
             /** @var string $positionOption */
             $positionOption = $input->getOption('position');
-            // User provided position if different from Symfony defaults
-            $userProvidedPosition = $positionOption !== $symfonyDefaults['position'];
+            $userProvidedPosition = $this->wasOptionProvided('position', $input);
 
             if (!$userProvidedPosition) {
                 $this->io->interactiveStep($currentStep, $totalSteps, 'Initial Positions (Grundstellung)');
@@ -488,8 +545,12 @@ class EncodeCommand extends Command
             $currentStep++;
             /** @var string $reflectorOption */
             $reflectorOption = $input->getOption('reflector');
-            // User provided reflector if different from Symfony defaults
-            $userProvidedReflector = $reflectorOption !== $symfonyDefaults['reflector'];
+            $userProvidedReflector = $this->wasOptionProvided('reflector', $input);
+
+            // Check if DORA wiring was provided via command line
+            /** @var string|null $doraWiringOption */
+            $doraWiringOption = $input->getOption('dora-wiring');
+            $userProvidedDoraWiring = $this->wasOptionProvided('dora-wiring', $input);
 
             if (!$userProvidedReflector) {
                 $this->io->interactiveStep($currentStep, $totalSteps, 'Select Reflector (Umkehrwalze)');
@@ -498,7 +559,13 @@ class EncodeCommand extends Command
                 $doraPairsStr = $reflectorResult['doraPairs'];
             } else {
                 $reflectorStr = $reflectorOption;
-                $this->io->interactiveSelected('Reflector', $reflectorStr . ' (from command line)');
+                // If DORA reflector with custom wiring from command line
+                if ($userProvidedDoraWiring && $doraWiringOption !== null && $doraWiringOption !== '') {
+                    $doraPairsStr = $doraWiringOption;
+                    $this->io->interactiveSelected('Reflector', $reflectorStr . ' with custom wiring (from command line)');
+                } else {
+                    $this->io->interactiveSelected('Reflector', $reflectorStr . ' (from command line)');
+                }
             }
 
             // =================================================================
@@ -508,8 +575,9 @@ class EncodeCommand extends Command
                 $currentStep++;
                 /** @var string $plugboardOption */
                 $plugboardOption = $input->getOption('plugboard');
+                $userProvidedPlugboard = $this->wasOptionProvided('plugboard', $input);
 
-                if ($plugboardOption === '') {
+                if (!$userProvidedPlugboard) {
                     $this->io->interactiveStep($currentStep, $totalSteps, 'Plugboard Connections (Steckerbrett)');
                     $maxPairs = (int) (count(Letter::cases()) / 2);
                     $this->io->interactiveHints([
