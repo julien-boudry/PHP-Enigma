@@ -30,12 +30,6 @@ A PHP implementation of the historic Enigma cipher machine, supporting multiple 
   - [Configuration & State](#configuration--state)
   - [Advanced Features](#advanced-features)
 - [Technical Specifications](#technical-specifications)
-  - [Supported Models](#supported-models)
-  - [Military Models](#military-models)
-  - [Commercial Models](#commercial-models)
-  - [Enigma T (Tirpitz)](#enigma-t-tirpitz)
-  - [Rotors and Reflectors](#rotors-and-reflectors)
-  - [UKW-D (Rewirable Reflector)](#ukw-d-rewirable-reflector)
 - [Testing](#testing)
 - [Historical Context](#historical-context)
   - [History](#history)
@@ -358,210 +352,25 @@ echo EnigmaTextConverter::formatInGroups('HELLOWORLD'); // "HELLO WORLD"
 
 Information used to create this package come from [Wikipedia](http://en.wikipedia.org/wiki/Enigma_machine) and the manual from "Enigma Simulator" by D. Rijmenants.
 
-This package provides the functionality of different Enigma models:
+This library supports multiple Enigma models:
 
-*   Wehrmacht / Luftwaffe 3 rotor model
-*   Kriegsmarine 3 rotor model
-*   Kriegsmarine 4 rotor model
-*   Commercial models (Enigma K, Swiss-K, Railway)
-*   Enigma T (Tirpitz) for German-Japanese communications
+| Type | Models |
+|------|--------|
+| **Military** | Wehrmacht/Luftwaffe (WMLW), Kriegsmarine M3 (KMM3), Kriegsmarine M4 (KMM4) |
+| **Commercial** | Enigma K, Swiss-K, Railway (Rocket) |
+| **Special** | Enigma T (Tirpitz) - German-Japanese communications |
 
-## Supported Models
+📖 **[Complete Models, Rotors & Reflectors Reference →](MODELS.md)**
 
-This library supports both military and commercial Enigma models. Military models feature a plugboard (Steckerbrett) for additional scrambling, while commercial models use a QWERTZ entry wheel without plugboard.
-
-### Military Models
-
-Each military model can be equipped with a different set of rotors and reflectors. All in all are 10 types of rotors and 4 types of reflectors available for military use.
-
-*   Wehrmacht / Luftwaffe 3 rotor model (`WMLW`) uses:
-    *   rotors: I, II, III, IV, V
-    *   reflectors: B, C, DORA (rewirable)
-*   Kriegsmarine 3 rotor model (`KMM3`) uses:
-    *   rotors: I, II, III, IV, V, VI, VII, VIII
-    *   reflectors: B, C
-*   Kriegsmarine 4 rotor model (`KMM4`) uses:
-    *   rotors: I, II, III, IV, V, VI, VII, VIII, Beta, Gamma
-    *   reflectors: B Thin, C Thin
-
-### Commercial Models
-
-Commercial Enigma machines were sold to governments and businesses before and during WW2. They differ from military models in two key ways:
-- **No plugboard**: The signal goes directly from the keyboard to the rotors
-- **QWERTZ entry wheel**: Uses `QWERTZUIOASDFGHJKPYXCVBNML` order instead of alphabetical
-
-```php
-use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
-
-// Create an Enigma K Commercial machine
-$rotorsConfiguration = new RotorConfiguration(
-    p1: RotorType::K_I,
-    p2: RotorType::K_II,
-    p3: RotorType::K_III,
-);
-
-$enigma = new Enigma(EnigmaModel::ENIGMA_K, $rotorsConfiguration, ReflectorType::K);
-
-// Set rotor positions
-$enigma->setPosition(RotorPosition::P1, Letter::A);
-$enigma->setPosition(RotorPosition::P2, Letter::B);
-$enigma->setPosition(RotorPosition::P3, Letter::C);
-
-// No plugboard available - attempting to use plugLetters() will throw an exception
-$encoded = $enigma->encodeLetter(Letter::H);
-```
-
-Available commercial models:
-
-*   Enigma K Commercial (`ENIGMA_K`) uses:
-    *   rotors: K_I, K_II, K_III
-    *   reflector: K
-*   Swiss-K / Swiss Air Force (`SWISS_K`) uses:
-    *   rotors: SWISS_K_I, SWISS_K_II, SWISS_K_III
-    *   reflector: SWISS_K
-*   Railway (Rocket) (`RAILWAY`) uses:
-    *   rotors: RAILWAY_I, RAILWAY_II, RAILWAY_III
-    *   reflector: RAILWAY
-
-### Enigma T (Tirpitz)
-
-The Enigma T (also called "Tirpitz") was a special variant used for communications between Germany and Japan during WW2. It features:
-- **No plugboard**: Like commercial models
-- **Unique entry wheel**: Uses `KZROUQHYAIGBLWVSTDXFPNMCJE` order (neither alphabetical nor QWERTZ)
-- **8 rotors with 5 notches each**: More frequent stepping than standard rotors
-
-```php
-use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
-
-// Create an Enigma T (Tirpitz) machine
-$rotorsConfiguration = new RotorConfiguration(
-    p1: RotorType::TIRPITZ_I,
-    p2: RotorType::TIRPITZ_II,
-    p3: RotorType::TIRPITZ_III,
-);
-
-$enigma = new Enigma(EnigmaModel::TIRPITZ, $rotorsConfiguration, ReflectorType::TIRPITZ);
-
-// Set rotor positions
-$enigma->setPosition(RotorPosition::P1, Letter::A);
-$enigma->setPosition(RotorPosition::P2, Letter::B);
-$enigma->setPosition(RotorPosition::P3, Letter::C);
-
-// Encode a message
-$ciphertext = $enigma->encodeLetters('HELLO');
-```
-
-*   Enigma T / Tirpitz (`TIRPITZ`) uses:
-    *   rotors: TIRPITZ_I through TIRPITZ_VIII (choose 3 of 8)
-    *   reflector: TIRPITZ
-
-## Rotors and Reflectors
-
-Each rotor and reflector provides a unique wiring, which can not be changed.
-
-### Military Rotors
-
-*   Contacts = ABCDEFGHIJKLMNOPQRSTUVWXYZ
-*   I = EKMFLGDQVZNTOWYHXUSPAIBRCJ
-*   II = AJDKSIRUXBLHWTMCQGZNPYFVOE
-*   III = BDFHJLCPRTXVZNYEIWGAKMUSQO
-*   IV = ESOVPZJAYQUIRHXLNFTGKDCMWB
-*   V = VZBRGITYUPSDNHLXAWMJQOFECK
-*   VI = JPGVOUMFYQBENHZRDKASXLICTW
-*   VII = NZJHGRCXMYSWBOUFAIVLPEKQDT
-*   VIII = FKQHTLXOCBJSPDZRAMEWNIUYGV
-*   Beta = LEYJVCNIXWPBQMDRTAKZGFUHOS
-*   Gamma = FSOKANUERHMBTIYCWLQPZXVGJD
-
-### Military Reflectors
-
-*   B = YRUHQSLDPXNGOKMIEBFZCWVJAT
-*   C = FVPJIAOYEDRZXWGCTKUQSBNMHL
-*   B Thin = ENKQAUYWJICOPBLMDXZVFTHRGS
-*   C Thin = RDOBJNTKVEHMLFCWZAXGYIPSUQ
-
-### Commercial Rotors
-
-Commercial models use a QWERTZ entry wheel (ETW = QWERTZUIOASDFGHJKPYXCVBNML).
-
-**Enigma K Commercial:**
-*   K_I = LPGSZMHAEOQKVXRFYBUTNICJDW (Notch: Y)
-*   K_II = SLVGBTFXJQOHEWIRZYAMKPCNDU (Notch: E)
-*   K_III = CJGDPSHKTURAWZXFMYNQOBVLIE (Notch: N)
-
-**Swiss-K (Swiss Air Force):**
-*   SWISS_K_I = PEZUOHXSCVFMTBGLRINQJWAYDK (Notch: Y)
-*   SWISS_K_II = ZOUESYDKFWPCIQXHMVBLGNJRAT (Notch: E)
-*   SWISS_K_III = EHRVXGAOBQUSIMZFLYNWKTPDJC (Notch: N)
-
-**Railway (Rocket):**
-*   RAILWAY_I = JGDQOXUSCAMIFRVTPNEWKBLZYH (Notch: N)
-*   RAILWAY_II = NTZPSFBOKMWRCJDIVLAEYUXHGQ (Notch: E)
-*   RAILWAY_III = JVIUBHTCDYAKEQZPOSGXNRMWFL (Notch: Y)
-
-### Commercial Reflectors
-
-*   K = IMETCGFRAYSQBZXWLHKDVUPOJN
-*   SWISS_K = IMETCGFRAYSQBZXWLHKDVUPOJN (same as K)
-*   RAILWAY = QYHOGNECVPUZTFDJAXWMKISRBL
-
-### Enigma T (Tirpitz) Rotors and Reflector
-
-The Enigma T uses a unique entry wheel (ETW = KZROUQHYAIGBLWVSTDXFPNMCJE).
-
-**Tirpitz Rotors (all have 5 notches at E, H, K, N, Q):**
-*   TIRPITZ_I = KPTYUELOCVGRFQDANJMBSWHZXI
-*   TIRPITZ_II = UPHZLWEQMTDJXCAKSOIGVBYFNR
-*   TIRPITZ_III = QUDLYRFEKONVZAXWHMGPJBSICT
-*   TIRPITZ_IV = CIABORGNLXVDMJEWKZPYSUFHTQ
-*   TIRPITZ_V = UAXGISNJBVERDYLFZWTPCKOHMQ
-*   TIRPITZ_VI = XFUZGALVHCNYSEWQTDMRBKPIOJ
-*   TIRPITZ_VII = BJVFTXPLNAYOZIKWGDQERUCHSM
-*   TIRPITZ_VIII = YMTPNZHWKODAJXELUQVGCBISFR
-
-**Tirpitz Reflector:**
-*   TIRPITZ = GEKPBTAUMOCNILJDXZYFHWVQSR
-
-### Notch Positions
-
-Rotors can have notches, which indicate the position where the next rotor is advanced. e.g.: Notch at position Q means, if rotor steps from Q to R, the next rotor is advanced. These positions are:
-
-**Military rotors:**
-*   I = Q
-*   II = E
-*   III = V
-*   IV = J
-*   V = Z
-*   VI, VII, VIII = Z + M
-
-**Commercial rotors:**
-All commercial rotors follow a similar pattern with notches at Y, E, and N positions.
-
-**Tirpitz rotors:**
-All 8 Tirpitz rotors have 5 notches at positions E, H, K, N, and Q, causing more frequent rotor stepping.
-
-Each Rotor can be only used in one position at a time. For military models, rotors I..VIII can be mounted at position 1, 2 or 3, whereas rotors Beta and Gamma can only be used at position 4\. Additionally, Beta and Gamma can only be used in combination with reflector B Thin or C Thin, the others only with reflector B or C. Commercial models have their own dedicated rotor sets that are not interchangeable with military rotors.
+The reference document includes:
+- Detailed specifications for all 7 supported models
+- Complete rotor wirings and notch positions
+- Reflector wirings (including UKW-D rewirable reflector)
+- Entry wheel configurations
+- Full compatibility matrix
 
 > [!IMPORTANT]
-> By default, this library enforces these historical constraints via strict mode validation (see [Strict Mode](#strict-mode)). You can disable these checks to allow experimental or non-historical configurations.
-
-## UKW-D (Rewirable Reflector)
-
-The UKW-D (Umkehrwalze Dora) was a rewirable reflector introduced in January 1944. Unlike fixed reflectors, operators could configure their own wiring using 12 plug cables connecting 24 sockets.
-
-```php
-use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, ReflectorType, RotorConfiguration, RotorType};
-use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
-
-// Using default wiring (includes historical B↔O pair, or J↔Y depending on notation)
-$enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::DORA);
-
-// Or with custom wiring (13 letter pairs)
-$customDora = ReflectorDora::fromString('AZ BO CX DW EV FU GT HS IR JQ KP LY MN');
-$enigma->mountReflector($customDora);
-```
-
-The UKW-D is only compatible with the Wehrmacht/Luftwaffe 3-rotor model (WMLW).
+> By default, this library enforces historical constraints via strict mode validation (see [Strict Mode](#strict-mode)). You can disable these checks to allow experimental or non-historical configurations.
 
 # Testing
 
