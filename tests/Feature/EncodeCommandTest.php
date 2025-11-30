@@ -988,7 +988,7 @@ describe('EncodeCommand', function (): void {
 
             try {
                 $this->commandTester->execute([], ['interactive' => true]);
-            } catch (\Exception) {
+            } catch (Exception) {
                 // Expected - questions will fail without proper input
             }
 
@@ -1033,7 +1033,7 @@ describe('EncodeCommand', function (): void {
 
             try {
                 $this->commandTester->execute(['--model' => 'KMM3'], ['interactive' => true]);
-            } catch (\Exception) {
+            } catch (Exception) {
                 // Expected
             }
 
@@ -1057,7 +1057,7 @@ describe('EncodeCommand', function (): void {
                     '--dora-wiring' => 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY',
                     '--rotors' => 'V-II-I',
                 ], ['interactive' => true]);
-            } catch (\Exception) {
+            } catch (Exception) {
                 // Expected - interactive mode will fail without full input
             }
 
@@ -1078,7 +1078,7 @@ describe('EncodeCommand', function (): void {
 
             try {
                 $this->commandTester->execute(['--model' => 'WMLW'], ['interactive' => true]);
-            } catch (\Exception) {
+            } catch (Exception) {
                 // Expected
             }
 
@@ -1093,7 +1093,7 @@ describe('EncodeCommand', function (): void {
 
             try {
                 $this->commandTester->execute(['--model' => 'ENIGMA_K'], ['interactive' => true]);
-            } catch (\Exception) {
+            } catch (Exception) {
                 // Expected
             }
 

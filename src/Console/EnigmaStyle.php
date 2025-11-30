@@ -6,13 +6,11 @@ namespace JulienBoudry\EnigmaMachine\Console;
 
 use JulienBoudry\EnigmaMachine\Enigma;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableStyle;
+use Symfony\Component\Console\Helper\{Table, TableStyle};
+use Symfony\Component\Console\Question\{ChoiceQuestion, Question};
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Console\Question\ChoiceQuestion;
-use Symfony\Component\Console\Question\Question;
 
 /**
  * Military/submarine-themed console style for the Enigma Machine CLI.
@@ -168,7 +166,7 @@ class EnigmaStyle extends SymfonyStyle
         $table = new Table($this->output);
 
         // Create military-style table
-        $tableStyle = new TableStyle();
+        $tableStyle = new TableStyle;
         $tableStyle
             ->setHorizontalBorderChars('─')
             ->setVerticalBorderChars('│')
@@ -180,7 +178,7 @@ class EnigmaStyle extends SymfonyStyle
         $table->setHeaders(['<military>Setting</>', '<military>Value</>']);
 
         foreach ($rows as $row) {
-            $table->addRow(["<olive>{$row[0]}</>" , "<steel>{$row[1]}</>"]);
+            $table->addRow(["<olive>{$row[0]}</>", "<steel>{$row[1]}</>"]);
         }
 
         $table->render();
@@ -269,9 +267,7 @@ class EnigmaStyle extends SymfonyStyle
         $choiceQuestion->setErrorMessage('Invalid selection: %s');
 
         /** @var string $answer */
-        $answer = $this->askQuestion($choiceQuestion);
-
-        return $answer;
+        return $this->askQuestion($choiceQuestion);
     }
 
     /**
@@ -279,6 +275,7 @@ class EnigmaStyle extends SymfonyStyle
      *
      * @param array<string> $choices
      * @param array<string> $defaults
+     *
      * @return array<string>
      */
     public function interactiveMultiChoice(string $question, array $choices, array $defaults = []): array
@@ -292,9 +289,7 @@ class EnigmaStyle extends SymfonyStyle
         $choiceQuestion->setErrorMessage('Invalid selection: %s');
 
         /** @var array<string> $answer */
-        $answer = $this->askQuestion($choiceQuestion);
-
-        return $answer;
+        return $this->askQuestion($choiceQuestion);
     }
 
     /**
@@ -322,9 +317,7 @@ class EnigmaStyle extends SymfonyStyle
         }
 
         /** @var string $answer */
-        $answer = $this->askQuestion($inputQuestion);
-
-        return $answer;
+        return $this->askQuestion($inputQuestion);
     }
 
     /**

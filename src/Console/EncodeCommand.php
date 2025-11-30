@@ -33,6 +33,7 @@ class EncodeCommand extends Command
 
     /**
      * Options explicitly provided via execute() for testing purposes.
+     *
      * @var array<string, mixed>
      */
     private array $explicitlyProvidedOptions = [];
@@ -44,6 +45,7 @@ class EncodeCommand extends Command
      *
      * @param string $optionName The option name (without -- prefix)
      * @param InputInterface $input The input interface to check
+     *
      * @return bool True if the option was explicitly provided
      */
     private function wasOptionProvided(string $optionName, InputInterface $input): bool
@@ -85,6 +87,7 @@ class EncodeCommand extends Command
 
     /**
      * Store options that were explicitly provided (for testing with CommandTester).
+     *
      * @param array<string, mixed> $options
      */
     public function setExplicitlyProvidedOptions(array $options): void
@@ -585,7 +588,7 @@ class EncodeCommand extends Command
 
                 if (!$userProvidedPlugboard) {
                     $this->io->interactiveStep($currentStep, $totalSteps, 'Plugboard Connections (Steckerbrett)');
-                    $maxPairs = (int) (count(Letter::cases()) / 2);
+                    $maxPairs = (int) (\count(Letter::cases()) / 2);
                     $this->io->interactiveHints([
                         'The plugboard swaps pairs of letters before and after the rotors.',
                         'Enter pairs like: AB CD EF (swaps A↔B, C↔D, E↔F)',
@@ -770,7 +773,7 @@ class EncodeCommand extends Command
             $availableChoices = array_filter(
                 $rotorChoices,
                 fn($name) => !\in_array($name, $usedRotors, true),
-                ARRAY_FILTER_USE_KEY
+                \ARRAY_FILTER_USE_KEY
             );
 
             $defaultRotor = array_key_first($availableChoices);
@@ -1202,6 +1205,7 @@ class EncodeCommand extends Command
         if ($isRandom) {
             $enigma = Enigma::createRandom($model);
             $enigma->strictMode = $strictMode;
+
             return $enigma;
         }
 
@@ -1436,6 +1440,7 @@ class EncodeCommand extends Command
      * Calculate the total number of interactive steps based on the model.
      *
      * @param EnigmaModel $model The Enigma model
+     *
      * @return int The total number of steps
      */
     private function calculateTotalSteps(EnigmaModel $model): int
