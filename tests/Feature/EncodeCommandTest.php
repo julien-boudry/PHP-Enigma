@@ -1070,5 +1070,47 @@ describe('EncodeCommand', function (): void {
             expect($display)->not->toContain('Select Reflector');
             expect($display)->not->toContain('Select Rotors');
         });
+
+        it('calculates correct step count for models with plugboard', function (): void {
+            // WMLW has plugboard, so should have 7 steps
+            $this->command->setExplicitlyProvidedOptions(['model' => 'WMLW']);
+            $this->commandTester->setInputs([]);
+
+            try {
+                $this->commandTester->execute(['--model' => 'WMLW'], ['interactive' => true]);
+            } catch (\Exception) {
+                // Expected
+            }
+
+            // Step counter should show X/7 for models with plugboard
+            expect($this->commandTester->getDisplay())->toMatch('/Step \d\/7/');
+        });
+
+        it('calculates correct step count for models without plugboard', function (): void {
+            // ENIGMA_K has no plugboard, so should have 6 steps
+            $this->command->setExplicitlyProvidedOptions(['model' => 'ENIGMA_K']);
+            $this->commandTester->setInputs([]);
+
+            try {
+                $this->commandTester->execute(['--model' => 'ENIGMA_K'], ['interactive' => true]);
+            } catch (\Exception) {
+                // Expected
+            }
+
+            // Step counter should show X/6 for models without plugboard
+            expect($this->commandTester->getDisplay())->toMatch('/Step \d\/6/');
+        });
+    });
+
+    describe('Short Options', function (): void {
+        it('accepts -R for --random option', function (): void {
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '-R' => true,
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('randomly generated configuration');
+        });
     });
 });

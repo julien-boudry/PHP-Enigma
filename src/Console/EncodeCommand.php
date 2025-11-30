@@ -6,7 +6,7 @@ namespace JulienBoudry\EnigmaMachine\Console;
 
 use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
-use Symfony\Component\Console\Input\{InputArgument, InputInterface, InputOption};
+use Symfony\Component\Console\Input\{ArgvInput, InputArgument, InputInterface, InputOption};
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -53,28 +53,28 @@ class EncodeCommand extends Command
             return true;
         }
 
-        // Then check real command line arguments
-        $argv = $_SERVER['argv'] ?? [];
-        $shortOptions = [
-            'model' => 'm',
-            'rotors' => 'r',
-            'ring' => 'g',
-            'position' => 'p',
-            'reflector' => 'u',
-            'plugboard' => 'b',
-            'random' => 'R',
-            'dora-wiring' => 'd',
-        ];
+        // Use Symfony's hasParameterOption via ArgvInput for real CLI usage
+        if ($input instanceof ArgvInput) {
+            $shortOptions = [
+                'model' => 'm',
+                'rotors' => 'r',
+                'ring' => 'g',
+                'position' => 'p',
+                'reflector' => 'u',
+                'plugboard' => 'b',
+                'random' => 'R',
+                'dora-wiring' => 'd',
+            ];
 
-        foreach ($argv as $arg) {
-            // Check long option forms: --option=value or --option value
-            if (str_starts_with($arg, "--{$optionName}")) {
+            // Check long option
+            if ($input->hasParameterOption("--{$optionName}", true)) {
                 return true;
             }
-            // Check short option form: -x or -xvalue
+
+            // Check short option
             if (isset($shortOptions[$optionName])) {
                 $short = $shortOptions[$optionName];
-                if ($arg === "-{$short}" || str_starts_with($arg, "-{$short}")) {
+                if ($input->hasParameterOption("-{$short}", true)) {
                     return true;
                 }
             }
@@ -204,7 +204,7 @@ class EncodeCommand extends Command
             )
             ->addOption(
                 'random',
-                null,
+                'R',
                 InputOption::VALUE_NONE,
                 'Generate a random configuration for the specified model (ignores other rotor/reflector options)'
             )
@@ -400,8 +400,7 @@ class EncodeCommand extends Command
     {
         $this->io->interactiveWelcome();
 
-        // Step tracking
-        $totalSteps = 7;
+        // Step tracking - will be recalculated after model selection
         $currentStep = 0;
 
         // =====================================================================
@@ -412,6 +411,9 @@ class EncodeCommand extends Command
         $modelOption = $input->getOption('model');
         $defaultModel = EnigmaModel::cases()[0];
         $userProvidedModel = $this->wasOptionProvided('model', $input);
+
+        // Calculate total steps (will recalculate after model is known)
+        $totalSteps = $this->calculateTotalSteps($defaultModel);
 
         if (!$userProvidedModel) {
             $this->io->interactiveStep($currentStep, $totalSteps, 'Select Enigma Model');
@@ -424,8 +426,12 @@ class EncodeCommand extends Command
             $modelChoices = $this->buildModelChoices();
             $selectedModel = $this->io->interactiveChoice('Which Enigma model?', $modelChoices, $defaultModel->name);
             $model = $this->parseModel($this->extractModelName($selectedModel));
+            // Recalculate total steps based on selected model
+            $totalSteps = $this->calculateTotalSteps($model);
         } else {
             $model = $this->parseModel(strtoupper($modelOption));
+            // Recalculate total steps based on selected model
+            $totalSteps = $this->calculateTotalSteps($model);
             $this->io->interactiveSelected('Model', $model->name . ' (from command line)');
         }
 
@@ -908,9 +914,6 @@ class EncodeCommand extends Command
         $positions = $this->parseLetters($positionStr, 'position');
         $reflectorType = $this->parseReflector($reflectorStr);
 
-        // Validate counts
-        $expectedCount = $model->getExpectedRotorCount();
-
         // Build rotor configuration (reverse for internal representation)
         // Input order: left to right (e.g., GREEK-P3-P2-P1 for M4, or P3-P2-P1 for 3-rotor)
         // After reverse: P1-P2-P3-GREEK for M4, or P1-P2-P3 for 3-rotor
@@ -980,7 +983,7 @@ class EncodeCommand extends Command
         /** @var string|null $inputTextFile */
         $inputTextFile = $input->getOption('input-text-file');
 
-        // Get text from file or argument
+        // Get text from file, argument, or stdin
         if ($inputTextFile !== null) {
             if (!file_exists($inputTextFile)) {
                 throw new \InvalidArgumentException("Input file not found: {$inputTextFile}");
@@ -995,10 +998,15 @@ class EncodeCommand extends Command
             $textArg = $input->getArgument('text');
 
             if ($textArg === null || $textArg === '') {
-                throw new \InvalidArgumentException('No text provided. Use a text argument, --input-text-file, or --input-binary-file.');
-            }
+                // Try reading from stdin if available (piped input)
+                $text = $this->readFromStdin();
 
-            $text = $textArg;
+                if ($text === null || $text === '') {
+                    throw new \InvalidArgumentException('No text provided. Use a text argument, --input-text-file, --input-binary-file, or pipe text via stdin.');
+                }
+            } else {
+                $text = $textArg;
+            }
         }
 
         /** @var bool $noStrict */
@@ -1397,5 +1405,45 @@ class EncodeCommand extends Command
         $available = implode(', ', array_map(fn(ReflectorType $r) => $r->name, ReflectorType::cases()));
 
         throw new \InvalidArgumentException("Unknown reflector: {$reflectorName}. Available: {$available}");
+    }
+
+    /**
+     * Read text from stdin if available (for piped input).
+     *
+     * @return string|null The text from stdin, or null if stdin is empty/not available
+     */
+    private function readFromStdin(): ?string
+    {
+        // Check if stdin has data available (non-blocking)
+        $stdin = \defined('STDIN') ? \STDIN : fopen('php://stdin', 'r');
+
+        if ($stdin === false) {
+            return null;
+        }
+
+        // Set non-blocking mode to check if data is available
+        stream_set_blocking($stdin, false);
+        $text = stream_get_contents($stdin);
+
+        if ($text === false || $text === '') {
+            return null;
+        }
+
+        return trim($text);
+    }
+
+    /**
+     * Calculate the total number of interactive steps based on the model.
+     *
+     * @param EnigmaModel $model The Enigma model
+     * @return int The total number of steps
+     */
+    private function calculateTotalSteps(EnigmaModel $model): int
+    {
+        // Base steps: Model (1) + Config Mode (1) + Rotors (1) + Ring (1) + Position (1) + Reflector (1) + Text (1) = 7
+        // If model has plugboard: +1 step
+        $baseSteps = 7;
+
+        return $model->hasPlugboard() ? $baseSteps : $baseSteps - 1;
     }
 }
