@@ -6,9 +6,9 @@ use JulienBoudry\EnigmaMachine\Console\EnigmaStyle;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-test('encodedResult wraps long text correctly', function () {
+test('encodedResult wraps long text correctly', function (): void {
     $input = new ArrayInput([]);
-    $output = new BufferedOutput();
+    $output = new BufferedOutput;
     $style = new EnigmaStyle($input, $output);
 
     // Create a long string that needs wrapping (max width is 60)
@@ -38,9 +38,9 @@ test('encodedResult wraps long text correctly', function () {
     expect($content)->toContain(str_repeat('A', 60));
 });
 
-test('military formatting methods apply styles', function () {
+test('military formatting methods apply styles', function (): void {
     $input = new ArrayInput([]);
-    $output = new BufferedOutput();
+    $output = new BufferedOutput;
     $style = new EnigmaStyle($input, $output);
 
     $style->militaryInfo('Info message');
@@ -52,9 +52,9 @@ test('military formatting methods apply styles', function () {
     // Actually SymfonyStyle formats tags.
 });
 
-test('militaryError renders error box', function () {
+test('militaryError renders error box', function (): void {
     $input = new ArrayInput([]);
-    $output = new BufferedOutput();
+    $output = new BufferedOutput;
     $style = new EnigmaStyle($input, $output);
 
     $style->militaryError('Critical Failure');

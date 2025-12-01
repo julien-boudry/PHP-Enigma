@@ -3,16 +3,10 @@
 declare(strict_types=1);
 
 use JulienBoudry\EnigmaMachine\Console\EnigmaSimulator;
-use JulienBoudry\EnigmaMachine\Enigma;
-use JulienBoudry\EnigmaMachine\EnigmaModel;
-use JulienBoudry\EnigmaMachine\Letter;
-use JulienBoudry\EnigmaMachine\ReflectorType;
-use JulienBoudry\EnigmaMachine\RotorConfiguration;
-use JulienBoudry\EnigmaMachine\RotorPosition;
-use JulienBoudry\EnigmaMachine\RotorType;
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 use Symfony\Component\Console\Output\BufferedOutput;
 
-test('simulator encodes text correctly', function () {
+test('simulator encodes text correctly', function (): void {
     // Setup deterministic Enigma
     // Standard setup: Rotors I-II-III (Left-to-Right) means P3=I, P2=II, P1=III
     $rotors = new RotorConfiguration(
@@ -28,7 +22,7 @@ test('simulator encodes text correctly', function () {
     $enigma->setPosition(RotorPosition::P2, Letter::A);
     $enigma->setPosition(RotorPosition::P3, Letter::A);
 
-    $output = new BufferedOutput();
+    $output = new BufferedOutput;
     $simulator = new EnigmaSimulator($output, $enigma);
 
     // Encode "AAAAA" with default settings (AAA) -> BDZGO
@@ -37,9 +31,9 @@ test('simulator encodes text correctly', function () {
     expect($result)->toBe('BDZGO');
 });
 
-test('simulator renders visual frame structure', function () {
+test('simulator renders visual frame structure', function (): void {
     $enigma = Enigma::createRandom(EnigmaModel::WMLW);
-    $output = new BufferedOutput();
+    $output = new BufferedOutput;
     $simulator = new EnigmaSimulator($output, $enigma);
 
     $simulator->simulate('A', 0);
@@ -54,12 +48,12 @@ test('simulator renders visual frame structure', function () {
         ->toContain('A'); // The input letter
 });
 
-test('simulator renders plugboard when present', function () {
+test('simulator renders plugboard when present', function (): void {
     $enigma = Enigma::createRandom(EnigmaModel::WMLW);
     // Ensure we have at least one plug
     $enigma->plugLetters(Letter::A, Letter::B);
-    
-    $output = new BufferedOutput();
+
+    $output = new BufferedOutput;
     $simulator = new EnigmaSimulator($output, $enigma);
 
     $simulator->simulate('A', 0);
@@ -67,17 +61,17 @@ test('simulator renders plugboard when present', function () {
 
     // Should not contain "NO PLUGBOARD" (Gothic)
     expect($content)->not->toContain('𝕹𝕺 𝕻𝕷𝖀𝕲𝕭𝕺𝕬𝕽𝕯');
-    
+
     // Should contain the plugged letters
     expect($content)->toContain('A');
     expect($content)->toContain('B');
 });
 
-test('simulator hides plugboard section for models without plugboard', function () {
+test('simulator hides plugboard section for models without plugboard', function (): void {
     // Use a commercial model that has no plugboard
     $enigma = Enigma::createRandom(EnigmaModel::ENIGMA_K);
-    
-    $output = new BufferedOutput();
+
+    $output = new BufferedOutput;
     $simulator = new EnigmaSimulator($output, $enigma);
 
     $simulator->simulate('A', 0);
@@ -85,18 +79,18 @@ test('simulator hides plugboard section for models without plugboard', function 
 
     // The plugboard section is completely hidden, so "NO PLUGBOARD" is NOT shown
     expect($content)->not->toContain('𝕹𝕺 𝕻𝕷𝖀𝕲𝕭𝕺𝕬𝕽𝕯');
-    
+
     // Verify it has fewer lines than a model with plugboard
     $lines = explode("\n", $content);
     // WMLW has ~35 lines, ENIGMA_K should have ~30
     // Exact count depends on implementation, but we can check it's reasonable
-    expect(count($lines))->toBeGreaterThan(20);
+    expect(\count($lines))->toBeGreaterThan(20);
 });
 
-test('simulator handles greek rotor rendering for M4', function () {
+test('simulator handles greek rotor rendering for M4', function (): void {
     $enigma = Enigma::createRandom(EnigmaModel::KMM4);
-    
-    $output = new BufferedOutput();
+
+    $output = new BufferedOutput;
     $simulator = new EnigmaSimulator($output, $enigma);
 
     $simulator->simulate('A', 0);
@@ -105,7 +99,7 @@ test('simulator handles greek rotor rendering for M4', function () {
     expect($content)->toContain('𝕽𝖔𝖙𝖔𝖗𝖘:');
 });
 
-test('simulator skips non-alpha characters', function () {
+test('simulator skips non-alpha characters', function (): void {
     // Setup deterministic Enigma
     $rotors = new RotorConfiguration(
         p1: RotorType::III,
@@ -117,7 +111,7 @@ test('simulator skips non-alpha characters', function () {
     $enigma->setPosition(RotorPosition::P2, Letter::A);
     $enigma->setPosition(RotorPosition::P3, Letter::A);
 
-    $output = new BufferedOutput();
+    $output = new BufferedOutput;
     $simulator = new EnigmaSimulator($output, $enigma);
 
     // "A 1 B" -> Should encode A and B, skip space and 1
