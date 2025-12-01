@@ -223,6 +223,12 @@ class EncodeCommand extends Command
                 InputOption::VALUE_NONE,
                 'Disable strict mode (allow non-historical configurations like plugboard on commercial models)'
             )
+            ->addOption(
+                'raw',
+                null,
+                InputOption::VALUE_NONE,
+                'Output raw encoded text without decoration (useful for pipes)'
+            )
             ->setHelp(
                 <<<HELP
                     The <info>%command.name%</info> command encodes text using the Enigma cipher machine.
@@ -361,10 +367,18 @@ class EncodeCommand extends Command
             // - No input file provided
             // - Not explicitly disabled with --no-interaction (-n)
             // - Terminal supports interaction
+            // - STDIN is a TTY (not piped)
+
+            $isStdinTty = true;
+            if (\defined('STDIN')) {
+                $isStdinTty = stream_isatty(\STDIN);
+            }
+
             $this->isInteractive = $textArg === null
                 && $inputBinaryFile === null
                 && $inputTextFile === null
-                && $input->isInteractive();
+                && $input->isInteractive()
+                && $isStdinTty;
 
             if ($this->isInteractive) {
                 return $this->executeInteractiveMode($input, $output);
@@ -1051,45 +1065,52 @@ class EncodeCommand extends Command
         /** @var string|null $outputFile */
         $outputFile = $input->getOption('output-file');
 
+        /** @var bool $raw */
+        $raw = $input->getOption('raw');
+
         // Strip spaces if requested (useful for decoding formatted groups)
         if ($stripSpaces) {
             $text = str_replace(' ', '', $text);
         }
 
         // Show intro
-        $this->io->enigmaTitle();
+        if (!$raw) {
+            $this->io->enigmaTitle();
 
-        // Show random note
-        if ($isRandom) {
-            $this->io->militaryNote('Using randomly generated configuration');
-        }
+            // Show random note
+            if ($isRandom) {
+                $this->io->militaryNote('Using randomly generated configuration');
+            }
 
-        // Show file source if from file
-        if ($inputTextFile !== null) {
-            $this->io->militaryInfo("Reading text from: {$inputTextFile}");
+            // Show file source if from file
+            if ($inputTextFile !== null) {
+                $this->io->militaryInfo("Reading text from: {$inputTextFile}");
 
-            // Warn about non-Enigma characters if not using latin mode
-            if (!$useLatin) {
-                $nonAlphaCount = preg_match_all('/[^A-Za-z]/', $text);
-                if ($nonAlphaCount > 0) {
-                    $this->io->militaryWarning("File contains {$nonAlphaCount} non-alphabetic characters that will be stripped.");
-                    $this->io->militaryWarning('Use --latin (-l) to convert spaces, numbers, and accents automatically.');
+                // Warn about non-Enigma characters if not using latin mode
+                if (!$useLatin) {
+                    $nonAlphaCount = preg_match_all('/[^A-Za-z]/', $text);
+                    if ($nonAlphaCount > 0) {
+                        $this->io->militaryWarning("File contains {$nonAlphaCount} non-alphabetic characters that will be stripped.");
+                        $this->io->militaryWarning('Use --latin (-l) to convert spaces, numbers, and accents automatically.');
+                    }
                 }
             }
-        }
 
-        // Show configuration
-        if ($showConfig) {
-            $this->displayConfiguration($enigma);
+            // Show configuration
+            if ($showConfig) {
+                $this->displayConfiguration($enigma);
+            }
         }
 
         // Encode the text
         $result = $this->encodeText($enigma, $text, $useLatin, $formatOutput);
 
         // Output result
-        $this->outputResult($result, $outputFile);
+        $this->outputResult($result, $outputFile, $raw);
 
-        $this->io->missionComplete('Encoding complete');
+        if (!$raw) {
+            $this->io->missionComplete('Encoding complete');
+        }
 
         return Command::SUCCESS;
     }
@@ -1185,7 +1206,7 @@ class EncodeCommand extends Command
     /**
      * Output the result to console or file.
      */
-    private function outputResult(string $result, ?string $outputFile): void
+    private function outputResult(string $result, ?string $outputFile, bool $raw = false): void
     {
         if ($outputFile !== null) {
             $dir = \dirname($outputFile);
@@ -1198,9 +1219,16 @@ class EncodeCommand extends Command
                 throw new \InvalidArgumentException("Failed to write output file: {$outputFile}");
             }
 
-            $this->io->militaryInfo("Written to: {$outputFile}");
+            if (!$raw) {
+                $this->io->militaryInfo("Written to: {$outputFile}");
+            }
         } else {
-            $this->io->encodedResult($result);
+            if ($raw) {
+                // Raw output just prints the result string followed by a newline
+                $this->io->writeln($result);
+            } else {
+                $this->io->encodedResult($result);
+            }
         }
     }
 
@@ -1437,15 +1465,14 @@ class EncodeCommand extends Command
      */
     private function readFromStdin(): ?string
     {
-        // Check if stdin has data available (non-blocking)
+        // Check if stdin has data available
         $stdin = \defined('STDIN') ? \STDIN : fopen('php://stdin', 'r');
 
         if ($stdin === false) {
             return null;
         }
 
-        // Set non-blocking mode to check if data is available
-        stream_set_blocking($stdin, false);
+        // Read until EOF (blocking is fine here as we expect input in non-interactive mode)
         $text = stream_get_contents($stdin);
 
         if ($text === false || $text === '') {
