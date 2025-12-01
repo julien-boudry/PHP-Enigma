@@ -170,6 +170,9 @@ class EnigmaSimulator
         );
     }
 
+    /**
+     * @return array<string>
+     */
     private function renderLampboard(?Letter $litLetter): array
     {
         $litChar = $litLetter ? $litLetter->toChar() : null;
@@ -182,7 +185,7 @@ class EnigmaSimulator
             $indent = match ($rowIndex) {
                 0 => '       ',
                 1 => '        ',
-                2 => '      ',
+                default => '      ',
             };
 
             $content .= $indent;
@@ -209,7 +212,7 @@ class EnigmaSimulator
             $paddingRight = match ($rowIndex) {
                 0 => str_repeat(' ', 15),
                 1 => str_repeat(' ', 18),
-                2 => str_repeat(' ', 16),
+                default => str_repeat(' ', 16),
             };
 
             $formattedLines[] = "<military>║</>{$content}{$paddingRight}<military>║</>";
@@ -218,6 +221,9 @@ class EnigmaSimulator
         return $formattedLines;
     }
 
+    /**
+     * @return array<string>
+     */
     private function renderPlugboard(): array
     {
         if (!$this->enigma->hasPlugboard()) {
@@ -252,7 +258,7 @@ class EnigmaSimulator
             $indent = match ($rowIndex) {
                 0 => '       ',
                 1 => '        ',
-                2 => '      ',
+                default => '      ',
             };
 
             $content .= $indent;
@@ -274,7 +280,7 @@ class EnigmaSimulator
             $paddingRight = match ($rowIndex) {
                 0 => str_repeat(' ', 15),
                 1 => str_repeat(' ', 18),
-                2 => str_repeat(' ', 16),
+                default => str_repeat(' ', 16),
             };
 
             $formattedLines[] = "<military>║</>{$content}{$paddingRight}<military>║</>";
@@ -283,6 +289,9 @@ class EnigmaSimulator
         return $formattedLines;
     }
 
+    /**
+     * @return array<string>
+     */
     private function renderKeyboard(?Letter $pressedLetter): array
     {
         $pressedChar = $pressedLetter ? $pressedLetter->toChar() : null;
@@ -295,7 +304,7 @@ class EnigmaSimulator
             $indent = match ($rowIndex) {
                 0 => '       ',
                 1 => '        ',
-                2 => '      ',
+                default => '      ',
             };
 
             $content .= $indent;
@@ -312,7 +321,7 @@ class EnigmaSimulator
             $paddingRight = match ($rowIndex) {
                 0 => str_repeat(' ', 15),
                 1 => str_repeat(' ', 18),
-                2 => str_repeat(' ', 16),
+                default => str_repeat(' ', 16),
             };
 
             $formattedLines[] = "<military>║</>{$content}{$paddingRight}<military>║</>";
