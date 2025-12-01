@@ -19,7 +19,7 @@ class TirpitzEntryWheel extends AbstractEntryWheel
      */
     public const string WIRING = 'KZROUQHYAIGBLWVSTDXFPNMCJE';
 
-    protected function getWiringString(): string
+    public function getWiringString(): string
     {
         return self::WIRING;
     }

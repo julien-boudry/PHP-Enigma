@@ -26,7 +26,7 @@ abstract class AbstractEntryWheel
     /**
      * Get the wiring string for this entry wheel.
      */
-    abstract protected function getWiringString(): string;
+    abstract public function getWiringString(): string;
 
     /**
      * Constructor creates the entry wheel wiring.

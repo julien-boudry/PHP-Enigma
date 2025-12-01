@@ -21,7 +21,7 @@ class AlphabeticalEntryWheel extends AbstractEntryWheel
      */
     public const string WIRING = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    protected function getWiringString(): string
+    public function getWiringString(): string
     {
         return self::WIRING;
     }

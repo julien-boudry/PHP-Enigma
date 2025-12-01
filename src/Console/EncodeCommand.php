@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JulienBoudry\EnigmaMachine\Console;
 
-use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
+use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, EnigmaTextConverter, Letter, ReflectorType, RotorConfiguration, RotorPosition, RotorType};
 use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
 use Symfony\Component\Console\Input\{ArgvInput, InputArgument, InputInterface, InputOption};
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -367,7 +367,7 @@ class EncodeCommand extends Command
                 && $input->isInteractive();
 
             if ($this->isInteractive) {
-                return $this->executeInteractiveMode($input);
+                return $this->executeInteractiveMode($input, $output);
             }
 
             // Binary file mode: use Enigma's encodeFile/decodeFile methods
@@ -399,7 +399,7 @@ class EncodeCommand extends Command
     /**
      * Execute in interactive mode - ask for missing options step by step.
      */
-    private function executeInteractiveMode(InputInterface $input): int
+    private function executeInteractiveMode(InputInterface $input, OutputInterface $output): int
     {
         $this->io->interactiveWelcome();
 
@@ -669,7 +669,26 @@ class EncodeCommand extends Command
         $this->displayConfiguration($enigma);
 
         // Encode and output
-        $result = $this->encodeText($enigma, $text, $useLatin, $formatOutput);
+        // In interactive mode, we use the simulator for visual feedback
+        if ($useLatin) {
+            $textToEncode = EnigmaTextConverter::latinToEnigmaFormat($text, 'X');
+        } else {
+            $textToEncode = strtoupper(preg_replace('/[^A-Za-z]/', '', $text) ?? $text);
+        }
+
+        $simulator = new EnigmaSimulator($output, $enigma);
+        $this->io->newLine();
+        $this->io->militaryInfo('Initializing Enigma Simulation...');
+        $this->io->newLine();
+        sleep(1);
+
+        $encodedText = $simulator->simulate($textToEncode);
+
+        if ($formatOutput) {
+            $result = EnigmaTextConverter::formatInGroups($encodedText);
+        } else {
+            $result = $encodedText;
+        }
 
         /** @var string|null $outputFile */
         $outputFile = $input->getOption('output-file');
@@ -1157,7 +1176,7 @@ class EncodeCommand extends Command
         $result = $enigma->encodeLetters($cleanedText);
 
         if ($formatOutput) {
-            $result = \JulienBoudry\EnigmaMachine\EnigmaTextConverter::formatInGroups($result);
+            $result = EnigmaTextConverter::formatInGroups($result);
         }
 
         return $result;

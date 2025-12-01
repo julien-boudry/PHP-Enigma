@@ -66,7 +66,7 @@ class EnigmaStyle extends SymfonyStyle
     {
         $this->newLine();
         $this->writeln('<military>╔══════════════════════════════════════╗</>');
-        $this->writeln('<military>║</>      <steel>⚙</> <military>ENIGMA MACHINE</> <steel>⚙</>          <military>║</>');
+        $this->writeln('<military>║</>          <steel>⚙</> <military>ENIGMA MACHINE</> <steel>⚙</>          <military>║</>');
         $this->writeln('<military>╚══════════════════════════════════════╝</>');
         $this->newLine();
     }
@@ -120,10 +120,42 @@ class EnigmaStyle extends SymfonyStyle
      */
     public function encodedResult(string $result): void
     {
+        $maxWidth = 60;
+        $wrapped = wordwrap($result, $maxWidth, "\n", true);
+        $lines = explode("\n", $wrapped);
+
+        // Calculate box width based on longest line (min width to fit title)
+        $title = 'ENCODED MESSAGE';
+        $contentWidth = max(array_map('strlen', $lines));
+        // Ensure box is wide enough for title and content
+        $boxWidth = max($contentWidth + 2, \strlen($title) + 4);
+
         $this->newLine();
-        $this->writeln('  <military>┌──── MESSAGE ────┐</>');
-        $this->writeln("  <military>│</> <cipher>{$result}</>");
-        $this->writeln('  <military>└─────────────────┘</>');
+
+        // Top border with title
+        $dashesTotal = $boxWidth - \strlen($title) - 2; // -2 for spaces around title
+        $dashesLeft = (int) floor($dashesTotal / 2);
+        $dashesRight = $dashesTotal - $dashesLeft;
+
+        $this->writeln(\sprintf(
+            '  <military>┌%s %s %s┐</>',
+            str_repeat('─', $dashesLeft),
+            $title,
+            str_repeat('─', $dashesRight)
+        ));
+
+        // Content
+        foreach ($lines as $line) {
+            $padding = $boxWidth - \strlen($line) - 1; // -1 for left space
+            $this->writeln(\sprintf(
+                '  <military>│</> <cipher>%s</>%s<military>│</>',
+                $line,
+                str_repeat(' ', $padding)
+            ));
+        }
+
+        // Bottom border
+        $this->writeln('  <military>└' . str_repeat('─', $boxWidth) . '┘</>');
         $this->newLine();
     }
 

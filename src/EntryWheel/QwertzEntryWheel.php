@@ -20,7 +20,7 @@ class QwertzEntryWheel extends AbstractEntryWheel
      */
     public const string WIRING = 'QWERTZUIOASDFGHJKPYXCVBNML';
 
-    protected function getWiringString(): string
+    public function getWiringString(): string
     {
         return self::WIRING;
     }
