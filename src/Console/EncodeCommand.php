@@ -1472,6 +1472,12 @@ class EncodeCommand extends Command
             return null;
         }
 
+        // If STDIN is a TTY, it means we are connected to a terminal, not a pipe.
+        // In this case, we shouldn't block waiting for input.
+        if (\function_exists('stream_isatty') && stream_isatty($stdin)) {
+            return null;
+        }
+
         // Read until EOF (blocking is fine here as we expect input in non-interactive mode)
         $text = stream_get_contents($stdin);
 

@@ -451,20 +451,17 @@ describe('EncodeCommand', function (): void {
         });
 
         it('allows decoding formatted 5-letter groups', function (): void {
-            // First encode with formatting
+            // First encode with formatting and raw output for easy extraction
             $this->commandTester->execute([
                 'text' => 'SECRETMESSAGE',
                 '--format' => true,
+                '--raw' => true,
             ]);
-            $encoded = $this->commandTester->getDisplay();
-
-            // Extract the formatted output from military-style format (│ RESULT format)
-            preg_match('/│\s*([A-Z\s]+)\s*$/m', $encoded, $matches);
-            $formattedOutput = trim($matches[1] ?? '');
+            $encoded = trim($this->commandTester->getDisplay());
 
             // Decode with strip-spaces
             $this->commandTester->execute([
-                'text' => $formattedOutput,
+                'text' => $encoded,
                 '--strip-spaces' => true,
             ]);
 
