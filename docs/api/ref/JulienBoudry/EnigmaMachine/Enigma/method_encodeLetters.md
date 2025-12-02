@@ -29,7 +29,7 @@ The letters to encode (A-Z only, no spaces or other characters)
 The encoded letters
 
 ## Throws
-- **[\ValueError]()** _If the input contains invalid characters_
+- **`\ValueError`** _If the input contains invalid characters_
 
 ## Related
 - **[\JulienBoudry\EnigmaMachine\Enigma::encodeLatinText()](method_encodeLatinText.md)** _For encoding arbitrary text with automatic conversion_

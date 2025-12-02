@@ -15,4 +15,4 @@ Get the P1 rotor (rightmost, fastest rotating).
 
 
 ## Throws
-- **[\InvalidArgumentException]()** _If no rotor is mounted_
+- **`\InvalidArgumentException`** _If no rotor is mounted_

@@ -3,7 +3,7 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Enigma.php#L85)
 
 ```php
-public function Enigma->__construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, JulienBoudry\EnigmaMachine\RotorConfiguration $rotors, JulienBoudry\EnigmaMachine\ReflectorType $reflector, [ bool $strictMode = true ] )
+public function Enigma->__construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, JulienBoudry\EnigmaMachine\RotorConfiguration $rotors, JulienBoudry\EnigmaMachine\ReflectorType|JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector, [ bool $strictMode = true ] )
 ```
 
 ## Description
@@ -31,11 +31,11 @@ The rotor configuration
 
 ### **reflector:**
 ```php
-JulienBoudry\EnigmaMachine\ReflectorType $reflector
+JulienBoudry\EnigmaMachine\ReflectorType|JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector
 ```
-**Type:** [`JulienBoudry\EnigmaMachine\ReflectorType`](../ReflectorType/enum_ReflectorType.md)
+**Type:** [`JulienBoudry\EnigmaMachine\ReflectorType`](../ReflectorType/enum_ReflectorType.md) | [`JulienBoudry\EnigmaMachine\Reflector\AbstractReflector`](../Reflector/AbstractReflector/class_AbstractReflector.md)
 
-ID for the reflector for the initial setup
+The reflector type or a custom reflector instance (e.g., configured ReflectorDora)
 
 ### **strictMode:**
 ```php

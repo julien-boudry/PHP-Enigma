@@ -81,7 +81,7 @@ class JulienBoudry\EnigmaMachine\Enigma
 
     // Methods
     public function __clone( ): void;
-    public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, JulienBoudry\EnigmaMachine\RotorConfiguration $rotors, JulienBoudry\EnigmaMachine\ReflectorType $reflector, [ bool $strictMode = true ] );
+    public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, JulienBoudry\EnigmaMachine\RotorConfiguration $rotors, JulienBoudry\EnigmaMachine\ReflectorType|JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector, [ bool $strictMode = true ] );
     public function decodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int;
     public function encodeBinary( string $binaryData, [ bool $formatOutput = false ] ): string;
     public function encodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int;
@@ -122,7 +122,7 @@ class JulienBoudry\EnigmaMachine\Enigma
 
     // Methods
     public function __clone( ): void;
-    public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, JulienBoudry\EnigmaMachine\RotorConfiguration $rotors, JulienBoudry\EnigmaMachine\ReflectorType $reflector, [ bool $strictMode = true ] );
+    public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, JulienBoudry\EnigmaMachine\RotorConfiguration $rotors, JulienBoudry\EnigmaMachine\ReflectorType|JulienBoudry\EnigmaMachine\Reflector\AbstractReflector $reflector, [ bool $strictMode = true ] );
     public function decodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int;
     public function encodeBinary( string $binaryData, [ bool $formatOutput = false ] ): string;
     public function encodeFile( SplFileObject|string $source, SplFileObject|string $destination ): int;

@@ -15,4 +15,4 @@ Get the P3 rotor (leftmost in 3-rotor models).
 
 
 ## Throws
-- **[\InvalidArgumentException]()** _If no rotor is mounted_
+- **`\InvalidArgumentException`** _If no rotor is mounted_

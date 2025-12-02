@@ -29,6 +29,8 @@ Each model has its own specific set of available rotors and reflectors.
 | Method Name | Description |
 | ------------- | ------------- |
 | [getCompatibleReflectors(...)](method_getCompatibleReflectors.md) | _Get the compatible reflector types for this model._ |
+| [getDescription(...)](method_getDescription.md) | _Get a human-readable description of this model._ |
+| [getEmoji(...)](method_getEmoji.md) | _Get an emoji representing this model._ |
 | [getEntryWheelType(...)](method_getEntryWheelType.md) | _Get the entry wheel type for this model._ |
 | [getExpectedRotorCount(...)](method_getExpectedRotorCount.md) | _Get the expected number of rotors for this model._ |
 | [hasPlugboard(...)](method_hasPlugboard.md) | _Check if this model has a plugboard._ |
@@ -61,6 +63,8 @@ enum JulienBoudry\EnigmaMachine\EnigmaModel implements UnitEnum
 
     // Methods
     public function getCompatibleReflectors( ): array;
+    public function getDescription( ): string;
+    public function getEmoji( ): string;
     public function getEntryWheelType( ): JulienBoudry\EnigmaMachine\EntryWheelType;
     public function getExpectedRotorCount( ): int;
     public function hasPlugboard( ): bool;
@@ -95,6 +99,8 @@ enum JulienBoudry\EnigmaMachine\EnigmaModel implements UnitEnum
 
     // Methods
     public function getCompatibleReflectors( ): array;
+    public function getDescription( ): string;
+    public function getEmoji( ): string;
     public function getEntryWheelType( ): JulienBoudry\EnigmaMachine\EntryWheelType;
     public function getExpectedRotorCount( ): int;
     public function hasPlugboard( ): bool;

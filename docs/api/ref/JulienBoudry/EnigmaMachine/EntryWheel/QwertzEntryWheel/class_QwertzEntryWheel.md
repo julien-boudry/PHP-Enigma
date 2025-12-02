@@ -22,6 +22,7 @@ This maps the German QWERTZ keyboard layout to sequential rotor contact position
 | ------------- | ------------- |
 | [__clone(...)](../AbstractEntryWheel/method___clone.md) | _Deep clone the entry wheel._ |
 | [__construct(...)](../AbstractEntryWheel/method___construct.md) | _Constructor creates the entry wheel wiring._ |
+| [getWiringString(...)](method_getWiringString.md) | __ |
 | [processInward(...)](../AbstractEntryWheel/method_processInward.md) | _Process a letter entering the rotor assembly (keyboard → rotors)._ |
 | [processOutward(...)](../AbstractEntryWheel/method_processOutward.md) | _Process a letter exiting the rotor assembly (rotors → lamps)._ |
 
@@ -32,6 +33,9 @@ class JulienBoudry\EnigmaMachine\EntryWheel\QwertzEntryWheel extends JulienBoudr
 {
     // Constants
     public const string WIRING = 'QWERTZUIOASDFGHJKPYXCVBNML';
+
+    // Methods
+    public function getWiringString( ): string;
 
     // Inherited Methods
     public function AbstractEntryWheel->__clone( ): void;
@@ -51,6 +55,9 @@ class JulienBoudry\EnigmaMachine\EntryWheel\QwertzEntryWheel extends JulienBoudr
 
     // Inherited Properties
     protected JulienBoudry\EnigmaMachine\EnigmaWiring AbstractEntryWheel->wiring;
+
+    // Methods
+    public function getWiringString( ): string;
 
     // Inherited Methods
     public function AbstractEntryWheel->__clone( ): void;

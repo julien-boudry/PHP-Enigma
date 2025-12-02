@@ -15,4 +15,4 @@ Get the P2 rotor (middle).
 
 
 ## Throws
-- **[\InvalidArgumentException]()** _If no rotor is mounted_
+- **`\InvalidArgumentException`** _If no rotor is mounted_

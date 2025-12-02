@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaMachine](../../readme.md) \ [ReflectorDora](class_ReflectorDora.md)
 # Method fromString()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorDora.php#L194)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Reflector/ReflectorDora.php#L202)
 
 ```php
 public static function ReflectorDora::fromString( string $pairsString ): self

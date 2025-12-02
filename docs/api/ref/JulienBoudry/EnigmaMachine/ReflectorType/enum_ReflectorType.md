@@ -37,6 +37,7 @@ Different Enigma models support different reflector types.
 | Method Name | Description |
 | ------------- | ------------- |
 | [createReflector(...)](method_createReflector.md) | _Create a reflector instance for this type._ |
+| [getDescription(...)](method_getDescription.md) | _Get a human-readable description of this reflector type._ |
 
 
 ## Public Representation
@@ -72,6 +73,7 @@ enum JulienBoudry\EnigmaMachine\ReflectorType implements UnitEnum
 
     // Methods
     public function createReflector( ): JulienBoudry\EnigmaMachine\Reflector\AbstractReflector;
+    public function getDescription( ): string;
 
 }
 ```
@@ -109,6 +111,7 @@ enum JulienBoudry\EnigmaMachine\ReflectorType implements UnitEnum
 
     // Methods
     public function createReflector( ): JulienBoudry\EnigmaMachine\Reflector\AbstractReflector;
+    public function getDescription( ): string;
 
 }
 ```

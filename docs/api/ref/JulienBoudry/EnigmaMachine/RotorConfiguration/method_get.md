@@ -25,4 +25,4 @@ The position to get
 The rotor at the given position
 
 ## Throws
-- **[\InvalidArgumentException]()** _If no rotor is mounted at the given position_
+- **`\InvalidArgumentException`** _If no rotor is mounted at the given position_

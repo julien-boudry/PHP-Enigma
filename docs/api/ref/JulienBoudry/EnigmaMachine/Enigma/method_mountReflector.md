@@ -27,4 +27,4 @@ The reflector type or instance to mount
 
 
 ## Throws
-- **[\InvalidArgumentException]()** _If the reflector is not compatible with this model (when strictMode is enabled)_
+- **`\InvalidArgumentException`** _If the reflector is not compatible with this model (when strictMode is enabled)_

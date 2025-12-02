@@ -15,4 +15,4 @@ Get the Greek rotor (M4 only, never rotates).
 
 
 ## Throws
-- **[\InvalidArgumentException]()** _If no rotor is mounted_
+- **`\InvalidArgumentException`** _If no rotor is mounted_

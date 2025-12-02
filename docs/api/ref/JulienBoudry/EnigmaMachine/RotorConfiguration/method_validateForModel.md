@@ -25,4 +25,4 @@ The model to validate against
 
 
 ## Throws
-- **[\InvalidArgumentException]()** _If the configuration is invalid for the model_
+- **`\InvalidArgumentException`** _If the configuration is invalid for the model_

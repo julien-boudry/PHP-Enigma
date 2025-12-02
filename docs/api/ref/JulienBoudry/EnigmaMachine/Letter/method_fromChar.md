@@ -25,4 +25,4 @@ A single character (A-Z, case-insensitive)
 
 
 ## Throws
-- **[\ValueError]()** _If the character is not a valid letter_
+- **`\ValueError`** _If the character is not a valid letter_

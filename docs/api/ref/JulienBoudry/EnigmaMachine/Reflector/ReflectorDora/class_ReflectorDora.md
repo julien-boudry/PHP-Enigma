@@ -27,6 +27,11 @@ The wiring was typically changed every 10 days as per the key sheets.
 This reflector was compatible with 3-rotor Enigma models (Wehrmacht/Luftwaffe).
 ## Elements
 
+### Public Constants
+| Constant Name | Signature | Description |
+| ------------- | ------------- | ------------- |
+| DEFAULT_WIRING | `public const string DEFAULT_WIRING = 'AC BO DE FG HI JK LM NP QR ST UV WX YZ'` | _Default wiring pairs for UKW-D._ |
+
 ### Public Static Methods
 | Method Name | Description |
 | ------------- | ------------- |
@@ -47,6 +52,8 @@ This reflector was compatible with 3-rotor Enigma models (Wehrmacht/Luftwaffe).
 ```php
 final class JulienBoudry\EnigmaMachine\Reflector\ReflectorDora extends JulienBoudry\EnigmaMachine\Reflector\AbstractReflector
 {
+    // Constants
+    public const string DEFAULT_WIRING = 'AC BO DE FG HI JK LM NP QR ST UV WX YZ';
 
     // Static Methods
     public static function fromString( string $pairsString ): self;
@@ -68,6 +75,8 @@ final class JulienBoudry\EnigmaMachine\Reflector\ReflectorDora extends JulienBou
 ```php
 final class JulienBoudry\EnigmaMachine\Reflector\ReflectorDora extends JulienBoudry\EnigmaMachine\Reflector\AbstractReflector
 {
+    // Constants
+    public const string DEFAULT_WIRING = 'AC BO DE FG HI JK LM NP QR ST UV WX YZ';
 
     // Properties
     private string $customWiring;

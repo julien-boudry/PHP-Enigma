@@ -48,7 +48,7 @@ Destination file path or SplFileObject to write decoded binary to
 Total number of bytes written to destination
 
 ## Throws
-- **[\RuntimeException]()** _If the source file cannot be read, destination cannot be written, or decoding fails_
+- **`\RuntimeException`** _If the source file cannot be read, destination cannot be written, or decoding fails_
 
 ## Related
 - **[\JulienBoudry\EnigmaMachine\Enigma::encodeFile()](method_encodeFile.md)** _For the encoding method_

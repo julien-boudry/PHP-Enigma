@@ -20,6 +20,15 @@
 | [RotorPosition](ref/JulienBoudry/EnigmaMachine/RotorPosition/enum_RotorPosition.md) | _Enumeration of rotor positions in the Enigma machine._ |
 | [RotorType](ref/JulienBoudry/EnigmaMachine/RotorType/enum_RotorType.md) | _Enumeration of available rotor types._ |
 
+## JulienBoudry\EnigmaMachine\Console
+| Class Name | Description |
+| ------------- | ------------- |
+| [Application](ref/JulienBoudry/EnigmaMachine/Console/Application/class_Application.md) | _Enigma Machine Console Application._ |
+| [EncodeCommand](ref/JulienBoudry/EnigmaMachine/Console/EncodeCommand/class_EncodeCommand.md) | _Command to encode text using the Enigma machine._ |
+| [EnigmaSimulator](ref/JulienBoudry/EnigmaMachine/Console/EnigmaSimulator/class_EnigmaSimulator.md) | __ |
+| [EnigmaStyle](ref/JulienBoudry/EnigmaMachine/Console/EnigmaStyle/class_EnigmaStyle.md) | _Military/submarine-themed console style for the Enigma Machine CLI._ |
+
+
 ## JulienBoudry\EnigmaMachine\EntryWheel
 | Class Name | Description |
 | ------------- | ------------- |

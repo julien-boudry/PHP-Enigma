@@ -42,7 +42,7 @@ Destination file path or SplFileObject to write to
 Total number of encoded letters written
 
 ## Throws
-- **[\RuntimeException]()** _If the source file cannot be read or destination cannot be written_
+- **`\RuntimeException`** _If the source file cannot be read or destination cannot be written_
 
 ## Related
 - **[\JulienBoudry\EnigmaMachine\Enigma::encodeBinary()](method_encodeBinary.md)** _For the underlying encoding method_
