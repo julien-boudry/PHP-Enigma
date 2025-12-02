@@ -80,6 +80,7 @@ When no text argument is provided, the CLI enters **interactive mode** — a bea
 - **Validation**: Input is validated in real-time (letters A-Z, pair format, etc.)
 - **Progressive disclosure**: Only relevant options are shown based on the selected model
 - **Pre-filled defaults**: Press Enter to accept sensible defaults
+- **Animated simulation**: Watch the Enigma machine encode each letter in real-time with a visual representation of rotors, lampboard, and keyboard
 
 ### Skipping Steps
 
@@ -103,6 +104,19 @@ Use `--no-interaction` (or `-n`) to disable interactive mode entirely:
 
 # Useful for scripts or non-TTY environments
 echo "HELLO" | ./bin/enigma encode -n  # Piped input requires -n
+```
+
+### Raw Output Mode
+
+Use `--raw` to output only the encoded text without any decoration:
+
+```bash
+# Clean output for piping or scripting
+./bin/enigma encode "HELLO" --raw
+# Output: MFNCZ
+
+# Combine with other commands
+./bin/enigma encode "SECRET" --raw | pbcopy  # Copy to clipboard (macOS)
 ```
 
 ## Command Reference
@@ -134,6 +148,7 @@ Usage:
 | `--random` | | Generate a random configuration | *(off)* |
 | `--show-config` | `-s` | Display the configuration used | *(off)* |
 | `--no-strict` | | Disable strict mode (allow non-historical configurations) | *(off)* |
+| `--raw` | | Output raw text without decoration (for scripts/pipes) | *(off)* |
 | `--no-interaction` | `-n` | Disable interactive mode (for scripts/pipes) | *(off)* |
 
 ## Usage Examples
