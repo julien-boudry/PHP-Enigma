@@ -40,11 +40,10 @@ test('simulator renders visual frame structure', function (): void {
     $content = $output->fetch();
 
     expect($content)
-        ->toContain('𝕰𝖓𝖎𝖌𝖒𝖆 𝕸𝖆𝖈𝖍𝖎𝖓𝖊') // Gothic font
-        ->toContain('𝕽𝖔𝖙𝖔𝖗𝖘:')
-        ->toContain('𝕴𝖓𝖕𝖚𝖙:')
-        ->toContain('𝕺𝖚𝖙𝖕𝖚𝖙:')
-        ->toContain('╔') // Box drawing char
+        ->toContain('𝕰𝖓𝖎𝖌𝖒𝖆 𝕸𝖆𝖈𝖍𝖎𝖓𝖊') // Gothic title
+        ->toContain('Rotors') // Section header
+        ->toContain('Status') // Status section
+        ->toContain('✠') // Cross symbol
         ->toContain('A'); // The input letter
 });
 
@@ -59,10 +58,10 @@ test('simulator renders plugboard when present', function (): void {
     $simulator->simulate('A', 0);
     $content = $output->fetch();
 
-    // Should not contain "NO PLUGBOARD" (Gothic)
-    expect($content)->not->toContain('𝕹𝕺 𝕻𝕷𝖀𝕲𝕭𝕺𝕬𝕽𝕯');
+    // Should contain PLUGBOARD section
+    expect($content)->toContain('Plugboard');
 
-    // Should contain the plugged letters
+    // Should contain the plugged letters in the pair display
     expect($content)->toContain('A');
     expect($content)->toContain('B');
 });
@@ -77,14 +76,13 @@ test('simulator hides plugboard section for models without plugboard', function 
     $simulator->simulate('A', 0);
     $content = $output->fetch();
 
-    // The plugboard section is completely hidden, so "NO PLUGBOARD" is NOT shown
-    expect($content)->not->toContain('𝕹𝕺 𝕻𝕷𝖀𝕲𝕭𝕺𝕬𝕽𝕯');
+    // The plugboard section should not be present for models without plugboard
+    expect($content)->not->toContain('Plugboard');
 
     // Verify it has fewer lines than a model with plugboard
     $lines = explode("\n", $content);
-    // WMLW has ~35 lines, ENIGMA_K should have ~30
-    // Exact count depends on implementation, but we can check it's reasonable
-    expect(\count($lines))->toBeGreaterThan(20);
+    // Should have a reasonable number of lines
+    expect(\count($lines))->toBeGreaterThan(15);
 });
 
 test('simulator handles greek rotor rendering for M4', function (): void {
@@ -96,7 +94,9 @@ test('simulator handles greek rotor rendering for M4', function (): void {
     $simulator->simulate('A', 0);
     $content = $output->fetch();
 
-    expect($content)->toContain('𝕽𝖔𝖙𝖔𝖗𝖘:');
+    expect($content)
+        ->toContain('Rotors') // Section header
+        ->toMatch('/BETA|GAMMA/'); // Greek rotor type (Beta or Gamma)
 });
 
 test('simulator skips non-alpha characters', function (): void {

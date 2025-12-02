@@ -6,6 +6,7 @@ namespace JulienBoudry\EnigmaMachine\Console;
 
 use JulienBoudry\EnigmaMachine\{Enigma, Letter, RotorPosition};
 use Symfony\Component\Console\Cursor;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class EnigmaSimulator
@@ -20,6 +21,22 @@ class EnigmaSimulator
         $this->output = $output;
         $this->enigma = $enigma;
         $this->cursor = new Cursor($output);
+
+        $this->configureStyles();
+    }
+
+    /**
+     * Configure custom color styles for the simulator.
+     */
+    private function configureStyles(): void
+    {
+        $formatter = $this->output->getFormatter();
+
+        $formatter->setStyle('military', new OutputFormatterStyle('#8B9A46', null, ['bold']));
+        $formatter->setStyle('olive', new OutputFormatterStyle('#6B8E23'));
+        $formatter->setStyle('steel', new OutputFormatterStyle('#708090'));
+        $formatter->setStyle('cipher', new OutputFormatterStyle('#00FF00', null, ['bold']));
+        $formatter->setStyle('muted', new OutputFormatterStyle('#696969'));
     }
 
     /**
@@ -31,7 +48,6 @@ class EnigmaSimulator
     {
         $layout = $this->enigma->entryWheel->getWiringString();
 
-        // Split into standard Enigma rows: 9, 8, 9 keys
         return [
             str_split(substr($layout, 0, 9)),
             str_split(substr($layout, 9, 8)),
@@ -48,29 +64,24 @@ class EnigmaSimulator
         $text = strtoupper($text);
         $length = \strlen($text);
 
-        // Initial render
         $this->renderFrame(null, null);
 
         for ($i = 0; $i < $length; $i++) {
             $char = $text[$i];
 
             if (!ctype_alpha($char)) {
-                continue; // Skip non-alpha for simulation
+                continue;
             }
 
-            // Delay for animation effect
             usleep($delayMs * 1000);
 
-            // Clear previous frame
             $this->cursor->moveUp($this->frameHeight);
             $this->cursor->clearOutput();
 
-            // Encode letter
             $inputLetter = Letter::fromChar($char);
             $outputLetter = $this->enigma->encodeLetter($inputLetter);
             $result .= $outputLetter->toChar();
 
-            // Render new frame
             $this->renderFrame($inputLetter, $outputLetter);
         }
 
@@ -81,55 +92,43 @@ class EnigmaSimulator
     {
         $buffer = [];
 
-        // Top border
-        $buffer[] = '<military>╔════════════════════[ 𝕰𝖓𝖎𝖌𝖒𝖆 𝕸𝖆𝖈𝖍𝖎𝖓𝖊 ]════════════════════╗</>';
+        // Title
+        $buffer[] = '';
+        $buffer[] = '<military>──────────────────[</> <cipher>𝕰𝖓𝖎𝖌𝖒𝖆 𝕸𝖆𝖈𝖍𝖎𝖓𝖊</> <military>]──────────────────</>';
+
+        // Model info
+        $model = $this->enigma->model->name;
+        $reflector = $this->enigma->reflector->getType()->name;
+        $buffer[] = "<steel>          Model: {$model}  |  Reflector: {$reflector}</>";
 
         // Rotors
-        $buffer[] = $this->renderRotors();
-
-        // Separator
-        $buffer[] = '<military>╟─✠──────────────────────────────────────────────────────✠─╢</>';
+        $buffer[] = '';
+        $buffer[] = '<military>✠</> <olive>Rotors</> <military>─────────────────────────────────────────────</>';
+        $buffer = array_merge($buffer, $this->renderRotors());
 
         // Lampboard
+        $buffer[] = '';
+        $buffer[] = '<military>✠</> <olive>Lampboard</> <military>──────────────────────────────────────────</>';
         $buffer = array_merge($buffer, $this->renderLampboard($output));
 
-        // Separator
-        $buffer[] = '<military>╟─✠──────────────────────────────────────────────────────✠─╢</>';
-
         // Keyboard
+        $buffer[] = '';
+        $buffer[] = '<military>✠</> <olive>Keyboard</> <military>───────────────────────────────────────────</>';
         $buffer = array_merge($buffer, $this->renderKeyboard($input));
 
+        // Plugboard
         if ($this->enigma->hasPlugboard()) {
-            // Separator
-            $buffer[] = '<military>╟─✠──────────────────────────────────────────────────────✠─╢</>';
-
-            // Plugboard
+            $buffer[] = '';
+            $buffer[] = '<military>✠</> <olive>Plugboard</> <military>──────────────────────────────────────────</>';
             $buffer = array_merge($buffer, $this->renderPlugboard());
         }
 
-        // Input/Output info
-        $buffer[] = '<military>╟─✠──────────────────────────────────────────────────────✠─╢</>';
-        $inChar = $input ? $input->toChar() : '-';
-        $outChar = $output ? $output->toChar() : '-';
+        // Status
+        $buffer[] = '';
+        $buffer[] = '<military>✠</> <olive>Status</> <military>─────────────────────────────────────────────</>';
+        $buffer = array_merge($buffer, $this->renderStatus($input, $output));
+        $buffer[] = '';
 
-        // Center the Input/Output block
-        // "Input: X           Output: Y" is 28 chars wide
-        // (58 - 28) / 2 = 15 padding left
-        $paddingLeft = str_repeat(' ', 15);
-        $paddingRight = str_repeat(' ', 15);
-
-        $buffer[] = \sprintf(
-            '<military>║</>%s<steel>𝕴𝖓𝖕𝖚𝖙:</> <olive>%s</>           <steel>𝕺𝖚𝖙𝖕𝖚𝖙:</> <cipher>%s</>%s<military>║</>',
-            $paddingLeft,
-            $inChar,
-            $outChar,
-            $paddingRight
-        );
-
-        // Bottom border
-        $buffer[] = '<military>╚══════════════════════════════════════════════════════════╝</>';
-
-        // Output the buffer
         foreach ($buffer as $line) {
             $this->output->writeln($line);
         }
@@ -137,37 +136,71 @@ class EnigmaSimulator
         $this->frameHeight = \count($buffer);
     }
 
-    private function renderRotors(): string
+    /**
+     * @return array<string>
+     */
+    private function renderRotors(): array
     {
-        $config = $this->enigma->getConfiguration();
+        $lines = [];
         $model = $this->enigma->model;
+        $rotorConfig = $this->enigma->rotors;
 
-        // Get positions
         $p1 = $this->enigma->getPosition(RotorPosition::P1)->toChar();
         $p2 = $this->enigma->getPosition(RotorPosition::P2)->toChar();
         $p3 = $this->enigma->getPosition(RotorPosition::P3)->toChar();
 
-        $rotorsDisplay = '';
+        $rotors = [];
+
         if ($model->requiresGreekRotor()) {
             $greekPos = $this->enigma->getPosition(RotorPosition::GREEK)->toChar();
-            $rotorsDisplay .= "<steel>[</><olive>{$greekPos}</><steel>]</> ";
+            $greekType = $rotorConfig->getGreek()->getType()->name;
+            $rotors[] = ['pos' => $greekPos, 'label' => $greekType];
         }
 
-        $rotorsDisplay .= "<steel>[</><olive>{$p3}</><steel>]</> <steel>[</><olive>{$p2}</><steel>]</> <steel>[</><olive>{$p1}</><steel>]</>";
+        $rotors[] = ['pos' => $p3, 'label' => $rotorConfig->getP3()->getType()->name];
+        $rotors[] = ['pos' => $p2, 'label' => $rotorConfig->getP2()->getType()->name];
+        $rotors[] = ['pos' => $p1, 'label' => $rotorConfig->getP1()->getType()->name];
 
-        // Calculate padding to center the content
-        // "Rotors: " (8 chars) + Rotors (11 or 15 chars)
-        // Total content length: 19 or 23
-        $contentLen = 8 + ($model->requiresGreekRotor() ? 15 : 11);
-        $paddingLeftLen = (int) floor((58 - $contentLen) / 2);
-        $paddingRightLen = 58 - $contentLen - $paddingLeftLen;
+        // Calculate total rotor display width
+        // Each rotor: "  [X]  " = 7 chars, separator: "──" = 2 chars
+        $rotorCount = \count($rotors);
+        $blockWidth = 7;
+        $separatorWidth = 2;
+        $totalWidth = ($blockWidth * $rotorCount) + ($separatorWidth * ($rotorCount - 1));
+        
+        // Lampboard first row: 9 letters × 4 chars each = 36 chars, indent 10
+        // Center rotors relative to lampboard center
+        $lampboardIndent = 10;
+        $lampboardWidth = 36;
+        $lampboardCenter = $lampboardIndent + ($lampboardWidth / 2);
+        $rotorStartPos = (int) ($lampboardCenter - ($totalWidth / 2));
+        $indent = str_repeat(' ', $rotorStartPos);
+        
+        // Rotor display line: [X]──[Y]──[Z]
+        $rotorLine = $indent;
+        foreach ($rotors as $i => $rotor) {
+            $rotorLine .= "  <steel>[</><cipher>{$rotor['pos']}</><steel>]</>  ";
+            if ($i < $rotorCount - 1) {
+                $rotorLine .= '<muted>──</>';
+            }
+        }
+        $lines[] = $rotorLine;
 
-        return \sprintf(
-            '<military>║</>%s<steel>𝕽𝖔𝖙𝖔𝖗𝖘:</> %s%s<military>║</>',
-            str_repeat(' ', $paddingLeftLen),
-            $rotorsDisplay,
-            str_repeat(' ', $paddingRightLen)
-        );
+        // Labels line - each label centered in 7 chars
+        $labelsLine = $indent;
+        foreach ($rotors as $i => $rotor) {
+            $label = $rotor['label'];
+            $labelLen = \strlen($label);
+            $padLeft = (int) floor(($blockWidth - $labelLen) / 2);
+            $padRight = $blockWidth - $labelLen - $padLeft;
+            $labelsLine .= str_repeat(' ', $padLeft) . $label . str_repeat(' ', $padRight);
+            if ($i < $rotorCount - 1) {
+                $labelsLine .= '  ';
+            }
+        }
+        $lines[] = "<muted>{$labelsLine}</>";
+
+        return $lines;
     }
 
     /**
@@ -180,15 +213,8 @@ class EnigmaSimulator
 
         $formattedLines = [];
         foreach ($rows as $rowIndex => $row) {
-            $content = '';
-            // Indentation
-            $indent = match ($rowIndex) {
-                0 => '       ',
-                1 => '        ',
-                default => '      ',
-            };
-
-            $content .= $indent;
+            $indent = ($rowIndex === 1) ? '            ' : '          ';
+            $content = $indent;
 
             foreach ($row as $char) {
                 if ($char === $litChar) {
@@ -198,92 +224,7 @@ class EnigmaSimulator
                 }
             }
 
-            // Calculate visible length to pad right side
-            // Visible length of each char block is 3 chars " X " or "(X)" plus 1 space = 4 chars.
-            // Row 0: 9 chars * 4 = 36. Indent 7. Total 43.
-            // Row 1: 8 chars * 4 = 32. Indent 8. Total 40.
-            // Row 2: 9 chars * 4 = 36. Indent 6. Total 42.
-
-            // Box width is 60 (inner 58).
-            // 58 - 43 = 15 spaces padding.
-            // 58 - 40 = 18 spaces padding.
-            // 58 - 42 = 16 spaces padding.
-
-            $paddingRight = match ($rowIndex) {
-                0 => str_repeat(' ', 15),
-                1 => str_repeat(' ', 18),
-                default => str_repeat(' ', 16),
-            };
-
-            $formattedLines[] = "<military>║</>{$content}{$paddingRight}<military>║</>";
-        }
-
-        return $formattedLines;
-    }
-
-    /**
-     * @return array<string>
-     */
-    private function renderPlugboard(): array
-    {
-        if (!$this->enigma->hasPlugboard()) {
-            // Center "NO PLUGBOARD" in the 58-char space
-            // "NO PLUGBOARD" is 12 chars. (58-12)/2 = 23 padding left/right.
-            return ['<military>║</>' . str_repeat(' ', 23) . '<muted>𝕹𝕺 𝕻𝕷𝖀𝕲𝕭𝕺𝕬𝕽𝕯</>' . str_repeat(' ', 23) . '<military>║</>'];
-        }
-
-        $pairs = $this->enigma->plugboard->getPluggedPairs();
-
-        // Map letters to colors
-        $colors = [
-            'fg=red', 'fg=green', 'fg=yellow', 'fg=blue', 'fg=magenta', 'fg=cyan',
-            'fg=red;options=bold', 'fg=green;options=bold', 'fg=yellow;options=bold',
-            'fg=blue;options=bold', 'fg=magenta;options=bold', 'fg=cyan;options=bold',
-            'fg=white;options=bold',
-        ];
-
-        $letterStyles = [];
-        foreach ($pairs as $index => $pair) {
-            $style = $colors[$index % \count($colors)];
-            $letterStyles[$pair[0]->value] = $style;
-            $letterStyles[$pair[1]->value] = $style;
-        }
-
-        $rows = $this->getKeyboardRows();
-        $formattedLines = [];
-
-        foreach ($rows as $rowIndex => $row) {
-            $content = '';
-            // Indentation
-            $indent = match ($rowIndex) {
-                0 => '       ',
-                1 => '        ',
-                default => '      ',
-            };
-
-            $content .= $indent;
-
-            foreach ($row as $char) {
-                $letter = Letter::fromChar($char);
-
-                if (isset($letterStyles[$letter->value])) {
-                    // Plugged
-                    $style = $letterStyles[$letter->value];
-                    $content .= "<{$style}> {$char} </> ";
-                } else {
-                    // Not plugged
-                    $content .= "<muted> {$char} </> ";
-                }
-            }
-
-            // Padding logic same as lampboard
-            $paddingRight = match ($rowIndex) {
-                0 => str_repeat(' ', 15),
-                1 => str_repeat(' ', 18),
-                default => str_repeat(' ', 16),
-            };
-
-            $formattedLines[] = "<military>║</>{$content}{$paddingRight}<military>║</>";
+            $formattedLines[] = $content;
         }
 
         return $formattedLines;
@@ -299,15 +240,8 @@ class EnigmaSimulator
 
         $formattedLines = [];
         foreach ($rows as $rowIndex => $row) {
-            $content = '';
-            // Indentation
-            $indent = match ($rowIndex) {
-                0 => '       ',
-                1 => '        ',
-                default => '      ',
-            };
-
-            $content .= $indent;
+            $indent = ($rowIndex === 1) ? '            ' : '          ';
+            $content = $indent;
 
             foreach ($row as $char) {
                 if ($char === $pressedChar) {
@@ -317,16 +251,77 @@ class EnigmaSimulator
                 }
             }
 
-            // Padding logic same as lampboard
-            $paddingRight = match ($rowIndex) {
-                0 => str_repeat(' ', 15),
-                1 => str_repeat(' ', 18),
-                default => str_repeat(' ', 16),
-            };
-
-            $formattedLines[] = "<military>║</>{$content}{$paddingRight}<military>║</>";
+            $formattedLines[] = $content;
         }
 
         return $formattedLines;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function renderPlugboard(): array
+    {
+        $pairs = $this->enigma->plugboard->getPluggedPairs();
+
+        if (\count($pairs) === 0) {
+            return ['            <muted>-- No Connections --</muted>'];
+        }
+
+        // Color palette for cable pairs
+        $colors = [
+            'fg=red',
+            'fg=green',
+            'fg=yellow',
+            'fg=blue',
+            'fg=magenta',
+            'fg=cyan',
+            'fg=red;options=bold',
+            'fg=green;options=bold',
+            'fg=yellow;options=bold',
+            'fg=blue;options=bold',
+            'fg=magenta;options=bold',
+            'fg=cyan;options=bold',
+            'fg=white;options=bold',
+        ];
+
+        $lines = [];
+        $pairsPerLine = 5;
+        $chunks = array_chunk($pairs, $pairsPerLine);
+
+        foreach ($chunks as $chunk) {
+            $content = '            ';
+
+            foreach ($chunk as $pair) {
+                $colorIndex = 0;
+                foreach ($pairs as $pi => $p) {
+                    if ($p === $pair) {
+                        $colorIndex = $pi;
+                        break;
+                    }
+                }
+                $style = $colors[$colorIndex % \count($colors)];
+                $a = $pair[0]->toChar();
+                $b = $pair[1]->toChar();
+                $content .= "<{$style}>{$a}<=>{$b}</> ";
+            }
+
+            $lines[] = $content;
+        }
+
+        return $lines;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function renderStatus(?Letter $input, ?Letter $output): array
+    {
+        $inChar = $input ? $input->toChar() : '-';
+        $outChar = $output ? $output->toChar() : '-';
+
+        return [
+            "            <steel>Input:</> <olive>{$inChar}</>     <cipher>==></cipher>     <steel>Output:</> <cipher>{$outChar}</>",
+        ];
     }
 }
