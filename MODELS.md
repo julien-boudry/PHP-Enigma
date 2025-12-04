@@ -426,17 +426,19 @@ The reflector (Umkehrwalze) swaps letters in pairs, allowing the same settings t
 
 ### UKW-D (Rewirable Reflector)
 
-The UKW-D (Umkehrwalze Dora) was a rewirable reflector introduced in January 1944. Unlike fixed reflectors, operators could configure their own wiring using 12 plug cables connecting 24 sockets.
+The UKW-D (Umkehrwalze Dora) was a rewirable reflector introduced in January 1944. Unlike fixed reflectors, operators could configure their own wiring. All 13 letter pairs are fully configurable in this implementation.
+
+> **Historical note:** On physical UKW-D units, one pair (B↔O) was fixed due to manufacturing constraints and could not be changed by operators. This library's default DORA wiring reproduces this historical configuration, but you can override all 13 pairs if desired.
 
 **Usage in PHP:**
 ```php
 use JulienBoudry\EnigmaMachine\{Enigma, EnigmaModel, ReflectorType, RotorConfiguration, RotorType};
 use JulienBoudry\EnigmaMachine\Reflector\ReflectorDora;
 
-// Using default wiring (includes historical B↔O pair, or J↔Y depending on notation)
+// Using default wiring (reproduces historical configuration with B↔O fixed pair)
 $enigma = new Enigma(EnigmaModel::WMLW, $rotorsConfiguration, ReflectorType::DORA);
 
-// Or with custom wiring (13 letter pairs)
+// Or with fully custom wiring (all 13 letter pairs configurable)
 $customDora = ReflectorDora::fromString('AZ BO CX DW EV FU GT HS IR JQ KP LY MN');
 $enigma->mountReflector($customDora);
 ```

@@ -184,7 +184,7 @@ class EncodeCommand extends Command
                 'dora-wiring',
                 'd',
                 InputOption::VALUE_REQUIRED,
-                "Custom wiring for UKW-D (Dora) reflector, 12 pairs (e.g., 'AC BO DE FG HI KL MN PQ RS TU VW XZ'). J↔Y pair is fixed.",
+                "Custom wiring for UKW-D (Dora) reflector, 13 pairs (e.g., 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY')",
                 ''
             )
             ->addOption(

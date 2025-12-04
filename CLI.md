@@ -137,7 +137,7 @@ Usage:
 | `--position` | `-p` | Initial positions (Grundstellung), left to right | `AAA` |
 | `--reflector` | `-u` | Reflector (Umkehrwalze) to use | `B` |
 | `--plugboard` | `-b` | Plugboard pairs, space-separated (e.g., `"AV BS CG"`) | *(empty)* |
-| `--dora-wiring` | `-d` | Custom wiring for UKW-D (Dora) reflector, 13 pairs | *(default wiring)* |
+| `--dora-wiring` | `-d` | Custom wiring for UKW-D (Dora) reflector, 13 fully configurable pairs | *(default wiring)* |
 | `--input-binary-file` | `-i` | Encode a binary file to Enigma letters | |
 | `--input-text-file` | `-I` | Read text from a file and encode | |
 | `--output-file` | `-o` | Write output to a file | |
@@ -199,10 +199,10 @@ Usage:
 
 ### UKW-D (Dora) Reflector
 
-The UKW-D (Umkehrwalze Dora) was a rewirable reflector used by the Wehrmacht/Luftwaffe from January 1944. Use `--dora-wiring` to specify custom wiring:
+The UKW-D (Umkehrwalze Dora) was a rewirable reflector used by the Wehrmacht/Luftwaffe from January 1944. All 13 letter pairs are fully configurable. Use `--dora-wiring` to specify custom wiring:
 
 ```bash
-# With custom DORA wiring (13 letter pairs, J↔Y is fixed internally)
+# With custom DORA wiring (13 letter pairs)
 ./bin/enigma encode "SECRETMESSAGE" \
   --model=WMLW \
   --reflector=DORA \
@@ -269,6 +269,7 @@ Quick reference:
 4. **Formatted output**: Use `--format` for 5-letter groups, `--strip-spaces` to decode them
 5. **File encoding**: Use `-i` for binary, `-I` for text files
 6. **Strict mode**: Use `--no-strict` to allow non-historical configurations (e.g., plugboard on commercial models)
+7. **Random mode**: `--random` always generates historically valid configurations; `--no-strict` has no effect when combined with `--random`
 
 ---
 
