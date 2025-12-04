@@ -1247,6 +1247,33 @@ class EncodeCommand extends Command
         $model = $this->parseModel(strtoupper($modelName));
 
         if ($isRandom) {
+            // Warn if other configuration options are provided (they will be ignored)
+            $ignoredOptions = [];
+            if ($this->wasOptionProvided('rotors', $input)) {
+                $ignoredOptions[] = '--rotors';
+            }
+            if ($this->wasOptionProvided('ring', $input)) {
+                $ignoredOptions[] = '--ring';
+            }
+            if ($this->wasOptionProvided('position', $input)) {
+                $ignoredOptions[] = '--position';
+            }
+            if ($this->wasOptionProvided('reflector', $input)) {
+                $ignoredOptions[] = '--reflector';
+            }
+            if ($this->wasOptionProvided('plugboard', $input)) {
+                $ignoredOptions[] = '--plugboard';
+            }
+            if ($this->wasOptionProvided('dora-wiring', $input)) {
+                $ignoredOptions[] = '--dora-wiring';
+            }
+
+            if (!empty($ignoredOptions)) {
+                $this->io->militaryWarning(
+                    '--random generates a complete configuration. Ignoring: ' . implode(', ', $ignoredOptions)
+                );
+            }
+
             $enigma = Enigma::createRandom($model);
             $enigma->strictMode = $strictMode;
 

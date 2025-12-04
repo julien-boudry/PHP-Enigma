@@ -554,6 +554,131 @@ describe('EncodeCommand', function (): void {
             expect($this->commandTester->getStatusCode())->toBe(0);
             expect($output)->toContain('KMM4');
         });
+
+        it('warns when --random is used with --rotors option', function (): void {
+            $this->command->setExplicitlyProvidedOptions(['random' => true, 'rotors' => 'V-IV-III']);
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--random' => true,
+                '--rotors' => 'V-IV-III',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('--random generates a complete configuration');
+            expect($output)->toContain('Ignoring:');
+            expect($output)->toContain('--rotors');
+        });
+
+        it('warns when --random is used with --position option', function (): void {
+            $this->command->setExplicitlyProvidedOptions(['random' => true, 'position' => 'ABC']);
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--random' => true,
+                '--position' => 'ABC',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('Ignoring:');
+            expect($output)->toContain('--position');
+        });
+
+        it('warns when --random is used with --ring option', function (): void {
+            $this->command->setExplicitlyProvidedOptions(['random' => true, 'ring' => 'XYZ']);
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--random' => true,
+                '--ring' => 'XYZ',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('Ignoring:');
+            expect($output)->toContain('--ring');
+        });
+
+        it('warns when --random is used with --reflector option', function (): void {
+            $this->command->setExplicitlyProvidedOptions(['random' => true, 'reflector' => 'C']);
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--random' => true,
+                '--reflector' => 'C',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('Ignoring:');
+            expect($output)->toContain('--reflector');
+        });
+
+        it('warns when --random is used with --plugboard option', function (): void {
+            $this->command->setExplicitlyProvidedOptions(['random' => true, 'plugboard' => 'AB CD']);
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--random' => true,
+                '--plugboard' => 'AB CD',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('Ignoring:');
+            expect($output)->toContain('--plugboard');
+        });
+
+        it('warns when --random is used with --dora-wiring option', function (): void {
+            $this->command->setExplicitlyProvidedOptions(['random' => true, 'dora-wiring' => 'AZBYCXDWEVFUGTHSIRJQKPLONM']);
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--random' => true,
+                '--dora-wiring' => 'AZBYCXDWEVFUGTHSIRJQKPLONM',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('Ignoring:');
+            expect($output)->toContain('--dora-wiring');
+        });
+
+        it('warns when --random is used with multiple ignored options', function (): void {
+            $this->command->setExplicitlyProvidedOptions([
+                'random' => true,
+                'rotors' => 'V-IV-III',
+                'position' => 'ABC',
+                'ring' => 'XYZ',
+            ]);
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--random' => true,
+                '--rotors' => 'V-IV-III',
+                '--position' => 'ABC',
+                '--ring' => 'XYZ',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->toContain('Ignoring:');
+            expect($output)->toContain('--rotors');
+            expect($output)->toContain('--position');
+            expect($output)->toContain('--ring');
+        });
+
+        it('does not warn when --random is used with --model option', function (): void {
+            $this->command->setExplicitlyProvidedOptions(['random' => true, 'model' => 'KMM4']);
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--random' => true,
+                '--model' => 'KMM4',
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->not->toContain('Ignoring:');
+            expect($output)->toContain('KMM4');
+        });
+
+        it('does not warn when --random is used alone', function (): void {
+            $this->command->setExplicitlyProvidedOptions(['random' => true]);
+            $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
+                'text' => 'HELLO',
+                '--random' => true,
+            ]);
+
+            expect($this->commandTester->getStatusCode())->toBe(0);
+            expect($output)->not->toContain('Ignoring:');
+        });
     });
 
     describe('Text File Input (--input-text-file)', function (): void {
