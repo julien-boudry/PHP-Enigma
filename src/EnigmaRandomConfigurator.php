@@ -167,14 +167,12 @@ final class EnigmaRandomConfigurator
     private function generateRandomPlugboardPairs(): array
     {
         $letters = Letter::cases();
-        $selectedKeys = $this->randomizer->pickArrayKeys($letters, self::PLUGBOARD_PAIRS * 2);
+        $selectedLetters = array_map(
+            fn(int $key) => $letters[$key],
+            $this->randomizer->pickArrayKeys($letters, self::PLUGBOARD_PAIRS * 2)
+        );
 
-        $pairs = [];
-        for ($i = 0; $i < self::PLUGBOARD_PAIRS * 2; $i += 2) {
-            $pairs[] = [$letters[$selectedKeys[$i]], $letters[$selectedKeys[$i + 1]]];
-        }
-
-        return $pairs;
+        return $this->generateRandomLetterPairs($selectedLetters);
     }
 
     /**
@@ -187,13 +185,23 @@ final class EnigmaRandomConfigurator
      */
     private function generateRandomDoraWiring(): array
     {
-        $letters = Letter::cases();
-        // Shuffle all 26 letters and pair them up
-        $shuffledKeys = $this->randomizer->pickArrayKeys($letters, 26);
+        return $this->generateRandomLetterPairs(Letter::cases());
+    }
+
+    /**
+     * Shuffle letters and pair them randomly.
+     *
+     * @param list<Letter> $letters Letters to pair (must be even count)
+     *
+     * @return list<array{Letter, Letter}> List of letter pairs
+     */
+    private function generateRandomLetterPairs(array $letters): array
+    {
+        $shuffledLetters = $this->randomizer->shuffleArray($letters);
 
         $pairs = [];
-        for ($i = 0; $i < 26; $i += 2) {
-            $pairs[] = [$letters[$shuffledKeys[$i]], $letters[$shuffledKeys[$i + 1]]];
+        for ($i = 0, $count = \count($shuffledLetters); $i < $count; $i += 2) {
+            $pairs[] = [$shuffledLetters[$i], $shuffledLetters[$i + 1]];
         }
 
         return $pairs;
