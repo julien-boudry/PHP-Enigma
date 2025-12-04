@@ -175,14 +175,22 @@ class EnigmaStyle extends SymfonyStyle
     {
         $config = $enigma->getConfiguration();
 
-        $this->configurationTable([
+        $rows = [
             ['Model', $config->model->name],
             ['Rotors', $config->getRotorString()],
             ['Ring', $config->getRingString()],
             ['Position', $config->getPositionString()],
             ['Reflector', $config->reflector->name],
             ['Plugboard', $config->getPlugboardString() ?: '(none)'],
-        ]);
+        ];
+
+        // Add DORA wiring if present
+        $doraWiring = $config->getDoraWiringString();
+        if ($doraWiring !== null) {
+            $rows[] = ['DORA Wiring', $doraWiring];
+        }
+
+        $this->configurationTable($rows);
     }
 
     /**

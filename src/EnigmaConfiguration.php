@@ -232,4 +232,21 @@ final readonly class EnigmaConfiguration
             $this->plugboardPairs
         ));
     }
+
+    /**
+     * Get DORA wiring pairs as a formatted string.
+     *
+     * @return string|null The wiring pairs string, or null if not using DORA
+     */
+    public function getDoraWiringString(): ?string
+    {
+        if ($this->doraWiringPairs === null) {
+            return null;
+        }
+
+        return implode(' ', array_map(
+            static fn(array $pair): string => $pair[0]->toChar() . $pair[1]->toChar(),
+            $this->doraWiringPairs
+        ));
+    }
 }
