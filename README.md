@@ -85,7 +85,7 @@ This package can be used in two ways:
   --plugboard="AV BS CG DL FU"
 
 # Random configuration (great for testing)
-./bin/enigma encode "SECRET" --random --show-config
+./bin/enigma encode "SECRET" --random
 
 # Latin text with accents and numbers
 ./bin/enigma encode "Panzer Division 7" --latin --format

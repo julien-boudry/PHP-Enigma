@@ -145,8 +145,7 @@ Usage:
 | `--latin` | `-l` | Convert Latin text (accents, numbers, punctuation) | *(off)* |
 | `--strip-spaces` | `-x` | Remove spaces from input | *(off)* |
 | `--format` | `-f` | Format output in traditional 5-letter groups | *(off)* |
-| `--random` | | Generate a random configuration | *(off)* |
-| `--show-config` | `-s` | Display the configuration used | *(off)* |
+| `--random` | `-R` | Generate a random configuration | *(off)* |
 | `--no-strict` | | Disable strict mode (allow non-historical configurations) | *(off)* |
 | `--raw` | | Output raw text without decoration (for scripts/pipes) | *(off)* |
 | `--delay` | | Animation delay between letters in ms (interactive mode) | `250` |
@@ -242,8 +241,8 @@ The UKW-D (Umkehrwalze Dora) was a rewirable reflector used by the Wehrmacht/Luf
 ### Random Configuration
 
 ```bash
-./bin/enigma encode "SECRET" --random --show-config
-# Generates secure random settings and displays them
+./bin/enigma encode "SECRET" --random
+# Generates secure random settings and displays the configuration
 ```
 
 ## Models, Rotors & Reflectors
@@ -264,7 +263,7 @@ Quick reference:
 
 ## Tips & Best Practices
 
-1. **Save your settings**: Use `--show-config` to record the configuration
+1. **Configuration always shown**: The configuration is automatically displayed (use `--raw` to hide it)
 2. **Rotor order**: Left to right (slowest to fastest): `--rotors=III-II-I`
 3. **Ring/Position**: Same convention: `--ring=XYZ` → P3=X, P2=Y, P1=Z
 4. **Formatted output**: Use `--format` for 5-letter groups, `--strip-spaces` to decode them

@@ -212,12 +212,6 @@ class EncodeCommand extends Command
                 'Generate a random configuration for the specified model (ignores other rotor/reflector options)'
             )
             ->addOption(
-                'show-config',
-                's',
-                InputOption::VALUE_NONE,
-                'Display the configuration used for encoding'
-            )
-            ->addOption(
                 'no-strict',
                 null,
                 InputOption::VALUE_NONE,
@@ -262,7 +256,7 @@ class EncodeCommand extends Command
                       <info>%command.full_name% -i photo.jpg.enigma -o photo_decoded.jpg -t</info>  (decode back)
 
                     <comment>Random configuration:</comment>
-                      <info>%command.full_name% "SECRET" --random --show-config</info>
+                      <info>%command.full_name% "SECRET" --random</info>
 
                     <comment>Latin text conversion:</comment>
                       <info>%command.full_name% "Héllo, Wörld! 123" --latin</info>
@@ -1072,9 +1066,6 @@ class EncodeCommand extends Command
         /** @var bool $formatOutput */
         $formatOutput = $input->getOption('format');
 
-        /** @var bool $showConfig */
-        $showConfig = $input->getOption('show-config');
-
         /** @var string|null $outputFile */
         $outputFile = $input->getOption('output-file');
 
@@ -1109,10 +1100,8 @@ class EncodeCommand extends Command
                 }
             }
 
-            // Show configuration
-            if ($showConfig) {
-                $this->displayConfiguration($enigma);
-            }
+            // Always show configuration
+            $this->displayConfiguration($enigma);
         }
 
         // Encode the text
@@ -1147,9 +1136,6 @@ class EncodeCommand extends Command
 
         $enigma = $this->createEnigma($input, $isRandom, !$noStrict);
 
-        /** @var bool $showConfig */
-        $showConfig = $input->getOption('show-config');
-
         // Show intro
         $this->io->enigmaTitle();
 
@@ -1158,10 +1144,8 @@ class EncodeCommand extends Command
             $this->io->militaryNote('Using randomly generated configuration');
         }
 
-        // Show configuration
-        if ($showConfig) {
-            $this->displayConfiguration($enigma);
-        }
+        // Always show configuration
+        $this->displayConfiguration($enigma);
 
         // Show file info
         $mode = $toBinary ? 'Converting to binary' : 'Encoding binary';

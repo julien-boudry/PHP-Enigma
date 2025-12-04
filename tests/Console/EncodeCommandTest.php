@@ -372,17 +372,17 @@ describe('EncodeCommand', function (): void {
             expect($this->commandTester->getStatusCode())->toBe(1);
         });
 
-        it('shows DORA configuration with --show-config', function (): void {
+        it('shows DORA configuration', function (): void {
             $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
                 'text' => 'HELLO',
                 '--model' => 'WMLW',
                 '--reflector' => 'DORA',
                 '--dora-wiring' => 'AQ BW CE DT FX GR HU IZ JK LN MO PS VY',
-                '--show-config' => true,
             ]);
 
             expect($this->commandTester->getStatusCode())->toBe(0);
             expect($output)->toContain('DORA');
+            expect($output)->toContain('DORA Wiring');
         });
     });
 
@@ -469,11 +469,10 @@ describe('EncodeCommand', function (): void {
         });
     });
 
-    describe('Show Configuration (--show-config)', function (): void {
-        it('displays configuration table', function (): void {
+    describe('Configuration Display', function (): void {
+        it('always displays configuration table', function (): void {
             $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
                 'text' => 'HELLO',
-                '--show-config' => true,
             ]);
 
             expect($this->commandTester->getStatusCode())->toBe(0);
@@ -492,13 +491,25 @@ describe('EncodeCommand', function (): void {
                 '--ring' => 'XYZ',
                 '--position' => 'ABC',
                 '--plugboard' => 'AB CD',
-                '--show-config' => true,
             ]);
 
             expect($output)->toContain('V-IV-III');
             expect($output)->toContain('XYZ');
             expect($output)->toContain('ABC');
             expect($output)->toContain('AB CD');
+        });
+
+        it('does not display configuration in raw mode', function (): void {
+            $this->commandTester->execute([
+                'text' => 'HELLO',
+                '--raw' => true,
+            ]);
+
+            $output = $this->commandTester->getDisplay();
+            expect($output)->not->toContain('Model');
+            expect($output)->not->toContain('CONFIGURATION');
+            // Raw output should just be the encoded text
+            expect(trim($output))->toBe('MFNCZ');
         });
     });
 
@@ -538,7 +549,6 @@ describe('EncodeCommand', function (): void {
                 'text' => 'HELLO',
                 '--model' => 'KMM4',
                 '--random' => true,
-                '--show-config' => true,
             ]);
 
             expect($this->commandTester->getStatusCode())->toBe(0);
@@ -762,13 +772,12 @@ describe('EncodeCommand', function (): void {
             expect(file_get_contents($this->decodedFile))->toBe('Hello Binary!');
         });
 
-        it('shows configuration with --show-config', function (): void {
+        it('always shows configuration', function (): void {
             file_put_contents($this->binaryFile, 'test');
 
             $output = executeAndGetOutput($this->commandTester, $this->promptOutput, [
                 '--input-binary-file' => $this->binaryFile,
                 '--output-file' => $this->encodedFile,
-                '--show-config' => true,
             ]);
 
             expect($this->commandTester->getStatusCode())->toBe(0);
@@ -799,7 +808,6 @@ describe('EncodeCommand', function (): void {
                 '--reflector' => 'K',
                 '--plugboard' => 'AB CD',
                 '--no-strict' => true,
-                '--show-config' => true,
             ]);
 
             expect($this->commandTester->getStatusCode())->toBe(0);
@@ -854,7 +862,6 @@ describe('EncodeCommand', function (): void {
                 '--model' => 'ENIGMA_K',
                 '--random' => true,
                 '--no-strict' => true,
-                '--show-config' => true,
             ]);
 
             expect($this->commandTester->getStatusCode())->toBe(0);
