@@ -229,6 +229,13 @@ class EncodeCommand extends Command
                 InputOption::VALUE_NONE,
                 'Output raw encoded text without decoration (useful for pipes)'
             )
+            ->addOption(
+                'delay',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Animation delay between letters in milliseconds (interactive mode only)',
+                '250'
+            )
             ->setHelp(
                 <<<HELP
                     The <info>%command.name%</info> command encodes text using the Enigma cipher machine.
@@ -696,7 +703,13 @@ class EncodeCommand extends Command
         $this->io->newLine();
         sleep(1);
 
-        $encodedText = $simulator->simulate($textToEncode);
+        /** @var string $delayOption */
+        $delayOption = $input->getOption('delay');
+        $delayMs = filter_var($delayOption, \FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
+        if ($delayMs === false) {
+            throw new \InvalidArgumentException("Invalid delay value: {$delayOption}. Must be a positive integer (milliseconds).");
+        }
+        $encodedText = $simulator->simulate($textToEncode, $delayMs);
 
         if ($formatOutput) {
             $result = EnigmaTextConverter::formatInGroups($encodedText);

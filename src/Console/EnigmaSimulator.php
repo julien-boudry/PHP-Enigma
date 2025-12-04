@@ -58,7 +58,7 @@ class EnigmaSimulator
     /**
      * Simulate the encoding of text with visual animation.
      */
-    public function simulate(string $text, int $delayMs = 250): string
+    public function simulate(string $text, int $delayMs): string
     {
         $result = '';
         $text = strtoupper($text);
@@ -167,7 +167,7 @@ class EnigmaSimulator
         $blockWidth = 7;
         $separatorWidth = 2;
         $totalWidth = ($blockWidth * $rotorCount) + ($separatorWidth * ($rotorCount - 1));
-        
+
         // Lampboard first row: 9 letters × 4 chars each = 36 chars, indent 10
         // Center rotors relative to lampboard center
         $lampboardIndent = 10;
@@ -175,7 +175,7 @@ class EnigmaSimulator
         $lampboardCenter = $lampboardIndent + ($lampboardWidth / 2);
         $rotorStartPos = (int) ($lampboardCenter - ($totalWidth / 2));
         $indent = str_repeat(' ', $rotorStartPos);
-        
+
         // Rotor display line: [X]──[Y]──[Z]
         $rotorLine = $indent;
         foreach ($rotors as $i => $rotor) {

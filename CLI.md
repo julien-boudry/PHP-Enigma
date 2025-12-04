@@ -149,6 +149,7 @@ Usage:
 | `--show-config` | `-s` | Display the configuration used | *(off)* |
 | `--no-strict` | | Disable strict mode (allow non-historical configurations) | *(off)* |
 | `--raw` | | Output raw text without decoration (for scripts/pipes) | *(off)* |
+| `--delay` | | Animation delay between letters in ms (interactive mode) | `250` |
 | `--no-interaction` | `-n` | Disable interactive mode (for scripts/pipes) | *(off)* |
 
 ## Usage Examples
