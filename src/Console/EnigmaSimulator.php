@@ -297,6 +297,7 @@ class EnigmaSimulator
                 foreach ($pairs as $pi => $p) {
                     if ($p === $pair) {
                         $colorIndex = $pi;
+
                         break;
                     }
                 }
