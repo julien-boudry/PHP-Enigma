@@ -39,6 +39,12 @@ class EncodeCommand extends Command
     private array $explicitlyProvidedOptions = [];
 
     /**
+     * Force stdin TTY detection result for testing purposes.
+     * When null, uses actual stream_isatty() check.
+     */
+    private ?bool $forceStdinTty = null;
+
+    /**
      * Check if an option was explicitly provided on the command line.
      * This is needed because Symfony doesn't distinguish between default values
      * and user-provided values that happen to match the default.
@@ -93,6 +99,15 @@ class EncodeCommand extends Command
     public function setExplicitlyProvidedOptions(array $options): void
     {
         $this->explicitlyProvidedOptions = $options;
+    }
+
+    /**
+     * Force stdin TTY detection result (for testing with CommandTester).
+     * This allows tests to simulate interactive mode even without a real TTY.
+     */
+    public function setForceStdinTty(bool $value): void
+    {
+        $this->forceStdinTty = $value;
     }
 
     protected function configure(): void
@@ -370,8 +385,8 @@ class EncodeCommand extends Command
             // - Terminal supports interaction
             // - STDIN is a TTY (not piped)
 
-            $isStdinTty = true;
-            if (\defined('STDIN')) {
+            $isStdinTty = $this->forceStdinTty ?? true;
+            if ($this->forceStdinTty === null && \defined('STDIN')) {
                 $isStdinTty = stream_isatty(\STDIN);
             }
 

@@ -1113,6 +1113,7 @@ describe('EncodeCommand', function (): void {
         it('enters interactive mode when no text argument is provided and interactive is true', function (): void {
             // Just verify that interactive mode is triggered (shows the welcome banner)
             // We don't test the full flow as ChoiceQuestion requires complex input simulation
+            $this->command->setForceStdinTty(true);
             $this->commandTester->setInputs([]); // No inputs will cause an error, but we check the banner appears
 
             try {
@@ -1157,6 +1158,7 @@ describe('EncodeCommand', function (): void {
         it('shows pre-selected options from command line', function (): void {
             // Providing --model should show it as "from command line"
             // Tell the command which options were explicitly provided (since CommandTester doesn't set $_SERVER['argv'])
+            $this->command->setForceStdinTty(true);
             $this->command->setExplicitlyProvidedOptions(['model' => 'KMM3']);
             $this->commandTester->setInputs([]);
 
@@ -1171,6 +1173,7 @@ describe('EncodeCommand', function (): void {
 
         it('shows multiple pre-selected options from command line', function (): void {
             // Providing multiple options should show all of them as "from command line"
+            $this->command->setForceStdinTty(true);
             $this->command->setExplicitlyProvidedOptions([
                 'model' => 'WMLW',
                 'reflector' => 'DORA',
@@ -1202,6 +1205,7 @@ describe('EncodeCommand', function (): void {
 
         it('calculates correct step count for models with plugboard', function (): void {
             // WMLW has plugboard, so should have 7 steps
+            $this->command->setForceStdinTty(true);
             $this->command->setExplicitlyProvidedOptions(['model' => 'WMLW']);
             $this->commandTester->setInputs([]);
 
@@ -1217,6 +1221,7 @@ describe('EncodeCommand', function (): void {
 
         it('calculates correct step count for models without plugboard', function (): void {
             // ENIGMA_K has no plugboard, so should have 6 steps
+            $this->command->setForceStdinTty(true);
             $this->command->setExplicitlyProvidedOptions(['model' => 'ENIGMA_K']);
             $this->commandTester->setInputs([]);
 
