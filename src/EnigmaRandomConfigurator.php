@@ -191,7 +191,7 @@ final class EnigmaRandomConfigurator
     /**
      * Shuffle letters and pair them randomly.
      *
-     * @param list<Letter> $letters Letters to pair (must be even count)
+     * @param array<Letter> $letters Letters to pair (must be even count)
      *
      * @return list<array{Letter, Letter}> List of letter pairs
      */
