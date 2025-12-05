@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaMachine](../../readme.md) \ [EnigmaStyle](class_EnigmaStyle.md)
 # Method interactiveConfirm()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L492)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L500)
 
 ```php
 public function EnigmaStyle->interactiveConfirm( string $question, [ bool $default = true ] ): bool

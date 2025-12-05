@@ -17,7 +17,7 @@ class JulienBoudry\EnigmaMachine\Console\EnigmaSimulator
 
     // Methods
     public function __construct( Symfony\Component\Console\Output\OutputInterface $output, JulienBoudry\EnigmaMachine\Enigma $enigma );
-    public function simulate( string $text, [ int $delayMs = 250 ] ): string;
+    public function simulate( string $text, int $delayMs ): string;
 
 }
 ```
@@ -35,7 +35,7 @@ class JulienBoudry\EnigmaMachine\Console\EnigmaSimulator
 
     // Methods
     public function __construct( Symfony\Component\Console\Output\OutputInterface $output, JulienBoudry\EnigmaMachine\Enigma $enigma );
-    public function simulate( string $text, [ int $delayMs = 250 ] ): string;
+    public function simulate( string $text, int $delayMs ): string;
 
 }
 ```

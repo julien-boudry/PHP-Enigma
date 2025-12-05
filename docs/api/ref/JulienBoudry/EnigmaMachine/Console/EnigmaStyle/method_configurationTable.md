@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaMachine](../../readme.md) \ [EnigmaStyle](class_EnigmaStyle.md)
 # Method configurationTable()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L193)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L201)
 
 ```php
 public function EnigmaStyle->configurationTable( array $rows ): void

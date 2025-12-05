@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaMachine](../../readme.md) \ [EnigmaStyle](class_EnigmaStyle.md)
 # Method interactivePlugboard()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L404)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L412)
 
 ```php
 public function EnigmaStyle->interactivePlugboard( string $question ): string

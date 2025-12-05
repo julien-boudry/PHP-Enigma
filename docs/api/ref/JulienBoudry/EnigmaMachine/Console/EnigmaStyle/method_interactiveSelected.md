@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaMachine](../../readme.md) \ [EnigmaStyle](class_EnigmaStyle.md)
 # Method interactiveSelected()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L508)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L516)
 
 ```php
 public function EnigmaStyle->interactiveSelected( string $label, string $value ): void

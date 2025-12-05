@@ -1,6 +1,6 @@
 > JulienBoudry \ [EnigmaMachine](../../readme.md) \ [EnigmaStyle](class_EnigmaStyle.md)
 # Method interactiveMultiChoice()
-> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L318)
+> [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaStyle.php#L326)
 
 ```php
 public function EnigmaStyle->interactiveMultiChoice( string $question, array $choices, [ array $defaults = [] ] ): array

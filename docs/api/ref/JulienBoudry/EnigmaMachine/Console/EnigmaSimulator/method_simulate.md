@@ -3,7 +3,7 @@
 > [Read it at source](https://github.com/julien-boudry/PHP-Enigma/tree/master/src/Console/EnigmaSimulator.php#L61)
 
 ```php
-public function EnigmaSimulator->simulate( string $text, [ int $delayMs = 250 ] ): string
+public function EnigmaSimulator->simulate( string $text, int $delayMs ): string
 ```
 
 ## Description
@@ -21,7 +21,7 @@ string $text
 
 ### **delayMs:**
 ```php
-int $delayMs = 250
+int $delayMs
 ```
 **Type:** `int`
 

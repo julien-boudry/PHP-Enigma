@@ -32,6 +32,7 @@ generated randomly, or extracted from an existing Enigma machine.
 | [__construct(...)](method___construct.md) | __ |
 | [createEnigma(...)](method_createEnigma.md) | _Create and configure a complete Enigma machine from this configuration._ |
 | [createRotorConfiguration(...)](method_createRotorConfiguration.md) | _Create a RotorConfiguration from this configuration._ |
+| [getDoraWiringString(...)](method_getDoraWiringString.md) | _Get DORA wiring pairs as a formatted string._ |
 | [getPlugboardString(...)](method_getPlugboardString.md) | _Get plugboard pairs as a formatted string._ |
 | [getPositionString(...)](method_getPositionString.md) | _Get initial positions as a formatted string (left to right)._ |
 | [getRingString(...)](method_getRingString.md) | _Get ring settings as a formatted string (left to right)._ |
@@ -60,6 +61,7 @@ final readonly class JulienBoudry\EnigmaMachine\EnigmaConfiguration
     public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, array $rotorTypes, array $ringstellungen, array $positions, JulienBoudry\EnigmaMachine\ReflectorType $reflector, array $plugboardPairs, [ ?array $doraWiringPairs = null ] );
     public function createEnigma( ): JulienBoudry\EnigmaMachine\Enigma;
     public function createRotorConfiguration( ): JulienBoudry\EnigmaMachine\RotorConfiguration;
+    public function getDoraWiringString( ): ?string;
     public function getPlugboardString( ): string;
     public function getPositionString( ): string;
     public function getRingString( ): string;
@@ -90,6 +92,7 @@ final readonly class JulienBoudry\EnigmaMachine\EnigmaConfiguration
     public function __construct( JulienBoudry\EnigmaMachine\EnigmaModel $model, array $rotorTypes, array $ringstellungen, array $positions, JulienBoudry\EnigmaMachine\ReflectorType $reflector, array $plugboardPairs, [ ?array $doraWiringPairs = null ] );
     public function createEnigma( ): JulienBoudry\EnigmaMachine\Enigma;
     public function createRotorConfiguration( ): JulienBoudry\EnigmaMachine\RotorConfiguration;
+    public function getDoraWiringString( ): ?string;
     public function getPlugboardString( ): string;
     public function getPositionString( ): string;
     public function getRingString( ): string;
